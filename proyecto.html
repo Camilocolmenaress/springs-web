@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPRINGS — Panel del Proyecto</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --burgundy: #6B1419;
+  --cream: #F2E8D5;
+  --tinta: #1A0A0C;
+  --mostaza: #C5871F;
+  --bg: #111010;
+  --surface: #1a1818;
+  --border: rgba(255,255,255,0.07);
+  --text: #e8e0d5;
+  --muted: rgba(232,224,213,0.35);
+}
+
+html { -webkit-font-smoothing: antialiased; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.header {
+  background: var(--burgundy);
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--mostaza);
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+
+.header-left { display: flex; align-items: center; gap: 16px; }
+
+.wordmark {
+  font-family: 'Anton', sans-serif;
+  font-size: 22px;
+  letter-spacing: 4px;
+  color: var(--cream);
+}
+
+.header-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(242,232,213,0.4);
+  border-left: 1px solid rgba(242,232,213,0.2);
+  padding-left: 16px;
+}
+
+.btn-ver-web {
+  background: var(--mostaza);
+  color: var(--tinta);
+  font-family: 'Anton', sans-serif;
+  font-size: 12px;
+  letter-spacing: 2px;
+  padding: 10px 20px;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity .15s;
+}
+.btn-ver-web:hover { opacity: 0.85; }
+
+/* ── OVERALL PROGRESS ── */
+.progress-banner {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 28px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.progress-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.progress-bar-wrap {
+  flex: 1;
+  min-width: 120px;
+  height: 4px;
+  background: rgba(255,255,255,0.08);
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--mostaza);
+  transition: width 0.4s ease;
+}
+
+.progress-pct {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--mostaza);
+  font-weight: 500;
+  min-width: 36px;
+}
+
+/* ── MAIN GRID ── */
+.main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+@media (max-width: 860px) {
+  .main { grid-template-columns: 1fr; }
+}
+
+.column {
+  border-right: 1px solid var(--border);
+  min-height: calc(100vh - 108px);
+}
+.column:last-child { border-right: none; }
+
+.column-header {
+  padding: 24px 28px 20px;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 69px;
+  background: var(--bg);
+  z-index: 100;
+}
+
+.col-person {
+  font-family: 'Anton', sans-serif;
+  font-size: 20px;
+  letter-spacing: 2px;
+}
+
+.col-person.jd { color: var(--mostaza); }
+.col-person.cam { color: #9CA3AF; }
+
+.col-desc {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+.col-progress {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.col-progress-bar {
+  flex: 1;
+  height: 3px;
+  background: rgba(255,255,255,0.07);
+}
+
+.col-progress-fill {
+  height: 100%;
+  transition: width 0.4s ease;
+}
+.jd .col-progress-fill { background: var(--mostaza); }
+.cam .col-progress-fill { background: #6B7280; }
+
+.col-progress-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ── FASE LABEL ── */
+.fase-label {
+  padding: 14px 28px 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.2);
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── TASK ── */
+.task {
+  border-bottom: 1px solid var(--border);
+  transition: background .15s;
+}
+
+.task.blocked { opacity: 0.45; }
+.task.done .task-title { text-decoration: line-through; opacity: 0.45; }
+
+.task-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 28px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.task-header:hover { background: rgba(255,255,255,0.025); }
+
+/* Custom checkbox */
+.task-check {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  flex-shrink: 0;
+  margin-top: 2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color .15s, background .15s;
+}
+
+.task-check.checked-jd {
+  background: var(--mostaza);
+  border-color: var(--mostaza);
+}
+.task-check.checked-cam {
+  background: #6B7280;
+  border-color: #6B7280;
+}
+
+.checkmark {
+  width: 10px;
+  height: 7px;
+  border-left: 2px solid #1A0A0C;
+  border-bottom: 2px solid #1A0A0C;
+  transform: rotate(-45deg) translateY(-1px);
+  display: none;
+}
+.task-check.checked-jd .checkmark,
+.task-check.checked-cam .checkmark { display: block; }
+
+.task-meta { flex: 1; }
+
+.task-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.task-subtitle {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 3px;
+  line-height: 1.4;
+}
+
+.task-badges {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border: 1px solid;
+}
+
+.badge-bloqueada { border-color: rgba(239,68,68,0.4); color: #F87171; }
+.badge-activa { border-color: rgba(197,135,31,0.5); color: var(--mostaza); }
+.badge-lista { border-color: rgba(74,222,128,0.4); color: #4ADE80; }
+.badge-espera { border-color: rgba(156,163,175,0.3); color: #9CA3AF; }
+.badge-critica { border-color: rgba(239,68,68,0.6); color: #F87171; background: rgba(239,68,68,0.08); }
+.badge-camilo { border-color: rgba(107,20,25,0.5); color: #F87171; }
+.badge-juandavid { border-color: rgba(197,135,31,0.4); color: var(--mostaza); }
+
+.task-expand {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  flex-shrink: 0;
+  margin-top: 2px;
+  font-size: 12px;
+  transition: transform .2s;
+}
+
+.task.open .task-expand { transform: rotate(180deg); }
+
+/* ── TASK STEPS ── */
+.task-steps {
+  display: none;
+  padding: 0 28px 20px 60px;
+  background: rgba(255,255,255,0.015);
+  border-top: 1px solid var(--border);
+}
+
+.task.open .task-steps { display: block; }
+
+.steps-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 14px 0 10px;
+}
+
+.step-item {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 14px;
+  align-items: flex-start;
+}
+
+.step-n {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  min-width: 20px;
+  padding-top: 1px;
+  opacity: 0.5;
+}
+
+.step-body {}
+
+.step-action {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.step-detail {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 3px;
+  line-height: 1.5;
+}
+
+.step-code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  background: rgba(255,255,255,0.06);
+  padding: 8px 12px;
+  margin-top: 8px;
+  color: var(--cream);
+  display: block;
+  border-left: 2px solid var(--mostaza);
+}
+
+.step-tip {
+  background: rgba(197,135,31,0.08);
+  border-left: 2px solid var(--mostaza);
+  padding: 8px 12px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: rgba(242,232,213,0.7);
+  line-height: 1.5;
+}
+
+.step-blocker {
+  background: rgba(239,68,68,0.06);
+  border-left: 2px solid #F87171;
+  padding: 8px 12px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: #F87171;
+  line-height: 1.5;
+}
+
+.result-box {
+  background: rgba(74,222,128,0.05);
+  border: 1px solid rgba(74,222,128,0.15);
+  border-left: 2px solid #4ADE80;
+  padding: 10px 14px;
+  margin-top: 12px;
+  font-size: 12px;
+  color: rgba(74,222,128,0.8);
+  line-height: 1.5;
+}
+
+.result-box strong {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin-bottom: 4px;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <div class="wordmark">SPRINGS</div>
+    <div class="header-label">Panel del Proyecto · Web</div>
+  </div>
+  <a class="btn-ver-web" href="index.html" target="_blank">
+    <span>↗</span> VER PÁGINA WEB
+  </a>
+</div>
+
+<!-- OVERALL PROGRESS -->
+<div class="progress-banner">
+  <div class="progress-label">Progreso general</div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="overall-bar" style="width:0%"></div>
+  </div>
+  <div class="progress-pct" id="overall-pct">0%</div>
+</div>
+
+<!-- MAIN GRID -->
+<div class="main">
+
+  <!-- ══════════════════════════════════════════
+       COLUMNA JUAN DAVID
+  ══════════════════════════════════════════ -->
+  <div class="column jd" id="col-jd">
+
+    <div class="column-header">
+      <div class="col-person jd">JUAN DAVID</div>
+      <div class="col-desc">Frontend · Diseño visual · Dirección creativa<br>Tú decides cómo se ve todo. Camilo lo conecta.</div>
+      <div class="col-progress">
+        <div class="col-progress-bar"><div class="col-progress-fill" id="jd-bar" style="width:0%"></div></div>
+        <div class="col-progress-text" id="jd-pct">0 / 0</div>
+      </div>
+    </div>
+
+    <div class="fase-label">FASE 0 — ANTES DE EMPEZAR</div>
+
+    <!-- JD-1 -->
+    <div class="task" id="jd-1" onclick="toggleTask('jd-1')">
+      <div class="task-header">
+        <div class="task-check" id="chk-jd-1" onclick="event.stopPropagation(); toggleCheck('jd-1')"><div class="checkmark"></div></div>
+        <div class="task-meta">
+          <div class="task-title">Instalar las herramientas de trabajo</div>
+          <div class="task-subtitle">VS Code + Node.js — los programas que necesitás para ver y editar la página</div>
+          <div class="task-badges"><span class="badge badge-activa">Activa</span></div>
+        </div>
+        <div class="task-expand">▼</div>
+      </div>
+      <div class="task-steps">
+        <div class="steps-title">Paso a paso</div>
+        <div class="step-item">
+          <div class="step-n">01</div>
+          <div class="step-body">
+            <div class="step-action">Instalar VS Code</div>
+            <div class="step-detail">Es el editor de código que vas a usar. Gratis, el más popular del mundo.</div>
+            <code class="step-code">Busca "VS Code" en Google → Descargar → Instalar</code>
+            <div class="step-tip">💡 Es como Word pero para código. Abre archivos .html, .tsx, .css y los muestra con colores.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">02</div>
+          <div class="step-body">
+            <div class="step-action">Instalar Node.js</div>
+            <div class="step-detail">Es el motor que hace correr el proyecto de Next.js en tu computadora.</div>
+            <code class="step-code">Busca "Node.js download" → versión LTS → Instalar</code>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">03</div>
+          <div class="step-body">
+            <div class="step-action">Verificar que funcionó</div>
+            <div class="step-detail">Abre la Terminal (Mac: Cmd+Espacio → escribe "Terminal").</div>
+            <code class="step-code">node --version</code>
+            <div class="step-detail">Si ves algo como <strong style="color:var(--mostaza)">v20.x.x</strong> — listo. Si ves un error, reinstala Node.js.</div>
+          </div>
+        </div>
+        <div class="result-box"><strong>Listo cuando:</strong>VS Code abre, y en la Terminal "node --version" muestra un número.</div>
+      </div>
+    </div>
+
+    <!-- JD-2 -->
+    <div class="task blocked" id="jd-2" onclick="toggleTask('jd-2')">
+      <div class="task-header">
+        <div class="task-check" id="chk-jd-2" onclick="event.stopPropagation(); toggleCheck('jd-2')"><div class="checkmark"></div></div>
+        <div class="task-meta">
+          <div class="task-title">Abrir el proyecto en tu computadora</div>
+          <div class="task-subtitle">Camilo te comparte el repositorio — vos lo descargas y lo abres</div>
+          <div class="task-badges">
+            <span class="badge badge-bloqueada">Bloqueada</span>
+            <span class="badge badge-camilo">Espera: Camilo CAM-1</span>
+          </div>
+        </div>
+        <div class="task-expand">▼</div>
+      </div>
+      <div class="task-steps">
+        <div class="steps-title">Paso a paso</div>
+        <div class="step-blocker">🔴 Esperar a que Camilo termine CAM-1 (Setup del proyecto). Él te va a compartir un link de GitHub.</div>
+        <div class="step-item">
+          <div class="step-n">01</div>
+          <div class="step-body">
+            <div class="step-action">Instalar Git</div>
+            <div class="step-detail">Git es como el "historial de versiones" del proyecto. Necesitás tenerlo para descargar el código.</div>
+            <code class="step-code">Busca "Git download" → Instalar</code>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">02</div>
+          <div class="step-body">
+            <div class="step-action">Clonar el repositorio</div>
+            <div class="step-detail">Camilo te manda algo como: https://github.com/springs-col/springs-web</div>
+            <code class="step-code">git clone [el link que te mandó Camilo]</code>
+            <div class="step-detail">Esto descarga todos los archivos del proyecto a tu computadora.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">03</div>
+          <div class="step-body">
+            <div class="step-action">Abrir la carpeta en VS Code</div>
+            <code class="step-code">Archivo → Abrir carpeta → selecciona "springs-web"</code>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">04</div>
+          <div class="step-body">
+            <div class="step-action">Instalar dependencias y arrancar</div>
+            <div class="step-detail">En VS Code, abre la Terminal (Ctrl+` o Terminal → Nueva terminal)</div>
+            <code class="step-code">npm install
+npm run dev</code>
+            <div class="step-detail">Luego abre el navegador en: <strong style="color:var(--mostaza)">http://localhost:3000</strong></div>
+            <div class="step-tip">💡 Cada vez que cambies un archivo, el navegador se actualiza solo. Así ves los cambios en tiempo real.</div>
+          </div>
+        </div>
+        <div class="result-box"><strong>Listo cuando:</strong>Ves la página de Springs corriendo en localhost:3000 en tu navegador.</div>
+      </div>
+    </div>
+
+    <div class="fase-label">FASE 1 — HERO PRINCIPAL</div>
+
+    <!-- JD-3 -->
+    <div class="task blocked" id="jd-3" onclick="toggleTask('jd-3')">
+      <div class="task-header">
+        <div class="task-check" id="chk-jd-3" onclick="event.stopPropagation(); toggleCheck('jd-3')"><div class="checkmark"></div></div>
+        <div class="task-meta">
+          <div class="task-title">Construir el Hero — la pantalla principal</div>
+          <div class="task-subtitle">Tipografía gigante, foto del producto flotando, botón "HACER PEDIDO"</div>
+          <div class="task-badges">
+            <span class="badge badge-bloqueada">Bloqueada</span>
+            <span class="badge badge-camilo">Espera: Camilo CAM-1</span>
+          </div>
+        </div>
+        <div class="task-expand">▼</div>
+      </div>
+      <div class="task-steps">
+        <div class="steps-title">Paso a paso</div>
+        <div class="step-blocker">🔴 Necesitás tener el proyecto corriendo (JD-2) antes de empezar esto.</div>
+        <div class="step-item">
+          <div class="step-n">01</div>
+          <div class="step-body">
+            <div class="step-action">Abrir el archivo del Hero</div>
+            <div class="step-detail">En VS Code, busca y abre:</div>
+            <code class="step-code">components/Hero.tsx</code>
+            <div class="step-tip">💡 .tsx es como HTML pero más poderoso. La mayoría del código va a ser reconocible para vos.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">02</div>
+          <div class="step-body">
+            <div class="step-action">Ajustar el texto principal (lo que se ve gigante)</div>
+            <div class="step-detail">Busca en el archivo algo como <code style="color:var(--mostaza)">DIFFER</code> o <code style="color:var(--mostaza)">ENT.</code> — esos son los textos que se salen de pantalla. Cámbialos por lo que quieras.</div>
+            <div class="step-tip">💡 Podría ser "SPRINGS." o "JACKET." o "DISTINTO." — tú decides cuál se ve mejor.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">03</div>
+          <div class="step-body">
+            <div class="step-action">Agregar el tagline</div>
+            <div class="step-detail">Busca la línea con el tagline actual y pon el que quieras usar. El oficial es:</div>
+            <code class="step-code">"Different by default."</code>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">04</div>
+          <div class="step-body">
+            <div class="step-action">Agregar la foto del producto</div>
+            <div class="step-detail">Necesitás una foto de la jacket en PNG <strong style="color:#F87171">con fondo transparente</strong> (sin fondo blanco). Es el elemento más importante del diseño.</div>
+            <div class="step-detail">Una vez tengas la foto: guárdala en la carpeta <code style="color:var(--mostaza)">public/images/</code> con el nombre <code style="color:var(--mostaza)">jacket-hero.png</code></div>
+            <div class="step-tip">💡 Para sacar el fondo de una foto: usá remove.bg (gratis, online) — sube la foto y te devuelve el PNG transparente.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">05</div>
+          <div class="step-body">
+            <div class="step-action">Ajustar colores o posición si algo no se ve bien</div>
+            <div class="step-detail">Busca los valores de color en el archivo: <code style="color:var(--mostaza)">#6B1419</code> (burgundy), <code style="color:var(--mostaza)">#C5871F</code> (mostaza), <code style="color:var(--mostaza)">#F2E8D5</code> (cream). Cámbialos si experimentás con variaciones.</div>
+            <div class="step-tip">💡 Los colores de la marca son los de arriba — no uses otros. Pero podés jugar con la opacidad.</div>
+          </div>
+        </div>
+        <div class="result-box"><strong>Listo cuando:</strong>En localhost:3000 ves el hero con tipografía que se sale de la pantalla, la foto de la jacket flotando, y el botón "HACER PEDIDO".</div>
+      </div>
+    </div>
+
+    <!-- JD-4 -->
+    <div class="task blocked" id="jd-4" onclick="toggleTask('jd-4')">
+      <div class="task-header">
+        <div class="task-check" id="chk-jd-4" onclick="event.stopPropagation(); toggleCheck('jd-4')"><div class="checkmark"></div></div>
+        <div class="task-meta">
+          <div class="task-title">Construir el menú de productos</div>
+          <div class="task-subtitle">Jackets, Loaded, Extras, Bebidas — con los precios y descripciones reales</div>
+          <div class="task-badges"><span class="badge badge-espera">Después del Hero</span></div>
+        </div>
+        <div class="task-expand">▼</div>
+      </div>
+      <div class="task-steps">
+        <div class="steps-title">Paso a paso</div>
+        <div class="step-item">
+          <div class="step-n">01</div>
+          <div class="step-body">
+            <div class="step-action">Abrir el archivo del menú</div>
+            <code class="step-code">components/Menu.tsx</code>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">02</div>
+          <div class="step-body">
+            <div class="step-action">Revisar los datos de los productos</div>
+            <div class="step-detail">Camilo va a tener los datos en Supabase, pero al principio van a estar en un archivo local:</div>
+            <code class="step-code">data/productos.ts</code>
+            <div class="step-detail">Acá están todos los nombres, precios y descripciones. Si algo está mal, lo editás directamente.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">03</div>
+          <div class="step-body">
+            <div class="step-action">Verificar el orden de las secciones</div>
+            <div class="step-detail">El orden correcto del menú es:</div>
+            <code class="step-code">1. COMBOS → 2. JACKETS → 3. LOADED → 4. EXTRAS → 5. BEBIDAS</code>
+            <div class="step-tip">💡 Los Combos van primero — anclan el ticket promedio hacia arriba.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">04</div>
+          <div class="step-body">
+            <div class="step-action">Verificar que se ve bien en mobile</div>
+            <div class="step-detail">En Chrome: clic derecho → Inspeccionar → ícono de celular arriba a la izquierda. Cambia a "iPhone 14 Pro" y verifica que todo se ve bien.</div>
+          </div>
+        </div>
+        <div class="result-box"><strong>Listo cuando:</strong>Al hacer clic en "HACER PEDIDO" se abre el menú completo, con todas las secciones, precios y descripciones correctas.</div>
+      </div>
+    </div>
+
+    <!-- JD-5 -->
+    <div class="task blocked" id="jd-5" onclick="toggleTask('jd-5')">
+      <div class="task-header">
+        <div class="task-check" id="chk-jd-5" onclick="event.stopPropagation(); toggleCheck('jd-5')"><div class="checkmark"></div></div>
+        <div class="task-meta">
+          <div class="task-title">Construir el carrito de compras</div>
+          <div class="task-subtitle">Drawer lateral en desktop, bottom sheet en mobile — agregar y quitar productos</div>
+          <div class="task-badges"><span class="badge badge-espera">Después del Menú</span></div>
+        </div>
+        <div class="task-expand">▼</div>
+      </div>
+      <div class="task-steps">
+        <div class="steps-title">Paso a paso</div>
+        <div class="step-item">
+          <div class="step-n">01</div>
+          <div class="step-body">
+            <div class="step-action">Abrir el archivo del carrito</div>
+            <code class="step-code">components/Cart.tsx</code>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">02</div>
+          <div class="step-body">
+            <div class="step-action">Verificar que el botón + agrega productos</div>
+            <div class="step-detail">Agrega un producto al carrito haciendo clic en "AGREGAR AL PEDIDO". Debe aparecer en el drawer con el nombre, precio y cantidad.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">03</div>
+          <div class="step-body">
+            <div class="step-action">Verificar el subtotal</div>
+            <div class="step-detail">El precio total abajo debe sumar correctamente cuando agregás varios productos.</div>
+            <div class="step-tip">💡 El umbral de domicilio gratis es $60.000. Debe mostrarse una barra de progreso hacia ese número.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">04</div>
+          <div class="step-body">
+            <div class="step-action">Ajustar el mensaje de carrito vacío</div>
+            <div class="step-detail">Cuando el carrito está vacío debe decir:</div>
+            <code class="step-code">"Su pedido está vacío. La papa no se hornea sola."</code>
+          </div>
+        </div>
+        <div class="result-box"><strong>Listo cuando:</strong>Podés agregar varios productos, ver el total, y eliminar items. En mobile el carrito se desliza desde abajo.</div>
+      </div>
+    </div>
+
+    <div class="fase-label">FASE 2 — REFINAMIENTO</div>
+
+    <!-- JD-6 -->
+    <div class="task blocked" id="jd-6" onclick="toggleTask('jd-6')">
+      <div class="task-header">
+        <div class="task-check" id="chk-jd-6" onclick="event.stopPropagation(); toggleCheck('jd-6')"><div class="checkmark"></div></div>
+        <div class="task-meta">
+          <div class="task-title">Prueba completa en mobile</div>
+          <div class="task-subtitle">Abrir en iPhone real y verificar que todo funciona a la perfección</div>
+          <div class="task-badges"><span class="badge badge-espera">Después de Carrito</span></div>
+        </div>
+        <div class="task-expand">▼</div>
+      </div>
+      <div class="task-steps">
+        <div class="steps-title">Paso a paso</div>
+        <div class="step-item">
+          <div class="step-n">01</div>
+          <div class="step-body">
+            <div class="step-action">Ver la IP de tu computadora</div>
+            <div class="step-detail">En la Terminal:</div>
+            <code class="step-code">ipconfig getifaddr en0</code>
+            <div class="step-detail">Te devuelve algo como <strong style="color:var(--mostaza)">192.168.1.5</strong></div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">02</div>
+          <div class="step-body">
+            <div class="step-action">Abrir en el iPhone</div>
+            <div class="step-detail">Con el iPhone en la misma red WiFi, abre Safari y escribe:</div>
+            <code class="step-code">http://192.168.1.5:3000</code>
+            <div class="step-detail">(Reemplazá el número por el que te apareció en el paso anterior)</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">03</div>
+          <div class="step-body">
+            <div class="step-action">Checklist visual mobile</div>
+            <code class="step-code">☐ Hero ocupa 100% de la pantalla sin scroll horizontal
+☐ Botón "HACER PEDIDO" es fácil de tocar con el dedo
+☐ Menú se desliza limpio desde abajo
+☐ Carrito funciona en mobile
+☐ Texto nunca se corta ni queda muy pequeño
+☐ No hay elementos superpuestos</code>
+          </div>
+        </div>
+        <div class="result-box"><strong>Listo cuando:</strong>Un cliente real puede hacer un pedido completo desde el iPhone sin confusiones.</div>
+      </div>
+    </div>
+
+    <!-- JD-7 -->
+    <div class="task blocked" id="jd-7" onclick="toggleTask('jd-7')">
+      <div class="task-header">
+        <div class="task-check" id="chk-jd-7" onclick="event.stopPropagation(); toggleCheck('jd-7')"><div class="checkmark"></div></div>
+        <div class="task-meta">
+          <div class="task-title">Reemplazar fotos placeholder por fotos reales</div>
+          <div class="task-subtitle">PNG sin fondo de los productos — el elemento más importante del diseño</div>
+          <div class="task-badges"><span class="badge badge-critica">Crítica</span></div>
+        </div>
+        <div class="task-expand">▼</div>
+      </div>
+      <div class="task-steps">
+        <div class="steps-title">Paso a paso</div>
+        <div class="step-item">
+          <div class="step-n">01</div>
+          <div class="step-body">
+            <div class="step-action">Tomar las fotos</div>
+            <div class="step-detail">La foto del hero debe ser la jacket más llamativa (La Brava o La Pesada). Fondo blanco o neutro para facilitar el recorte.</div>
+            <div class="step-tip">💡 Luz natural encima del producto. Sin sombras duras. Mirar cómo Vicio fotografía las burgers — fondo limpio, producto protagonista.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">02</div>
+          <div class="step-body">
+            <div class="step-action">Sacar el fondo</div>
+            <code class="step-code">Ir a remove.bg → Subir foto → Descargar PNG</code>
+            <div class="step-tip">💡 Gratis para resolución media. Para resolución alta tienen plan pago. Para el lanzamiento, la versión gratuita funciona.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">03</div>
+          <div class="step-body">
+            <div class="step-action">Guardar en el proyecto</div>
+            <code class="step-code">Guardar en: public/images/jacket-hero.png</code>
+            <div class="step-detail">El sitio la carga automáticamente cuando el archivo tiene ese nombre.</div>
+          </div>
+        </div>
+        <div class="result-box"><strong>Listo cuando:</strong>La foto real de la jacket aparece flotando en el hero. Se ve como la burger de Vicio pero con nuestra identidad.</div>
+      </div>
+    </div>
+
+    <!-- JD-8 -->
+    <div class="task blocked" id="jd-8" onclick="toggleTask('jd-8')">
+      <div class="task-header">
+        <div class="task-check" id="chk-jd-8" onclick="event.stopPropagation(); toggleCheck('jd-8')"><div class="checkmark"></div></div>
+        <div class="task-meta">
+          <div class="task-title">Conectar con datos reales de Supabase</div>
+          <div class="task-subtitle">Reemplazar datos de prueba con los de la base de datos real de Camilo</div>
+          <div class="task-badges">
+            <span class="badge badge-bloqueada">Bloqueada</span>
+            <span class="badge badge-camilo">Espera: Camilo CAM-3</span>
+          </div>
+        </div>
+        <div class="task-expand">▼</div>
+      </div>
+      <div class="task-steps">
+        <div class="steps-title">Paso a paso</div>
+        <div class="step-blocker">🔴 Camilo necesita terminar CAM-3 (API de productos) antes de este paso.</div>
+        <div class="step-item">
+          <div class="step-n">01</div>
+          <div class="step-body">
+            <div class="step-action">Confirmar con Camilo que la API está lista</div>
+            <div class="step-detail">Camilo te va a decir: "La API está en /api/products". Probala en el navegador:</div>
+            <code class="step-code">http://localhost:3000/api/products</code>
+            <div class="step-detail">Deberías ver todos los productos del menú en formato JSON (lista de datos).</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">02</div>
+          <div class="step-body">
+            <div class="step-action">Cambiar la línea de datos en el componente</div>
+            <div class="step-detail">En <code style="color:var(--mostaza)">components/Menu.tsx</code>, busca la línea que dice <code style="color:var(--mostaza)">mockData</code> o <code style="color:var(--mostaza)">productosEstaticos</code> y cambiala por la llamada a la API. Camilo te dice exactamente qué línea cambiar.</div>
+          </div>
+        </div>
+        <div class="result-box"><strong>Listo cuando:</strong>Los productos del menú vienen de Supabase. Si Camilo cambia un precio en la base de datos, se actualiza automáticamente en la web.</div>
+      </div>
+    </div>
+
+  </div><!-- /col-jd -->
+
+  <!-- ══════════════════════════════════════════
+       COLUMNA CAMILO
+  ══════════════════════════════════════════ -->
+  <div class="column cam" id="col-cam">
+
+    <div class="column-header">
+      <div class="col-person cam">CAMILO</div>
+      <div class="col-desc">Backend · Supabase · Pagos · Infraestructura<br>Vos hacés que todo funcione por dentro.</div>
+      <div class="col-progress">
+        <div class="col-progress-bar"><div class="col-progress-fill" id="cam-bar" style="width:0%"></div></div>
+        <div class="col-progress-text" id="cam-pct">0 / 0</div>
+      </div>
+    </div>
+
+    <div class="fase-label">FASE 0 — SETUP (PRIMERO — Juan David depende de esto)</div>
+
+    <!-- CAM-1 -->
+    <div class="task" id="cam-1" onclick="toggleTask('cam-1')">
+      <div class="task-header">
+        <div class="task-check" id="chk-cam-1" onclick="event.stopPropagation(); toggleCheck('cam-1')"><div class="checkmark"></div></div>
+        <div class="task-meta">
+          <div class="task-title">Setup Next.js + Vercel + GitHub</div>
+          <div class="task-subtitle">Crear el proyecto base, configurar el dominio de deploy, compartir acceso a Juan David</div>
+          <div class="task-badges">
+            <span class="badge badge-activa">Activa</span>
+            <span class="badge badge-critica">Crítica — Juan David no puede empezar sin esto</span>
+          </div>
+        </div>
+        <div class="task-expand">▼</div>
+      </div>
+      <div class="task-steps">
+        <div class="steps-title">Paso a paso</div>
+        <div class="step-item">
+          <div class="step-n">01</div>
+          <div class="step-body">
+            <div class="step-action">Crear el proyecto Next.js</div>
+            <code class="step-code">npx create-next-app@latest springs-web --typescript --tailwind --app --src-dir</code>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">02</div>
+          <div class="step-body">
+            <div class="step-action">Configurar tokens de diseño (globals.css)</div>
+            <div class="step-detail">Configurar las variables CSS con los colores y fuentes de Springs para que Juan David no tenga que buscar los hex codes:</div>
+            <code class="step-code">--burgundy: #6B1419
+--cream: #F2E8D5
+--tinta: #1A0A0C
+--mostaza: #C5871F
+/* Fonts: Anton, Inter, JetBrains Mono */</code>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">03</div>
+          <div class="step-body">
+            <div class="step-action">Subir a GitHub y conectar a Vercel</div>
+            <div class="step-detail">Push inicial → conectar repo en vercel.com → el sitio queda en una URL pública tipo <code style="color:var(--mostaza)">springs-web.vercel.app</code></div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">04</div>
+          <div class="step-body">
+            <div class="step-action">Crear carpetas base y componentes vacíos</div>
+            <code class="step-code">components/Hero.tsx       ← Juan David
+components/Menu.tsx       ← Juan David
+components/Cart.tsx       ← Juan David
+components/ProductCard.tsx ← Juan David
+app/api/products/         ← Camilo
+lib/supabase.ts           ← Camilo</code>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">05</div>
+          <div class="step-body">
+            <div class="step-action">Compartir acceso a Juan David</div>
+            <div class="step-detail">Invitar a Juan David al repo de GitHub → él clona y arranca.</div>
+            <div class="step-tip">💡 Avisarle cuando esté listo. Juan David no puede empezar JD-2 hasta esto.</div>
+          </div>
+        </div>
+        <div class="result-box"><strong>Listo cuando:</strong>La URL de Vercel carga. Juan David puede clonar y correr npm run dev.</div>
+      </div>
+    </div>
+
+    <div class="fase-label">FASE 1 — BASE DE DATOS</div>
+
+    <!-- CAM-2 -->
+    <div class="task" id="cam-2" onclick="toggleTask('cam-2')">
+      <div class="task-header">
+        <div class="task-check" id="chk-cam-2" onclick="event.stopPropagation(); toggleCheck('cam-2')"><div class="checkmark"></div></div>
+        <div class="task-meta">
+          <div class="task-title">Supabase — crear base de datos y tablas</div>
+          <div class="task-subtitle">Tablas: products, orders, order_items. RLS habilitado siempre.</div>
+          <div class="task-badges"><span class="badge badge-activa">Activa</span></div>
+        </div>
+        <div class="task-expand">▼</div>
+      </div>
+      <div class="task-steps">
+        <div class="steps-title">Paso a paso</div>
+        <div class="step-item">
+          <div class="step-n">01</div>
+          <div class="step-body">
+            <div class="step-action">Crear proyecto en Supabase</div>
+            <code class="step-code">supabase.com → New project → springs-bga → región US East</code>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">02</div>
+          <div class="step-body">
+            <div class="step-action">Crear tabla products</div>
+            <code class="step-code">id uuid PRIMARY KEY DEFAULT gen_random_uuid()
+nombre text NOT NULL
+descripcion text
+precio integer NOT NULL
+categoria text CHECK (categoria IN ('jacket','loaded','extra','bebida','combo'))
+disponible boolean DEFAULT true
+imagen_url text
+orden integer DEFAULT 0</code>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">03</div>
+          <div class="step-body">
+            <div class="step-action">Crear tabla orders y order_items</div>
+            <code class="step-code">orders: id, numero_pedido, total, estado, created_at
+order_items: id, order_id, product_id, cantidad, precio_unitario</code>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">04</div>
+          <div class="step-body">
+            <div class="step-action">Poblar con los productos del menú</div>
+            <div class="step-detail">Ingresar los 13 productos con sus precios desde el CLAUDE.md del proyecto.</div>
+            <div class="step-tip">💡 Una vez hecho, Juan David puede editar precios directo desde el Table Editor de Supabase (parece un Google Sheets).</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">05</div>
+          <div class="step-body">
+            <div class="step-action">Habilitar RLS en todas las tablas</div>
+            <code class="step-code">ALTER TABLE products ENABLE ROW LEVEL SECURITY;
+ALTER TABLE orders ENABLE ROW LEVEL SECURITY;</code>
+          </div>
+        </div>
+        <div class="result-box"><strong>Listo cuando:</strong>Los 13 productos están en Supabase y Juan David puede editar precios sin tocar código.</div>
+      </div>
+    </div>
+
+    <!-- CAM-3 -->
+    <div class="task" id="cam-3" onclick="toggleTask('cam-3')">
+      <div class="task-header">
+        <div class="task-check" id="chk-cam-3" onclick="event.stopPropagation(); toggleCheck('cam-3')"><div class="checkmark"></div></div>
+        <div class="task-meta">
+          <div class="task-title">API de productos</div>
+          <div class="task-subtitle">Endpoint /api/products que devuelve la carta completa para que Juan David conecte el menú</div>
+          <div class="task-badges">
+            <span class="badge badge-espera">Después de CAM-2</span>
+            <span class="badge badge-juandavid">Juan David necesita esto para JD-8</span>
+          </div>
+        </div>
+        <div class="task-expand">▼</div>
+      </div>
+      <div class="task-steps">
+        <div class="steps-title">Paso a paso</div>
+        <div class="step-item">
+          <div class="step-n">01</div>
+          <div class="step-body">
+            <div class="step-action">Crear la route en Next.js</div>
+            <code class="step-code">app/api/products/route.ts</code>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">02</div>
+          <div class="step-body">
+            <div class="step-action">Shape de respuesta acordado con Juan David</div>
+            <code class="step-code">[{ id, nombre, descripcion, precio, categoria, disponible, imagen_url }]</code>
+            <div class="step-tip">💡 Este es el contrato. Si cambiás los nombres de los campos, avisale a Juan David.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">03</div>
+          <div class="step-body">
+            <div class="step-action">Agregar caché de 60 segundos</div>
+            <code class="step-code">export const revalidate = 60</code>
+            <div class="step-detail">La carta no cambia cada segundo — un minuto de cache reduce costos de DB.</div>
+          </div>
+        </div>
+        <div class="result-box"><strong>Listo cuando:</strong>GET /api/products devuelve los 13 productos. Avisar a Juan David para que conecte JD-8.</div>
+      </div>
+    </div>
+
+    <div class="fase-label">FASE 2 — PEDIDOS Y COCINA</div>
+
+    <!-- CAM-4 -->
+    <div class="task" id="cam-4" onclick="toggleTask('cam-4')">
+      <div class="task-header">
+        <div class="task-check" id="chk-cam-4" onclick="event.stopPropagation(); toggleCheck('cam-4')"><div class="checkmark"></div></div>
+        <div class="task-meta">
+          <div class="task-title">Flujo de pedido — crear y guardar órdenes</div>
+          <div class="task-subtitle">POST /api/orders — recibe carrito, genera número de pedido, guarda en Supabase</div>
+          <div class="task-badges"><span class="badge badge-espera">Después de CAM-2</span></div>
+        </div>
+        <div class="task-expand">▼</div>
+      </div>
+      <div class="task-steps">
+        <div class="steps-title">Paso a paso</div>
+        <div class="step-item">
+          <div class="step-n">01</div>
+          <div class="step-body">
+            <div class="step-action">Crear route POST /api/orders</div>
+            <code class="step-code">app/api/orders/route.ts</code>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">02</div>
+          <div class="step-body">
+            <div class="step-action">Generar número de pedido correlativo</div>
+            <div class="step-detail">Formato: #001, #002, #003... El número visible en la pantalla de confirmación.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">03</div>
+          <div class="step-body">
+            <div class="step-action">Guardar orden y order_items en Supabase</div>
+            <div class="step-detail">Transacción atómica: si falla el insert de items, no crear la orden.</div>
+          </div>
+        </div>
+        <div class="result-box"><strong>Listo cuando:</strong>Un pedido de prueba aparece en la tabla orders de Supabase con su número correlativo.</div>
+      </div>
+    </div>
+
+    <!-- CAM-5 -->
+    <div class="task" id="cam-5" onclick="toggleTask('cam-5')">
+      <div class="task-header">
+        <div class="task-check" id="chk-cam-5" onclick="event.stopPropagation(); toggleCheck('cam-5')"><div class="checkmark"></div></div>
+        <div class="task-meta">
+          <div class="task-title">Comandera — panel de cocina en tiempo real</div>
+          <div class="task-subtitle">Steicy ve los pedidos entrantes al instante — Supabase Realtime</div>
+          <div class="task-badges"><span class="badge badge-espera">Después de CAM-4</span></div>
+        </div>
+        <div class="task-expand">▼</div>
+      </div>
+      <div class="task-steps">
+        <div class="steps-title">Paso a paso</div>
+        <div class="step-item">
+          <div class="step-n">01</div>
+          <div class="step-body">
+            <div class="step-action">Crear ruta protegida /cocina</div>
+            <code class="step-code">app/cocina/page.tsx</code>
+            <div class="step-detail">Proteger con password simple o Supabase Auth básico.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">02</div>
+          <div class="step-body">
+            <div class="step-action">Suscribirse a nuevos pedidos con Realtime</div>
+            <code class="step-code">supabase
+  .channel('orders')
+  .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'orders' }, handler)
+  .subscribe()</code>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">03</div>
+          <div class="step-body">
+            <div class="step-action">Estados del pedido</div>
+            <code class="step-code">nuevo → preparando → listo → entregado</code>
+            <div class="step-detail">Steicy cambia el estado con un toque desde el panel.</div>
+          </div>
+        </div>
+        <div class="result-box"><strong>Listo cuando:</strong>Steicy entra a /cocina y ve los pedidos nuevos aparecer en tiempo real sin refrescar la página.</div>
+      </div>
+    </div>
+
+    <div class="fase-label">FASE 3 — PAGOS Y NOTIFICACIONES</div>
+
+    <!-- CAM-6 -->
+    <div class="task" id="cam-6" onclick="toggleTask('cam-6')">
+      <div class="task-header">
+        <div class="task-check" id="chk-cam-6" onclick="event.stopPropagation(); toggleCheck('cam-6')"><div class="checkmark"></div></div>
+        <div class="task-meta">
+          <div class="task-title">Integración Wompi (pagos)</div>
+          <div class="task-subtitle">Pasarela colombiana — PSE, tarjeta, Nequi, Bancolombia</div>
+          <div class="task-badges"><span class="badge badge-espera">Después de CAM-4</span></div>
+        </div>
+        <div class="task-expand">▼</div>
+      </div>
+      <div class="task-steps">
+        <div class="steps-title">Paso a paso</div>
+        <div class="step-item">
+          <div class="step-n">01</div>
+          <div class="step-body">
+            <div class="step-action">Crear cuenta en Wompi</div>
+            <code class="step-code">comercios.wompi.co → Crear cuenta → Verificar negocio</code>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">02</div>
+          <div class="step-body">
+            <div class="step-action">Obtener keys y configurar en .env</div>
+            <code class="step-code">WOMPI_PUBLIC_KEY=pub_prod_...
+WOMPI_PRIVATE_KEY=prv_prod_...</code>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">03</div>
+          <div class="step-body">
+            <div class="step-action">Crear widget de pago al finalizar pedido</div>
+            <div class="step-detail">Wompi tiene un widget embebido — no hay que construir el formulario de pago desde cero.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">04</div>
+          <div class="step-body">
+            <div class="step-action">Webhook de confirmación</div>
+            <div class="step-detail">Cuando Wompi confirma el pago → actualizar estado de la orden en Supabase → trigger de notificación.</div>
+          </div>
+        </div>
+        <div class="result-box"><strong>Listo cuando:</strong>Un pago de prueba de $1 pasa por Wompi y la orden queda marcada como "pagada" en Supabase.</div>
+      </div>
+    </div>
+
+    <!-- CAM-7 -->
+    <div class="task" id="cam-7" onclick="toggleTask('cam-7')">
+      <div class="task-header">
+        <div class="task-check" id="chk-cam-7" onclick="event.stopPropagation(); toggleCheck('cam-7')"><div class="checkmark"></div></div>
+        <div class="task-meta">
+          <div class="task-title">Notificaciones WhatsApp via n8n</div>
+          <div class="task-subtitle">Al confirmar pago → WhatsApp al cliente con número de pedido y tiempo estimado</div>
+          <div class="task-badges"><span class="badge badge-espera">Después de CAM-6</span></div>
+        </div>
+        <div class="task-expand">▼</div>
+      </div>
+      <div class="task-steps">
+        <div class="steps-title">Paso a paso</div>
+        <div class="step-item">
+          <div class="step-n">01</div>
+          <div class="step-body">
+            <div class="step-action">Configurar flujo en n8n</div>
+            <div class="step-detail">Trigger: webhook desde Supabase cuando una orden cambia a "pagada" → enviar WhatsApp via Twilio o 360Dialog.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">02</div>
+          <div class="step-body">
+            <div class="step-action">Mensaje al cliente</div>
+            <code class="step-code">"Su pedido #047 está confirmado.
+Tiempo estimado: 30-45 min.
+¡Gracias por pedir con Springs!"</code>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-n">03</div>
+          <div class="step-body">
+            <div class="step-action">Notificación interna a Steicy</div>
+            <div class="step-detail">También enviar WhatsApp a Steicy con el detalle del pedido como backup al panel de cocina.</div>
+          </div>
+        </div>
+        <div class="result-box"><strong>Listo cuando:</strong>Al hacer un pedido de prueba llega WhatsApp al número de prueba con el número de pedido.</div>
+      </div>
+    </div>
+
+  </div><!-- /col-cam -->
+
+</div><!-- /main -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+const SUPABASE_URL = 'https://qacxqqclkiwylkbeqdrk.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFhY3hxcWNsa2l3eWxrYmVxZHJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2ODA5NDksImV4cCI6MjA5NDI1Njk0OX0.p7532-MkJbWFUFgsk0oT0s0IpDKziXUV9cch9HOd_Lo';
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let currentState = {};
+
+// ── Toggle task open/close ──
+function toggleTask(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+// ── Toggle checkbox — guarda en Supabase ──
+async function toggleCheck(id) {
+  event.stopPropagation();
+  const newDone = !currentState[id];
+  currentState[id] = newDone;
+
+  applyCheck(id, newDone);
+  applyBlocking();
+  updateProgress();
+  showToast('Guardando...');
+
+  const who = id.startsWith('jd') ? 'Juan David' : 'Camilo';
+  const { error } = await db.from('project_tasks').upsert({
+    id,
+    done: newDone,
+    updated_by: who,
+    updated_at: new Date().toISOString()
+  });
+
+  showToast(error ? 'Error al guardar' : (newDone ? '✓ Marcado como listo' : 'Desmarcado'), error);
+}
+
+function applyCheck(id, checked) {
+  const chk = document.getElementById('chk-' + id);
+  const task = document.getElementById(id);
+  if (!chk || !task) return;
+  const isJD = id.startsWith('jd');
+  chk.className = 'task-check' + (checked ? (isJD ? ' checked-jd' : ' checked-cam') : '');
+  task.classList.toggle('done', checked);
+}
+
+function applyBlocking() {
+  setBlocked('jd-2', !currentState['cam-1']);
+  setBlocked('jd-3', !currentState['cam-1']);
+  setBlocked('jd-8', !currentState['cam-3']);
+}
+
+function setBlocked(id, blocked) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('blocked', blocked);
+}
+
+// ── Barras de progreso ──
+function updateProgress() {
+  const jdTasks  = ['jd-1','jd-2','jd-3','jd-4','jd-5','jd-6','jd-7','jd-8'];
+  const camTasks = ['cam-1','cam-2','cam-3','cam-4','cam-5','cam-6','cam-7'];
+  const all = [...jdTasks, ...camTasks];
+
+  const jdDone  = jdTasks.filter(t => currentState[t]).length;
+  const camDone = camTasks.filter(t => currentState[t]).length;
+  const allDone = all.filter(t => currentState[t]).length;
+
+  document.getElementById('jd-bar').style.width  = Math.round(jdDone  / jdTasks.length  * 100) + '%';
+  document.getElementById('cam-bar').style.width = Math.round(camDone / camTasks.length * 100) + '%';
+  document.getElementById('overall-bar').style.width = Math.round(allDone / all.length * 100) + '%';
+
+  document.getElementById('jd-pct').textContent  = jdDone  + ' / ' + jdTasks.length;
+  document.getElementById('cam-pct').textContent = camDone + ' / ' + camTasks.length;
+  document.getElementById('overall-pct').textContent = Math.round(allDone / all.length * 100) + '%';
+}
+
+// ── Toast de feedback ──
+let toastTimer;
+function showToast(msg, isError) {
+  let toast = document.getElementById('sync-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'sync-toast';
+    toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1818;border:1px solid rgba(255,255,255,0.12);color:#e8e0d5;font-family:JetBrains Mono,monospace;font-size:11px;letter-spacing:1px;padding:10px 20px;z-index:9999;transition:opacity .3s;border-left:3px solid #C5871F';
+    document.body.appendChild(toast);
+  }
+  toast.style.borderLeftColor = isError ? '#F87171' : '#C5871F';
+  toast.textContent = msg;
+  toast.style.opacity = '1';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { toast.style.opacity = '0'; }, 2500);
+}
+
+// ── Init — carga desde Supabase + Realtime ──
+async function init() {
+  showToast('Cargando estado del proyecto...');
+
+  const { data, error } = await db.from('project_tasks').select('*');
+  if (error) { showToast('Error de conexión', true); return; }
+
+  data.forEach(t => { currentState[t.id] = t.done; });
+  Object.keys(currentState).forEach(id => applyCheck(id, currentState[id]));
+  applyBlocking();
+  updateProgress();
+  showToast('Conectado — cambios sincronizan en tiempo real');
+
+  // Realtime — ver cambios del otro en vivo
+  db.channel('project_tasks')
+    .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'project_tasks' }, payload => {
+      const { id, done, updated_by } = payload.new;
+      currentState[id] = done;
+      applyCheck(id, done);
+      applyBlocking();
+      updateProgress();
+      showToast(updated_by + ' marcó ' + id + (done ? ' ✓' : ' como pendiente'));
+    })
+    .subscribe();
+}
+
+init();
+</script>
+</body>
+</html>

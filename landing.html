@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SPRINGS — Different by default.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --burgundy: #6B1419;
+      --cream:    #F2E8D5;
+      --tinta:    #1A0A0C;
+      --mostaza:  #C5871F;
+    }
+
+    html {
+      overflow: hidden;
+      height: 100%;
+      cursor: none;
+    }
+
+    body {
+      background: var(--cream);
+      height: 100vh;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      scrollbar-width: none;
+      scroll-behavior: smooth;
+    }
+    body::-webkit-scrollbar { display: none; }
+
+    /* ── CURSOR ── */
+    .cursor {
+      width: 9px;
+      height: 9px;
+      background: var(--tinta);
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+    }
+    .cursor-ring {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--tinta);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.25s ease, width 0.2s, height 0.2s;
+      opacity: 0.4;
+    }
+
+    /* ── CANVAS (un solo plano horizontal) ── */
+    .canvas {
+      position: relative;
+      width: 520vw;
+      height: 100vh;
+    }
+
+    /* ── NAV TOP (sticky) ── */
+    .nav-top {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 40px;
+      pointer-events: none;
+    }
+    .nav-top > * { pointer-events: all; }
+
+    .logo {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.45rem;
+      letter-spacing: 0.18em;
+      color: var(--tinta);
+      text-decoration: none;
+    }
+
+    .nav-top-right {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+    .nav-top-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--tinta);
+      opacity: 0.45;
+      max-width: 180px;
+      text-align: right;
+      line-height: 1.4;
+    }
+    .nav-cta {
+      font-family: 'Anton', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.16em;
+      color: var(--cream);
+      background: var(--burgundy);
+      padding: 12px 28px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--tinta); }
+    .nav-cta-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--mostaza);
+      border-radius: 50%;
+      animation: blink 1.2s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    /* ── NAV BOTTOM (sticky) ── */
+    .nav-bottom {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 40px;
+      pointer-events: none;
+    }
+    .nav-bottom > * { pointer-events: all; }
+
+    .nav-bottom-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-bottom-links a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--tinta);
+      opacity: 0.4;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-bottom-links a:hover { opacity: 1; }
+
+    .nav-bottom-social {
+      display: flex;
+      gap: 20px;
+    }
+    .nav-bottom-social a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--tinta);
+      opacity: 0.4;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-bottom-social a:hover { opacity: 1; }
+
+    /* ── ELEMENTOS ABSOLUTOS EN EL CANVAS ── */
+
+    /* -- ZONA 1: HERO (0–160vw) -- */
+
+    /* Papa placeholder — foto enorme que sangra */
+    .papa-hero {
+      position: absolute;
+      left: -3vw;
+      top: -8vh;
+      width: 58vw;
+      height: 116vh;
+      background: linear-gradient(150deg, #C4924A 0%, #8B5E2A 40%, #5C3A14 80%, #3A2008 100%);
+      clip-path: ellipse(46% 52% at 48% 50%);
+      opacity: 0.92;
+    }
+    /* Textura interior */
+    .papa-hero::after {
+      content: '';
+      position: absolute;
+      inset: 15%;
+      background: radial-gradient(ellipse at 40% 35%, rgba(220,170,90,0.5) 0%, transparent 60%);
+    }
+    /* Label sobre la foto */
+    .papa-label {
+      position: absolute;
+      left: 3vw;
+      bottom: 14vh;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--tinta);
+      opacity: 0.5;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .papa-label::before {
+      content: '';
+      width: 20px;
+      height: 1px;
+      background: var(--tinta);
+      opacity: 0.5;
+    }
+
+    /* "SPRINGS" gigante, overlapping */
+    .hero-brand {
+      position: absolute;
+      left: 30vw;
+      top: 50%;
+      transform: translateY(-54%);
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(120px, 17vw, 280px);
+      color: var(--tinta);
+      line-height: 0.85;
+      letter-spacing: 0.02em;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* "JACKET." sangrando por la derecha */
+    .hero-sub {
+      position: absolute;
+      left: 32vw;
+      bottom: 10vh;
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(60px, 9vw, 140px);
+      color: var(--burgundy);
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    /* Sticker 1 — rotante */
+    .sticker-1 {
+      position: absolute;
+      left: 52vw;
+      top: 12vh;
+      width: 110px;
+      height: 110px;
+      z-index: 10;
+    }
+    .sticker-1-inner {
+      width: 100%;
+      height: 100%;
+      background: var(--burgundy);
+      border-radius: 50%;
+      animation: spin 14s linear infinite;
+      position: relative;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .sticker-2 {
+      position: absolute;
+      left: 80vw;
+      top: 8vh;
+      width: 140px;
+      height: 55px;
+      background: var(--cream);
+      border: 1.5px solid var(--tinta);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      transform: rotate(-4deg);
+      z-index: 10;
+      padding: 8px 16px;
+    }
+    .sticker-2 span:first-child {
+      font-family: 'Anton', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--tinta);
+    }
+    .sticker-2 span:last-child {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      color: var(--tinta);
+      opacity: 0.5;
+      text-transform: uppercase;
+    }
+
+    /* Elementos flotantes pequeños */
+    .float-text {
+      position: absolute;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--tinta);
+      opacity: 0.35;
+    }
+    .float-arrow {
+      position: absolute;
+      font-family: 'Anton', sans-serif;
+      font-size: 1.2rem;
+      color: var(--tinta);
+      opacity: 0.25;
+    }
+    .float-symbol {
+      position: absolute;
+      font-size: 1.4rem;
+      color: var(--tinta);
+      opacity: 0.2;
+    }
+
+    /* Línea horizontal que cruza todo */
+    .h-line {
+      position: absolute;
+      height: 1px;
+      background: rgba(26,10,12,0.1);
+    }
+
+    /* Lista de menú corrida (estilo Vicio) */
+    .menu-run {
+      position: absolute;
+      bottom: 9vh;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--tinta);
+      opacity: 0.35;
+      white-space: nowrap;
+    }
+
+    /* -- ZONA 2: JACKETS (160–280vw) -- */
+
+    /* "JACKETS." gigante sangrando desde la izquierda */
+    .jackets-title {
+      position: absolute;
+      left: 115vw;
+      top: 50%;
+      transform: translateY(-52%);
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(120px, 18vw, 290px);
+      color: var(--tinta);
+      line-height: 0.85;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .jackets-handle {
+      position: absolute;
+      left: 118vw;
+      top: 20vh;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--tinta);
+      opacity: 0.4;
+    }
+
+    /* Foto editorial placeholder 1 */
+    .photo-1 {
+      position: absolute;
+      left: 158vw;
+      top: 12vh;
+      width: 24vw;
+      height: 72vh;
+      background: var(--burgundy);
+      overflow: hidden;
+    }
+    .photo-1-inner {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, #8B1D24 0%, #4A0E12 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .photo-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px;
+      background: linear-gradient(0deg, rgba(26,10,12,0.8) 0%, transparent 100%);
+    }
+    .photo-label-name {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      color: var(--cream);
+      display: block;
+    }
+    .photo-label-price {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--mostaza);
+    }
+
+    /* Foto editorial placeholder 2 */
+    .photo-2 {
+      position: absolute;
+      left: 184vw;
+      top: 22vh;
+      width: 20vw;
+      height: 58vh;
+      background: var(--tinta);
+      overflow: hidden;
+    }
+
+    /* Foto editorial placeholder 3 */
+    .photo-3 {
+      position: absolute;
+      left: 206vw;
+      top: 8vh;
+      width: 16vw;
+      height: 55vh;
+      background: rgba(107,20,25,0.15);
+      overflow: hidden;
+    }
+
+    /* JACKETS lista productos */
+    .products-block {
+      position: absolute;
+      left: 158vw;
+      bottom: 9vh;
+      display: flex;
+      gap: 0;
+    }
+    .product-item {
+      border-left: 1px solid rgba(26,10,12,0.12);
+      padding: 0 28px;
+    }
+    .product-item:first-child { padding-left: 0; border-left: none; }
+    .p-name {
+      font-family: 'Anton', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      color: var(--tinta);
+      display: block;
+    }
+    .p-desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem;
+      color: var(--tinta);
+      opacity: 0.35;
+    }
+    .p-price {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--burgundy);
+      display: block;
+      margin-top: 3px;
+    }
+
+    /* STICKER grande FUSE */
+    .sticker-fuse {
+      position: absolute;
+      left: 142vw;
+      top: 30vh;
+      width: 130px;
+      height: 130px;
+      background: var(--mostaza);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      z-index: 10;
+      transform: rotate(12deg);
+      padding: 16px;
+    }
+    .sticker-fuse-title {
+      font-family: 'Anton', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      color: var(--tinta);
+      line-height: 1;
+    }
+    .sticker-fuse-sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--tinta);
+      opacity: 0.6;
+      margin-top: 5px;
+      line-height: 1.4;
+    }
+
+    /* -- ZONA 3: LOADED (280–390vw) -- */
+
+    .loaded-title {
+      position: absolute;
+      left: 235vw;
+      top: 50%;
+      transform: translateY(-52%);
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(120px, 18vw, 290px);
+      color: var(--cream);
+      line-height: 0.85;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      pointer-events: none;
+      -webkit-text-stroke: 2px var(--tinta);
+      color: transparent;
+    }
+
+    /* Fondo oscuro zona loaded */
+    .loaded-bg {
+      position: absolute;
+      left: 238vw;
+      top: 0;
+      width: 140vw;
+      height: 100vh;
+      background: var(--tinta);
+      z-index: -1;
+    }
+
+    .loaded-tag {
+      position: absolute;
+      left: 241vw;
+      top: 20vh;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mostaza);
+    }
+
+    /* Fotos loaded */
+    .photo-loaded-1 {
+      position: absolute;
+      left: 278vw;
+      top: 15vh;
+      width: 22vw;
+      height: 65vh;
+      background: rgba(107,20,25,0.6);
+    }
+    .photo-loaded-2 {
+      position: absolute;
+      left: 302vw;
+      top: 25vh;
+      width: 18vw;
+      height: 50vh;
+      background: rgba(197,135,31,0.2);
+      border: 1px solid rgba(197,135,31,0.3);
+    }
+
+    /* Lista loaded corrida */
+    .loaded-list {
+      position: absolute;
+      left: 241vw;
+      bottom: 9vh;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.4;
+      white-space: nowrap;
+    }
+
+    /* -- ZONA 4: PEDIR (390–520vw) -- */
+
+    .pedir-bg {
+      position: absolute;
+      left: 378vw;
+      top: 0;
+      width: 142vw;
+      height: 100vh;
+      background: var(--burgundy);
+      z-index: -1;
+    }
+
+    .pedir-title {
+      position: absolute;
+      left: 382vw;
+      top: 50%;
+      transform: translateY(-52%);
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(120px, 18vw, 280px);
+      color: var(--cream);
+      line-height: 0.85;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    .pedir-apps {
+      position: absolute;
+      left: 420vw;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 28vw;
+    }
+
+    .app-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 22px;
+      font-family: 'Anton', sans-serif;
+      font-size: 0.88rem;
+      letter-spacing: 0.14em;
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
+    .app-btn:hover { transform: translateX(6px); }
+    .app-rappi   { background: var(--cream); color: var(--tinta); }
+    .app-uber    { background: transparent; color: var(--cream); border: 1px solid rgba(242,232,213,0.25); }
+    .app-directo { background: transparent; color: var(--mostaza); border: 1px solid rgba(197,135,31,0.35); }
+
+    .pedir-info {
+      position: absolute;
+      left: 382vw;
+      bottom: 9vh;
+      display: flex;
+      gap: 40px;
+      align-items: flex-end;
+    }
+    .pedir-info-item {}
+    .pedir-info-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.35;
+      display: block;
+      margin-bottom: 5px;
+    }
+    .pedir-info-val {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.06em;
+      color: var(--cream);
+    }
+
+    /* Final slogan */
+    .final-slogan {
+      position: absolute;
+      left: 452vw;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(60px, 8vw, 120px);
+      color: var(--cream);
+      opacity: 0.08;
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    /* Línea divisoria zonas */
+    .zone-divider {
+      position: absolute;
+      top: 8vh;
+      width: 1px;
+      height: 80vh;
+      background: rgba(26,10,12,0.1);
+    }
+
+    /* Placeholder text en fotos */
+    .photo-placeholder-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0.25;
+      text-align: center;
+    }
+
+    /* "AQUÍ TIENES NUESTRO MENÚ" como Vicio */
+    .aqui-menu {
+      position: absolute;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--tinta);
+      opacity: 0.3;
+    }
+
+    /* Scroll indicator horizontal */
+    .scroll-ind {
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 400;
+      pointer-events: none;
+    }
+    .scroll-dot {
+      width: 4px;
+      height: 4px;
+      background: var(--tinta);
+      border-radius: 50%;
+      opacity: 0.2;
+      transition: opacity 0.3s;
+    }
+    .scroll-dot.active { opacity: 0.6; }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cur"></div>
+  <div class="cursor-ring" id="ring"></div>
+
+  <!-- NAV TOP -->
+  <nav class="nav-top">
+    <a class="logo" href="#">SPRINGS</a>
+    <div class="nav-top-right">
+      <div class="nav-top-tag">LA JACKET ES<br>EL PRODUCTO HOY.</div>
+      <a class="nav-cta" href="index.html">
+        <span class="nav-cta-dot"></span>
+        PEDIR YA
+      </a>
+    </div>
+  </nav>
+
+  <!-- CANVAS PRINCIPAL -->
+  <div class="canvas">
+
+    <!-- ══════════════════════════════
+         ZONA 1 — HERO
+    ══════════════════════════════ -->
+
+    <!-- Papa foto enorme sangrando -->
+    <div class="papa-hero"></div>
+    <div class="papa-label">La Jacket · 300g · Horneada · Nunca frita</div>
+
+    <!-- "SPRINGS" gigante -->
+    <div class="hero-brand">SPRINGS</div>
+
+    <!-- "JACKET." sangrando -->
+    <div class="hero-sub">JACKET.</div>
+
+    <!-- Sticker rotante -->
+    <div class="sticker-1">
+      <div class="sticker-1-inner">
+        <svg viewBox="0 0 110 110" width="110" height="110" style="position:absolute;top:0;left:0;">
+          <path id="c1" d="M55,55 m-42,0 a42,42 0 1,1 84,0 a42,42 0 1,1 -84,0" fill="none"/>
+          <text font-family="JetBrains Mono, monospace" font-size="9" fill="#F2E8D5" letter-spacing="2.5">
+            <textPath href="#c1">DIFFERENT BY DEFAULT · SPRINGS · </textPath>
+          </text>
+        </svg>
+        <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Anton',sans-serif;font-size:0.75rem;letter-spacing:0.12em;color:#F2E8D5;text-align:center;">BGA<br>2024</span>
+      </div>
+    </div>
+
+    <!-- Badge esquina -->
+    <div class="sticker-2">
+      <span>SPRINGS [BGA]</span>
+      <span>Dark Kitchen · Limited</span>
+    </div>
+
+    <!-- Elementos flotantes zona 1 -->
+    <div class="float-text" style="left:57vw;top:28vh;">@SPRINGS.COL</div>
+    <div class="float-arrow" style="left:54vw;top:38vh;">↗</div>
+    <div class="float-text" style="left:67vw;top:55vh;">British Soul · Colombian Heart</div>
+    <div class="float-symbol" style="left:62vw;top:44vh;">+</div>
+    <div class="float-symbol" style="left:74vw;top:32vh;">☺</div>
+
+    <!-- Línea horizontal -->
+    <div class="h-line" style="left:0;top:50%;width:100vw;"></div>
+
+    <!-- Lista de menú corrida estilo Vicio -->
+    <div class="menu-run" style="left:3vw;">
+      LA FIJA / LA PESADA / LA BRAVA / LA SIMPLE / LA HONESTA / LOADED POLLO / LOADED MOLIDA / LOADED DESMECHADA / LOADED CHORIZO /
+    </div>
+
+    <!-- Handle/handle zona 1 -->
+    <div class="aqui-menu" style="left:95vw;top:25vh;">AQUÍ TIENES NUESTRO MENÚ</div>
+
+    <!-- ══════════════════════════════
+         ZONA 2 — JACKETS
+    ══════════════════════════════ -->
+
+    <div class="zone-divider" style="left:110vw;"></div>
+
+    <!-- "JACKETS." -->
+    <div class="jackets-title">JAC-<br>KETS.</div>
+
+    <div class="jackets-handle">W25 · Carta Jackets</div>
+
+    <!-- Sticker FUSE -->
+    <div class="sticker-fuse">
+      <div class="sticker-fuse-title">FUSE</div>
+      <div class="sticker-fuse-sub">Tartara + Ají<br>Incluida</div>
+    </div>
+
+    <!-- Foto editorial 1 (La Fija) -->
+    <div class="photo-1">
+      <div class="photo-1-inner">
+        <span class="photo-placeholder-text" style="color:#F2E8D5;">FOTO<br>PRODUCTO</span>
+      </div>
+      <div class="photo-label">
+        <span class="photo-label-name">LA FIJA</span>
+        <span class="photo-label-price">32,900</span>
+      </div>
+    </div>
+
+    <!-- Foto editorial 2 -->
+    <div class="photo-2" style="display:flex;align-items:center;justify-content:center;">
+      <span class="photo-placeholder-text" style="color:#F2E8D5;">FOTO<br>AMBIENTE</span>
+    </div>
+    <div style="position:absolute;left:185vw;bottom:14vh;font-family:'Anton',sans-serif;font-size:0.85rem;letter-spacing:0.12em;color:#1A0A0C;opacity:0.25;">TE DAMOS LO TUYO</div>
+
+    <!-- Foto editorial 3 -->
+    <div class="photo-3" style="display:flex;align-items:center;justify-content:center;">
+      <span class="photo-placeholder-text" style="color:#1A0A0C;">FOTO<br>MARCA</span>
+    </div>
+
+    <!-- Elementos flotantes zona 2 -->
+    <div class="float-text" style="left:130vw;top:15vh;">300G · Horneada · Nunca frita</div>
+    <div class="float-arrow" style="left:155vw;top:20vh;">↗</div>
+    <div class="float-symbol" style="left:138vw;top:68vh;">+</div>
+
+    <!-- Productos en la base -->
+    <div class="products-block">
+      <div class="product-item">
+        <span class="p-name">LA FIJA</span>
+        <span class="p-desc">Pollo desmechado</span>
+        <span class="p-price">32,900</span>
+      </div>
+      <div class="product-item">
+        <span class="p-name">LA PESADA</span>
+        <span class="p-desc">Carne desmechada</span>
+        <span class="p-price">35,900</span>
+      </div>
+      <div class="product-item">
+        <span class="p-name">LA BRAVA</span>
+        <span class="p-desc">Chorizo santandereano</span>
+        <span class="p-price">34,900</span>
+      </div>
+      <div class="product-item">
+        <span class="p-name">LA SIMPLE</span>
+        <span class="p-desc">Carne molida sazonada</span>
+        <span class="p-price">28,900</span>
+      </div>
+      <div class="product-item">
+        <span class="p-name">LA HONESTA</span>
+        <span class="p-desc">Sin carne · Aguacate</span>
+        <span class="p-price">28,900</span>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════
+         ZONA 3 — LOADED
+    ══════════════════════════════ -->
+
+    <!-- Fondo oscuro -->
+    <div class="loaded-bg"></div>
+
+    <div class="zone-divider" style="left:237vw;background:rgba(242,232,213,0.08);"></div>
+
+    <!-- "LOADED." outline -->
+    <div class="loaded-title">LOA-<br>DED.</div>
+
+    <div class="loaded-tag">Para compartir · Gajos · Queso fundido</div>
+
+    <!-- Elementos flotantes zona 3 -->
+    <div class="float-text" style="left:243vw;top:40vh;color:#F2E8D5;">@SPRINGS.COL</div>
+    <div class="float-symbol" style="left:260vw;top:30vh;color:#C5871F;opacity:0.4;">+</div>
+    <div class="float-symbol" style="left:270vw;top:50vh;color:#F2E8D5;opacity:0.1;">☺</div>
+
+    <!-- Fotos loaded -->
+    <div class="photo-loaded-1" style="display:flex;align-items:center;justify-content:center;">
+      <span class="photo-placeholder-text" style="color:#F2E8D5;">FOTO<br>LOADED</span>
+    </div>
+    <div style="position:absolute;left:278vw;bottom:14vh;">
+      <span style="font-family:'Anton',sans-serif;font-size:1rem;letter-spacing:0.08em;color:#F2E8D5;display:block;">LOADED POLLO</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:#C5871F;font-weight:600;">24,900</span>
+    </div>
+
+    <div class="photo-loaded-2" style="display:flex;align-items:center;justify-content:center;">
+      <span class="photo-placeholder-text" style="color:#C5871F;">FOTO<br>LOADED</span>
+    </div>
+    <div style="position:absolute;left:302vw;bottom:14vh;">
+      <span style="font-family:'Anton',sans-serif;font-size:1rem;letter-spacing:0.08em;color:#F2E8D5;display:block;">LOADED CHORIZO</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:#C5871F;font-weight:600;">24,900</span>
+    </div>
+
+    <!-- Lista loaded corrida -->
+    <div class="loaded-list">
+      LOADED POLLO / LOADED MOLIDA / LOADED DESMECHADA / LOADED CHORIZO / GAJOS · QUESO FUNDIDO · FUSE
+    </div>
+
+    <!-- ══════════════════════════════
+         ZONA 4 — PEDIR YA
+    ══════════════════════════════ -->
+
+    <div class="pedir-bg"></div>
+
+    <div class="zone-divider" style="left:377vw;background:rgba(242,232,213,0.08);"></div>
+
+    <!-- "PEDIR YA." -->
+    <div class="pedir-title">PEDIR<br>YA.</div>
+
+    <!-- Apps -->
+    <div class="pedir-apps">
+      <a class="app-btn app-rappi" href="#">RAPPI <span>→</span></a>
+      <a class="app-btn app-uber" href="#">UBER EATS <span>→</span></a>
+      <a class="app-btn app-directo" href="index.html">PEDIDO DIRECTO (PRONTO) <span>→</span></a>
+    </div>
+
+    <!-- Info base -->
+    <div class="pedir-info">
+      <div class="pedir-info-item">
+        <span class="pedir-info-label">Horario</span>
+        <span class="pedir-info-val">12PM — 9PM</span>
+      </div>
+      <div class="pedir-info-item">
+        <span class="pedir-info-label">Ciudad</span>
+        <span class="pedir-info-val">BUCARAMANGA</span>
+      </div>
+      <div class="pedir-info-item">
+        <span class="pedir-info-label">Modelo</span>
+        <span class="pedir-info-val">DARK KITCHEN</span>
+      </div>
+    </div>
+
+    <!-- Elementos flotantes zona 4 -->
+    <div class="float-text" style="left:390vw;top:18vh;color:#F2E8D5;">Different by default.</div>
+    <div class="float-symbol" style="left:415vw;top:25vh;color:#F2E8D5;opacity:0.12;font-size:3rem;">↗</div>
+
+    <!-- Slogan final fantasma -->
+    <div class="final-slogan">DIFFERENT<br>BY DEFAULT.</div>
+
+  </div><!-- /canvas -->
+
+  <!-- NAV BOTTOM -->
+  <nav class="nav-bottom">
+    <ul class="nav-bottom-links">
+      <li><a href="#">Jackets</a></li>
+      <li><a href="#">Loaded</a></li>
+      <li><a href="#">Nosotros</a></li>
+      <li><a href="#">FAQs</a></li>
+    </ul>
+    <div class="nav-bottom-social">
+      <a href="#">Instagram</a>
+      <a href="#">TikTok</a>
+      <a href="#" style="opacity:0.6;">↗</a>
+    </div>
+  </nav>
+
+  <script>
+    // Cursor
+    const cur = document.getElementById('cur');
+    const ring = document.getElementById('ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', (e) => {
+      mx = e.clientX; my = e.clientY;
+      cur.style.left = mx + 'px';
+      cur.style.top  = my + 'px';
+    });
+    function animRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top  = ry + 'px';
+      requestAnimationFrame(animRing);
+    }
+    animRing();
+
+    // Rueda del mouse → scroll horizontal
+    document.body.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      document.body.scrollLeft += e.deltaY * 1.5;
+    }, { passive: false });
+
+    // Drag
+    let down = false, startX, scrollLeft;
+    document.body.addEventListener('mousedown', (e) => {
+      down = true;
+      startX = e.pageX;
+      scrollLeft = document.body.scrollLeft;
+    });
+    document.addEventListener('mouseup', () => { down = false; });
+    document.body.addEventListener('mousemove', (e) => {
+      if (!down) return;
+      e.preventDefault();
+      document.body.scrollLeft = scrollLeft - (e.pageX - startX) * 1.5;
+    });
+
+    // Flechas teclado
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') document.body.scrollLeft += window.innerWidth * 0.4;
+      if (e.key === 'ArrowLeft')  document.body.scrollLeft -= window.innerWidth * 0.4;
+    });
+  </script>
+</body>
+</html>
