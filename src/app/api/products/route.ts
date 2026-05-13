@@ -1,13 +1,18 @@
-import { productos } from "@/data/productos";
+import { supabase } from "@/lib/supabase";
 import { NextResponse } from "next/server";
 
-// Datos estaticos por ahora — se conecta a Supabase en CAM-3
 export const revalidate = 60;
 
 export async function GET() {
-  const disponibles = productos
-    .filter((p) => p.disponible)
-    .sort((a, b) => a.orden - b.orden);
+  const { data, error } = await supabase
+    .from("products")
+    .select("id, nombre, descripcion, precio, categoria, disponible, imagen_url")
+    .eq("disponible", true)
+    .order("orden", { ascending: true });
 
-  return NextResponse.json(disponibles);
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  return NextResponse.json(data);
 }
