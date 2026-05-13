@@ -1,0 +1,2167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>SPRINGS — Pedir</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --burgundy:#6B1419;
+  --cream:#F2E8D5;
+  --tinta:#1A0A0C;
+  --mostaza:#C5871F;
+  --burgundy-dark:#4a0e12;
+  --cream-dark:#e8dcc8;
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--cream);
+  color:var(--tinta);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ═══ HEADER ═══ */
+.header{
+  background:var(--burgundy);
+  padding:28px 20px 24px;
+  text-align:center;
+  position:relative;
+}
+.header::after{
+  content:'';
+  position:absolute;
+  bottom:0;left:0;right:0;
+  height:3px;
+  background:var(--mostaza);
+}
+.wordmark{
+  font-family:'Anton',sans-serif;
+  font-size:42px;
+  letter-spacing:4px;
+  color:var(--cream);
+  line-height:1;
+}
+.tagline{
+  font-family:'Inter',sans-serif;
+  font-style:italic;
+  font-size:14px;
+  color:var(--mostaza);
+  margin-top:4px;
+  font-weight:400;
+}
+.location{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:rgba(242,232,213,0.5);
+  margin-top:8px;
+}
+
+/* ═══ TRUST BAR ═══ */
+.trust-bar{
+  background:var(--cream);
+  border-bottom:1px solid rgba(26,10,12,0.1);
+  padding:10px 20px;
+  text-align:center;
+}
+.trust-bar-text{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  letter-spacing:1px;
+  color:var(--tinta);
+  opacity:0.6;
+}
+
+/* ═══ NAV TABS ═══ */
+.nav{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:var(--tinta);
+  display:flex;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  border-bottom:1px solid var(--mostaza);
+}
+.nav::-webkit-scrollbar{display:none}
+.nav a{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:rgba(242,232,213,0.45);
+  text-decoration:none;
+  padding:14px 18px;
+  white-space:nowrap;
+  transition:color .2s;
+  flex-shrink:0;
+  position:relative;
+}
+.nav a:hover,.nav a.active{
+  color:var(--cream);
+}
+.nav a.active::after{
+  content:'';
+  position:absolute;
+  bottom:0;left:0;right:0;
+  height:2px;
+  background:var(--mostaza);
+  animation:navIndicator .2s ease-out;
+}
+@keyframes navIndicator{
+  from{transform:scaleX(0)}
+  to{transform:scaleX(1)}
+}
+
+/* ═══ SECTIONS ═══ */
+.section{
+  padding:32px 16px 16px;
+}
+.section-title{
+  font-family:'Anton',sans-serif;
+  font-size:28px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--burgundy);
+  margin-bottom:4px;
+}
+.section-sub{
+  font-family:'Inter',sans-serif;
+  font-style:italic;
+  font-size:13px;
+  color:rgba(26,10,12,0.5);
+  margin-bottom:20px;
+}
+
+/* ═══ COMBO CARDS ═══ */
+.combo-grid{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.combo-card{
+  background:var(--burgundy);
+  padding:24px 20px;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+  transition:transform .15s;
+  border-left:3px solid transparent;
+}
+.combo-card:hover,.combo-card:active{
+  border-left-color:var(--mostaza);
+}
+.combo-card:active{transform:scale(0.98)}
+.combo-name{
+  font-family:'Anton',sans-serif;
+  font-size:24px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--cream);
+}
+.combo-desc{
+  font-family:'Inter',sans-serif;
+  font-size:13px;
+  color:rgba(242,232,213,0.7);
+  margin-top:6px;
+  line-height:1.5;
+}
+.combo-bottom{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  margin-top:16px;
+}
+.combo-price{
+  font-family:'JetBrains Mono',monospace;
+  font-size:22px;
+  font-weight:600;
+  color:var(--mostaza);
+}
+.combo-save{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--cream);
+  background:var(--mostaza);
+  padding:4px 10px;
+}
+
+/* ═══ PRODUCT CARDS ═══ */
+.product-list{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+.product-card{
+  background:var(--cream);
+  border-bottom:1px solid rgba(26,10,12,0.08);
+  padding:20px 0;
+  display:flex;
+  gap:14px;
+  cursor:pointer;
+  transition:background .15s, border-left-color .15s;
+  border-left:3px solid transparent;
+}
+.product-card:hover,.product-card:active{
+  border-left-color:var(--burgundy);
+}
+.product-card:active{background:var(--cream-dark)}
+.product-img{
+  width:90px;
+  height:90px;
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  text-align:center;
+  color:rgba(242,232,213,0.8);
+  line-height:1.4;
+  padding:8px;
+}
+.product-img.jacket-img{background:#8B6914}
+.product-img.loaded-img{background:#7A5C2B}
+.product-img.extra-img{background:var(--burgundy);width:60px;height:60px;font-size:8px}
+.product-img.bebida-img{background:#5C4A2E;width:60px;height:60px;font-size:8px}
+
+.product-info{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-width:0;
+}
+.product-name{
+  font-family:'Anton',sans-serif;
+  font-size:20px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--tinta);
+  line-height:1.1;
+}
+.product-desc{
+  font-family:'Inter',sans-serif;
+  font-size:12.5px;
+  color:rgba(26,10,12,0.55);
+  margin-top:4px;
+  line-height:1.4;
+}
+.product-meta{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:8px;
+}
+.product-price{
+  font-family:'JetBrains Mono',monospace;
+  font-size:16px;
+  font-weight:600;
+  color:var(--tinta);
+}
+.product-badge{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--burgundy);
+  border:1px solid var(--burgundy);
+  padding:2px 7px;
+}
+
+/* ═══ EXTRAS / BEBIDAS ═══ */
+.extras-grid{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+}
+.extra-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 0;
+  border-bottom:1px solid rgba(26,10,12,0.08);
+}
+.extra-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.extra-name{
+  font-family:'Inter',sans-serif;
+  font-size:14px;
+  font-weight:500;
+  color:var(--tinta);
+}
+.extra-price{
+  font-family:'JetBrains Mono',monospace;
+  font-size:14px;
+  font-weight:500;
+  color:var(--tinta);
+}
+.extra-right{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.extra-stepper{
+  display:flex;
+  align-items:center;
+  gap:0;
+}
+.extra-stepper-btn{
+  width:32px;
+  height:32px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--burgundy);
+  color:var(--cream);
+  border:none;
+  font-family:'JetBrains Mono',monospace;
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+  transition:background .15s;
+  user-select:none;
+}
+.extra-stepper-btn:active{background:var(--burgundy-dark)}
+.extra-stepper-btn.minus{
+  background:transparent;
+  color:var(--burgundy);
+  border:1px solid var(--burgundy);
+}
+.extra-stepper-btn.minus:active{background:rgba(107,20,25,0.1)}
+.extra-stepper-qty{
+  font-family:'JetBrains Mono',monospace;
+  font-size:14px;
+  font-weight:600;
+  color:var(--tinta);
+  width:28px;
+  text-align:center;
+}
+.extra-stepper.hidden .extra-stepper-btn.minus,
+.extra-stepper.hidden .extra-stepper-qty{
+  display:none;
+}
+
+/* ═══ FUSE BANNER ═══ */
+.fuse-banner{
+  background:var(--tinta);
+  padding:28px 20px;
+  margin:0 -16px;
+  text-align:center;
+}
+.fuse-question{
+  font-family:'Anton',sans-serif;
+  font-size:22px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--cream);
+}
+.fuse-desc{
+  font-family:'Inter',sans-serif;
+  font-style:italic;
+  font-size:13px;
+  color:rgba(242,232,213,0.5);
+  margin-top:6px;
+}
+
+/* ═══ MODAL/DRAWER ═══ */
+.modal-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(26,10,12,0);
+  z-index:200;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  pointer-events:none;
+  transition:background .3s ease;
+}
+.modal-overlay.open{
+  pointer-events:auto;
+  background:rgba(26,10,12,0.7);
+}
+.modal{
+  background:var(--cream);
+  width:100%;
+  max-width:480px;
+  max-height:88vh;
+  overflow-y:auto;
+  position:relative;
+  transform:translateY(100%);
+  transition:transform .35s cubic-bezier(0.32,0.72,0,1);
+}
+.modal-overlay.open .modal{
+  transform:translateY(0);
+}
+.modal-drag-handle{
+  width:40px;
+  height:4px;
+  background:rgba(26,10,12,0.2);
+  margin:10px auto 0;
+  flex-shrink:0;
+}
+.modal-header{
+  position:relative;
+  padding:0;
+}
+.modal-img{
+  width:100%;
+  height:200px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:rgba(242,232,213,0.7);
+  background:#8B6914;
+}
+.modal-close{
+  position:absolute;
+  top:12px;right:12px;
+  width:36px;height:36px;
+  background:var(--tinta);
+  color:var(--cream);
+  border:none;
+  font-family:'Inter',sans-serif;
+  font-size:18px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.modal-body{
+  padding:24px 20px 120px;
+}
+.modal-product-name{
+  font-family:'Anton',sans-serif;
+  font-size:30px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--tinta);
+}
+.modal-product-desc{
+  font-family:'Inter',sans-serif;
+  font-size:14px;
+  color:rgba(26,10,12,0.55);
+  margin-top:6px;
+  line-height:1.5;
+}
+.modal-product-price{
+  font-family:'JetBrains Mono',monospace;
+  font-size:22px;
+  font-weight:600;
+  color:var(--tinta);
+  margin-top:12px;
+}
+.modal-fuse-tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--burgundy);
+  border:1px solid var(--burgundy);
+  padding:3px 10px;
+  display:inline-block;
+  margin-top:10px;
+}
+.modal-section-title{
+  font-family:'Anton',sans-serif;
+  font-size:16px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--burgundy);
+  margin-top:28px;
+  margin-bottom:12px;
+}
+.addon-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 0;
+  border-bottom:1px solid rgba(26,10,12,0.08);
+}
+.addon-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.addon-check{
+  width:22px;height:22px;
+  border:2px solid rgba(26,10,12,0.2);
+  background:transparent;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  transition:all .15s;
+}
+.addon-check.checked{
+  background:var(--burgundy);
+  border-color:var(--burgundy);
+}
+.addon-check.checked::after{
+  content:'';
+  width:8px;height:4px;
+  border-left:2px solid var(--cream);
+  border-bottom:2px solid var(--cream);
+  transform:rotate(-45deg);
+  margin-top:-2px;
+}
+.addon-name{
+  font-family:'Inter',sans-serif;
+  font-size:14px;
+  color:var(--tinta);
+}
+.addon-price{
+  font-family:'JetBrains Mono',monospace;
+  font-size:13px;
+  color:var(--tinta);
+  flex-shrink:0;
+}
+
+/* ═══ MODAL ADD BUTTON ═══ */
+.modal-footer{
+  position:fixed;
+  bottom:0;
+  left:0;right:0;
+  max-width:480px;
+  margin:0 auto;
+  padding:16px 20px;
+  padding-bottom:calc(16px + var(--safe-bottom));
+  background:var(--cream);
+  border-top:1px solid rgba(26,10,12,0.08);
+  z-index:210;
+}
+.btn-add{
+  width:100%;
+  padding:16px;
+  background:var(--burgundy);
+  color:var(--cream);
+  border:none;
+  font-family:'Anton',sans-serif;
+  font-size:16px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  transition:background .15s;
+}
+.btn-add:active{background:var(--burgundy-dark)}
+.btn-add.added{
+  background:var(--tinta);
+}
+.btn-add-price{
+  font-family:'JetBrains Mono',monospace;
+  font-size:15px;
+  font-weight:600;
+  transition:opacity .15s;
+}
+
+/* ═══ CART BAR ═══ */
+.cart-bar{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  background:var(--burgundy);
+  padding:14px 20px;
+  padding-bottom:calc(14px + var(--safe-bottom));
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:150;
+  cursor:pointer;
+  transform:translateY(100%);
+  transition:transform .35s cubic-bezier(0.32,0.72,0,1);
+}
+.cart-bar.visible{
+  transform:translateY(0);
+}
+.cart-bar:active{opacity:0.9}
+.cart-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.cart-count{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  font-weight:600;
+  color:var(--burgundy);
+  background:var(--cream);
+  width:26px;height:26px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.cart-label{
+  font-family:'Anton',sans-serif;
+  font-size:15px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--cream);
+}
+.cart-total{
+  font-family:'JetBrains Mono',monospace;
+  font-size:16px;
+  font-weight:600;
+  color:var(--mostaza);
+}
+
+/* ═══ CART DRAWER ═══ */
+.cart-drawer-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(26,10,12,0);
+  z-index:160;
+  pointer-events:none;
+  transition:background .3s ease;
+}
+.cart-drawer-overlay.open{
+  pointer-events:auto;
+  background:rgba(26,10,12,0.7);
+}
+.cart-drawer{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  background:var(--cream);
+  z-index:170;
+  max-height:70vh;
+  overflow-y:auto;
+  transform:translateY(100%);
+  transition:transform .35s cubic-bezier(0.32,0.72,0,1);
+}
+.cart-drawer-overlay.open .cart-drawer{
+  transform:translateY(0);
+}
+.cart-drawer-handle{
+  width:40px;
+  height:4px;
+  background:rgba(26,10,12,0.2);
+  margin:10px auto 0;
+}
+.cart-drawer-header{
+  padding:20px 20px 12px;
+  border-bottom:1px solid rgba(26,10,12,0.08);
+}
+.cart-drawer-title{
+  font-family:'Anton',sans-serif;
+  font-size:22px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--tinta);
+}
+.cart-drawer-items{
+  padding:0 20px;
+}
+.cart-drawer-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 0;
+  border-bottom:1px solid rgba(26,10,12,0.06);
+}
+.cart-drawer-item-info{
+  flex:1;
+  min-width:0;
+}
+.cart-drawer-item-name{
+  font-family:'Inter',sans-serif;
+  font-size:14px;
+  font-weight:500;
+  color:var(--tinta);
+}
+.cart-drawer-item-qty{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:rgba(26,10,12,0.5);
+  margin-top:2px;
+}
+.cart-drawer-item-price{
+  font-family:'JetBrains Mono',monospace;
+  font-size:14px;
+  font-weight:600;
+  color:var(--tinta);
+  margin-right:12px;
+  flex-shrink:0;
+}
+.cart-drawer-item-remove{
+  width:28px;
+  height:28px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:transparent;
+  border:1px solid rgba(26,10,12,0.15);
+  color:var(--tinta);
+  font-family:'Inter',sans-serif;
+  font-size:14px;
+  cursor:pointer;
+  flex-shrink:0;
+  transition:background .15s;
+}
+.cart-drawer-item-remove:active{background:rgba(26,10,12,0.05)}
+.cart-drawer-footer{
+  padding:16px 20px;
+  padding-bottom:calc(16px + var(--safe-bottom));
+  border-top:1px solid rgba(26,10,12,0.1);
+}
+.cart-drawer-subtotal{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:14px;
+}
+.cart-drawer-subtotal-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:rgba(26,10,12,0.5);
+}
+.cart-drawer-subtotal-value{
+  font-family:'JetBrains Mono',monospace;
+  font-size:18px;
+  font-weight:600;
+  color:var(--tinta);
+}
+.btn-checkout{
+  width:100%;
+  padding:16px;
+  background:var(--burgundy);
+  color:var(--cream);
+  border:none;
+  font-family:'Anton',sans-serif;
+  font-size:16px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  cursor:pointer;
+  text-align:center;
+  transition:background .15s;
+}
+.btn-checkout:active{background:var(--burgundy-dark)}
+.cart-drawer-empty{
+  padding:32px 20px;
+  text-align:center;
+  font-family:'Inter',sans-serif;
+  font-size:14px;
+  color:rgba(26,10,12,0.4);
+  font-style:italic;
+}
+
+/* ═══ TOAST ═══ */
+.toast{
+  position:fixed;
+  top:-60px;
+  left:50%;
+  transform:translateX(-50%);
+  background:var(--tinta);
+  color:var(--cream);
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  letter-spacing:1px;
+  padding:12px 24px;
+  z-index:300;
+  white-space:nowrap;
+  transition:top .35s cubic-bezier(0.32,0.72,0,1);
+  max-width:90vw;
+  text-align:center;
+}
+.toast.show{
+  top:16px;
+}
+
+/* ═══ WHATSAPP BUTTON ═══ */
+.wa-btn{
+  position:fixed;
+  bottom:80px;
+  right:16px;
+  width:48px;
+  height:48px;
+  background:var(--tinta);
+  color:var(--cream);
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  z-index:140;
+  transition:transform .15s, bottom .35s cubic-bezier(0.32,0.72,0,1);
+}
+.wa-btn:active{transform:scale(0.92)}
+.wa-btn.raised{
+  bottom:calc(80px + var(--safe-bottom));
+}
+
+/* ═══ FOOTER ═══ */
+.footer{
+  background:var(--tinta);
+  padding:32px 20px 100px;
+  text-align:center;
+}
+.footer-wordmark{
+  font-family:'Anton',sans-serif;
+  font-size:28px;
+  letter-spacing:3px;
+  color:var(--cream);
+}
+.footer-tagline{
+  font-family:'Inter',sans-serif;
+  font-style:italic;
+  font-size:12px;
+  color:rgba(242,232,213,0.35);
+  margin-top:4px;
+}
+.footer-info{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:rgba(242,232,213,0.2);
+  margin-top:20px;
+  line-height:2;
+}
+
+/* ═══ STAGGERED REVEAL ═══ */
+.product-card,.combo-card{
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity .5s cubic-bezier(0.16,1,0.3,1),
+             transform .5s cubic-bezier(0.16,1,0.3,1),
+             background .15s,border-left-color .15s;
+}
+.product-card.revealed,.combo-card.revealed{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* ═══ RECOMMENDED CARD ═══ */
+.product-card.recommended{
+  border-left:3px solid var(--mostaza);
+  position:relative;
+}
+.product-card.recommended::before{
+  content:'EMPIECE POR ESTA';
+  position:absolute;
+  top:0;right:0;
+  background:var(--mostaza);
+  color:var(--tinta);
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;
+  letter-spacing:1px;
+  padding:4px 10px;
+  z-index:1;
+}
+
+/* ═══ INLINE EDUCATION ═══ */
+.inline-edu{
+  background:var(--tinta);
+  padding:16px 20px;
+  margin-bottom:16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+}
+.inline-edu.hidden{display:none}
+.inline-edu-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:2px;
+  color:var(--mostaza);
+  display:block;
+  margin-bottom:4px;
+}
+.inline-edu-text{
+  font-family:'Inter',sans-serif;
+  font-size:13px;
+  color:rgba(242,232,213,0.8);
+  line-height:1.5;
+}
+.inline-edu-dismiss{
+  background:transparent;
+  border:1px solid rgba(242,232,213,0.2);
+  color:var(--cream);
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:1px;
+  padding:8px 14px;
+  cursor:pointer;
+  white-space:nowrap;
+  flex-shrink:0;
+  transition:background .15s;
+}
+.inline-edu-dismiss:hover{
+  background:rgba(242,232,213,0.1);
+}
+
+/* ═══ DELIVERY PROGRESS ═══ */
+.delivery-progress{
+  padding:12px 20px;
+  background:var(--tinta);
+  margin-bottom:0;
+}
+.delivery-progress-text{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.5px;
+  color:rgba(242,232,213,0.7);
+  margin-bottom:8px;
+}
+.delivery-progress-text strong{
+  color:var(--mostaza);
+}
+.delivery-progress-bar{
+  height:3px;
+  background:rgba(242,232,213,0.1);
+  position:relative;
+}
+.delivery-progress-fill{
+  height:100%;
+  background:var(--mostaza);
+  transition:width .5s cubic-bezier(0.16,1,0.3,1);
+  width:0%;
+}
+.delivery-progress.reached .delivery-progress-fill{
+  background:var(--cream);
+}
+.delivery-progress.reached .delivery-progress-text{
+  color:var(--cream);
+}
+
+/* ═══ DESKTOP LAYOUT ═══ */
+@media(min-width:768px){
+  .header{padding:40px 40px 36px}
+  .wordmark{font-size:56px;letter-spacing:6px}
+  .section{padding:40px;max-width:720px;margin:0 auto}
+  .combo-grid{flex-direction:row;gap:16px}
+  .combo-card{flex:1}
+  .product-card{padding:24px 0}
+  .product-img{width:110px;height:110px}
+  .product-name{font-size:22px}
+  .modal{max-height:85vh;border-top:3px solid var(--mostaza)}
+  .modal-img{height:260px}
+  .footer{padding-bottom:40px}
+}
+
+/* ═══ DESKTOP 2-COLUMN ═══ */
+@media(min-width:1024px){
+  .desktop-wrapper{
+    display:flex;
+    max-width:1200px;
+    margin:0 auto;
+    position:relative;
+  }
+  .desktop-menu{
+    flex:0 0 65%;
+    max-width:65%;
+  }
+  .desktop-cart-panel{
+    flex:0 0 35%;
+    max-width:35%;
+    position:sticky;
+    top:48px;
+    height:calc(100vh - 48px);
+    display:flex;
+    flex-direction:column;
+    background:var(--cream);
+    border-left:1px solid rgba(26,10,12,0.08);
+  }
+  .desktop-cart-panel-header{
+    padding:28px 24px 16px;
+    border-bottom:1px solid rgba(26,10,12,0.08);
+  }
+  .desktop-cart-panel-title{
+    font-family:'Anton',sans-serif;
+    font-size:22px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--tinta);
+  }
+  .desktop-cart-panel-items{
+    flex:1;
+    overflow-y:auto;
+    padding:0 24px;
+  }
+  .desktop-cart-panel-empty{
+    padding:32px 0;
+    text-align:center;
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    color:rgba(26,10,12,0.4);
+    font-style:italic;
+  }
+  .desktop-cart-panel-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 0;
+    border-bottom:1px solid rgba(26,10,12,0.06);
+  }
+  .desktop-cart-panel-item-info{flex:1;min-width:0}
+  .desktop-cart-panel-item-name{
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    font-weight:500;
+    color:var(--tinta);
+  }
+  .desktop-cart-panel-item-price{
+    font-family:'JetBrains Mono',monospace;
+    font-size:14px;
+    font-weight:600;
+    color:var(--tinta);
+    margin-right:12px;
+    flex-shrink:0;
+  }
+  .desktop-cart-panel-item-remove{
+    width:28px;height:28px;
+    display:flex;align-items:center;justify-content:center;
+    background:transparent;
+    border:1px solid rgba(26,10,12,0.15);
+    color:var(--tinta);
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    cursor:pointer;
+    flex-shrink:0;
+  }
+  .desktop-cart-panel-item-remove:active{background:rgba(26,10,12,0.05)}
+  .desktop-cart-panel-footer{
+    padding:20px 24px;
+    border-top:1px solid rgba(26,10,12,0.1);
+  }
+  .desktop-cart-panel-delivery{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:1px;
+    color:rgba(26,10,12,0.5);
+    margin-bottom:12px;
+  }
+  .desktop-cart-panel-subtotal{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:16px;
+  }
+  .desktop-cart-panel-subtotal-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:rgba(26,10,12,0.5);
+  }
+  .desktop-cart-panel-subtotal-value{
+    font-family:'JetBrains Mono',monospace;
+    font-size:18px;
+    font-weight:600;
+    color:var(--tinta);
+  }
+  .desktop-btn-checkout{
+    width:100%;
+    padding:16px;
+    background:var(--burgundy);
+    color:var(--cream);
+    border:none;
+    font-family:'Anton',sans-serif;
+    font-size:16px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    cursor:pointer;
+    text-align:center;
+    transition:background .15s;
+  }
+  .desktop-btn-checkout:active{background:var(--burgundy-dark)}
+
+  /* Hide mobile cart bar and WA btn adjustments on desktop */
+  .cart-bar{display:none!important}
+  .wa-btn{bottom:24px;right:24px}
+  .footer{padding-bottom:40px}
+  .section{max-width:none;padding:40px 32px}
+  .fuse-banner{margin:0 -32px}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="header">
+  <div class="wordmark">SPRINGS</div>
+  <div class="tagline">Jacket de autor.</div>
+  <div class="location">Bucaramanga</div>
+</header>
+
+<!-- ═══ TRUST BAR ═══ -->
+<div class="trust-bar">
+  <div class="trust-bar-text">30-45 min · Cabecera · Cañaveral · Sotomayor</div>
+</div>
+
+<!-- Explainer moved to inline within Jackets section -->
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav" id="nav">
+  <a href="#combos" class="active" data-section="combos">COMBOS</a>
+  <a href="#jackets" data-section="jackets">JACKETS</a>
+  <a href="#loaded" data-section="loaded">LOADED</a>
+  <a href="#extras" data-section="extras">EXTRAS</a>
+  <a href="#bebidas" data-section="bebidas">BEBIDAS</a>
+</nav>
+
+<!-- ═══ DESKTOP WRAPPER START ═══ -->
+<div class="desktop-wrapper">
+<div class="desktop-menu">
+
+<!-- ═══ COMBOS ═══ -->
+<section class="section" id="combos">
+  <div class="section-title">Combos</div>
+  <div class="section-sub">Pida completo. Ahorre en serio.</div>
+  <div class="combo-grid">
+    <div class="combo-card" onclick="openCombo('uno')">
+      <div class="combo-name">PARA UNO</div>
+      <div class="combo-desc">Cualquier Jacket + Bebida a su elección.</div>
+      <div class="combo-bottom">
+        <div class="combo-price">36,900</div>
+        <div class="combo-save">AHORRA 4,000</div>
+      </div>
+    </div>
+    <div class="combo-card" onclick="openCombo('dos')">
+      <div class="combo-name">PARA DOS</div>
+      <div class="combo-desc">2 Jackets + 2 Bebidas. Para compartir o repetir.</div>
+      <div class="combo-bottom">
+        <div class="combo-price">69,900</div>
+        <div class="combo-save">AHORRA 9,900</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ JACKETS ═══ -->
+<section class="section" id="jackets">
+  <div class="section-title">Jackets</div>
+  <div class="section-sub">Papa horneada. Mantequilla y queso en la pulpa. Rellena sin miedo. Viene con Fuse.</div>
+
+  <!-- Inline education for first-time visitors -->
+  <div class="inline-edu" id="inlineEdu">
+    <div>
+      <span class="inline-edu-label">PRIMERA VEZ?</span>
+      <span class="inline-edu-text">Pida <strong>La Fija</strong>. Pollo, hogao, queso costeño. La que todo el mundo recomienda.</span>
+    </div>
+    <button class="inline-edu-dismiss" onclick="dismissInlineEdu()">OK</button>
+  </div>
+
+  <div class="product-list">
+
+    <div class="product-card" id="cardFija" onclick="openProduct('fija')">
+      <div class="product-img jacket-img">LA<br>FIJA</div>
+      <div class="product-info">
+        <div class="product-name">LA FIJA</div>
+        <div class="product-desc">Pollo desmechado. Hogao. Queso costeño.</div>
+        <div class="product-meta">
+          <span class="product-price">32,900</span>
+          <span class="product-badge">INCLUYE FUSE</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="openProduct('pesada')">
+      <div class="product-img jacket-img">LA<br>PESADA</div>
+      <div class="product-info">
+        <div class="product-name">LA PESADA</div>
+        <div class="product-desc">Carne desmechada. Hogao. Queso costeño.</div>
+        <div class="product-meta">
+          <span class="product-price">35,900</span>
+          <span class="product-badge">INCLUYE FUSE</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="openProduct('brava')">
+      <div class="product-img jacket-img">LA<br>BRAVA</div>
+      <div class="product-info">
+        <div class="product-name">LA BRAVA</div>
+        <div class="product-desc">Chorizo santandereano. Hogao. Queso costeño.</div>
+        <div class="product-meta">
+          <span class="product-price">34,900</span>
+          <span class="product-badge">INCLUYE FUSE</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="openProduct('simple')">
+      <div class="product-img jacket-img">LA<br>SIMPLE</div>
+      <div class="product-info">
+        <div class="product-name">LA SIMPLE</div>
+        <div class="product-desc">Carne molida sazonada. Hogao. Queso costeño.</div>
+        <div class="product-meta">
+          <span class="product-price">28,900</span>
+          <span class="product-badge">INCLUYE FUSE</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="openProduct('honesta')">
+      <div class="product-img jacket-img">LA<br>HONESTA</div>
+      <div class="product-info">
+        <div class="product-name">LA HONESTA</div>
+        <div class="product-desc">Queso costeño doble. Hogao doble. Aguacate.</div>
+        <div class="product-meta">
+          <span class="product-price">28,900</span>
+          <span class="product-badge">INCLUYE FUSE</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ FUSE BANNER ═══ -->
+<div class="fuse-banner">
+  <div class="fuse-question">¿YA LE ECHÓ LA FUSE?</div>
+  <div class="fuse-desc">Tartara + ají. El remate de cada Jacket.</div>
+</div>
+
+<!-- ═══ LOADED ═══ -->
+<section class="section" id="loaded">
+  <div class="section-title">Loaded</div>
+  <div class="section-sub">Gajos de papa horneada. Toppings sin límite.</div>
+  <div class="product-list">
+
+    <div class="product-card" onclick="openProduct('loaded-pollo')">
+      <div class="product-img loaded-img">LOADED<br>POLLO</div>
+      <div class="product-info">
+        <div class="product-name">LOADED POLLO</div>
+        <div class="product-desc">Gajos. Pollo desmechado. Queso fundido. Fuse.</div>
+        <div class="product-meta">
+          <span class="product-price">24,900</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="openProduct('loaded-molida')">
+      <div class="product-img loaded-img">LOADED<br>MOLIDA</div>
+      <div class="product-info">
+        <div class="product-name">LOADED MOLIDA</div>
+        <div class="product-desc">Gajos. Carne molida. Queso fundido. Cebolla crispy.</div>
+        <div class="product-meta">
+          <span class="product-price">22,500</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="openProduct('loaded-desmechada')">
+      <div class="product-img loaded-img">LOADED<br>DESMECH.</div>
+      <div class="product-info">
+        <div class="product-name">LOADED DESMECHADA</div>
+        <div class="product-desc">Gajos. Carne desmechada. Queso fundido. Fuse.</div>
+        <div class="product-meta">
+          <span class="product-price">24,900</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="openProduct('loaded-chorizo')">
+      <div class="product-img loaded-img">LOADED<br>CHORIZO</div>
+      <div class="product-info">
+        <div class="product-name">LOADED CHORIZO</div>
+        <div class="product-desc">Gajos. Chorizo picado. Queso fundido. Hogao.</div>
+        <div class="product-meta">
+          <span class="product-price">24,900</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ EXTRAS ═══ -->
+<section class="section" id="extras">
+  <div class="section-title">Extras</div>
+  <div class="section-sub">Hágala mejor.</div>
+  <div class="extras-grid" id="extrasGrid">
+    <div class="extra-row" data-extra="queso" data-price="3500" data-label="Extra queso costeño">
+      <div class="extra-left">
+        <span class="extra-name">Extra queso costeño</span>
+        <span class="extra-price">3,500</span>
+      </div>
+      <div class="extra-right">
+        <div class="extra-stepper hidden" data-extra="queso">
+          <button class="extra-stepper-btn minus" onclick="extraMinus(event,'queso',3500)">-</button>
+          <span class="extra-stepper-qty">0</span>
+        </div>
+        <button class="extra-stepper-btn" onclick="extraPlus(event,'queso',3500,'Extra queso costeño')">+</button>
+      </div>
+    </div>
+    <div class="extra-row" data-extra="aguacate" data-price="3000" data-label="Aguacate">
+      <div class="extra-left">
+        <span class="extra-name">Aguacate</span>
+        <span class="extra-price">3,000</span>
+      </div>
+      <div class="extra-right">
+        <div class="extra-stepper hidden" data-extra="aguacate">
+          <button class="extra-stepper-btn minus" onclick="extraMinus(event,'aguacate',3000)">-</button>
+          <span class="extra-stepper-qty">0</span>
+        </div>
+        <button class="extra-stepper-btn" onclick="extraPlus(event,'aguacate',3000,'Aguacate')">+</button>
+      </div>
+    </div>
+    <div class="extra-row" data-extra="huevo" data-price="2500" data-label="Huevo frito">
+      <div class="extra-left">
+        <span class="extra-name">Huevo frito</span>
+        <span class="extra-price">2,500</span>
+      </div>
+      <div class="extra-right">
+        <div class="extra-stepper hidden" data-extra="huevo">
+          <button class="extra-stepper-btn minus" onclick="extraMinus(event,'huevo',2500)">-</button>
+          <span class="extra-stepper-qty">0</span>
+        </div>
+        <button class="extra-stepper-btn" onclick="extraPlus(event,'huevo',2500,'Huevo frito')">+</button>
+      </div>
+    </div>
+    <div class="extra-row" data-extra="hogao" data-price="2500" data-label="Hogao doble">
+      <div class="extra-left">
+        <span class="extra-name">Hogao doble</span>
+        <span class="extra-price">2,500</span>
+      </div>
+      <div class="extra-right">
+        <div class="extra-stepper hidden" data-extra="hogao">
+          <button class="extra-stepper-btn minus" onclick="extraMinus(event,'hogao',2500)">-</button>
+          <span class="extra-stepper-qty">0</span>
+        </div>
+        <button class="extra-stepper-btn" onclick="extraPlus(event,'hogao',2500,'Hogao doble')">+</button>
+      </div>
+    </div>
+    <div class="extra-row" data-extra="doble" data-price="6900" data-label="Doble relleno">
+      <div class="extra-left">
+        <span class="extra-name">Doble relleno</span>
+        <span class="extra-price">6,900</span>
+      </div>
+      <div class="extra-right">
+        <div class="extra-stepper hidden" data-extra="doble">
+          <button class="extra-stepper-btn minus" onclick="extraMinus(event,'doble',6900)">-</button>
+          <span class="extra-stepper-qty">0</span>
+        </div>
+        <button class="extra-stepper-btn" onclick="extraPlus(event,'doble',6900,'Doble relleno')">+</button>
+      </div>
+    </div>
+    <div class="extra-row" data-extra="fuse" data-price="1500" data-label="Fuse extra">
+      <div class="extra-left">
+        <span class="extra-name">Fuse extra</span>
+        <span class="extra-price">1,500</span>
+      </div>
+      <div class="extra-right">
+        <div class="extra-stepper hidden" data-extra="fuse">
+          <button class="extra-stepper-btn minus" onclick="extraMinus(event,'fuse',1500)">-</button>
+          <span class="extra-stepper-qty">0</span>
+        </div>
+        <button class="extra-stepper-btn" onclick="extraPlus(event,'fuse',1500,'Fuse extra')">+</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BEBIDAS ═══ -->
+<section class="section" id="bebidas">
+  <div class="section-title">Bebidas</div>
+  <div class="section-sub">Complete su pedido.</div>
+  <div class="extras-grid" id="bebidasGrid">
+    <div class="extra-row" data-extra="limonada" data-price="5000" data-label="Limonada natural">
+      <div class="extra-left">
+        <span class="extra-name">Limonada natural</span>
+        <span class="extra-price">5,000</span>
+      </div>
+      <div class="extra-right">
+        <div class="extra-stepper hidden" data-extra="limonada">
+          <button class="extra-stepper-btn minus" onclick="extraMinus(event,'limonada',5000)">-</button>
+          <span class="extra-stepper-qty">0</span>
+        </div>
+        <button class="extra-stepper-btn" onclick="extraPlus(event,'limonada',5000,'Limonada natural')">+</button>
+      </div>
+    </div>
+    <div class="extra-row" data-extra="panela" data-price="5500" data-label="Limonada de panela">
+      <div class="extra-left">
+        <span class="extra-name">Limonada de panela</span>
+        <span class="extra-price">5,500</span>
+      </div>
+      <div class="extra-right">
+        <div class="extra-stepper hidden" data-extra="panela">
+          <button class="extra-stepper-btn minus" onclick="extraMinus(event,'panela',5500)">-</button>
+          <span class="extra-stepper-qty">0</span>
+        </div>
+        <button class="extra-stepper-btn" onclick="extraPlus(event,'panela',5500,'Limonada de panela')">+</button>
+      </div>
+    </div>
+    <div class="extra-row" data-extra="agua" data-price="3000" data-label="Agua">
+      <div class="extra-left">
+        <span class="extra-name">Agua</span>
+        <span class="extra-price">3,000</span>
+      </div>
+      <div class="extra-right">
+        <div class="extra-stepper hidden" data-extra="agua">
+          <button class="extra-stepper-btn minus" onclick="extraMinus(event,'agua',3000)">-</button>
+          <span class="extra-stepper-qty">0</span>
+        </div>
+        <button class="extra-stepper-btn" onclick="extraPlus(event,'agua',3000,'Agua')">+</button>
+      </div>
+    </div>
+    <div class="extra-row" data-extra="gaseosa" data-price="4000" data-label="Gaseosa">
+      <div class="extra-left">
+        <span class="extra-name">Gaseosa</span>
+        <span class="extra-price">4,000</span>
+      </div>
+      <div class="extra-right">
+        <div class="extra-stepper hidden" data-extra="gaseosa">
+          <button class="extra-stepper-btn minus" onclick="extraMinus(event,'gaseosa',4000)">-</button>
+          <span class="extra-stepper-qty">0</span>
+        </div>
+        <button class="extra-stepper-btn" onclick="extraPlus(event,'gaseosa',4000,'Gaseosa')">+</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- end desktop-menu -->
+
+<!-- ═══ DESKTOP CART PANEL ═══ -->
+<div class="desktop-cart-panel" id="desktopCartPanel">
+  <div class="desktop-cart-panel-header">
+    <div class="desktop-cart-panel-title">SU PEDIDO</div>
+  </div>
+  <div class="desktop-cart-panel-items" id="desktopCartItems">
+    <div class="desktop-cart-panel-empty" id="desktopCartEmpty">Su pedido está vacío. La papa no se hornea sola.</div>
+  </div>
+  <div class="desktop-cart-panel-footer">
+    <div class="delivery-progress" id="deliveryProgressDesktop">
+      <div class="delivery-progress-text" id="deliveryMsgDesktop">Falta <strong>60,000</strong> para domicilio gratis</div>
+      <div class="delivery-progress-bar"><div class="delivery-progress-fill" id="deliveryFillDesktop"></div></div>
+    </div>
+    <div class="desktop-cart-panel-delivery" style="margin-top:12px">30-45 MIN · DOMICILIO</div>
+    <div class="desktop-cart-panel-subtotal">
+      <span class="desktop-cart-panel-subtotal-label">SUBTOTAL</span>
+      <span class="desktop-cart-panel-subtotal-value" id="desktopCartTotal">0</span>
+    </div>
+    <button class="desktop-btn-checkout" onclick="checkout()">IR A PAGAR</button>
+  </div>
+</div>
+
+</div><!-- end desktop-wrapper -->
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-wordmark">SPRINGS</div>
+  <div class="footer-tagline">Jacket de autor.</div>
+  <div class="footer-info">
+    Bucaramanga, Colombia<br>
+    Domicilios: Cabecera · Cañaveral · Sotomayor · San Francisco · La Aurora<br>
+    springs.com.co · @springs.col
+  </div>
+</footer>
+
+<!-- ═══ CART BAR (mobile) ═══ -->
+<div class="cart-bar" id="cartBar" onclick="openCartDrawer()">
+  <div class="cart-left">
+    <div class="cart-count" id="cartCount">0</div>
+    <div class="cart-label">VER PEDIDO</div>
+  </div>
+  <div class="cart-total" id="cartTotal">0</div>
+</div>
+
+<!-- ═══ CART DRAWER (mobile) ═══ -->
+<div class="cart-drawer-overlay" id="cartDrawerOverlay" onclick="closeCartDrawer(event)">
+  <div class="cart-drawer" onclick="event.stopPropagation()">
+    <div class="cart-drawer-handle"></div>
+    <div class="cart-drawer-header">
+      <div class="cart-drawer-title">SU PEDIDO</div>
+    </div>
+    <div class="cart-drawer-items" id="cartDrawerItems">
+      <div class="cart-drawer-empty" id="cartDrawerEmpty">Su pedido está vacío. La papa no se hornea sola.</div>
+    </div>
+    <div class="cart-drawer-footer">
+      <div class="delivery-progress" id="deliveryProgressMobile">
+        <div class="delivery-progress-text" id="deliveryMsgMobile">Falta <strong>60,000</strong> para domicilio gratis</div>
+        <div class="delivery-progress-bar"><div class="delivery-progress-fill" id="deliveryFillMobile"></div></div>
+      </div>
+      <div class="cart-drawer-subtotal" style="margin-top:14px">
+        <span class="cart-drawer-subtotal-label">SUBTOTAL</span>
+        <span class="cart-drawer-subtotal-value" id="cartDrawerTotal">0</span>
+      </div>
+      <button class="btn-checkout" onclick="checkout()">IR A PAGAR</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TOAST ═══ -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══ WHATSAPP BUTTON ═══ -->
+<a class="wa-btn" id="waBtn" href="https://wa.me/57XXXXXXXXXX" target="_blank" rel="noopener">WA</a>
+
+<!-- ═══ PRODUCT MODAL ═══ -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-drag-handle"></div>
+    <div class="modal-header">
+      <div class="modal-img" id="modalImg">PRODUCTO</div>
+      <button class="modal-close" onclick="closeModal()">X</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-product-name" id="modalName">NOMBRE</div>
+      <div class="modal-product-desc" id="modalDesc">Descripción.</div>
+      <div class="modal-product-price" id="modalPrice">0</div>
+      <div class="modal-fuse-tag" id="modalFuse" style="display:none">INCLUYE FUSE</div>
+
+      <div class="modal-section-title">HÁGALA MEJOR</div>
+      <div id="modalAddons">
+        <div class="addon-row" data-addon="queso" data-price="3500">
+          <div class="addon-left">
+            <div class="addon-check" onclick="toggleAddon(this)"></div>
+            <span class="addon-name">Extra queso costeño</span>
+          </div>
+          <span class="addon-price">3,500</span>
+        </div>
+        <div class="addon-row" data-addon="aguacate" data-price="3000">
+          <div class="addon-left">
+            <div class="addon-check" onclick="toggleAddon(this)"></div>
+            <span class="addon-name">Aguacate</span>
+          </div>
+          <span class="addon-price">3,000</span>
+        </div>
+        <div class="addon-row" data-addon="huevo" data-price="2500">
+          <div class="addon-left">
+            <div class="addon-check" onclick="toggleAddon(this)"></div>
+            <span class="addon-name">Huevo frito</span>
+          </div>
+          <span class="addon-price">2,500</span>
+        </div>
+        <div class="addon-row" data-addon="hogao" data-price="2500">
+          <div class="addon-left">
+            <div class="addon-check" onclick="toggleAddon(this)"></div>
+            <span class="addon-name">Hogao doble</span>
+          </div>
+          <span class="addon-price">2,500</span>
+        </div>
+        <div class="addon-row" data-addon="doble" data-price="6900">
+          <div class="addon-left">
+            <div class="addon-check" onclick="toggleAddon(this)"></div>
+            <span class="addon-name">Doble relleno</span>
+          </div>
+          <span class="addon-price">6,900</span>
+        </div>
+        <div class="addon-row" data-addon="fuse" data-price="1500">
+          <div class="addon-left">
+            <div class="addon-check" onclick="toggleAddon(this)"></div>
+            <span class="addon-name">Fuse extra</span>
+          </div>
+          <span class="addon-price">1,500</span>
+        </div>
+      </div>
+
+      <div class="modal-section-title">COMPLETE SU PEDIDO</div>
+      <div id="modalBebidas">
+        <div class="addon-row" data-addon="limonada" data-price="5000">
+          <div class="addon-left">
+            <div class="addon-check" onclick="toggleAddon(this)"></div>
+            <span class="addon-name">Limonada natural</span>
+          </div>
+          <span class="addon-price">5,000</span>
+        </div>
+        <div class="addon-row" data-addon="panela" data-price="5500">
+          <div class="addon-left">
+            <div class="addon-check" onclick="toggleAddon(this)"></div>
+            <span class="addon-name">Limonada de panela</span>
+          </div>
+          <span class="addon-price">5,500</span>
+        </div>
+        <div class="addon-row" data-addon="agua" data-price="3000">
+          <div class="addon-left">
+            <div class="addon-check" onclick="toggleAddon(this)"></div>
+            <span class="addon-name">Agua</span>
+          </div>
+          <span class="addon-price">3,000</span>
+        </div>
+        <div class="addon-row" data-addon="gaseosa" data-price="4000">
+          <div class="addon-left">
+            <div class="addon-check" onclick="toggleAddon(this)"></div>
+            <span class="addon-name">Gaseosa</span>
+          </div>
+          <span class="addon-price">4,000</span>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-add" id="btnAdd" onclick="addToCart()">
+        <span id="btnAddLabel">AGREGAR AL PEDIDO</span>
+        <span class="btn-add-price" id="modalTotal">32,900</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══ DATA ═══
+const products = {
+  fija:    { name:'LA FIJA',    desc:'Pollo desmechado. Hogao. Queso costeño.', price:32900, type:'jacket', fuse:true },
+  pesada:  { name:'LA PESADA',  desc:'Carne desmechada. Hogao. Queso costeño.', price:35900, type:'jacket', fuse:true },
+  brava:   { name:'LA BRAVA',   desc:'Chorizo santandereano. Hogao. Queso costeño.', price:34900, type:'jacket', fuse:true },
+  simple:  { name:'LA SIMPLE',  desc:'Carne molida sazonada. Hogao. Queso costeño.', price:28900, type:'jacket', fuse:true },
+  honesta: { name:'LA HONESTA', desc:'Queso costeño doble. Hogao doble. Aguacate.', price:28900, type:'jacket', fuse:true },
+  'loaded-pollo':      { name:'LOADED POLLO',      desc:'Gajos. Pollo desmechado. Queso fundido. Fuse.', price:24900, type:'loaded', fuse:false },
+  'loaded-molida':     { name:'LOADED MOLIDA',      desc:'Gajos. Carne molida. Queso fundido. Cebolla crispy.', price:22500, type:'loaded', fuse:false },
+  'loaded-desmechada': { name:'LOADED DESMECHADA',  desc:'Gajos. Carne desmechada. Queso fundido. Fuse.', price:24900, type:'loaded', fuse:false },
+  'loaded-chorizo':    { name:'LOADED CHORIZO',     desc:'Gajos. Chorizo picado. Queso fundido. Hogao.', price:24900, type:'loaded', fuse:false },
+};
+
+const extraNames = {
+  queso:'Extra queso costeño', aguacate:'Aguacate', huevo:'Huevo frito',
+  hogao:'Hogao doble', doble:'Doble relleno', fuse:'Fuse extra',
+  limonada:'Limonada natural', panela:'Limonada de panela',
+  agua:'Agua', gaseosa:'Gaseosa'
+};
+
+let cart = [];
+let cartTotalValue = 0;
+let currentProduct = null;
+let currentBase = 0;
+let extraQuantities = {};
+
+// ═══ FORMAT ═══
+function fmt(n){ return n.toLocaleString('es-CO') }
+
+// ═══ INLINE EDUCATION ═══
+(function(){
+  if(localStorage.getItem('springs_edu_dismissed')){
+    var edu = document.getElementById('inlineEdu');
+    if(edu) edu.classList.add('hidden');
+  }
+})();
+
+function dismissInlineEdu(){
+  var edu = document.getElementById('inlineEdu');
+  if(edu) edu.classList.add('hidden');
+  localStorage.setItem('springs_edu_dismissed','1');
+}
+
+// ═══ RECOMMENDED CARD (first-time visitors) ═══
+(function(){
+  if(!localStorage.getItem('springs_has_ordered')){
+    var card = document.getElementById('cardFija');
+    if(card) card.classList.add('recommended');
+  }
+})();
+
+// ═══ NAV SCROLL HIGHLIGHT ═══
+const navEl = document.getElementById('nav');
+const navLinks = document.querySelectorAll('.nav a');
+const sections = document.querySelectorAll('.section');
+
+function updateNav(){
+  let current = '';
+  sections.forEach(function(s){
+    if(window.scrollY >= s.offsetTop - 80) current = s.id;
+  });
+  navLinks.forEach(function(a){
+    var wasActive = a.classList.contains('active');
+    var isActive = a.dataset.section === current;
+    a.classList.toggle('active', isActive);
+    // Auto-scroll nav to show active tab
+    if(isActive && !wasActive){
+      a.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'});
+    }
+  });
+}
+window.addEventListener('scroll', updateNav, {passive:true});
+
+// ═══ OPEN PRODUCT MODAL ═══
+function openProduct(id){
+  var p = products[id];
+  if(!p) return;
+  currentProduct = id;
+  currentBase = p.price;
+
+  document.getElementById('modalImg').textContent = p.name;
+  document.getElementById('modalImg').className = 'modal-img ' + (p.type === 'jacket' ? 'jacket-img' : 'loaded-img');
+  document.getElementById('modalName').textContent = p.name;
+  document.getElementById('modalDesc').textContent = p.desc;
+  document.getElementById('modalPrice').textContent = fmt(p.price);
+  document.getElementById('modalFuse').style.display = p.fuse ? 'inline-block' : 'none';
+
+  // Reset addons
+  document.querySelectorAll('.addon-check').forEach(function(c){ c.classList.remove('checked'); });
+  resetBtnAdd();
+  updateModalTotal();
+
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function openCombo(type){
+  if(type === 'uno'){
+    currentProduct = 'combo-uno';
+    currentBase = 36900;
+    document.getElementById('modalImg').textContent = 'PARA UNO';
+    document.getElementById('modalImg').className = 'modal-img jacket-img';
+    document.getElementById('modalName').textContent = 'COMBO PARA UNO';
+    document.getElementById('modalDesc').textContent = 'Cualquier Jacket + Bebida a su elección.';
+    document.getElementById('modalPrice').textContent = '36,900';
+    document.getElementById('modalFuse').style.display = 'inline-block';
+  } else {
+    currentProduct = 'combo-dos';
+    currentBase = 69900;
+    document.getElementById('modalImg').textContent = 'PARA DOS';
+    document.getElementById('modalImg').className = 'modal-img jacket-img';
+    document.getElementById('modalName').textContent = 'COMBO PARA DOS';
+    document.getElementById('modalDesc').textContent = '2 Jackets + 2 Bebidas. Para compartir o repetir.';
+    document.getElementById('modalPrice').textContent = '69,900';
+    document.getElementById('modalFuse').style.display = 'inline-block';
+  }
+
+  document.querySelectorAll('.addon-check').forEach(function(c){ c.classList.remove('checked'); });
+  resetBtnAdd();
+  updateModalTotal();
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+// ═══ CLOSE MODAL ═══
+function closeModal(e){
+  if(e && e.target !== document.getElementById('modalOverlay')) return;
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  currentProduct = null;
+}
+
+// ═══ MODAL SWIPE DOWN ═══
+(function(){
+  var modal = document.querySelector('.modal');
+  var startY = 0;
+  var currentY = 0;
+  var dragging = false;
+
+  modal.addEventListener('touchstart', function(e){
+    if(modal.scrollTop <= 0){
+      startY = e.touches[0].clientY;
+      dragging = true;
+    }
+  }, {passive:true});
+
+  modal.addEventListener('touchmove', function(e){
+    if(!dragging) return;
+    currentY = e.touches[0].clientY;
+    var diff = currentY - startY;
+    if(diff > 0){
+      modal.style.transform = 'translateY(' + diff + 'px)';
+    }
+  }, {passive:true});
+
+  modal.addEventListener('touchend', function(){
+    if(!dragging) return;
+    dragging = false;
+    var diff = currentY - startY;
+    if(diff > 100){
+      closeModal();
+    }
+    modal.style.transform = '';
+  });
+})();
+
+// ═══ TOGGLE ADDON ═══
+function toggleAddon(el){
+  el.classList.toggle('checked');
+  updateModalTotal();
+}
+
+// ═══ UPDATE MODAL TOTAL ═══
+function updateModalTotal(){
+  var total = currentBase;
+  document.querySelectorAll('.addon-check.checked').forEach(function(c){
+    var row = c.closest('.addon-row');
+    total += parseInt(row.dataset.price);
+  });
+  document.getElementById('modalTotal').textContent = fmt(total);
+}
+
+// ═══ RESET ADD BUTTON ═══
+function resetBtnAdd(){
+  var btn = document.getElementById('btnAdd');
+  var label = document.getElementById('btnAddLabel');
+  btn.classList.remove('added');
+  label.textContent = 'AGREGAR AL PEDIDO';
+}
+
+// ═══ ADD TO CART ═══
+function addToCart(){
+  var total = currentBase;
+  var addons = [];
+  document.querySelectorAll('.addon-check.checked').forEach(function(c){
+    var row = c.closest('.addon-row');
+    total += parseInt(row.dataset.price);
+    addons.push(row.dataset.addon);
+  });
+
+  var displayName = currentProduct;
+  if(products[currentProduct]) displayName = products[currentProduct].name;
+  else if(currentProduct === 'combo-uno') displayName = 'COMBO PARA UNO';
+  else if(currentProduct === 'combo-dos') displayName = 'COMBO PARA DOS';
+
+  cart.push({ product: currentProduct, displayName: displayName, total: total, addons: addons });
+  cartTotalValue = cart.reduce(function(s,i){ return s + i.total; }, 0);
+
+  // Button feedback
+  var btn = document.getElementById('btnAdd');
+  var label = document.getElementById('btnAddLabel');
+  btn.classList.add('added');
+  label.textContent = 'AGREGADO';
+
+  updateCartBar();
+  renderCartDrawer();
+  renderDesktopCart();
+  showToast(displayName + ' agregado al pedido');
+
+  setTimeout(function(){
+    closeModal();
+    setTimeout(resetBtnAdd, 400);
+  }, 800);
+}
+
+// ═══ EXTRAS STEPPER ═══
+function extraPlus(e, name, price, label){
+  e.stopPropagation();
+  if(!extraQuantities[name]) extraQuantities[name] = 0;
+  extraQuantities[name]++;
+
+  cart.push({ product: 'extra-' + name, displayName: label, total: price, addons: [] });
+  cartTotalValue = cart.reduce(function(s,i){ return s + i.total; }, 0);
+
+  updateExtraStepper(name);
+  updateCartBar();
+  renderCartDrawer();
+  renderDesktopCart();
+  showToast(label + ' agregado al pedido');
+}
+
+function extraMinus(e, name, price){
+  e.stopPropagation();
+  if(!extraQuantities[name] || extraQuantities[name] <= 0) return;
+  extraQuantities[name]--;
+
+  // Remove last instance of this extra from cart
+  for(var i = cart.length - 1; i >= 0; i--){
+    if(cart[i].product === 'extra-' + name){
+      cart.splice(i, 1);
+      break;
+    }
+  }
+  cartTotalValue = cart.reduce(function(s,i){ return s + i.total; }, 0);
+
+  updateExtraStepper(name);
+  updateCartBar();
+  renderCartDrawer();
+  renderDesktopCart();
+}
+
+function updateExtraStepper(name){
+  var qty = extraQuantities[name] || 0;
+  var steppers = document.querySelectorAll('.extra-stepper[data-extra="' + name + '"]');
+  steppers.forEach(function(stepper){
+    var qtyEl = stepper.querySelector('.extra-stepper-qty');
+    if(qtyEl) qtyEl.textContent = qty;
+    if(qty > 0){
+      stepper.classList.remove('hidden');
+    } else {
+      stepper.classList.add('hidden');
+    }
+  });
+}
+
+// ═══ TOAST ═══
+var toastTimer = null;
+function showToast(msg){
+  var toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  if(toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){
+    toast.classList.remove('show');
+  }, 2500);
+}
+
+// ═══ UPDATE CART BAR ═══
+function updateCartBar(){
+  var bar = document.getElementById('cartBar');
+  var count = document.getElementById('cartCount');
+  var total = document.getElementById('cartTotal');
+  var waBtn = document.getElementById('waBtn');
+
+  count.textContent = cart.length;
+  total.textContent = fmt(cartTotalValue);
+  bar.classList.toggle('visible', cart.length > 0);
+  waBtn.classList.toggle('raised', cart.length > 0);
+}
+
+// ═══ CART DRAWER ═══
+function openCartDrawer(){
+  document.getElementById('cartDrawerOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  renderCartDrawer();
+}
+
+function closeCartDrawer(e){
+  if(e && e.target !== document.getElementById('cartDrawerOverlay')) return;
+  document.getElementById('cartDrawerOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function renderCartDrawer(){
+  var container = document.getElementById('cartDrawerItems');
+  var empty = document.getElementById('cartDrawerEmpty');
+  var totalEl = document.getElementById('cartDrawerTotal');
+
+  // Clear items except empty message
+  var items = container.querySelectorAll('.cart-drawer-item');
+  items.forEach(function(el){ el.remove(); });
+
+  if(cart.length === 0){
+    empty.style.display = 'block';
+    totalEl.textContent = '0';
+    return;
+  }
+
+  empty.style.display = 'none';
+
+  cart.forEach(function(item, idx){
+    var div = document.createElement('div');
+    div.className = 'cart-drawer-item';
+    var addonsText = item.addons.length > 0 ? ' + ' + item.addons.length + ' extra' + (item.addons.length > 1 ? 's' : '') : '';
+    div.innerHTML = '<div class="cart-drawer-item-info"><div class="cart-drawer-item-name">' +
+      item.displayName + addonsText +
+      '</div></div><span class="cart-drawer-item-price">' +
+      fmt(item.total) + '</span><button class="cart-drawer-item-remove" onclick="removeFromCart(' +
+      idx + ')">X</button>';
+    container.appendChild(div);
+  });
+
+  totalEl.textContent = fmt(cartTotalValue);
+}
+
+function removeFromCart(idx){
+  var removed = cart[idx];
+  cart.splice(idx, 1);
+  cartTotalValue = cart.reduce(function(s,i){ return s + i.total; }, 0);
+
+  // Update extra quantities if it was an extra
+  if(removed.product.startsWith('extra-')){
+    var extraName = removed.product.replace('extra-','');
+    if(extraQuantities[extraName]) extraQuantities[extraName]--;
+    updateExtraStepper(extraName);
+  }
+
+  updateCartBar();
+  renderCartDrawer();
+  renderDesktopCart();
+
+  if(cart.length === 0){
+    closeCartDrawer();
+  }
+}
+
+// ═══ CART DRAWER SWIPE ═══
+(function(){
+  var drawer = document.querySelector('.cart-drawer');
+  var startY = 0;
+  var currentY = 0;
+  var dragging = false;
+
+  drawer.addEventListener('touchstart', function(e){
+    if(drawer.scrollTop <= 0){
+      startY = e.touches[0].clientY;
+      dragging = true;
+    }
+  }, {passive:true});
+
+  drawer.addEventListener('touchmove', function(e){
+    if(!dragging) return;
+    currentY = e.touches[0].clientY;
+    var diff = currentY - startY;
+    if(diff > 0){
+      drawer.style.transform = 'translateY(' + diff + 'px)';
+    }
+  }, {passive:true});
+
+  drawer.addEventListener('touchend', function(){
+    if(!dragging) return;
+    dragging = false;
+    var diff = currentY - startY;
+    if(diff > 80){
+      closeCartDrawer();
+    }
+    drawer.style.transform = '';
+  });
+})();
+
+// ═══ DESKTOP CART PANEL ═══
+function renderDesktopCart(){
+  var container = document.getElementById('desktopCartItems');
+  var empty = document.getElementById('desktopCartEmpty');
+  var totalEl = document.getElementById('desktopCartTotal');
+
+  // Clear items except empty message
+  var items = container.querySelectorAll('.desktop-cart-panel-item');
+  items.forEach(function(el){ el.remove(); });
+
+  if(cart.length === 0){
+    empty.style.display = 'block';
+    totalEl.textContent = '0';
+    return;
+  }
+
+  empty.style.display = 'none';
+
+  cart.forEach(function(item, idx){
+    var div = document.createElement('div');
+    div.className = 'desktop-cart-panel-item';
+    var addonsText = item.addons.length > 0 ? ' + ' + item.addons.length + ' extra' + (item.addons.length > 1 ? 's' : '') : '';
+    div.innerHTML = '<div class="desktop-cart-panel-item-info"><div class="desktop-cart-panel-item-name">' +
+      item.displayName + addonsText +
+      '</div></div><span class="desktop-cart-panel-item-price">' +
+      fmt(item.total) + '</span><button class="desktop-cart-panel-item-remove" onclick="removeFromCart(' +
+      idx + ')">X</button>';
+    container.appendChild(div);
+  });
+
+  totalEl.textContent = fmt(cartTotalValue);
+}
+
+// ═══ CHECKOUT ═══
+function checkout(){
+  if(cart.length === 0) return;
+  localStorage.setItem('springs_has_ordered','1');
+  showToast('Checkout no disponible en boceto');
+}
+
+// ═══ STAGGERED SCROLL REVEAL ═══
+(function(){
+  var staggerObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        var list = entry.target.closest('.product-list') || entry.target.closest('.combo-grid');
+        if(!list) return;
+        var cards = list.querySelectorAll('.product-card, .combo-card');
+        cards.forEach(function(card, i){
+          setTimeout(function(){
+            card.classList.add('revealed');
+          }, i * 80);
+        });
+        staggerObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  // Observe first item in each list
+  document.querySelectorAll('.product-list, .combo-grid').forEach(function(list){
+    var first = list.querySelector('.product-card, .combo-card');
+    if(first) staggerObserver.observe(first);
+  });
+})();
+
+// ═══ PRICE COUNT-UP ANIMATION ═══
+function animatePrice(element, from, to, duration){
+  duration = duration || 400;
+  var start = performance.now();
+  function update(now){
+    var elapsed = now - start;
+    var progress = Math.min(elapsed / duration, 1);
+    var eased = 1 - Math.pow(1 - progress, 3);
+    var current = Math.round(from + (to - from) * eased);
+    element.textContent = fmt(current);
+    if(progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+
+// Override updateCartBar to use price animation
+var _origUpdateCartBar = updateCartBar;
+updateCartBar = function(){
+  var bar = document.getElementById('cartBar');
+  var count = document.getElementById('cartCount');
+  var totalEl = document.getElementById('cartTotal');
+  var waBtn = document.getElementById('waBtn');
+  var desktopTotalEl = document.getElementById('desktopCartTotal');
+
+  // Animate count
+  count.textContent = cart.length;
+  count.style.transform = 'scale(1.3)';
+  setTimeout(function(){ count.style.transform = 'scale(1)'; }, 150);
+
+  // Animate price
+  var oldVal = parseInt(totalEl.textContent.replace(/\D/g,'')) || 0;
+  animatePrice(totalEl, oldVal, cartTotalValue);
+
+  if(desktopTotalEl){
+    var oldDesktop = parseInt(desktopTotalEl.textContent.replace(/\D/g,'')) || 0;
+    animatePrice(desktopTotalEl, oldDesktop, cartTotalValue);
+  }
+
+  bar.classList.toggle('visible', cart.length > 0);
+  waBtn.classList.toggle('raised', cart.length > 0);
+
+  // Update delivery progress
+  updateDeliveryProgress();
+};
+
+// ═══ DELIVERY PROGRESS ═══
+var FREE_DELIVERY_THRESHOLD = 60000;
+
+function updateDeliveryProgress(){
+  var pct = Math.min((cartTotalValue / FREE_DELIVERY_THRESHOLD) * 100, 100);
+  var remaining = FREE_DELIVERY_THRESHOLD - cartTotalValue;
+  var reached = cartTotalValue >= FREE_DELIVERY_THRESHOLD;
+
+  // Mobile
+  var fillM = document.getElementById('deliveryFillMobile');
+  var msgM = document.getElementById('deliveryMsgMobile');
+  var progM = document.getElementById('deliveryProgressMobile');
+  if(fillM) fillM.style.width = pct + '%';
+  if(reached){
+    if(progM) progM.classList.add('reached');
+    if(msgM) msgM.innerHTML = 'DOMICILIO GRATIS. BIEN JUGADO.';
+  } else {
+    if(progM) progM.classList.remove('reached');
+    if(msgM) msgM.innerHTML = 'Falta <strong>' + fmt(remaining) + '</strong> para domicilio gratis';
+  }
+
+  // Desktop
+  var fillD = document.getElementById('deliveryFillDesktop');
+  var msgD = document.getElementById('deliveryMsgDesktop');
+  var progD = document.getElementById('deliveryProgressDesktop');
+  if(fillD) fillD.style.width = pct + '%';
+  if(reached){
+    if(progD) progD.classList.add('reached');
+    if(msgD) msgD.innerHTML = 'DOMICILIO GRATIS. BIEN JUGADO.';
+  } else {
+    if(progD) progD.classList.remove('reached');
+    if(msgD) msgD.innerHTML = 'Falta <strong>' + fmt(remaining) + '</strong> para domicilio gratis';
+  }
+}
+</script>
+
+</body>
+</html>
