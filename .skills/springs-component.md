@@ -6,77 +6,84 @@ description: Crear componentes UI siguiendo el design system de Springs. Usar cu
 # Springs Component Builder
 
 Guía para crear cualquier componente nuevo en el e-commerce de Springs.
+Stack: React/TSX + Tailwind CSS v4 con tokens custom.
 
 ## Cuándo usar
 - Cuando se pida crear un componente, sección, o página nueva.
 - Cuando se modifique un componente existente.
 
-## CSS Variables (usar siempre, nunca hardcodear colores)
-```css
-:root {
-  --burgundy: #6B1419;
-  --cream: #F2E8D5;
-  --tinta: #1A0A0C;
-  --mostaza: #C5871F;
-  --burgundy-dark: #4a0e12;
-  --cream-dark: #e8dcc8;
-  --safe-bottom: env(safe-area-inset-bottom, 0px);
-}
-```
+## Tokens disponibles en Tailwind
+
+### Colores
+`bg-burgundy`, `text-burgundy`, `border-burgundy`
+`bg-cream`, `text-cream`, `border-cream`
+`bg-tinta`, `text-tinta`, `border-tinta`
+`bg-mostaza`, `text-mostaza`, `border-mostaza`
+
+Opacidad con slash: `text-cream/60`, `bg-tinta/50`, `border-tinta/10`
+
+### Fuentes
+`font-display` → Anton (titulares, nombres de producto)
+`font-sans` → Inter (texto funcional, body)
+`font-mono` → JetBrains Mono (precios, datos, badges)
+
+### Forma
+`border-radius: 0` está forzado globalmente. No usar `rounded-*` nunca.
 
 ## Patrones de componentes aprobados
 
 ### Product card (horizontal, para listas)
+```tsx
+<div className="border border-tinta/10 p-5">
+  <h3 className="font-display text-lg uppercase tracking-wide">{nombre}</h3>
+  <p className="font-sans text-tinta/50 text-sm mt-1">{descripcion}</p>
+  <div className="flex items-center justify-between mt-4">
+    <span className="font-mono text-sm font-medium">{precio}</span>
+    <button className="bg-tinta text-cream font-mono text-xs tracking-[2px] px-4 py-2 uppercase hover:opacity-85 transition-opacity">
+      AGREGAR AL PEDIDO
+    </button>
+  </div>
+</div>
 ```
-[Imagen 90x90] [Nombre (Anton)] 
-               [Descripción (Inter, muted)]
-               [Precio (JetBrains Mono)] [Badge]
-```
-- Border-left: 3px transparent, burgundy on hover.
-- Cursor pointer. Transition 0.15s.
-- Click abre modal bottom-sheet.
 
 ### Combo card (bloque burgundy)
+```tsx
+<div className="bg-burgundy p-6 hover:border-l-4 hover:border-mostaza transition-all">
+  <h3 className="font-display text-cream text-xl uppercase tracking-wide">{nombre}</h3>
+  <p className="font-sans text-cream/50 text-sm mt-1">{descripcion}</p>
+  <div className="flex items-center gap-3 mt-4">
+    <span className="font-mono text-mostaza text-lg">{precio}</span>
+    <span className="font-mono text-cream/30 text-xs tracking-[2px]">AHORRA {ahorro}</span>
+  </div>
+</div>
 ```
-[Nombre (Anton, cream)]
-[Descripción (Inter, cream muted)]
-[Precio (JetBrains Mono, mostaza)] [AHORRA badge]
-```
-- Background burgundy. Border-left mostaza on hover.
-- Precio en mostaza (sobre fondo oscuro = pasa WCAG AA).
 
 ### Section header
+```tsx
+<h2 className="font-display text-3xl tracking-[4px] text-tinta border-b border-tinta/10 pb-3">
+  {titulo}
+</h2>
 ```
-[TÍTULO (Anton, burgundy, 28px, uppercase)]
-[Subtítulo (Inter italic, 13px, muted)]
-```
-
-### Modal bottom-sheet
-- transform: translateY(100%) → translateY(0).
-- transition: 0.35s cubic-bezier(0.32, 0.72, 0, 1).
-- Drag handle: 40x4px, tinta 20% opacity, centrado.
-- Swipe-to-close threshold: 100px.
-- Backdrop: tinta 70% opacity, fade in.
-
-### Sticky cart bar (mobile)
-- Fixed bottom. Burgundy background.
-- Left: count (cream square) + "VER PEDIDO" (Anton).
-- Right: total (JetBrains Mono, mostaza).
-- Safe area padding.
-- Slide-up animation on first item.
 
 ### Toast notification
-- Fixed top, centered. Tinta background.
-- JetBrains Mono 12px, cream text.
-- Slide down 0.35s. Auto-dismiss 2.5s.
+```tsx
+<div className="fixed top-4 left-1/2 -translate-x-1/2 bg-tinta text-cream font-mono text-xs tracking-[1px] px-5 py-3 z-50 animate-slide-down">
+  {mensaje}
+</div>
+```
 
 ### Extra/bebida row with stepper
+```tsx
+<div className="flex items-center justify-between py-3 border-b border-tinta/10">
+  <span className="font-sans text-sm">{nombre}</span>
+  <span className="font-mono text-sm">{precio}</span>
+  <div className="flex items-center gap-2">
+    <button className="w-8 h-8 border border-burgundy text-burgundy font-mono">-</button>
+    <span className="font-mono w-7 text-center">{qty}</span>
+    <button className="w-8 h-8 bg-burgundy text-cream font-mono">+</button>
+  </div>
+</div>
 ```
-[Nombre (Inter)] [Precio (JetBrains Mono)] [- qty +]
-```
-- Botón +: burgundy bg, cream text, 32x32px.
-- Botón -: transparent, burgundy border, 32x32px.
-- Qty: JetBrains Mono, centered, 28px wide.
 
 ## Animaciones aprobadas
 
@@ -89,5 +96,8 @@ Guía para crear cualquier componente nuevo en el e-commerce de Springs.
 | Price count-up | ease-out cubic | 0.4s |
 | Cart bar slide | cubic-bezier(0.32, 0.72, 0, 1) | 0.35s |
 
-## Regla final
-Después de crear cualquier componente, ejecutar mentalmente el springs-design-check. Si algo no pasa, corregir antes de entregar.
+## Reglas
+- Componentes con interactividad llevan `"use client"` al inicio.
+- Props tipadas con interfaces de TypeScript.
+- Datos de productos vienen de `@/data/productos` (tipo `Producto`).
+- Después de crear cualquier componente, ejecutar mentalmente el springs-design-check.

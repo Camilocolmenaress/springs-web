@@ -2,37 +2,79 @@
 
 Este proyecto es EXCLUSIVAMENTE el e-commerce de Springs (springs.com.co). Todo lo que hagas aquí debe producir código funcional para la página web donde los clientes hacen pedidos de jacket potatoes para domicilio en Bucaramanga.
 
-## Quién soy
-Camilo, co-fundador de Springs, 21 años, vibe coder. Stack: Next.js 14, Supabase, Vercel. Este es mi proyecto con mi primo Juan David.
+## Equipo y roles
+
+Dos personas trabajan en este repo. **Identifica con quién estás hablando** por su directorio home o pregúntale directamente.
+
+### Camilo — Backend
+- **Archivos suyos:** `src/lib/`, `src/app/api/`, `src/data/`, `.env.local`, `supabase/`
+- **Responsabilidades:** Supabase (tablas, RLS, Realtime), APIs (routes), pagos (Wompi), automatizaciones (n8n), infraestructura (Vercel, dominio)
+- **Stack:** Next.js 16, Supabase, TypeScript, Wompi
+
+### Juan David — Frontend
+- **Archivos suyos:** `src/components/`, `src/app/page.tsx`, `src/app/globals.css`, `public/images/`
+- **Responsabilidades:** Hero, menú, carrito, diseño visual, dirección creativa, fotos de producto
+- **Stack:** React/TSX, Tailwind CSS, componentes client-side
+
+### Archivos compartidos (coordinar antes de editar)
+- `src/app/layout.tsx` — cambios afectan a ambos
+- `src/data/productos.ts` — contrato de datos, cambiar shape requiere avisar al otro
+- `package.json` — agregar dependencias requiere avisar
+
+### Regla de no-colisión
+- NUNCA editar archivos del otro rol sin que te lo pidan explícitamente.
+- Si necesitas cambiar algo del otro lado, describe qué necesitas y por qué — no lo hagas directamente.
+- Ante la duda, pregunta "¿esto es responsabilidad de Camilo o de Juan David?"
 
 ## Qué es este proyecto
 E-commerce propio de Springs — dark kitchen de jacket potatoes (papas horneadas rellenas con proteína santandereana) en Bucaramanga, Colombia. 100% domicilios. El sitio es el canal principal de ventas.
 
 ## Stack técnico
-- **Framework:** Next.js 14 (App Router) — migrar cuando se indique, actualmente boceto HTML estático.
-- **Backend/DB:** Supabase (PostgreSQL + Realtime + Auth + Edge Functions).
-- **Pagos:** Wompi (pasarela colombiana).
-- **Automatizaciones:** n8n (flujos WhatsApp, notificaciones, reactivación).
-- **Analytics:** Vercel Analytics + Meta Pixel + GA4.
-- **Hosting:** Vercel.
+- **Framework:** Next.js 16 (App Router, `src/` directory, TypeScript)
+- **Estilos:** Tailwind CSS v4 con tokens de diseño en `globals.css`
+- **Backend/DB:** Supabase (PostgreSQL + Realtime + Auth + Edge Functions)
+- **Pagos:** Wompi (pasarela colombiana)
+- **Automatizaciones:** n8n (flujos WhatsApp, notificaciones, reactivación)
+- **Analytics:** Vercel Analytics + Meta Pixel + GA4
+- **Hosting:** Vercel
 - **Dominio objetivo:** springs.com.co
+
+## Estructura del proyecto
+```
+src/
+├── app/
+│   ├── layout.tsx              ← Root layout (fuentes, metadata) — COMPARTIDO
+│   ├── page.tsx                ← Página principal — JUAN DAVID
+│   ├── globals.css             ← Tokens de diseño Tailwind — JUAN DAVID
+│   └── api/
+│       └── products/route.ts   ← API de productos — CAMILO
+├── components/
+│   ├── Hero.tsx                ← JUAN DAVID
+│   ├── Menu.tsx                ← JUAN DAVID
+│   ├── Cart.tsx                ← JUAN DAVID
+│   └── ProductCard.tsx         ← JUAN DAVID
+├── data/
+│   └── productos.ts            ← Carta completa, 22 productos — COMPARTIDO
+└── lib/
+    └── supabase.ts             ← Cliente Supabase — CAMILO
+```
 
 ## Identidad visual (NO NEGOCIABLE)
 
 ### Paleta cromática absoluta
 Solo estos 4 colores. Ningún otro. Nunca.
-- **Burgundy** `#6B1419` — dominante, 65-75% de superficie visual.
-- **Cream** `#F2E8D5` — fondo, texto sobre oscuros, 20-25%.
-- **Tinta** `#1A0A0C` — contraste extremo, NO es negro puro, 5-8%.
-- **Mostaza brasa** `#C5871F` — acento, CTAs, datos destacados, 3-5%.
+- **Burgundy** `#6B1419` — dominante, 65-75% de superficie visual. Tailwind: `bg-burgundy`, `text-burgundy`
+- **Cream** `#F2E8D5` — fondo, texto sobre oscuros, 20-25%. Tailwind: `bg-cream`, `text-cream`
+- **Tinta** `#1A0A0C` — contraste extremo, NO es negro puro, 5-8%. Tailwind: `bg-tinta`, `text-tinta`
+- **Mostaza brasa** `#C5871F` — acento, CTAs, datos destacados, 3-5%. Tailwind: `bg-mostaza`, `text-mostaza`
 
-### Tipografías (Google Fonts)
-- **Anton** — titulares, wordmark, nombres de producto. All caps, condensada bold.
-- **Inter** — texto funcional, descripciones, body copy.
-- **JetBrains Mono** — precios, datos, contadores, badges. Monospace, all caps.
+### Tipografías (Google Fonts, cargadas en layout.tsx via next/font)
+- **Anton** — titulares, wordmark, nombres de producto. All caps. Tailwind: `font-display`
+- **Inter** — texto funcional, descripciones, body copy. Tailwind: `font-sans`
+- **JetBrains Mono** — precios, datos, contadores, badges. Tailwind: `font-mono`
 
 ### Reglas visuales
-- CERO border-radius. Bordes rectos siempre. La marca tiene actitud.
+- CERO border-radius. Bordes rectos siempre. (`globals.css` ya fuerza esto con `* { border-radius: 0 !important; }`)
 - CERO iconos decorativos (ni chef hat, ni papa, ni fuego, ni nada).
 - CERO emojis en ninguna parte de la interfaz.
 - CERO ilustraciones, patrones decorativos, o marcos ornamentales.
@@ -97,7 +139,7 @@ Tartara + ají. Color rosa/salmón. Incluida con cada Jacket. Extra disponible.
 
 ### Precios
 - Sin símbolo $. Solo el número con separador de miles: `32,900`.
-- Tipografía: JetBrains Mono.
+- Tipografía: JetBrains Mono (`font-mono`).
 - Color: tinta sobre cream, mostaza sobre fondos oscuros.
 
 ## Flujo de pedido (build path)
@@ -126,7 +168,7 @@ Tartara + ají. Color rosa/salmón. Incluida con cada Jacket. Extra disponible.
 - El producto se llama "Jacket" (nunca "papa horneada", "papa rellena", "jacket potato").
 - CTAs: "AGREGAR AL PEDIDO", "IR A PAGAR", "VER PEDIDO", "HÁGALA MEJOR", "COMPLETE SU PEDIDO".
 
-## UX implementado en el boceto actual
+## Comportamiento UX objetivo
 - Modal bottom-sheet con slide animation + swipe-to-close.
 - Cart drawer expandible con items, remove, subtotal.
 - Toast notifications al agregar items.
@@ -142,19 +184,11 @@ Tartara + ají. Color rosa/salmón. Incluida con cada Jacket. Extra disponible.
 - iPhone safe area (env(safe-area-inset-bottom)).
 - Empty states: "Su pedido está vacío. La papa no se hornea sola."
 
-## Mejoras pendientes (investigadas, no implementadas)
-- Dark mode (CSS custom properties, burgundy como fondo).
-- Skeleton loading on-brand (shimmer mostaza).
-- Order number como identidad (#047) post-checkout.
-- Checkout real (Wompi integration).
-- Order tracking page.
-- Estado cocina en tiempo real (Supabase Realtime).
-- Tipografía editorial como hero visual (Anton a 80px en cards).
-
 ## Reglas de desarrollo
 - Mobile-first SIEMPRE. Diseñar para 375px, escalar a desktop.
-- Cada cambio debe funcionar al abrir el HTML directamente en navegador.
-- No agregar dependencias externas a menos que sea estrictamente necesario.
-- Cuando migre a Next.js: App Router, Server Components por defecto, Client Components solo donde haya interactividad.
+- `npm run dev` para desarrollo local en localhost:3000.
+- App Router: Server Components por defecto, `"use client"` solo donde haya interactividad.
 - Supabase: Row Level Security habilitado siempre.
+- No agregar dependencias externas a menos que sea estrictamente necesario.
 - Código limpio, sin comentarios obvios. El código se explica solo.
+- Imports con alias: `@/components/`, `@/lib/`, `@/data/`.
