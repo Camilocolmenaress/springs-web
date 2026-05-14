@@ -69,6 +69,7 @@ export default function MobileCanvas() {
             width: editorialWidth,
             height: "100vh",
             position: "relative",
+            overflow: "hidden",
             background: "var(--cream)",
           }}
         >
