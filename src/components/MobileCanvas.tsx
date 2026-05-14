@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Lenis from "lenis";
 import MobileEditorial from "@/components/MobileEditorial";
 import MobilePedir from "@/components/MobilePedir";
 
@@ -10,15 +9,13 @@ const DESIGN_H = 900;
 
 export default function MobileCanvas() {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const lenisRef = useRef<Lenis | null>(null);
   const [viewportW, setViewportW] = useState<number>(0);
   const [viewportH, setViewportH] = useState<number>(0);
 
-  const pauseScroll = () => lenisRef.current?.stop();
-  const resumeScroll = () => lenisRef.current?.start();
+  // No-ops: native scroll no necesita pause/resume
+  const pauseScroll = () => {};
+  const resumeScroll = () => {};
 
-  // Medir viewport y actualizar al rotar / resize
   useEffect(() => {
     const measure = () => {
       setViewportW(window.innerWidth);
@@ -29,56 +26,8 @@ export default function MobileCanvas() {
     return () => window.removeEventListener("resize", measure);
   }, []);
 
-  // Lock body para que Lenis controle el scroll
-  useEffect(() => {
-    const prevBody = document.body.style.cssText;
-    const prevHtml = document.documentElement.style.cssText;
-    document.body.style.overflow = "hidden";
-    document.body.style.height = "100%";
-    document.documentElement.style.overflow = "hidden";
-    document.documentElement.style.height = "100%";
-    return () => {
-      document.body.style.cssText = prevBody;
-      document.documentElement.style.cssText = prevHtml;
-    };
-  }, []);
-
-  // Inicializar Lenis horizontal una vez tengamos viewport
-  useEffect(() => {
-    if (!viewportW) return;
-    const wrapper = wrapperRef.current;
-    const content = contentRef.current;
-    if (!wrapper || !content) return;
-
-    const lenis = new Lenis({
-      wrapper,
-      content,
-      orientation: "horizontal",
-      gestureOrientation: "both",
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 2,
-      duration: 1.4,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    });
-    lenisRef.current = lenis;
-
-    let raf: number;
-    const animate = (time: number) => {
-      lenis.raf(time);
-      raf = requestAnimationFrame(animate);
-    };
-    raf = requestAnimationFrame(animate);
-
-    return () => {
-      cancelAnimationFrame(raf);
-      lenis.destroy();
-      lenisRef.current = null;
-    };
-  }, [viewportW]);
-
   const scrollToStart = () => {
-    lenisRef.current?.scrollTo(0, { duration: 1.6 });
+    wrapperRef.current?.scrollTo({ left: 0, behavior: "smooth" });
   };
 
   if (!viewportW) {
@@ -100,13 +49,12 @@ export default function MobileCanvas() {
         overflowX: "scroll",
         overflowY: "hidden",
         scrollbarWidth: "none",
+        WebkitOverflowScrolling: "touch",
         background: "var(--cream)",
         position: "relative",
-        touchAction: "none",
       }}
     >
       <div
-        ref={contentRef}
         style={{
           display: "flex",
           alignItems: "stretch",
@@ -114,7 +62,6 @@ export default function MobileCanvas() {
           width: editorialWidth + viewportW,
         }}
       >
-        {/* Letterbox vertical para editorial */}
         <div
           style={{
             flexShrink: 0,
