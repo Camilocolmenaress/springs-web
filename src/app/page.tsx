@@ -1,9 +1,23 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Lenis from "lenis";
 import { motion, useInView } from "framer-motion";
 import DragSticker from "@/components/DragSticker";
+import MobileHome from "@/components/MobileHome";
+
+const DESKTOP_BREAKPOINT = 1024;
+
+function useIsDesktop() {
+  const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
+  useEffect(() => {
+    const check = () => setIsDesktop(window.innerWidth >= DESKTOP_BREAKPOINT);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return isDesktop;
+}
 
 // Helper: elemento que aparece al entrar al viewport
 function Reveal({ children, delay = 0, style }: { children: React.ReactNode; delay?: number; style?: React.CSSProperties }) {
@@ -23,6 +37,7 @@ function Reveal({ children, delay = 0, style }: { children: React.ReactNode; del
 }
 
 export default function Home() {
+  const isDesktop = useIsDesktop();
   const wrapperRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const lenisRef = useRef<Lenis | null>(null);
@@ -31,6 +46,7 @@ export default function Home() {
   const resumeScroll = () => lenisRef.current?.start();
 
   useEffect(() => {
+    if (isDesktop !== true) return;
     const wrapper = wrapperRef.current;
     const content = contentRef.current;
     if (!wrapper || !content) return;
@@ -59,7 +75,17 @@ export default function Home() {
       lenis.destroy();
       lenisRef.current = null;
     };
-  }, []);
+  }, [isDesktop]);
+
+  // Render mobile vertical layout para viewports estrechos
+  if (isDesktop === false) {
+    return <MobileHome />;
+  }
+
+  // Mientras detectamos viewport, evitamos parpadeo
+  if (isDesktop === null) {
+    return <div style={{ width: "100vw", height: "100vh", background: "#F2E8D5" }} />;
+  }
 
   // Estilos base
   const F = {
