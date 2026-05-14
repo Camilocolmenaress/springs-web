@@ -1,8 +1,10 @@
 "use client";
 
-import { useRef } from "react";
+import { createContext, useContext, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import DragSticker from "@/components/DragSticker";
+
+const ScrollRootCtx = createContext<React.RefObject<Element | null> | undefined>(undefined);
 
 const C = {
   burgundy: "#6B1419",
@@ -18,8 +20,9 @@ const F = {
 };
 
 function Reveal({ children, delay = 0, style }: { children: React.ReactNode; delay?: number; style?: React.CSSProperties }) {
+  const root = useContext(ScrollRootCtx);
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.3 });
+  const inView = useInView(ref, { once: true, amount: 0.3, root });
   return (
     <motion.div
       ref={ref}
@@ -36,10 +39,12 @@ function Reveal({ children, delay = 0, style }: { children: React.ReactNode; del
 type Props = {
   pauseScroll?: () => void;
   resumeScroll?: () => void;
+  scrollRoot?: React.RefObject<Element | null>;
 };
 
-export default function MobileEditorial({ pauseScroll, resumeScroll }: Props) {
+export default function MobileEditorial({ pauseScroll, resumeScroll, scrollRoot }: Props) {
   return (
+    <ScrollRootCtx.Provider value={scrollRoot}>
     <div
       style={{
         position: "relative",
@@ -414,7 +419,7 @@ export default function MobileEditorial({ pauseScroll, resumeScroll }: Props) {
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
         whileInView={{ scale: 1, opacity: 1 }}
-        viewport={{ once: true, amount: 0.3 }}
+        viewport={{ once: true, amount: 0.3, root: scrollRoot }}
         transition={{ duration: 0.8 }}
         style={{
           position: "absolute", left: "3240px", top: "162px", zIndex: 4,
@@ -543,5 +548,6 @@ export default function MobileEditorial({ pauseScroll, resumeScroll }: Props) {
       </Reveal>
 
     </div>
+    </ScrollRootCtx.Provider>
   );
 }

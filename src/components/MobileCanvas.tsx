@@ -90,7 +90,7 @@ export default function MobileCanvas() {
                 transformOrigin: "0 0",
               }}
             >
-              <MobileEditorial pauseScroll={pauseScroll} resumeScroll={resumeScroll} />
+              <MobileEditorial pauseScroll={pauseScroll} resumeScroll={resumeScroll} scrollRoot={wrapperRef} />
             </div>
           </div>
         </div>
