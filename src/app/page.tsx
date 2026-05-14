@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Lenis from "lenis";
 import { motion, useInView } from "framer-motion";
 import DragSticker from "@/components/DragSticker";
-import MobileHome from "@/components/MobileHome";
+import MobileCanvas from "@/components/MobileCanvas";
 
 const DESKTOP_BREAKPOINT = 1024;
 
@@ -77,14 +77,10 @@ export default function Home() {
     };
   }, [isDesktop]);
 
-  // Render mobile vertical layout para viewports estrechos
-  if (isDesktop === false) {
-    return <MobileHome />;
-  }
-
-  // Mientras detectamos viewport, evitamos parpadeo
-  if (isDesktop === null) {
-    return <div style={{ width: "100vw", height: "100vh", background: "#F2E8D5" }} />;
+  // Default a mobile mientras detectamos viewport (mobile-first).
+  // Switcheamos a canvas desktop solo si confirmamos ancho >= 1024.
+  if (isDesktop !== true) {
+    return <MobileCanvas />;
   }
 
   // Estilos base
