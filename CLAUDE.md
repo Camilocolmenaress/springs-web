@@ -1,5 +1,55 @@
 # Springs Web — Contexto para Claude Code
 
+## ⚠️ REGLA #1 — WORKFLOW GIT OBLIGATORIO
+
+**Este repo es colaborativo entre Camilo y Juan David. Si no sigues este flujo, las ramas divergen y se pierde tiempo arreglando conflictos.**
+
+### Al INICIAR cualquier sesión de trabajo
+ANTES de tocar un solo archivo, ejecuta SIEMPRE:
+```bash
+git pull origin main
+```
+Si hay conflictos o cambios divergentes, RESUÉLVELOS PRIMERO antes de continuar. No empieces a editar sobre una base desactualizada.
+
+### Al TERMINAR un cambio significativo (feature, fix, sección lista)
+Ejecuta SIEMPRE este flujo completo, en orden:
+```bash
+git add <archivos específicos, no "git add ." salvo confirmación>
+git commit -m "tipo(quien): descripción corta
+
+descripción larga opcional"
+git push origin main
+```
+
+Convenciones de mensaje:
+- `feat(JD):` — Juan David, feature nueva
+- `feat(CAM):` — Camilo, feature nueva
+- `fix(JD):` o `fix(CAM):` — bugfix
+- `docs:` — solo documentación
+- `refactor:` — limpieza sin cambio funcional
+
+### Antes de hacer push, SI git rechaza el push
+Significa que el otro pusheó algo mientras trabajabas. Resuelve así:
+```bash
+git pull origin main --no-rebase    # une las dos historias
+git push origin main                # ahora sí sube
+```
+
+### Verificación rápida en cualquier momento
+- `git status` — ¿hay cambios sin commitear?
+- `git log -1 --oneline` — ¿en qué commit estás?
+- `git remote -v` — ¿estoy en el repo correcto? (debe ser `Camilocolmenaress/springs-web`)
+
+### Cosas que NUNCA hacer
+- ❌ `git push --force` ni `git push -f` — borra trabajo del otro.
+- ❌ `git reset --hard` sin confirmar primero qué se pierde.
+- ❌ Commitear `.env.local`, claves, tokens — revisar el `.gitignore` antes.
+- ❌ Trabajar varias horas sin pushear — el otro queda ciego.
+
+**Claude: aplica este flujo proactivamente. Si el usuario te pide "guarda" o "sube a GitHub", ejecuta pull → status → commit → push automáticamente. Si detectas que las ramas divergieron, explica la situación antes de tocar nada.**
+
+---
+
 Este proyecto es EXCLUSIVAMENTE el e-commerce de Springs (springs.com.co). Todo lo que hagas aquí debe producir código funcional para la página web donde los clientes hacen pedidos de jacket potatoes para domicilio en Bucaramanga.
 
 ## Equipo y roles
