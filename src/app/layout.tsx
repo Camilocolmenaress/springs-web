@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Anton, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import CookieBanner from "@/components/CookieBanner";
 
 const anton = Anton({
   weight: "400",
@@ -37,7 +38,10 @@ export default function RootLayout({
       lang="es"
       className={`${anton.variable} ${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
-      <body className="overflow-hidden h-full">{children}</body>
+      <body className="overflow-hidden h-full">
+        {children}
+        <CookieBanner />
+      </body>
     </html>
   );
 }
