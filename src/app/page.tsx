@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import Lenis from "lenis";
 import { motion, useInView } from "framer-motion";
+import DragSticker from "@/components/DragSticker";
 
 // Helper: elemento que aparece al entrar al viewport
 function Reveal({ children, delay = 0, style }: { children: React.ReactNode; delay?: number; style?: React.CSSProperties }) {
@@ -24,6 +25,10 @@ function Reveal({ children, delay = 0, style }: { children: React.ReactNode; del
 export default function Home() {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const lenisRef = useRef<Lenis | null>(null);
+
+  const pauseScroll = () => lenisRef.current?.stop();
+  const resumeScroll = () => lenisRef.current?.start();
 
   useEffect(() => {
     const wrapper = wrapperRef.current;
@@ -40,6 +45,7 @@ export default function Home() {
       duration: 1.4,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     });
+    lenisRef.current = lenis;
 
     let raf: number;
     const animate = (time: number) => {
@@ -51,6 +57,7 @@ export default function Home() {
     return () => {
       cancelAnimationFrame(raf);
       lenis.destroy();
+      lenisRef.current = null;
     };
   }, []);
 
@@ -187,16 +194,17 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Sticker SPRINGS BURGER CLUB (rojo) — placeholder */}
-          <motion.div
-            initial={{ rotate: -8, scale: 0 }}
-            animate={{ rotate: -8, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.4, type: "spring" }}
+          {/* Sticker SPRINGS JACKET CLUB — draggable */}
+          <DragSticker
+            rotate={-8}
+            idleRotateRange={2}
+            idleDuration={7}
+            onDragStart={pauseScroll}
+            onDragEnd={resumeScroll}
             style={{
               position: "absolute", left: "30vw", top: "8vh", zIndex: 20,
               background: C.burgundy, color: C.cream,
               padding: "12px 18px",
-              transform: "rotate(-8deg)",
               textAlign: "center",
               border: `2px solid ${C.tinta}`,
             }}
@@ -207,12 +215,15 @@ export default function Home() {
               ESTO ES ALGO ASÍ<br />COMO QUE TE PAGAMOS<br />POR COMER SPRINGS
             </div>
             <div style={{ marginTop: "8px", background: C.tinta, color: C.cream, padding: "4px 14px", display: "inline-block", ...F.mono, fontSize: "0.6rem", letterSpacing: "0.2em" }}>ACCEDER</div>
-          </motion.div>
+          </DragSticker>
 
-          {/* Sticker SPRINGS [UNVRS] holográfico */}
-          <motion.div
-            animate={{ rotate: [3, -2, 3] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          {/* Sticker SPRINGS [UNVRS] holográfico — draggable */}
+          <DragSticker
+            rotate={3}
+            idleRotateRange={2.5}
+            idleDuration={6}
+            onDragStart={pauseScroll}
+            onDragEnd={resumeScroll}
             style={{
               position: "absolute", left: "50vw", top: "5vh", zIndex: 20,
               padding: "8px 16px",
@@ -225,7 +236,58 @@ export default function Home() {
             <div style={{ ...F.mono, fontSize: "0.5rem", letterSpacing: "0.18em", color: C.tinta, marginTop: "3px", textTransform: "uppercase" }}>
               SPRINGS (SPACE) JACKET CLUB X BGA<br />LIMITED EDITION
             </div>
-          </motion.div>
+          </DragSticker>
+
+          {/* Sticker RÓBALA — campaña activa, mostaza — draggable */}
+          <DragSticker
+            rotate={12}
+            idleRotateRange={3}
+            idleDuration={5}
+            onDragStart={pauseScroll}
+            onDragEnd={resumeScroll}
+            style={{
+              position: "absolute", left: "76vw", top: "11vh", zIndex: 22,
+              background: C.mostaza, color: C.tinta,
+              padding: "14px 20px",
+              border: `2px solid ${C.tinta}`,
+              textAlign: "center",
+            }}
+          >
+            <div style={{ ...F.display, fontSize: "1.5rem", letterSpacing: "0.06em", lineHeight: 1 }}>RÓBALA</div>
+            <div style={{ ...F.mono, fontSize: "0.52rem", letterSpacing: "0.14em", marginTop: "6px", lineHeight: 1.3, textTransform: "uppercase" }}>
+              BONO ESCONDIDO<br />EN LA CIUDAD
+            </div>
+            <div style={{ marginTop: "8px", background: C.tinta, color: C.mostaza, padding: "3px 12px", display: "inline-block", ...F.mono, fontSize: "0.55rem", letterSpacing: "0.2em" }}>STORIES ↗</div>
+          </DragSticker>
+
+          {/* Sticker MIÉRCOLES DE DADOS — draggable */}
+          <DragSticker
+            rotate={-14}
+            idleRotateRange={3}
+            idleDuration={6}
+            onDragStart={pauseScroll}
+            onDragEnd={resumeScroll}
+            style={{
+              position: "absolute", left: "82vw", top: "62vh", zIndex: 22,
+              background: C.cream, color: C.tinta,
+              padding: "12px 16px",
+              border: `2px solid ${C.tinta}`,
+              textAlign: "center",
+            }}
+          >
+            <div style={{ ...F.display, fontSize: "1.1rem", letterSpacing: "0.05em", lineHeight: 1 }}>MIÉRCOLES</div>
+            <div style={{ ...F.display, fontSize: "1.1rem", fontStyle: "italic", lineHeight: 1, marginTop: "2px" }}>de Dados</div>
+            <div style={{
+              margin: "8px auto 0",
+              width: "34px", height: "34px",
+              background: C.tinta, color: C.cream,
+              ...F.display, fontSize: "1.3rem",
+              display: "flex", alignItems: "center", justifyContent: "center",
+            }}>6</div>
+            <div style={{ ...F.mono, fontSize: "0.5rem", letterSpacing: "0.15em", marginTop: "6px", textTransform: "uppercase", opacity: 0.7 }}>
+              SACA 6 = GRATIS
+            </div>
+          </DragSticker>
 
           {/* Stickers pequeños flotantes */}
           <div style={{ position: "absolute", left: "62vw", top: "44vh", zIndex: 8 }}>
@@ -233,19 +295,21 @@ export default function Home() {
             <div style={{ ...F.mono, fontSize: "0.6rem", letterSpacing: "0.1em", color: C.tinta, opacity: 0.5, marginTop: "2px" }}>@SPRINGS.COL</div>
           </div>
 
-          {/* Sticker SPRINGS (logo grande tipo etiqueta) */}
-          <motion.div
-            animate={{ rotate: [-4, 2, -4] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          {/* Sticker SPRINGS (logo grande tipo etiqueta) — draggable */}
+          <DragSticker
+            rotate={-4}
+            idleRotateRange={3}
+            idleDuration={5}
+            onDragStart={pauseScroll}
+            onDragEnd={resumeScroll}
             style={{
               position: "absolute", left: "60vw", top: "52vh", zIndex: 20,
               background: C.tinta, padding: "8px 18px",
-              transform: "rotate(-4deg)",
               border: `2px solid ${C.burgundy}`,
             }}
           >
             <div style={{ ...F.display, fontSize: "1.8rem", color: C.burgundy, letterSpacing: "0.05em", lineHeight: 1 }}>SPRINGS</div>
-          </motion.div>
+          </DragSticker>
 
           {/* Símbolos flotantes */}
           <span style={{ position: "absolute", left: "58vw", top: "44vh", ...F.display, fontSize: "1.2rem", color: C.tinta, opacity: 0.3, zIndex: 5 }}>+</span>
@@ -257,15 +321,17 @@ export default function Home() {
             <div style={{ ...F.mono, fontSize: "0.62rem", letterSpacing: "0.18em", color: C.tinta, textTransform: "uppercase" }}>AQUÍ TIENES NUESTRO MENÚ</div>
           </div>
 
-          {/* Sticker BIG ORDERS — burgundy */}
-          <motion.div
-            animate={{ rotate: [-6, 4, -6] }}
-            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+          {/* Sticker PEDIDO GRANDE — burgundy — draggable */}
+          <DragSticker
+            rotate={-6}
+            idleRotateRange={3}
+            idleDuration={7}
+            onDragStart={pauseScroll}
+            onDragEnd={resumeScroll}
             style={{
               position: "absolute", left: "62vw", bottom: "10vh", zIndex: 20,
               background: C.burgundy, color: C.cream,
               padding: "14px 22px",
-              transform: "rotate(-6deg)",
               border: `2px solid ${C.tinta}`,
               textAlign: "center",
             }}
@@ -275,7 +341,7 @@ export default function Home() {
               ¿OFICINA? ¿FAMILIA?<br />HABLEMOS.
             </div>
             <div style={{ marginTop: "8px", background: C.tinta, padding: "3px 12px", display: "inline-block", ...F.mono, fontSize: "0.55rem", letterSpacing: "0.18em" }}>CLICK AQUÍ</div>
-          </motion.div>
+          </DragSticker>
 
           {/* Menú corrido — lista de productos */}
           <Reveal delay={0.3} style={{
@@ -345,10 +411,13 @@ export default function Home() {
             </div>
           </Reveal>
 
-          {/* Sticker holográfico */}
-          <motion.div
-            animate={{ rotate: [-4, 4, -4] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          {/* Sticker holográfico MUY RICA — draggable */}
+          <DragSticker
+            rotate={-4}
+            idleRotateRange={4}
+            idleDuration={5}
+            onDragStart={pauseScroll}
+            onDragEnd={resumeScroll}
             style={{
               position: "absolute", left: "127vw", top: "15vh", zIndex: 25,
               width: "60px", height: "60px",
@@ -358,7 +427,27 @@ export default function Home() {
             }}
           >
             <span style={{ ...F.mono, fontSize: "0.5rem", letterSpacing: "0.1em", color: C.tinta, textAlign: "center" }}>SPRINGS<br />MUY RICA</span>
-          </motion.div>
+          </DragSticker>
+
+          {/* Sticker DROP — papa de temporada — draggable */}
+          <DragSticker
+            rotate={9}
+            idleRotateRange={3}
+            idleDuration={5.5}
+            onDragStart={pauseScroll}
+            onDragEnd={resumeScroll}
+            style={{
+              position: "absolute", left: "164vw", top: "10vh", zIndex: 25,
+              background: C.tinta, color: C.mostaza,
+              padding: "10px 18px",
+              border: `2px solid ${C.mostaza}`,
+              textAlign: "center",
+            }}
+          >
+            <div style={{ ...F.mono, fontSize: "0.5rem", letterSpacing: "0.22em", opacity: 0.7, marginBottom: "2px" }}>W25 · DROP</div>
+            <div style={{ ...F.display, fontSize: "1.6rem", letterSpacing: "0.04em", color: C.cream, lineHeight: 1 }}>SOLO 20</div>
+            <div style={{ ...F.mono, fontSize: "0.55rem", letterSpacing: "0.14em", marginTop: "4px" }}>POR NOCHE</div>
+          </DragSticker>
 
           {/* "TE DAMOS LO TUYO" continuación */}
           <Reveal delay={0.1} style={{ position: "absolute", left: "172vw", top: "20vh", zIndex: 5 }}>

@@ -40,3 +40,8 @@ next-env.d.ts
 
 # superpowers
 .superpowers/
+
+# playwright temp / preview screenshots (locales, no se commitean)
+.playwright-mcp/
+/*.jpeg
+/*.png
