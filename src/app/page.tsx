@@ -88,14 +88,14 @@ export default function Home() {
           <p style={{ ...F.mono, fontSize: "0.65rem", lineHeight: 1.4, letterSpacing: "0.1em", textTransform: "uppercase", color: C.cream, maxWidth: "180px", textAlign: "right" }}>
             LA JACKET ES<br />EL PRODUCTO HOY.
           </p>
-          <a href="#pedir" style={{
+          <a href="/menu" style={{
             display: "flex", alignItems: "center", gap: "8px",
             border: `1px solid ${C.burgundy}`, color: C.burgundy, background: C.cream,
             ...F.mono, fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase",
             padding: "10px 18px", textDecoration: "none", borderRadius: "999px",
           }}>
             <span style={{ width: "6px", height: "6px", background: C.mostaza, borderRadius: "50%" }} />
-            ¡PEDIR YA!
+            ¡VER MENÚ!
           </a>
         </div>
       </nav>
@@ -108,9 +108,15 @@ export default function Home() {
         mixBlendMode: "difference",
       }}>
         <ul style={{ display: "flex", gap: "28px", listStyle: "none", padding: 0, margin: 0, pointerEvents: "auto" }}>
-          {["CARTA", "JACKETS", "LOADED", "NOSOTROS", "PEDIR"].map((item) => (
-            <li key={item}>
-              <a href="#" style={{ ...F.mono, fontSize: "0.65rem", letterSpacing: "0.2em", color: C.cream, textDecoration: "none", opacity: 0.7 }}>{item}</a>
+          {[
+            { label: "CARTA", href: "/menu" },
+            { label: "JACKETS", href: "/menu" },
+            { label: "LOADED", href: "/menu" },
+            { label: "NOSOTROS", href: "#" },
+            { label: "PEDIR", href: "/menu" },
+          ].map((item) => (
+            <li key={item.label}>
+              <a href={item.href} style={{ ...F.mono, fontSize: "0.65rem", letterSpacing: "0.2em", color: C.cream, textDecoration: "none", opacity: 0.7 }}>{item.label}</a>
             </li>
           ))}
         </ul>
@@ -676,14 +682,14 @@ export default function Home() {
               }}>
                 UBER EATS <span>→</span>
               </a>
-              <a href="#" style={{
+              <a href="/menu" style={{
                 ...F.display, fontSize: "1rem", letterSpacing: "0.12em",
                 color: C.mostaza, background: "transparent",
                 border: `1px solid ${C.mostaza}`,
                 padding: "16px 24px", textDecoration: "none",
                 display: "flex", justifyContent: "space-between", alignItems: "center",
               }}>
-                PEDIDO DIRECTO (PRONTO) <span>→</span>
+                PEDIDO DIRECTO <span>→</span>
               </a>
             </div>
           </Reveal>

@@ -9,7 +9,7 @@ const FRAME_H = IPHONE_H + 18;
 const RADIUS = 54;
 
 export default function PreviewPage() {
-  const [route, setRoute] = useState("/menu-preview");
+  const [route, setRoute] = useState("/menu");
 
   return (
     <main
@@ -37,7 +37,7 @@ export default function PreviewPage() {
 
 function Toolbar({ route, setRoute }: { route: string; setRoute: (r: string) => void }) {
   const routes = [
-    { label: "MENÚ", value: "/menu-preview" },
+    { label: "MENÚ", value: "/menu" },
     { label: "HOME", value: "/" },
   ];
   return (
