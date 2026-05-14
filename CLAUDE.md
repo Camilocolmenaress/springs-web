@@ -184,11 +184,38 @@ Tartara + ají. Color rosa/salmón. Incluida con cada Jacket. Extra disponible.
 - iPhone safe area (env(safe-area-inset-bottom)).
 - Empty states: "Su pedido está vacío. La papa no se hornea sola."
 
+## Librerías de animación aprobadas (instaladas)
+
+- **Lenis** (`lenis`) — smooth scroll horizontal. Usar para el scroll principal de la landing. `orientation: 'horizontal'`, wheel → horizontal.
+- **Framer Motion** (`framer-motion`) — animaciones React. Usar para scroll-reveal, transiciones entre paneles, gestos.
+
+### Cómo usar Lenis en Next.js (patrón aprobado)
+```tsx
+"use client";
+import Lenis from "lenis";
+import { useEffect, useRef } from "react";
+
+const lenisRef = useRef<Lenis | null>(null);
+useEffect(() => {
+  const lenis = new Lenis({
+    orientation: "horizontal",
+    wrapper: wrapperRef.current!,
+    content: contentRef.current!,
+    smoothWheel: true,
+  });
+  lenisRef.current = lenis;
+  const raf = (time: number) => { lenis.raf(time); requestAnimationFrame(raf); };
+  requestAnimationFrame(raf);
+  return () => lenis.destroy();
+}, []);
+```
+
 ## Reglas de desarrollo
 - Mobile-first SIEMPRE. Diseñar para 375px, escalar a desktop.
 - `npm run dev` para desarrollo local en localhost:3000.
 - App Router: Server Components por defecto, `"use client"` solo donde haya interactividad.
 - Supabase: Row Level Security habilitado siempre.
-- No agregar dependencias externas a menos que sea estrictamente necesario.
+- Lenis y Framer Motion están aprobados y ya instalados — úsalos sin restricción.
+- No agregar otras dependencias sin avisarle al otro.
 - Código limpio, sin comentarios obvios. El código se explica solo.
 - Imports con alias: `@/components/`, `@/lib/`, `@/data/`.
