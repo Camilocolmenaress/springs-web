@@ -34,10 +34,9 @@ export default function MobileCanvas() {
     return <div style={{ width: "100vw", height: "100vh", background: "#F2E8D5" }} />;
   }
 
-  const scale = viewportW / DESIGN_W;
+  const scale = viewportH / DESIGN_H;
   const editorialWidth = 3 * DESIGN_W * scale;
-  const editorialHeight = DESIGN_H * scale;
-  const verticalPad = Math.max(0, (viewportH - editorialHeight) / 2);
+  const editorialHeight = viewportH;
 
   return (
     <div
@@ -76,7 +75,7 @@ export default function MobileCanvas() {
           <div
             style={{
               position: "absolute",
-              top: verticalPad,
+              top: 0,
               left: 0,
               width: editorialWidth,
               height: editorialHeight,
