@@ -54,9 +54,10 @@ export default function MobileCanvas() {
       wrapper,
       content,
       orientation: "horizontal",
-      gestureOrientation: "vertical",
+      gestureOrientation: "both",
       smoothWheel: true,
       wheelMultiplier: 1,
+      touchMultiplier: 2,
       duration: 1.4,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     });
@@ -98,6 +99,7 @@ export default function MobileCanvas() {
         overflow: "hidden",
         background: "var(--cream)",
         position: "relative",
+        touchAction: "none",
       }}
     >
       <div
