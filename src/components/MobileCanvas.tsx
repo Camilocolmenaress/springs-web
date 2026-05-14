@@ -93,10 +93,13 @@ export default function MobileCanvas() {
   return (
     <div
       ref={wrapperRef}
+      className="mobile-canvas"
       style={{
         width: "100vw",
         height: "100vh",
-        overflow: "hidden",
+        overflowX: "scroll",
+        overflowY: "hidden",
+        scrollbarWidth: "none",
         background: "var(--cream)",
         position: "relative",
         touchAction: "none",

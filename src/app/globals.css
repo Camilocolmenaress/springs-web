@@ -34,6 +34,9 @@ html, body {
   font-family: var(--font-sans), system-ui, sans-serif;
 }
 
+/* Esconde scrollbar en el canvas mobile */
+.mobile-canvas::-webkit-scrollbar { display: none; }
+
 /* Scroll horizontal global */
 .h-scroll-track {
   display: flex;
