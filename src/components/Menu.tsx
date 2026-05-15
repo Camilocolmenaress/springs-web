@@ -4,6 +4,14 @@ import { useMemo, useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { productos, type Categoria, type Producto } from "@/data/productos";
 
+const C = {
+  burgundy: "#6B1419",
+  cream: "#F2E8D5",
+  tinta: "#1A0A0C",
+  mostaza: "#C5871F",
+  plate: "#CEC8B4",
+};
+
 const CATEGORIAS: { key: Categoria; label: string }[] = [
   { key: "combo", label: "COMBOS" },
   { key: "jacket", label: "JACKETS" },
@@ -20,7 +28,7 @@ type Props = {
 };
 
 export default function Menu({ onAgregar }: Props) {
-  const [categoria, setCategoria] = useState<Categoria>("combo");
+  const [categoria, setCategoria] = useState<Categoria>("jacket");
   const [index, setIndex] = useState(0);
 
   const items = useMemo(
@@ -36,9 +44,7 @@ export default function Menu({ onAgregar }: Props) {
   }, [categoria]);
 
   const total = items.length;
-  const activo = items[index];
 
-  // Distancia signada más corta entre item i e índice actual (con wrap circular)
   const signedDistance = useCallback(
     (i: number) => {
       if (total === 0) return 0;
@@ -77,45 +83,61 @@ export default function Menu({ onAgregar }: Props) {
     return () => window.removeEventListener("keydown", onKey);
   }, [goPrev, goNext]);
 
-  if (!activo) return null;
+  if (!items.length) return null;
 
   const categoriaActual = CATEGORIAS.find((c) => c.key === categoria)?.label ?? "";
 
   return (
     <section
       id="menu"
-      className="relative w-full bg-cream overflow-hidden"
       style={{
+        position: "relative",
+        width: "100%",
         height: "100vh",
-        paddingTop: "max(56px, env(safe-area-inset-top, 56px))",
-        paddingBottom: "max(24px, env(safe-area-inset-bottom, 24px))",
+        background: C.cream,
+        overflow: "hidden",
         display: "flex",
         flexDirection: "column",
+        paddingTop: "max(56px, env(safe-area-inset-top, 56px))",
+        paddingBottom: "max(20px, env(safe-area-inset-bottom, 20px))",
       }}
     >
-      {/* Header — selector de categorías */}
-      <div className="px-6 md:px-12 mb-8 md:mb-10">
-        <div className="flex items-center gap-2 text-tinta/50 font-mono text-[0.6rem] tracking-[0.22em] uppercase mb-4">
-          <span className="block w-3 h-px bg-tinta/40" />
+      {/* Header */}
+      <div style={{ padding: "0 clamp(20px, 5vw, 80px) 20px" }}>
+        <div style={{
+          fontFamily: "var(--font-jetbrains-mono), monospace",
+          fontSize: "0.6rem",
+          letterSpacing: "0.22em",
+          color: C.tinta,
+          opacity: 0.5,
+          textTransform: "uppercase",
+          marginBottom: 14,
+          display: "flex",
+          alignItems: "center",
+          gap: 8,
+        }}>
+          <span style={{ display: "block", width: 12, height: 1, background: C.tinta, opacity: 0.4 }} />
           AQUÍ TIENES NUESTRO MENÚ
         </div>
-        <div
-          className="flex gap-2 overflow-x-auto pb-2 -mx-6 px-6 md:mx-0 md:px-0"
-          style={{ scrollbarWidth: "none" }}
-        >
+        <div style={{ display: "flex", gap: 8, overflowX: "auto", scrollbarWidth: "none" }}>
           {CATEGORIAS.map((c) => {
             const active = c.key === categoria;
             return (
               <button
                 key={c.key}
                 onClick={() => setCategoria(c.key)}
-                className="font-mono text-[0.65rem] md:text-[0.7rem] tracking-[0.22em] uppercase shrink-0 transition-colors"
                 style={{
+                  fontFamily: "var(--font-jetbrains-mono), monospace",
+                  fontSize: "0.65rem",
+                  letterSpacing: "0.22em",
+                  textTransform: "uppercase",
                   padding: "10px 18px",
-                  background: active ? "var(--tinta)" : "transparent",
-                  color: active ? "var(--cream)" : "var(--tinta)",
-                  border: `1px solid var(--tinta)`,
+                  background: active ? C.tinta : "transparent",
+                  color: active ? C.cream : C.tinta,
+                  border: `1px solid ${C.tinta}`,
                   cursor: "pointer",
+                  flexShrink: 0,
+                  transition: "background 0.15s, color 0.15s",
                 }}
               >
                 {c.label}
@@ -125,105 +147,119 @@ export default function Menu({ onAgregar }: Props) {
         </div>
       </div>
 
-      {/* Tipografía gigante de fondo — nombre de la categoría */}
+      {/* Watermark */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-[42%] -translate-y-1/2 text-center whitespace-nowrap font-display"
         style={{
-          fontSize: "clamp(140px, 24vw, 380px)",
+          pointerEvents: "none",
+          position: "absolute",
+          inset: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: "var(--font-anton), sans-serif",
+          fontSize: "clamp(100px, 20vw, 320px)",
           lineHeight: 0.85,
-          letterSpacing: "-0.005em",
-          color: "var(--tinta)",
-          opacity: 0.06,
+          color: C.tinta,
+          opacity: 0.055,
           textTransform: "uppercase",
+          whiteSpace: "nowrap",
           zIndex: 1,
+          userSelect: "none",
         }}
       >
         {categoriaActual}
       </div>
 
-      {/* Carrusel rueda — área central */}
-      <div className="relative flex-1 flex flex-col justify-center" style={{ zIndex: 2 }}>
+      {/* Carousel area */}
+      <div style={{ position: "relative", flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", zIndex: 2 }}>
+
+        {/* Cards track */}
         <div
-          className="relative mx-auto"
           style={{
+            position: "relative",
             width: "100%",
-            maxWidth: "1100px",
-            height: "min(64vh, 540px)",
+            height: "min(68vh, 580px)",
             perspective: "1400px",
-            perspectiveOrigin: "50% 50%",
+            perspectiveOrigin: "50% 45%",
           }}
         >
           {items.map((p, i) => {
             const d = signedDistance(i);
             const isCenter = d === 0;
-            const onClickCard = () => {
-              if (isCenter) {
-                onAgregar?.(p);
-              } else {
-                goTo(i);
-              }
-            };
             return (
               <WheelCard
                 key={p.id}
                 producto={p}
                 distance={d}
-                onClick={onClickCard}
+                onClick={() => { if (!isCenter) goTo(i); }}
                 onAgregar={onAgregar}
               />
             );
           })}
         </div>
 
-        {/* Controles — flechas y paginador */}
-        <div className="mt-6 md:mt-8 flex items-center justify-center gap-4 md:gap-6">
-          <button
-            onClick={goPrev}
-            disabled={total < 2}
-            aria-label="Anterior"
-            className="font-display text-2xl text-tinta disabled:opacity-30"
-            style={{
-              padding: "8px 14px",
-              border: `1px solid var(--tinta)`,
-              background: "var(--cream)",
-              cursor: total < 2 ? "default" : "pointer",
-            }}
-          >
-            ←
-          </button>
-          <div
-            className="font-mono text-tinta tabular-nums"
-            style={{
-              fontSize: "0.7rem",
-              letterSpacing: "0.2em",
-              padding: "10px 16px",
-              border: `1px solid var(--tinta)`,
-            }}
-          >
-            {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
-          </div>
-          <button
-            onClick={goNext}
-            disabled={total < 2}
-            aria-label="Siguiente"
-            className="font-display text-2xl text-tinta disabled:opacity-30"
-            style={{
-              padding: "8px 14px",
-              border: `1px solid var(--tinta)`,
-              background: "var(--cream)",
-              cursor: total < 2 ? "default" : "pointer",
-            }}
-          >
-            →
-          </button>
+        {/* Nav arrows */}
+        {total > 1 && (
+          <>
+            <NavBtn direction="prev" onClick={goPrev} style={{ position: "absolute", left: "clamp(10px, 5vw, 60px)", top: "42%" }} />
+            <NavBtn direction="next" onClick={goNext} style={{ position: "absolute", right: "clamp(10px, 5vw, 60px)", top: "42%" }} />
+          </>
+        )}
+
+        {/* Dot pagination */}
+        <div style={{ display: "flex", gap: 8, marginTop: 16, alignItems: "center" }}>
+          {items.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goTo(i)}
+              aria-label={`Producto ${i + 1}`}
+              style={{
+                width: i === index ? 20 : 8,
+                height: 8,
+                background: i === index ? C.tinta : "transparent",
+                border: `1px solid ${C.tinta}`,
+                cursor: "pointer",
+                padding: 0,
+                transition: "width 0.25s, background 0.25s",
+              }}
+            />
+          ))}
         </div>
       </div>
     </section>
   );
 }
 
-/* ─────────────────────────────────────── */
+function NavBtn({ direction, onClick, style }: { direction: "prev" | "next"; onClick: () => void; style?: React.CSSProperties }) {
+  return (
+    <button
+      onClick={onClick}
+      aria-label={direction === "prev" ? "Anterior" : "Siguiente"}
+      style={{
+        width: 52,
+        height: 52,
+        background: C.cream,
+        boxShadow: `inset 0 0 0 1px ${C.tinta}`,
+        clipPath: "circle(50%)",
+        border: "none",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        cursor: "pointer",
+        fontFamily: "var(--font-anton), sans-serif",
+        fontSize: "1.4rem",
+        color: C.tinta,
+        lineHeight: 1,
+        transform: "translateY(-50%)",
+        zIndex: 10,
+        ...style,
+      }}
+    >
+      {direction === "prev" ? "‹" : "›"}
+    </button>
+  );
+}
 
 function WheelCard({
   producto,
@@ -240,14 +276,9 @@ function WheelCard({
   const isCenter = distance === 0;
   const visible = abs <= 2;
 
-  // Geometría de la rueda: a más lejos del centro, más giro, menos escala, menos opacidad
-  const CARD_OFFSET_VW = 26; // separación entre slots en vw (responsive)
-  const x = distance * CARD_OFFSET_VW;
-  const rotateY = -distance * 38;
-  const scale = isCenter ? 1 : abs === 1 ? 0.62 : 0.4;
+  const scale = isCenter ? 1 : abs === 1 ? 0.62 : 0.38;
   const opacity = !visible ? 0 : isCenter ? 1 : abs === 1 ? 0.55 : 0.18;
   const zIndex = 20 - abs * 3;
-  const blur = abs >= 2 ? 4 : 0;
 
   return (
     <motion.div
@@ -263,11 +294,10 @@ function WheelCard({
       aria-label={!isCenter ? `Ir a ${producto.nombre}` : undefined}
       aria-hidden={!visible}
       animate={{
-        x: `${x}vw`,
-        rotateY,
+        x: `${distance * 28}vw`,
+        rotateY: -distance * 22,
         scale,
         opacity,
-        filter: `blur(${blur}px)`,
       }}
       transition={{ type: "spring", stiffness: 140, damping: 22, mass: 0.9 }}
       style={{
@@ -276,7 +306,7 @@ function WheelCard({
         left: "50%",
         translateX: "-50%",
         translateY: "-50%",
-        width: "min(420px, 78vw)",
+        width: "min(380px, 68vw)",
         zIndex,
         cursor: isCenter ? "default" : "pointer",
         pointerEvents: visible ? "auto" : "none",
@@ -298,85 +328,154 @@ function ProductoCard({
   expanded: boolean;
   onAgregar?: (p: Producto) => void;
 }) {
+  const imgSrc = producto.imagen_url || "/images/jacket-placeholder.png";
+
   return (
-    <article className="flex flex-col bg-cream text-left" style={{ border: `1px solid var(--tinta)` }}>
-      <div
-        className="relative flex items-center justify-center"
-        style={{
-          aspectRatio: "4 / 3",
-          background:
-            "radial-gradient(ellipse at 50% 45%, #D4A55A 0%, #9B6530 35%, #5C3514 70%, #2E1A08 100%)",
-          borderBottom: `1px solid var(--tinta)`,
-        }}
-      >
-        <span
-          className="font-display uppercase text-center px-4"
+    <article style={{ display: "flex", flexDirection: "column", alignItems: "center", background: "transparent" }}>
+
+      {/* Image + plate */}
+      <div style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
+        <img
+          src={imgSrc}
+          alt={producto.nombre}
           style={{
-            fontSize: "clamp(34px, 5.5vw, 64px)",
-            color: "var(--cream)",
-            letterSpacing: "0.02em",
-            lineHeight: 0.95,
-            textShadow: "0 4px 14px rgba(0,0,0,0.35)",
+            width: "min(260px, 54vw)",
+            height: "min(260px, 54vw)",
+            objectFit: "contain",
+            position: "relative",
+            zIndex: 2,
+            display: "block",
           }}
-        >
-          {producto.nombre}
-        </span>
-        <span
-          className="absolute top-3 left-3 font-mono uppercase"
-          style={{
-            fontSize: "0.55rem",
-            letterSpacing: "0.2em",
-            color: "var(--cream)",
-            opacity: 0.6,
-          }}
-        >
-          W25 · BGA
-        </span>
+        />
+        <div style={{
+          width: "68%",
+          height: 20,
+          background: C.plate,
+          clipPath: "ellipse(50% 50% at 50% 50%)",
+          marginTop: -14,
+          position: "relative",
+          zIndex: 1,
+        }} />
       </div>
 
-      <div className="flex-1 flex flex-col gap-3 p-5 md:p-6">
-        <div className="font-mono uppercase text-tinta/50" style={{ fontSize: "0.55rem", letterSpacing: "0.22em" }}>
-          {CATEGORIAS.find((c) => c.key === producto.categoria)?.label}
-        </div>
-        <h3 className="font-display text-tinta uppercase" style={{ fontSize: "clamp(24px, 3.2vw, 40px)", lineHeight: 0.95, letterSpacing: "0.01em" }}>
-          {producto.nombre}
-        </h3>
-
-        {expanded && producto.descripcion && (
-          <p className="font-sans text-tinta/80" style={{ fontSize: "0.85rem", lineHeight: 1.45 }}>
-            {producto.descripcion}
-          </p>
-        )}
-
-        <div className="mt-auto pt-3 flex items-end justify-between gap-4">
-          <div className="font-mono text-tinta tabular-nums" style={{ fontSize: expanded ? "1.4rem" : "1rem", letterSpacing: "0.04em" }}>
-            {formatPrecio(producto.precio)}
+      {/* Center — expanded info */}
+      {expanded ? (
+        <div style={{ textAlign: "center", marginTop: 14, width: "100%" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10 }}>
+            <span style={{ color: C.tinta, fontSize: "0.8rem" }}>✦</span>
+            <h3 style={{
+              fontFamily: "var(--font-anton), sans-serif",
+              fontSize: "clamp(28px, 5.5vw, 58px)",
+              textTransform: "uppercase",
+              letterSpacing: "0.01em",
+              lineHeight: 1,
+              color: C.tinta,
+              margin: 0,
+            }}>
+              {producto.nombre}
+            </h3>
+            <span style={{ color: C.tinta, fontSize: "0.8rem" }}>✦</span>
           </div>
-          {expanded && (
+          <p style={{
+            fontFamily: "var(--font-inter), sans-serif",
+            fontSize: "0.72rem",
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            color: C.tinta,
+            opacity: 0.6,
+            margin: "8px 0 0",
+          }}>
+            {producto.descripcion.toUpperCase()}
+          </p>
+          <div style={{
+            display: "flex",
+            alignItems: "stretch",
+            marginTop: 14,
+            border: `1px solid ${C.tinta}`,
+          }}>
+            <div style={{
+              flex: 1,
+              padding: "12px 20px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              borderRight: `1px solid ${C.tinta}`,
+            }}>
+              <span style={{
+                fontFamily: "var(--font-jetbrains-mono), monospace",
+                fontSize: "1.3rem",
+                color: C.tinta,
+                letterSpacing: "0.02em",
+                display: "block",
+              }}>
+                {formatPrecio(producto.precio)}
+              </span>
+              <span style={{
+                fontFamily: "var(--font-jetbrains-mono), monospace",
+                fontSize: "0.5rem",
+                letterSpacing: "0.2em",
+                color: C.tinta,
+                opacity: 0.5,
+                marginTop: 2,
+                display: "block",
+              }}>
+                COP
+              </span>
+            </div>
             <button
               type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                onAgregar?.(producto);
-              }}
+              onClick={(e) => { e.stopPropagation(); onAgregar?.(producto); }}
               disabled={!producto.disponible}
-              className="font-display uppercase disabled:opacity-40"
               style={{
-                fontSize: "0.85rem",
-                letterSpacing: "0.18em",
-                padding: "14px 22px",
-                background: "var(--burgundy)",
-                color: "var(--cream)",
-                border: `1px solid var(--tinta)`,
+                fontFamily: "var(--font-anton), sans-serif",
+                fontSize: "0.8rem",
+                letterSpacing: "0.15em",
+                textTransform: "uppercase",
+                padding: "12px 22px",
+                background: C.burgundy,
+                color: C.cream,
+                border: "none",
                 cursor: producto.disponible ? "pointer" : "not-allowed",
+                opacity: producto.disponible ? 1 : 0.4,
               }}
             >
               {producto.disponible ? "AGREGAR ↗" : "AGOTADO"}
             </button>
-          )}
+          </div>
         </div>
-      </div>
+      ) : (
+        /* Side — compact info */
+        <div style={{ textAlign: "center", marginTop: 10 }}>
+          <h3 style={{
+            fontFamily: "var(--font-anton), sans-serif",
+            fontSize: "clamp(15px, 3vw, 24px)",
+            textTransform: "uppercase",
+            color: C.tinta,
+            margin: 0,
+          }}>
+            {producto.nombre}
+          </h3>
+          <p style={{
+            fontFamily: "var(--font-inter), sans-serif",
+            fontSize: "0.62rem",
+            letterSpacing: "0.06em",
+            textTransform: "uppercase",
+            color: C.tinta,
+            opacity: 0.55,
+            margin: "4px 0 0",
+          }}>
+            {producto.descripcion.toUpperCase()}
+          </p>
+          <div style={{
+            fontFamily: "var(--font-jetbrains-mono), monospace",
+            fontSize: "0.82rem",
+            color: C.tinta,
+            marginTop: 5,
+          }}>
+            {formatPrecio(producto.precio)} COP
+          </div>
+        </div>
+      )}
     </article>
   );
 }
-
