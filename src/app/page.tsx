@@ -162,7 +162,9 @@ export default function Home() {
           <div style={{
             position: "absolute", left: "-4vw", top: "8vh",
             width: "44vw", height: "84vh",
-            background: "radial-gradient(ellipse at 45% 40%, #D4A55A 0%, #9B6530 35%, #5C3514 70%, #2E1A08 100%)",
+            backgroundImage: "url('/images/jacket-placeholder.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
             clipPath: "ellipse(48% 50% at 50% 50%)",
             zIndex: 2,
           }}>
@@ -586,7 +588,9 @@ export default function Home() {
           <Reveal delay={0.2} style={{ position: "absolute", left: "298vw", top: "12vh", zIndex: 4 }}>
             <div style={{
               width: "14vw", height: "32vh",
-              background: `radial-gradient(ellipse at center, ${C.burgundy} 0%, #3a0a0e 100%)`,
+              backgroundImage: "url('/images/jacket-placeholder.png')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
               display: "flex", alignItems: "center", justifyContent: "center", padding: "16px",
             }}>
               <div style={{ ...F.display, fontSize: "1.6rem", color: C.cream, letterSpacing: "0.04em", textAlign: "center" }}>LA<br />BRAVA</div>
@@ -639,7 +643,9 @@ export default function Home() {
           <div style={{
             position: "absolute", left: "315vw", bottom: "12vh", zIndex: 4,
             width: "28vw", height: "64vh",
-            background: "radial-gradient(ellipse at 45% 40%, #D4A55A 0%, #9B6530 35%, #5C3514 70%, #2E1A08 100%)",
+            backgroundImage: "url('/images/jacket-placeholder.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
             clipPath: "ellipse(48% 50% at 50% 50%)",
           }} />
 

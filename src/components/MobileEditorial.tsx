@@ -60,7 +60,9 @@ export default function MobileEditorial({ pauseScroll, resumeScroll, scrollRoot 
       <div style={{
         position: "absolute", left: "-57.6px", top: "72px",
         width: "633.6px", height: "756px",
-        background: "radial-gradient(ellipse at 45% 40%, #D4A55A 0%, #9B6530 35%, #5C3514 70%, #2E1A08 100%)",
+        backgroundImage: "url('/images/jacket-placeholder.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
         clipPath: "ellipse(48% 50% at 50% 50%)",
         zIndex: 2,
       }}>
@@ -290,7 +292,9 @@ export default function MobileEditorial({ pauseScroll, resumeScroll, scrollRoot 
       <Reveal style={{ position: "absolute", left: "1555.2px", top: "198px", zIndex: 4 }}>
         <div style={{
           width: "288px", height: "540px",
-          background: `linear-gradient(160deg, ${C.burgundy} 0%, #4A0E12 100%)`,
+          backgroundImage: "url('/images/jacket-placeholder.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
           display: "flex", alignItems: "flex-end", padding: "16px",
         }}>
           <div>
@@ -304,7 +308,9 @@ export default function MobileEditorial({ pauseScroll, resumeScroll, scrollRoot 
       <Reveal delay={0.1} style={{ position: "absolute", left: "1886.4px", top: "162px", zIndex: 4 }}>
         <div style={{
           width: "230.4px", height: "468px",
-          background: `linear-gradient(180deg, #3a1818 0%, ${C.tinta} 100%)`,
+          backgroundImage: "url('/images/jacket-placeholder.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
           border: `2px solid ${C.cream}`,
           display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "16px",
           position: "relative",
