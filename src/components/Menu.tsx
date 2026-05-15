@@ -99,29 +99,20 @@ export default function Menu({ onAgregar }: Props) {
       background: C.cream,
       overflow: "hidden",
       display: "flex", flexDirection: "column",
-      paddingTop:    "max(56px, env(safe-area-inset-top,    56px))",
-      paddingBottom: "max(16px, env(safe-area-inset-bottom, 16px))",
+      paddingTop:    "max(16px, env(safe-area-inset-top,    16px))",
+      paddingBottom: "max(12px, env(safe-area-inset-bottom, 12px))",
     }}>
 
       {/* ── Header ───────────────────────────────────────── */}
-      <div style={{ padding: "0 clamp(20px, 5vw, 80px) 16px", flexShrink: 0 }}>
-        <div style={{
-          fontFamily: "var(--font-jetbrains-mono), monospace",
-          fontSize: "0.6rem", letterSpacing: "0.22em",
-          color: C.tinta, opacity: 0.5, textTransform: "uppercase",
-          marginBottom: 12, display: "flex", alignItems: "center", gap: 8,
-        }}>
-          <span style={{ display: "block", width: 12, height: 1, background: C.tinta, opacity: 0.4 }} />
-          AQUÍ TIENES NUESTRO MENÚ
-        </div>
-        <div style={{ display: "flex", gap: 8, overflowX: "auto", scrollbarWidth: "none" }}>
+      <div style={{ padding: "0 clamp(16px, 5vw, 80px) 8px", flexShrink: 0 }}>
+        <div style={{ display: "flex", gap: 6, overflowX: "auto", scrollbarWidth: "none" }}>
           {CATEGORIAS.map(c => {
             const active = c.key === categoria;
             return (
               <button key={c.key} onClick={() => setCategoria(c.key)} style={{
                 fontFamily: "var(--font-jetbrains-mono), monospace",
-                fontSize: "0.65rem", letterSpacing: "0.22em", textTransform: "uppercase",
-                padding: "10px 18px",
+                fontSize: "0.6rem", letterSpacing: "0.18em", textTransform: "uppercase",
+                padding: "7px 13px",
                 background: active ? C.tinta : "transparent",
                 color:      active ? C.cream : C.tinta,
                 border: `1px solid ${C.tinta}`,
@@ -180,7 +171,7 @@ export default function Menu({ onAgregar }: Props) {
                   aria-label={!isCenter ? `Ir a ${p.nombre}` : undefined}
                   style={{
                     position: "absolute",
-                    top: "50%", left: "50%",
+                    top: "38%", left: "50%",
                     translateX: "-50%", translateY: "-50%",
                     width: "min(340px, 60vw)",
                     zIndex: 20 - abs * 3,
@@ -239,7 +230,7 @@ export default function Menu({ onAgregar }: Props) {
               <button onClick={goPrev} aria-label="Anterior" style={{
                 position: "absolute",
                 left:  "calc(50% - min(210px, 34vw))",
-                top:   "40%",
+                top:   "38%",
                 transform: "translate(-50%, -50%)",
                 width: 50, height: 50,
                 background: "rgba(242,232,213,0.88)",
@@ -254,7 +245,7 @@ export default function Menu({ onAgregar }: Props) {
               <button onClick={goNext} aria-label="Siguiente" style={{
                 position: "absolute",
                 left:  "calc(50% + min(160px, 28vw))",
-                top:   "40%",
+                top:   "38%",
                 transform: "translate(-50%, -50%)",
                 width: 50, height: 50,
                 background: "rgba(242,232,213,0.88)",
