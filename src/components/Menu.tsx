@@ -164,7 +164,7 @@ export default function Menu({ onAgregar }: Props) {
               const abs = Math.abs(offset);
               const isCenter = abs === 0;
               const visible  = abs <= 2;
-              const scale   = isCenter ? 1 : abs === 1 ? 0.58 : 0.36;
+              const scale   = isCenter ? 1 : abs === 1 ? 0.72 : 0.45;
               const opacity = isCenter ? 1 : abs === 1 ? 0.75 : 0.28;
 
               return (
@@ -194,8 +194,8 @@ export default function Menu({ onAgregar }: Props) {
                     src={imgSrc(p)}
                     alt={p.nombre}
                     style={{
-                      width:  isCenter ? "clamp(300px, 82vw, 700px)" : "clamp(200px, 55vw, 420px)",
-                      height: isCenter ? "clamp(300px, 82vw, 700px)" : "clamp(200px, 55vw, 420px)",
+                      width:  isCenter ? "min(82vh, 90vw)" : "min(52vh, 62vw, 480px)",
+                      height: isCenter ? "min(82vh, 90vw)" : "min(52vh, 62vw, 480px)",
                       objectFit: "contain",
                       display: "block",
                     }}
