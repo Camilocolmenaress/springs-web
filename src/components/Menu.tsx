@@ -99,12 +99,22 @@ export default function Menu({ onAgregar }: Props) {
       background: C.cream,
       overflow: "hidden",
       display: "flex", flexDirection: "column",
-      paddingTop:    "max(16px, env(safe-area-inset-top,    16px))",
+      paddingTop:    "max(52px, env(safe-area-inset-top,    52px))",
       paddingBottom: "max(12px, env(safe-area-inset-bottom, 12px))",
     }}>
 
       {/* ── Header ───────────────────────────────────────── */}
       <div style={{ padding: "0 clamp(16px, 5vw, 80px) 8px", flexShrink: 0 }}>
+        {/* Fila 1: label bajo el botón VOLVER */}
+        <div style={{
+          fontFamily: "var(--font-jetbrains-mono), monospace",
+          fontSize: "0.55rem", letterSpacing: "0.2em",
+          color: C.tinta, opacity: 0.45,
+          marginBottom: 8,
+        }}>
+          — AQUÍ TIENES NUESTRO MENÚ
+        </div>
+        {/* Fila 2: pestañas de categoría */}
         <div style={{ display: "flex", gap: 6, overflowX: "auto", scrollbarWidth: "none" }}>
           {CATEGORIAS.map(c => {
             const active = c.key === categoria;
@@ -155,7 +165,7 @@ export default function Menu({ onAgregar }: Props) {
               const abs = Math.abs(offset);
               const isCenter = abs === 0;
               const visible  = abs <= 2;
-              const scale   = isCenter ? 1 : abs === 1 ? 0.72 : 0.45;
+              const scale   = isCenter ? 1 : abs === 1 ? 1 : 0.65;
               const opacity = isCenter ? 1 : abs === 1 ? 0.75 : 0.28;
 
               return (
@@ -185,8 +195,8 @@ export default function Menu({ onAgregar }: Props) {
                     src={imgSrc(p)}
                     alt={p.nombre}
                     style={{
-                      width:  isCenter ? "min(82vh, 90vw)" : "min(52vh, 62vw, 480px)",
-                      height: isCenter ? "min(82vh, 90vw)" : "min(52vh, 62vw, 480px)",
+                      width:  isCenter ? "min(60vh, 88vw)" : "min(30vh, 38vw, 260px)",
+                      height: isCenter ? "min(60vh, 88vw)" : "min(30vh, 38vw, 260px)",
                       objectFit: "contain",
                       display: "block",
                     }}
@@ -262,7 +272,7 @@ export default function Menu({ onAgregar }: Props) {
         </div>
 
         {/* ── Center product info ───────────────────────── */}
-        <div style={{ flexShrink: 0, padding: "0 clamp(20px, 9vw, 140px)" }}>
+        <div style={{ flexShrink: 0, padding: "0 clamp(16px, 4vw, 60px)" }}>
           <AnimatePresence mode="wait">
             <motion.div
               key={`${activo.id}-${activeRealIdx}`}
@@ -292,7 +302,7 @@ export default function Menu({ onAgregar }: Props) {
               }}>
                 {activo.descripcion.toUpperCase()}
               </p>
-              <div style={{ display: "flex", alignItems: "stretch", border: `1px solid ${C.tinta}` }}>
+              <div style={{ display: "flex", alignItems: "stretch", border: `1px solid ${C.tinta}`, maxWidth: 420, margin: "0 auto", width: "100%" }}>
                 <div style={{
                   flex: 1, padding: "8px 20px",
                   display: "flex", flexDirection: "column", justifyContent: "center",
