@@ -10,8 +10,6 @@ const C = {
   cream:    "#F2E8D5",
   tinta:    "#1A0A0C",
   mostaza:  "#C5871F",
-  plateFace:"#CBC4B0",
-  plateEdge:"#9A9080",
 };
 
 const CATEGORIAS: { key: Categoria; label: string }[] = [
@@ -24,32 +22,6 @@ const CATEGORIAS: { key: Categoria; label: string }[] = [
 
 const fmt = (n: number) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-/* ── Plate ─────────────────────────────────────────────── */
-function Plate() {
-  return (
-    <div style={{
-      position: "relative",
-      width: "100%",
-      height: "min(58px, 7vw)",
-      filter: "drop-shadow(0 14px 22px rgba(0,0,0,0.22))",
-    }}>
-      {/* Cylindrical edge — darker, offset down */}
-      <div style={{
-        position: "absolute",
-        top: "30%", left: "2%", right: "2%", bottom: 0,
-        background: C.plateEdge,
-        clipPath: "ellipse(50% 50% at 50% 50%)",
-      }} />
-      {/* Top face — lighter, sits above */}
-      <div style={{
-        position: "absolute",
-        top: 0, left: 0, right: 0, bottom: "20%",
-        background: C.plateFace,
-        clipPath: "ellipse(50% 50% at 50% 50%)",
-      }} />
-    </div>
-  );
-}
 
 /* ── Chevron ────────────────────────────────────────────── */
 function Chevron({ dir }: { dir: "left" | "right" }) {
@@ -218,43 +190,16 @@ export default function Menu({ onAgregar }: Props) {
                     WebkitTapHighlightColor: "transparent",
                   }}
                 >
-                  {/*
-                   * Contenedor único: placa (z1) + imagen (z2).
-                   * Los píxeles transparentes del PNG revelan la placa debajo
-                   * de la papa — se asienta sola sin trucos de margen.
-                   */}
-                  <div style={{
-                    position: "relative",
-                    width: "min(320px, 60vw)",
-                    height: "min(340px, 64vw)",
-                  }}>
-                    {/* Placa — detrás de la imagen */}
-                    <div style={{
-                      position: "absolute",
-                      top: "66%",
-                      left: "50%",
-                      transform: "translateX(-50%)",
-                      width: "100%",
-                      zIndex: 1,
-                    }}>
-                      <Plate />
-                    </div>
-                    {/* Imagen papa — encima, áreas transparentes muestran la placa */}
-                    <img
-                      src={imgSrc(p)}
-                      alt={p.nombre}
-                      style={{
-                        position: "absolute",
-                        inset: 0,
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "contain",
-                        objectPosition: "center",
-                        zIndex: 2,
-                        display: "block",
-                      }}
-                    />
-                  </div>
+                  <img
+                    src={imgSrc(p)}
+                    alt={p.nombre}
+                    style={{
+                      width: "min(400px, 68vw)",
+                      height: "min(400px, 68vw)",
+                      objectFit: "contain",
+                      display: "block",
+                    }}
+                  />
 
                   {/* Side card text */}
                   {!isCenter && (

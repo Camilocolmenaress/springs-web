@@ -42,7 +42,7 @@ export const productos: Producto[] = [
     precio: 32900,
     categoria: "jacket",
     disponible: true,
-    imagen_url: null,
+    imagen_url: "/images/la-fija.png",
     orden: 10,
   },
   {
