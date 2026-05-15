@@ -29,22 +29,21 @@ function Plate() {
   return (
     <div style={{
       position: "relative",
-      width: "min(300px, 58vw)",
-      height: "min(60px, 7.5vw)",
-      filter: "drop-shadow(0 10px 18px rgba(0,0,0,0.20))",
-      flexShrink: 0,
+      width: "100%",
+      height: "min(58px, 7vw)",
+      filter: "drop-shadow(0 14px 22px rgba(0,0,0,0.22))",
     }}>
-      {/* Cylindrical side / bottom edge */}
+      {/* Cylindrical edge — darker, offset down */}
       <div style={{
         position: "absolute",
-        top: "28%", left: 0, right: 0, bottom: 0,
+        top: "30%", left: "2%", right: "2%", bottom: 0,
         background: C.plateEdge,
         clipPath: "ellipse(50% 50% at 50% 50%)",
       }} />
-      {/* Top surface */}
+      {/* Top face — lighter, sits above */}
       <div style={{
         position: "absolute",
-        top: 0, left: 0, right: 0, bottom: "16%",
+        top: 0, left: 0, right: 0, bottom: "20%",
         background: C.plateFace,
         clipPath: "ellipse(50% 50% at 50% 50%)",
       }} />
@@ -219,25 +218,42 @@ export default function Menu({ onAgregar }: Props) {
                     WebkitTapHighlightColor: "transparent",
                   }}
                 >
-                  {/* Potato image */}
-                  <img
-                    src={imgSrc(p)}
-                    alt={p.nombre}
-                    style={{
-                      width:  "min(280px, 54vw)",
-                      height: "min(280px, 54vw)",
-                      objectFit: "contain",
-                      objectPosition: "center bottom",
-                      display: "block",
-                      position: "relative",
-                      zIndex: 2,
-                      /* Pull image down so it overlaps plate top edge */
-                      marginBottom: "-min(20px, 2.5vw)",
-                    }}
-                  />
-                  {/* Plate disc */}
-                  <div style={{ position: "relative", zIndex: 1 }}>
-                    <Plate />
+                  {/*
+                   * Contenedor único: placa (z1) + imagen (z2).
+                   * Los píxeles transparentes del PNG revelan la placa debajo
+                   * de la papa — se asienta sola sin trucos de margen.
+                   */}
+                  <div style={{
+                    position: "relative",
+                    width: "min(320px, 60vw)",
+                    height: "min(340px, 64vw)",
+                  }}>
+                    {/* Placa — detrás de la imagen */}
+                    <div style={{
+                      position: "absolute",
+                      top: "66%",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      width: "100%",
+                      zIndex: 1,
+                    }}>
+                      <Plate />
+                    </div>
+                    {/* Imagen papa — encima, áreas transparentes muestran la placa */}
+                    <img
+                      src={imgSrc(p)}
+                      alt={p.nombre}
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "contain",
+                        objectPosition: "center",
+                        zIndex: 2,
+                        display: "block",
+                      }}
+                    />
                   </div>
 
                   {/* Side card text */}
