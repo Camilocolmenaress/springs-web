@@ -52,7 +52,7 @@ export const productos: Producto[] = [
     precio: 35900,
     categoria: "jacket",
     disponible: true,
-    imagen_url: null,
+    imagen_url: "/images/jacket-2.png",
     orden: 11,
   },
   {
@@ -62,7 +62,7 @@ export const productos: Producto[] = [
     precio: 34900,
     categoria: "jacket",
     disponible: true,
-    imagen_url: null,
+    imagen_url: "/images/jacket-2.png",
     orden: 12,
   },
   {
@@ -72,7 +72,7 @@ export const productos: Producto[] = [
     precio: 28900,
     categoria: "jacket",
     disponible: true,
-    imagen_url: null,
+    imagen_url: "/images/jacket-2.png",
     orden: 13,
   },
   {
@@ -82,7 +82,7 @@ export const productos: Producto[] = [
     precio: 28900,
     categoria: "jacket",
     disponible: true,
-    imagen_url: null,
+    imagen_url: "/images/jacket-2.png",
     orden: 14,
   },
 
