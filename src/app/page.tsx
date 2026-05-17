@@ -253,117 +253,167 @@ export default function Home() {
           {/* + símbolo top-right */}
           <span style={{ position: "absolute", left: "94vw", top: "26vh", ...F.display, fontSize: "1.8rem", color: C.tinta, opacity: 0.4, zIndex: 5 }}>+</span>
 
-          {/* Tarjeta TU PLAN YA ESTÁ EN LA PUERTA */}
-          <div style={{
-            position: "absolute", left: "64vw", bottom: "10vh", zIndex: 8,
-            width: "13vw", padding: "16px 18px",
-            background: C.cream, border: `1px solid rgba(26,10,12,0.18)`,
-          }}>
-            <div style={{ ...F.mono, fontSize: "0.6rem", letterSpacing: "0.12em", color: C.tinta, lineHeight: 1.6, textTransform: "uppercase", marginBottom: 14 }}>
-              TU PLAN<br />YA ESTÁ<br />EN LA PUERTA.
-            </div>
-            <div style={{ width: 20, height: 28, border: `1px solid ${C.tinta}`, opacity: 0.35, margin: "0 auto" }} />
-          </div>
+          {/* ─── STICKERS ────────────────────────────────── */}
 
-          {/* Tarjeta DELIVERY EN TODA BGA */}
-          <div style={{
-            position: "absolute", left: "80vw", bottom: "10vh", zIndex: 8,
-            width: "12vw", padding: "18px 20px",
-            background: C.burgundy,
-          }}>
-            <div style={{ ...F.display, fontSize: "clamp(18px, 1.8vw, 28px)", letterSpacing: "0.04em", color: C.cream, lineHeight: 1, marginBottom: 6 }}>DELIVERY</div>
-            <div style={{ ...F.mono, fontSize: "0.52rem", letterSpacing: "0.14em", color: C.cream, textTransform: "uppercase", marginBottom: 16, opacity: 0.8 }}>EN TODA BGA.</div>
-            <a href="/menu" style={{ ...F.mono, fontSize: "0.58rem", letterSpacing: "0.16em", color: C.cream, textDecoration: "none", display: "flex", alignItems: "center", gap: 6 }}>
-              VER MÁS <span>↗</span>
-            </a>
-          </div>
-
-          {/* Tarjeta oscura (foto ambientación) */}
-          <DragSticker
-            rotate={-3}
-            idleRotateRange={2}
-            idleDuration={7}
-            onDragStart={pauseScroll}
-            onDragEnd={resumeScroll}
-            style={{
-              position: "absolute", left: "76vw", top: "36vh", zIndex: 15,
-              width: "8vw", height: "14vh",
-              background: C.tinta,
-              display: "flex", alignItems: "flex-end", padding: "8px 10px",
-              border: `2px solid ${C.burgundy}`,
-            }}
-          >
-            <div style={{ ...F.display, fontSize: "0.8rem", color: C.burgundy, letterSpacing: "0.05em" }}>SPRINGS</div>
-          </DragSticker>
-
-          {/* Sticker SPRINGS Jacket Club */}
-          <DragSticker
-            rotate={-8}
-            idleRotateRange={2}
-            idleDuration={7}
-            onDragStart={pauseScroll}
-            onDragEnd={resumeScroll}
+          {/* 1. SPRINGS Jacket Club */}
+          <DragSticker rotate={-8} idleRotateRange={2} idleDuration={7}
+            onDragStart={pauseScroll} onDragEnd={resumeScroll}
             style={{
               position: "absolute", left: "3vw", top: "10vh", zIndex: 20,
-              background: C.burgundy, color: C.cream,
-              padding: "12px 16px", textAlign: "center",
-              border: `2px solid ${C.tinta}`, width: "13vw",
+              background: C.burgundy, padding: "14px 16px", textAlign: "center",
+              boxShadow: `0 0 0 5px ${C.cream}, 0 0 0 7px ${C.tinta}`,
+              width: "12vw",
             }}
           >
-            <div style={{ ...F.display, fontSize: "1.0rem", letterSpacing: "0.08em", lineHeight: 1 }}>SPRINGS</div>
-            <div style={{ ...F.display, fontSize: "0.85rem", fontStyle: "italic", lineHeight: 1, marginTop: 2 }}>Jacket Club</div>
-            <div style={{ ...F.mono, fontSize: "0.45rem", letterSpacing: "0.1em", marginTop: 8, lineHeight: 1.4, textTransform: "uppercase" }}>
+            <div style={{ ...F.display, fontSize: "1.05rem", letterSpacing: "0.06em", lineHeight: 1, color: C.cream }}>SPRINGS</div>
+            <div style={{ ...F.sans, fontSize: "0.78rem", fontStyle: "italic", fontWeight: 700, lineHeight: 1, marginTop: 2, color: C.cream }}>Jacket Club</div>
+            <div style={{ ...F.mono, fontSize: "0.43rem", letterSpacing: "0.08em", marginTop: 8, lineHeight: 1.55, textTransform: "uppercase", color: C.cream, opacity: 0.85 }}>
               ESTO ES ALGO ASÍ<br />COMO QUE TE PAGAMOS<br />POR COMER SPRINGS
             </div>
-            <div style={{ marginTop: 8, background: C.tinta, color: C.cream, padding: "4px 14px", display: "inline-flex", alignItems: "center", gap: 6, ...F.mono, fontSize: "0.55rem", letterSpacing: "0.2em" }}>
-              ENTRAR +
+            <div style={{ marginTop: 10, background: C.tinta, color: C.cream, padding: "5px 16px", display: "inline-block", ...F.display, fontSize: "0.62rem", letterSpacing: "0.18em" }}>
+              ACCEDER
             </div>
           </DragSticker>
 
-          {/* Sticker SPRINGS [UNVRS] */}
-          <DragSticker
-            rotate={3}
-            idleRotateRange={2.5}
-            idleDuration={6}
-            onDragStart={pauseScroll}
-            onDragEnd={resumeScroll}
+          {/* 2. FOR THE HOTTEST PEOPLE — círculo con globo */}
+          <DragSticker rotate={-5} idleRotateRange={3} idleDuration={8}
+            onDragStart={pauseScroll} onDragEnd={resumeScroll}
             style={{
-              position: "absolute", left: "57vw", top: "9vh", zIndex: 20,
-              padding: "8px 14px",
-              background: "linear-gradient(135deg, #e8e8e8 0%, #ffffff 50%, #d0d0d0 100%)",
-              border: `1.5px solid ${C.tinta}`,
-              textAlign: "center", maxWidth: "14vw",
+              position: "absolute", left: "22vw", top: "18vh", zIndex: 18,
+              width: "8vw", height: "8vw",
+              background: C.cream,
+              boxShadow: `0 0 0 5px ${C.cream}, 0 0 0 7px ${C.tinta}`,
+              clipPath: "circle(50%)",
+              display: "flex", alignItems: "center", justifyContent: "center",
             }}
           >
-            <div style={{ ...F.display, fontSize: "0.85rem", letterSpacing: "0.05em", color: C.tinta }}>SPRINGS™ [UNVRS]</div>
-            <div style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.15em", color: C.tinta, marginTop: 3, textTransform: "uppercase", lineHeight: 1.4 }}>
+            <svg viewBox="0 0 110 110" width="100%" height="100%">
+              <circle cx="55" cy="55" r="22" fill="none" stroke={C.tinta} strokeWidth="1.2" opacity={0.8}/>
+              <ellipse cx="55" cy="55" rx="12" ry="22" fill="none" stroke={C.tinta} strokeWidth="1.1" opacity={0.6}/>
+              <ellipse cx="55" cy="55" rx="22" ry="8" fill="none" stroke={C.tinta} strokeWidth="1" opacity={0.6}/>
+              <line x1="33" y1="55" x2="77" y2="55" stroke={C.tinta} strokeWidth="0.8" opacity={0.45}/>
+              <line x1="55" y1="33" x2="55" y2="77" stroke={C.tinta} strokeWidth="0.8" opacity={0.45}/>
+              <path id="hot-circle" fill="none" d="M55,55 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"/>
+              <text fontFamily="JetBrains Mono, monospace" fontSize="7.5" letterSpacing="2.2" fill={C.tinta} fillOpacity={0.8}>
+                <textPath href="#hot-circle">FOR THE HOTTEST PEOPLE ✦ </textPath>
+              </text>
+            </svg>
+          </DragSticker>
+
+          {/* 3. SPRINGS™ [UNVRS] */}
+          <DragSticker rotate={3} idleRotateRange={2.5} idleDuration={6}
+            onDragStart={pauseScroll} onDragEnd={resumeScroll}
+            style={{
+              position: "absolute", left: "57vw", top: "9vh", zIndex: 20,
+              padding: "10px 16px", textAlign: "center",
+              background: "#EDEAE4",
+              boxShadow: `0 0 0 4px ${C.cream}, 0 0 0 5.5px rgba(26,10,12,0.35)`,
+              maxWidth: "13vw",
+            }}
+          >
+            <div style={{ ...F.display, fontSize: "0.9rem", letterSpacing: "0.04em", color: C.tinta }}>SPRINGS™ [UNVRS]</div>
+            <div style={{ ...F.mono, fontSize: "0.41rem", letterSpacing: "0.14em", color: C.tinta, marginTop: 4, textTransform: "uppercase", lineHeight: 1.55, opacity: 0.7 }}>
               SPRINGS (SPACE) JACKET CLUB X BGA<br />LIMITED EDITION
             </div>
           </DragSticker>
 
-          {/* Sticker MIÉRCOLES DE DADOS */}
-          <DragSticker
-            rotate={-14}
-            idleRotateRange={3}
-            idleDuration={6}
-            onDragStart={pauseScroll}
-            onDragEnd={resumeScroll}
+          {/* 4. RÓBALA */}
+          <DragSticker rotate={6} idleRotateRange={2} idleDuration={5}
+            onDragStart={pauseScroll} onDragEnd={resumeScroll}
+            style={{
+              position: "absolute", left: "78vw", top: "10vh", zIndex: 20,
+              background: C.mostaza, padding: "14px 18px",
+              boxShadow: `0 0 0 5px ${C.cream}, 0 0 0 7px ${C.tinta}`,
+              width: "11vw",
+            }}
+          >
+            <div style={{ ...F.display, fontSize: "1.65rem", letterSpacing: "0.03em", lineHeight: 1, color: C.tinta }}>RÓBALA</div>
+            <div style={{ ...F.mono, fontSize: "0.43rem", letterSpacing: "0.1em", marginTop: 6, lineHeight: 1.55, textTransform: "uppercase", color: C.tinta, opacity: 0.85 }}>
+              BONO ESCONDIDO<br />EN LA CIUDAD
+            </div>
+            <div style={{ marginTop: 8, background: C.tinta, color: C.mostaza, padding: "4px 10px", display: "inline-block", ...F.mono, fontSize: "0.5rem", letterSpacing: "0.18em" }}>
+              STORIES →
+            </div>
+          </DragSticker>
+
+          {/* 5. SPRINGS banner negro */}
+          <DragSticker rotate={-2} idleRotateRange={1.5} idleDuration={9}
+            onDragStart={pauseScroll} onDragEnd={resumeScroll}
+            style={{
+              position: "absolute", left: "34vw", bottom: "26vh", zIndex: 12,
+              background: C.tinta, padding: "10px 22px",
+              boxShadow: `0 0 0 4px ${C.cream}, 0 0 0 5.5px ${C.tinta}`,
+              display: "flex", flexDirection: "column", alignItems: "flex-start",
+            }}
+          >
+            <div style={{ ...F.display, fontSize: "1.55rem", letterSpacing: "0.04em", color: C.burgundy, lineHeight: 1 }}>SPRINGS</div>
+            <div style={{ background: C.burgundy, padding: "2px 8px", marginTop: 3, ...F.mono, fontSize: "0.43rem", letterSpacing: "0.2em", color: C.cream }}>
+              JACKET CLUB
+            </div>
+          </DragSticker>
+
+          {/* 6. AQUÍ TAMBIÉN NOS TOMAMOS EN SERIO LA PAPA */}
+          <DragSticker rotate={4} idleRotateRange={2} idleDuration={6}
+            onDragStart={pauseScroll} onDragEnd={resumeScroll}
+            style={{
+              position: "absolute", left: "73vw", top: "34vh", zIndex: 15,
+              background: C.tinta, padding: "14px 16px",
+              boxShadow: `0 0 0 4px ${C.cream}, 0 0 0 5.5px ${C.tinta}`,
+              width: "10vw",
+            }}
+          >
+            <div style={{ ...F.mono, fontSize: "0.5rem", letterSpacing: "0.1em", color: C.cream, lineHeight: 1.65, textTransform: "uppercase", marginBottom: 8 }}>
+              AQUÍ TAMBIÉN<br />NOS TOMAMOS<br />EN SERIO<br />LA PAPA
+            </div>
+            <span style={{ color: C.mostaza, fontSize: "0.85rem" }}>✦</span>
+          </DragSticker>
+
+          {/* 7. TU PLAN YA ESTÁ EN LA PUERTA */}
+          <div style={{
+            position: "absolute", left: "63vw", bottom: "10vh", zIndex: 8,
+            width: "12vw", padding: "16px 18px",
+            background: C.cream,
+            boxShadow: `0 0 0 4px ${C.cream}, 0 0 0 5.5px rgba(26,10,12,0.25)`,
+          }}>
+            <div style={{ ...F.mono, fontSize: "0.58rem", letterSpacing: "0.12em", color: C.tinta, lineHeight: 1.65, textTransform: "uppercase", marginBottom: 12 }}>
+              TU PLAN<br />YA ESTÁ<br />EN LA PUERTA.
+            </div>
+            <div style={{ width: 18, height: 26, border: `1px solid ${C.tinta}`, opacity: 0.3, margin: "0 auto" }} />
+          </div>
+
+          {/* 8. DELIVERY EN TODA BGA */}
+          <div style={{
+            position: "absolute", left: "78vw", bottom: "10vh", zIndex: 8,
+            width: "12vw", padding: "18px 20px",
+            background: C.burgundy,
+            boxShadow: `0 0 0 4px ${C.cream}, 0 0 0 5.5px ${C.tinta}`,
+          }}>
+            <div style={{ ...F.display, fontSize: "clamp(18px, 1.8vw, 28px)", letterSpacing: "0.04em", color: C.cream, lineHeight: 1, marginBottom: 6 }}>DELIVERY</div>
+            <div style={{ ...F.mono, fontSize: "0.5rem", letterSpacing: "0.14em", color: C.cream, textTransform: "uppercase", marginBottom: 14, opacity: 0.8 }}>EN TODA BGA.</div>
+            <a href="/menu" style={{ ...F.mono, fontSize: "0.55rem", letterSpacing: "0.16em", color: C.cream, textDecoration: "none", display: "flex", alignItems: "center", gap: 6 }}>
+              VER MÁS <span>↗</span>
+            </a>
+          </div>
+
+          {/* 9. MIÉRCOLES DE DADOS */}
+          <DragSticker rotate={-14} idleRotateRange={3} idleDuration={6}
+            onDragStart={pauseScroll} onDragEnd={resumeScroll}
             style={{
               position: "absolute", left: "3vw", bottom: "10vh", zIndex: 22,
               background: C.cream, color: C.tinta,
-              padding: "10px 14px",
-              border: `2px solid ${C.tinta}`, textAlign: "center",
+              padding: "12px 16px", textAlign: "center",
+              boxShadow: `0 0 0 5px ${C.cream}, 0 0 0 7px ${C.tinta}`,
             }}
           >
-            <div style={{ ...F.display, fontSize: "0.95rem", letterSpacing: "0.05em", lineHeight: 1 }}>MIÉRCOLES</div>
-            <div style={{ ...F.display, fontSize: "0.95rem", fontStyle: "italic", lineHeight: 1, marginTop: 2 }}>de Dados</div>
+            <div style={{ ...F.display, fontSize: "1.0rem", letterSpacing: "0.05em", lineHeight: 1 }}>MIÉRCOLES</div>
+            <div style={{ ...F.sans, fontSize: "0.82rem", fontStyle: "italic", fontWeight: 700, lineHeight: 1, marginTop: 2 }}>de Dados</div>
             <div style={{
-              margin: "6px auto 0", width: 30, height: 30,
+              margin: "8px auto 0", width: 32, height: 32,
               background: C.tinta, color: C.cream,
-              ...F.display, fontSize: "1.2rem",
+              ...F.display, fontSize: "1.3rem",
               display: "flex", alignItems: "center", justifyContent: "center",
             }}>6</div>
-            <div style={{ ...F.mono, fontSize: "0.45rem", letterSpacing: "0.12em", marginTop: 5, textTransform: "uppercase", opacity: 0.7 }}>
+            <div style={{ ...F.mono, fontSize: "0.43rem", letterSpacing: "0.12em", marginTop: 5, textTransform: "uppercase", opacity: 0.65 }}>
               SACA 6 = GRATIS
             </div>
           </DragSticker>
