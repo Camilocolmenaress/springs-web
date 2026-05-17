@@ -54,9 +54,9 @@ const DEFAULT_DESIGN: DesignValues = {
   potatoBottom:     195,
   subtitleSize:     2.3,
   bodyCopyLeft:     54,
-  artGallerySize:   12,
-  artGalleryBottom: 40,
-  artGalleryLeft:   -4,
+  artGallerySize:   7,
+  artGalleryBottom: 120,
+  artGalleryLeft:   2,
 };
 
 export default function Home() {
@@ -229,11 +229,13 @@ export default function Home() {
             width: "110vw", zIndex: 1,
             pointerEvents: "none",
           }}>
-            {/* Línea punteada mostaza */}
-            <div style={{
-              width: "100%", height: 2, marginBottom: 6,
-              backgroundImage: `repeating-linear-gradient(to right, ${C.mostaza} 0px, ${C.mostaza} 8px, transparent 8px, transparent 18px)`,
-            }} />
+            {/* Línea punteada mostaza — solo en modo editor */}
+            {editMode && (
+              <div style={{
+                width: "100%", height: 2, marginBottom: 6,
+                backgroundImage: `repeating-linear-gradient(to right, ${C.mostaza} 0px, ${C.mostaza} 8px, transparent 8px, transparent 18px)`,
+              }} />
+            )}
             <h2 style={{
               ...F.display,
               fontSize: `clamp(40px, ${design.artGallerySize}vw, 400px)`,
