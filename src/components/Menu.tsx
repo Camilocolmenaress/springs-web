@@ -157,7 +157,7 @@ export default function Menu({ onAgregar }: Props) {
       <div style={{ position: "relative", flex: 1, display: "flex", flexDirection: "column", zIndex: 2, overflowX: "hidden", justifyContent: "center" }}>
 
         {/* Carousel track */}
-        <div style={{ position: "relative", flexShrink: 0, height: "clamp(480px, 76vh, 760px)" }}>
+        <div style={{ position: "relative", flexShrink: 0, height: "clamp(320px, 50vh, 520px)" }}>
           <AnimatePresence>
             {OFFSETS.map(offset => {
               const v   = vIdx + offset;
@@ -165,14 +165,14 @@ export default function Menu({ onAgregar }: Props) {
               const abs = Math.abs(offset);
               const isCenter = abs === 0;
               const visible  = abs <= 2;
-              const scale   = isCenter ? 1 : abs === 1 ? 1 : 0.65;
-              const opacity = isCenter ? 1 : abs === 1 ? 0.75 : 0.28;
+              const scale   = isCenter ? 1 : abs === 1 ? 1 : 0.70;
+              const opacity = isCenter ? 1 : abs === 1 ? 0.75 : 0.50;
 
               return (
                 <motion.div
                   key={v}
                   initial={false}
-                  animate={{ x: `${offset * 30}vw`, scale, opacity }}
+                  animate={{ x: `${offset * 23}vw`, scale, opacity }}
                   exit={{ opacity: 0, transition: { duration: 0.12 } }}
                   transition={{ type: "spring", stiffness: 150, damping: 24, mass: 0.85 }}
                   onClick={isCenter ? undefined : () => goTo(((v % total) + total) % total)}
@@ -195,15 +195,15 @@ export default function Menu({ onAgregar }: Props) {
                     src={imgSrc(p)}
                     alt={p.nombre}
                     style={{
-                      width:  isCenter ? "min(80vh, 98vw, 820px)" : "min(42vh, 48vw, 380px)",
-                      height: isCenter ? "min(80vh, 98vw, 820px)" : "min(42vh, 48vw, 380px)",
+                      width:  isCenter ? "max(280px, min(52vh, 40vw, 540px))" : "max(150px, min(30vh, 22vw, 300px))",
+                      height: isCenter ? "max(280px, min(52vh, 40vw, 540px))" : "max(150px, min(30vh, 22vw, 300px))",
                       objectFit: "contain",
                       display: "block",
                     }}
                   />
 
                   {/* Side card text */}
-                  {!isCenter && (
+                  {!isCenter && abs === 1 && (
                     <div style={{ textAlign: "center", marginTop: 10 }}>
                       <div style={{
                         fontFamily: "var(--font-anton), sans-serif",
@@ -272,7 +272,7 @@ export default function Menu({ onAgregar }: Props) {
         </div>
 
         {/* ── Center product info ───────────────────────── */}
-        <div style={{ flexShrink: 0, padding: "0 clamp(16px, 4vw, 60px)" }}>
+        <div style={{ flexShrink: 0, padding: "0 clamp(16px, 4vw, 60px)", marginTop: "-80px" }}>
           <AnimatePresence mode="wait">
             <motion.div
               key={`${activo.id}-${activeRealIdx}`}
