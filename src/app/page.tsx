@@ -54,9 +54,9 @@ const DEFAULT_DESIGN: DesignValues = {
   potatoBottom:     195,
   subtitleSize:     2.3,
   bodyCopyLeft:     54,
-  artGallerySize:   14,
-  artGalleryBottom: 44,
-  artGalleryLeft:   1,
+  artGallerySize:   8,
+  artGalleryBottom: 90,
+  artGalleryLeft:   -4,
 };
 
 export default function Home() {
