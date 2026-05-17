@@ -12,6 +12,8 @@ export interface DesignValues {
   titleLeft: number;       // vw
   titleTop: number;        // vh
   bodyCopyLeft: number;    // vw
+  artGallerySize: number;  // vw
+  artGalleryBottom: number;// px
 }
 
 interface Props {
@@ -38,7 +40,9 @@ const SLIDERS: Array<{
   { key: "potatoLeft",   label: "Papa left",        min: -15,max: 30,  step: 1,   unit: "vw" },
   { key: "potatoBottom", label: "Papa bottom",      min: 0,  max: 200, step: 5,   unit: "px" },
   { key: "subtitleSize", label: "Subtítulo tamaño", min: 1.5,max: 4.5, step: 0.1, unit: "vw" },
-  { key: "bodyCopyLeft", label: "Texto body left",  min: 30, max: 60,  step: 1,   unit: "vw" },
+  { key: "bodyCopyLeft",      label: "Texto body left",    min: 30,  max: 60,  step: 1,   unit: "vw" },
+  { key: "artGallerySize",   label: "ART GALLERY tamaño", min: 5,   max: 22,  step: 0.5, unit: "vw" },
+  { key: "artGalleryBottom", label: "ART GALLERY bottom",  min: 0,   max: 200, step: 5,   unit: "px" },
 ];
 
 export default function DevPanel({ values, onChange, potatoDragOffset }: Props) {
@@ -51,14 +55,16 @@ export default function DevPanel({ values, onChange, potatoDragOffset }: Props) 
     const potatoBottomFinal = values.potatoBottom - Math.round(potatoDragOffset.y);
 
     const code = `/* ── VALORES DEV PANEL ── */
-potatoWidth:  "${values.potatoWidth}vw"
-potatoLeft:   "${potatoLeftFinal.toFixed(1)}vw"
-potatoBottom: "${potatoBottomFinal}px"
-titleSize:    "clamp(120px, ${values.titleSize}vw, 340px)"
-titleLeft:    "${values.titleLeft}vw"
-titleTop:     "${values.titleTop}vh"
-subtitleSize: "clamp(18px, ${values.subtitleSize}vw, 42px)"
-bodyCopyLeft: "${values.bodyCopyLeft}vw"`;
+potatoWidth:      "${values.potatoWidth}vw"
+potatoLeft:       "${potatoLeftFinal.toFixed(1)}vw"
+potatoBottom:     "${potatoBottomFinal}px"
+titleSize:        "clamp(120px, ${values.titleSize}vw, 340px)"
+titleLeft:        "${values.titleLeft}vw"
+titleTop:         "${values.titleTop}vh"
+subtitleSize:     "clamp(18px, ${values.subtitleSize}vw, 42px)"
+bodyCopyLeft:     "${values.bodyCopyLeft}vw"
+artGallerySize:   "${values.artGallerySize}vw"
+artGalleryBottom: "${values.artGalleryBottom}px"`;
     navigator.clipboard.writeText(code);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
