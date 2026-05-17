@@ -157,7 +157,7 @@ export default function Menu({ onAgregar }: Props) {
       <div style={{ position: "relative", flex: 1, display: "flex", flexDirection: "column", zIndex: 2, overflowX: "hidden", justifyContent: "center" }}>
 
         {/* Carousel track */}
-        <div style={{ position: "relative", flexShrink: 0, height: "clamp(440px, 68vh, 680px)" }}>
+        <div style={{ position: "relative", flexShrink: 0, height: "clamp(480px, 76vh, 760px)" }}>
           <AnimatePresence>
             {OFFSETS.map(offset => {
               const v   = vIdx + offset;
@@ -195,8 +195,8 @@ export default function Menu({ onAgregar }: Props) {
                     src={imgSrc(p)}
                     alt={p.nombre}
                     style={{
-                      width:  isCenter ? "min(66vh, 92vw, 660px)" : "min(40vh, 46vw, 360px)",
-                      height: isCenter ? "min(66vh, 92vw, 660px)" : "min(40vh, 46vw, 360px)",
+                      width:  isCenter ? "min(80vh, 98vw, 820px)" : "min(42vh, 48vw, 380px)",
+                      height: isCenter ? "min(80vh, 98vw, 820px)" : "min(42vh, 48vw, 380px)",
                       objectFit: "contain",
                       display: "block",
                     }}
