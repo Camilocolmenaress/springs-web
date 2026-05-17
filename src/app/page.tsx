@@ -298,13 +298,25 @@ export default function Home() {
 
           {/* Body copy */}
           <div style={{ position: "absolute", left: `${d.bodyCopyLeft}vw`, bottom: "12vh", zIndex: 5 }}>
-            <div style={{ ...F.mono, fontSize: "0.68rem", letterSpacing: "0.14em", color: C.tinta, lineHeight: 2.1, textTransform: "uppercase", opacity: 0.85 }}>
-              NO ES SOLO COMIDA.<br />
-              ES UN PLAN.<br />
-              ES UN LUGAR.<br />
-              ES SPRINGS.
+            <div style={{ lineHeight: 1.05 }}>
+              <div style={{
+                ...F.display,
+                fontSize: "clamp(28px, 3.2vw, 56px)",
+                color: C.tinta, letterSpacing: "-0.01em",
+                textTransform: "uppercase",
+                display: "flex", alignItems: "center", gap: "0.3em",
+              }}>
+                JACKET <span style={{ fontSize: "0.7em", opacity: 0.7 }}>↗</span>
+              </div>
+              <div style={{
+                fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
+                fontStyle: "italic", fontWeight: 800,
+                fontSize: "clamp(26px, 3vw, 52px)",
+                color: C.tinta, letterSpacing: "0.01em",
+              }}>
+                "La fija"
+              </div>
             </div>
-            <span style={{ ...F.mono, fontSize: "0.8rem", color: C.tinta, opacity: 0.3, display: "block", marginTop: 14 }}>✦</span>
           </div>
 
           {/* + símbolo top-right */}
