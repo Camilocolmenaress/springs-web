@@ -54,8 +54,8 @@ const DEFAULT_DESIGN: DesignValues = {
   potatoBottom:     195,
   subtitleSize:     2.3,
   bodyCopyLeft:     54,
-  artGallerySize:   18,
-  artGalleryBottom: 44,
+  artGallerySize:   22,
+  artGalleryBottom: 0,
   artGalleryLeft:   -4,
 };
 
@@ -226,22 +226,13 @@ export default function Home() {
           {/* ART GALLERY — texto masivo debajo de la papa */}
           <div style={{
             position: "absolute", left: `${design.artGalleryLeft}vw`, bottom: design.artGalleryBottom,
-            width: "100vw", zIndex: 1,
-            overflow: "hidden", pointerEvents: "none",
-            display: "flex", alignItems: "baseline", gap: "2vw",
+            width: "110vw", zIndex: 1,
+            pointerEvents: "none",
+            borderTop: `2px dashed ${C.mostaza}`,
           }}>
-            <div style={{
-              ...F.mono, fontSize: "0.55rem", letterSpacing: "0.2em",
-              color: C.tinta, opacity: 0.45, whiteSpace: "nowrap",
-              display: "flex", flexDirection: "column", gap: 3,
-              paddingBottom: 6,
-            }}>
-              <span>S24 ↗</span>
-              <span style={{ fontSize: "0.45rem", opacity: 0.7 }}>SPRINGS</span>
-            </div>
             <h2 style={{
               ...F.display,
-              fontSize: `clamp(40px, ${design.artGallerySize}vw, 280px)`,
+              fontSize: `clamp(40px, ${design.artGallerySize}vw, 400px)`,
               color: C.tinta, lineHeight: 0.88,
               margin: 0, letterSpacing: "-0.025em",
               textTransform: "uppercase", whiteSpace: "nowrap",

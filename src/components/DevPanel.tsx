@@ -43,7 +43,7 @@ const SLIDERS: Array<{
   { key: "subtitleSize", label: "Subtítulo tamaño", min: 1.5,max: 4.5, step: 0.1, unit: "vw" },
   { key: "bodyCopyLeft",      label: "Texto body left",    min: 30,  max: 60,  step: 1,   unit: "vw" },
   { key: "artGallerySize",   label: "ART GALLERY tamaño", min: 5,   max: 22,  step: 0.5, unit: "vw" },
-  { key: "artGalleryBottom", label: "ART GALLERY bottom",  min: 0,   max: 200, step: 5,   unit: "px" },
+  { key: "artGalleryBottom", label: "ART GALLERY bottom",  min: -80, max: 200, step: 5,   unit: "px" },
   { key: "artGalleryLeft",   label: "ART GALLERY left",    min: -20, max: 60,  step: 1,   unit: "vw" },
 ];
 
