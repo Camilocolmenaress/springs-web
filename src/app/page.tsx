@@ -185,15 +185,24 @@ export default function Home() {
 
           {/* Sello circular "HECHA PARA LOS DE VERDAD" */}
           <svg
-            viewBox="0 0 130 130" width="110" height="110"
+            viewBox="0 0 130 130" width="120" height="120"
             style={{ position: "absolute", left: "-1vw", top: "37vh", zIndex: 5 }}
           >
-            <circle cx="65" cy="65" r="56" fill="none" stroke={C.tinta} strokeWidth="0.8" opacity={0.5} />
-            <circle cx="65" cy="65" r="44" fill="none" stroke={C.tinta} strokeWidth="0.4" opacity={0.3} />
-            <path id="stamp-path" fill="none" d="M65,65 m-50,0 a50,50 0 1,1 100,0 a50,50 0 1,1 -100,0" />
-            <text fontFamily="JetBrains Mono, monospace" fontSize="8" letterSpacing="2" fill={C.tinta} fillOpacity={0.65}>
-              <textPath href="#stamp-path">✦ HECHA PARA LOS DE VERDAD ✦ </textPath>
+            <circle cx="65" cy="65" r="58" fill="none" stroke={C.tinta} strokeWidth="1.2" opacity={0.5} />
+            <circle cx="65" cy="65" r="50" fill="none" stroke={C.tinta} strokeWidth="0.5" opacity={0.25} />
+            <path id="stamp-path" fill="none" d="M65,65 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0" />
+            <text fontFamily="JetBrains Mono, monospace" fontSize="7.5" letterSpacing="2.5" fill={C.tinta} fillOpacity={0.7}>
+              <textPath href="#stamp-path">★ HECHA PARA LOS DE VERDAD ★ </textPath>
             </text>
+            <text x="44" y="52" fontFamily="sans-serif" fontSize="8" fill={C.tinta} fillOpacity={0.5}>★</text>
+            <text x="76" y="52" fontFamily="sans-serif" fontSize="8" fill={C.tinta} fillOpacity={0.5}>★</text>
+            {/* Icono linterna */}
+            <rect x="60" y="86" width="10" height="4" fill={C.tinta} opacity={0.55}/>
+            <rect x="57" y="68" width="16" height="18" fill="none" stroke={C.tinta} strokeWidth="1.4" opacity={0.55}/>
+            <path d="M61 68 L61 62 Q65 57 69 62 L69 68" fill="none" stroke={C.tinta} strokeWidth="1.3" opacity={0.55}/>
+            <rect x="59" y="70" width="12" height="12" fill={C.mostaza} opacity={0.15}/>
+            <line x1="57" y1="68" x2="73" y2="68" stroke={C.tinta} strokeWidth="1.2" opacity={0.55}/>
+            <line x1="57" y1="86" x2="73" y2="86" stroke={C.tinta} strokeWidth="1.2" opacity={0.55}/>
           </svg>
 
           {/* Globe + ubicación */}
@@ -215,7 +224,7 @@ export default function Home() {
               whiteSpace: "nowrap",
             }}>
               SPRINGS
-              <span style={{ position: "absolute", top: "18%", right: "-8%", fontSize: "0.1em", color: C.tinta }}>✦</span>
+              <span style={{ position: "absolute", top: "30%", right: "20%", fontSize: "0.12em", color: C.tinta, opacity: 0.9 }}>✦</span>
             </h1>
             <div style={{
               ...F.sans, fontStyle: "italic", fontWeight: 800,
@@ -240,18 +249,8 @@ export default function Home() {
             <span style={{ ...F.mono, fontSize: "0.8rem", color: C.tinta, opacity: 0.3, display: "block", marginTop: 14 }}>✦</span>
           </div>
 
-          {/* S202/S — texto lateral rotado */}
-          <div style={{
-            position: "absolute", left: "97vw", top: "50%",
-            transform: "translateY(-50%) rotate(90deg)",
-            ...F.mono, fontSize: "0.45rem", letterSpacing: "0.15em",
-            color: C.tinta, opacity: 0.3, whiteSpace: "nowrap", zIndex: 5,
-          }}>
-            S202/S
-          </div>
-
           {/* + símbolo top-right */}
-          <span style={{ position: "absolute", left: "94vw", top: "26vh", ...F.display, fontSize: "1.8rem", color: C.tinta, opacity: 0.4, zIndex: 5 }}>+</span>
+          <span style={{ position: "absolute", left: "97vw", top: "42vh", ...F.display, fontSize: "1.8rem", color: C.tinta, opacity: 0.4, zIndex: 5 }}>+</span>
 
           {/* ─── STICKERS ────────────────────────────────── */}
 
@@ -270,8 +269,8 @@ export default function Home() {
             <div style={{ ...F.mono, fontSize: "0.43rem", letterSpacing: "0.08em", marginTop: 8, lineHeight: 1.55, textTransform: "uppercase", color: C.cream, opacity: 0.85 }}>
               ESTO ES ALGO ASÍ<br />COMO QUE TE PAGAMOS<br />POR COMER SPRINGS
             </div>
-            <div style={{ marginTop: 10, background: C.tinta, color: C.cream, padding: "5px 16px", display: "inline-block", ...F.display, fontSize: "0.62rem", letterSpacing: "0.18em" }}>
-              ACCEDER
+            <div style={{ marginTop: 10, background: C.tinta, color: C.cream, padding: "5px 16px", display: "inline-flex", alignItems: "center", gap: 6, ...F.display, fontSize: "0.62rem", letterSpacing: "0.18em" }}>
+              ENTRAR <span style={{ fontSize: "0.55rem" }}>✦</span>
             </div>
           </DragSticker>
 
@@ -305,12 +304,20 @@ export default function Home() {
             onDragStart={pauseScroll} onDragEnd={resumeScroll}
             style={{
               position: "absolute", left: "57vw", top: "9vh", zIndex: 20,
-              padding: "10px 16px", textAlign: "center",
+              padding: "20px 16px 10px", textAlign: "center",
               background: "#EDEAE4",
               boxShadow: `0 0 0 4px ${C.cream}, 0 0 0 5.5px rgba(26,10,12,0.35)`,
               maxWidth: "13vw",
             }}
           >
+            {/* Tape strip */}
+            <div style={{
+              position: "absolute", top: -7, left: "50%",
+              transform: "translateX(-50%)",
+              width: "55%", height: 14,
+              background: "rgba(200,195,182,0.65)",
+              border: "0.5px solid rgba(150,145,130,0.35)",
+            }} />
             <div style={{ ...F.display, fontSize: "0.9rem", letterSpacing: "0.04em", color: C.tinta }}>SPRINGS™ [UNVRS]</div>
             <div style={{ ...F.mono, fontSize: "0.41rem", letterSpacing: "0.14em", color: C.tinta, marginTop: 4, textTransform: "uppercase", lineHeight: 1.55, opacity: 0.7 }}>
               SPRINGS (SPACE) JACKET CLUB X BGA<br />LIMITED EDITION
@@ -321,7 +328,7 @@ export default function Home() {
           <DragSticker rotate={6} idleRotateRange={2} idleDuration={5}
             onDragStart={pauseScroll} onDragEnd={resumeScroll}
             style={{
-              position: "absolute", left: "78vw", top: "10vh", zIndex: 20,
+              position: "absolute", left: "90vw", top: "10vh", zIndex: 20,
               background: C.mostaza, padding: "14px 18px",
               boxShadow: `0 0 0 5px ${C.cream}, 0 0 0 7px ${C.tinta}`,
               width: "11vw",
@@ -336,19 +343,54 @@ export default function Home() {
             </div>
           </DragSticker>
 
-          {/* 5. SPRINGS banner negro */}
-          <DragSticker rotate={-2} idleRotateRange={1.5} idleDuration={9}
+          {/* 5. Dark sticker — foto letrero SPRINGS iluminado */}
+          <DragSticker rotate={2} idleRotateRange={1.5} idleDuration={8}
             onDragStart={pauseScroll} onDragEnd={resumeScroll}
             style={{
-              position: "absolute", left: "34vw", bottom: "26vh", zIndex: 12,
-              background: C.tinta, padding: "10px 22px",
+              position: "absolute", left: "82vw", top: "45vh", zIndex: 20,
+              width: "10vw",
+              background: C.tinta,
               boxShadow: `0 0 0 4px ${C.cream}, 0 0 0 5.5px ${C.tinta}`,
-              display: "flex", flexDirection: "column", alignItems: "flex-start",
+              overflow: "visible",
             }}
           >
-            <div style={{ ...F.display, fontSize: "1.55rem", letterSpacing: "0.04em", color: C.burgundy, lineHeight: 1 }}>SPRINGS</div>
-            <div style={{ background: C.burgundy, padding: "2px 8px", marginTop: 3, ...F.mono, fontSize: "0.43rem", letterSpacing: "0.2em", color: C.cream }}>
-              JACKET CLUB
+            {/* Tape strip */}
+            <div style={{
+              position: "absolute", top: -7, left: "50%",
+              transform: "translateX(-50%)",
+              width: "42%", height: 13,
+              background: "rgba(200,195,182,0.55)",
+              border: "0.5px solid rgba(150,145,130,0.3)",
+            }} />
+            {/* Foto oscura */}
+            <div style={{
+              padding: "20px 14px 16px",
+              background: "radial-gradient(ellipse at 45% 40%, #2a0a0c 0%, #080206 100%)",
+              minHeight: "10vw",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              position: "relative",
+            }}>
+              <div style={{
+                position: "absolute", inset: 0,
+                background: "radial-gradient(ellipse at 50% 55%, rgba(107,20,25,0.4) 0%, transparent 68%)",
+              }} />
+              <div style={{
+                ...F.display, fontSize: "clamp(13px, 1.5vw, 20px)",
+                color: C.burgundy, letterSpacing: "0.1em", lineHeight: 1,
+                textShadow: `0 0 10px ${C.burgundy}, 0 0 20px rgba(107,20,25,0.7)`,
+                position: "relative", zIndex: 1,
+              }}>
+                SPRINGS
+              </div>
+            </div>
+            {/* S/2025 rotado en borde derecho */}
+            <div style={{
+              position: "absolute", right: -16, top: "50%",
+              transform: "translateY(-50%) rotate(90deg)",
+              ...F.mono, fontSize: "0.36rem", letterSpacing: "0.22em",
+              color: C.cream, opacity: 0.4, whiteSpace: "nowrap",
+            }}>
+              S/2025
             </div>
           </DragSticker>
 
@@ -370,20 +412,27 @@ export default function Home() {
 
           {/* 7. TU PLAN YA ESTÁ EN LA PUERTA */}
           <div style={{
-            position: "absolute", left: "63vw", bottom: "10vh", zIndex: 8,
-            width: "12vw", padding: "16px 18px",
+            position: "absolute", left: "73vw", bottom: "8vh", zIndex: 8,
+            width: "11vw", padding: "16px 18px",
             background: C.cream,
             boxShadow: `0 0 0 4px ${C.cream}, 0 0 0 5.5px rgba(26,10,12,0.25)`,
           }}>
             <div style={{ ...F.mono, fontSize: "0.58rem", letterSpacing: "0.12em", color: C.tinta, lineHeight: 1.65, textTransform: "uppercase", marginBottom: 12 }}>
               TU PLAN<br />YA ESTÁ<br />EN LA PUERTA.
             </div>
-            <div style={{ width: 18, height: 26, border: `1px solid ${C.tinta}`, opacity: 0.3, margin: "0 auto" }} />
+            <svg viewBox="0 0 32 44" width={28} height={38} style={{ display: "block", margin: "0 auto", opacity: 0.5 }}>
+              <rect x="12" y="38" width="8" height="4" fill={C.tinta}/>
+              <rect x="9" y="18" width="14" height="20" fill="none" stroke={C.tinta} strokeWidth="1.5"/>
+              <path d="M13 18 L13 12 Q16 8 19 12 L19 18" fill="none" stroke={C.tinta} strokeWidth="1.4"/>
+              <rect x="11" y="20" width="10" height="14" fill={C.mostaza} opacity={0.3}/>
+              <line x1="9" y1="18" x2="23" y2="18" stroke={C.tinta} strokeWidth="1.2"/>
+              <line x1="9" y1="38" x2="23" y2="38" stroke={C.tinta} strokeWidth="1.2"/>
+            </svg>
           </div>
 
           {/* 8. DELIVERY EN TODA BGA */}
           <div style={{
-            position: "absolute", left: "78vw", bottom: "10vh", zIndex: 8,
+            position: "absolute", left: "86vw", bottom: "8vh", zIndex: 8,
             width: "12vw", padding: "18px 20px",
             background: C.burgundy,
             boxShadow: `0 0 0 4px ${C.cream}, 0 0 0 5.5px ${C.tinta}`,
