@@ -298,24 +298,11 @@ export default function Home() {
 
           {/* Body copy */}
           <div style={{ position: "absolute", left: `${d.bodyCopyLeft}vw`, bottom: "12vh", zIndex: 5 }}>
-            <div style={{ lineHeight: 1.05 }}>
-              <div style={{
-                ...F.display,
-                fontSize: "clamp(28px, 3.2vw, 56px)",
-                color: C.tinta, letterSpacing: "-0.01em",
-                textTransform: "uppercase",
-                display: "flex", alignItems: "center", gap: "0.3em",
-              }}>
-                JACKET <span style={{ fontSize: "0.7em", opacity: 0.7 }}>↗</span>
+            <div style={{ ...F.display, fontSize: "clamp(28px, 3.2vw, 56px)", color: C.tinta, letterSpacing: "-0.01em", lineHeight: 1.1 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.25em" }}>
+                Jacket <span style={{ fontSize: "0.65em", opacity: 0.7 }}>↗</span>
               </div>
-              <div style={{
-                fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
-                fontStyle: "italic", fontWeight: 800,
-                fontSize: "clamp(26px, 3vw, 52px)",
-                color: C.tinta, letterSpacing: "0.01em",
-              }}>
-                "La fija"
-              </div>
+              <div>La Fija</div>
             </div>
           </div>
 
