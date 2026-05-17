@@ -1,0 +1,49 @@
+{
+  "page": "menu",
+  "zones": {
+    "header": {
+      "label": "Header menú",
+      "elements": {
+        "title": {
+          "type": "text",
+          "props": {
+            "content": "NUESTRA CARTA",
+            "fontSize": { "value": 3, "unit": "vw", "min": 1, "max": 8, "step": 0.1 },
+            "fontFamily": { "value": "display", "options": ["display", "sans", "mono"] },
+            "color": { "value": "tinta", "options": ["burgundy", "cream", "tinta", "mostaza"] }
+          }
+        }
+      }
+    },
+    "carousel": {
+      "label": "Carrusel productos",
+      "elements": {
+        "productImage": {
+          "type": "image",
+          "props": {
+            "src": { "value": "/images/la-fija.png", "folder": "/images" },
+            "width": { "value": 60, "unit": "vw", "min": 30, "max": 95, "step": 1 }
+          }
+        },
+        "productName": {
+          "type": "text",
+          "props": {
+            "content": "LA FIJA",
+            "fontSize": { "value": 2.5, "unit": "rem", "min": 1, "max": 5, "step": 0.1 },
+            "fontFamily": { "value": "display", "options": ["display", "sans", "mono"] },
+            "color": { "value": "tinta", "options": ["burgundy", "cream", "tinta", "mostaza"] }
+          }
+        },
+        "price": {
+          "type": "text",
+          "props": {
+            "content": "32,900",
+            "fontSize": { "value": 1.2, "unit": "rem", "min": 0.8, "max": 3, "step": 0.1 },
+            "fontFamily": { "value": "mono", "options": ["display", "sans", "mono"] },
+            "color": { "value": "tinta", "options": ["burgundy", "cream", "tinta", "mostaza"] }
+          }
+        }
+      }
+    }
+  }
+}
