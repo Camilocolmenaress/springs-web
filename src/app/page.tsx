@@ -46,14 +46,14 @@ function Reveal({ children, delay = 0, style }: { children: React.ReactNode; del
 }
 
 const DEFAULT_DESIGN: DesignValues = {
-  titleSize:    22,
-  titleLeft:    37,
-  titleTop:     14,
-  potatoWidth:  52,
-  potatoLeft:   -2,
-  potatoBottom: 40,
-  subtitleSize: 2.6,
-  bodyCopyLeft: 38,
+  titleSize:    19.5,
+  titleLeft:    42,
+  titleTop:     15,
+  potatoWidth:  48,
+  potatoLeft:   -4.2,
+  potatoBottom: 195,
+  subtitleSize: 2.3,
+  bodyCopyLeft: 54,
 };
 
 export default function Home() {
