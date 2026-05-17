@@ -57,8 +57,9 @@ export default function Home() {
     potatoBottom: (hero?.image?.props?.bottom as { value: number })?.value ?? 195,
     subtitleSize: (hero?.subtitle?.props?.fontSize as { value: number })?.value ?? 2.3,
     bodyCopyLeft: (hero?.bodyCopy?.props?.left as { value: number })?.value ?? 54,
-    artGallerySize:   (hero?.artGallery?.props?.fontSize as { value: number })?.value ?? 14,
-    artGalleryBottom: (hero?.artGallery?.props?.bottom as { value: number })?.value ?? 44,
+    artGallerySize:   (hero?.artGallery?.props?.fontSize as { value: number })?.value ?? 7,
+    artGalleryBottom: (hero?.artGallery?.props?.bottom as { value: number })?.value ?? 120,
+    artGalleryLeft:   (hero?.artGallery?.props?.left as { value: number })?.value ?? 2,
     heroImage:    (hero?.image?.props?.src as { value: string })?.value ?? "/images/la-fija.png",
   };
 
@@ -212,24 +213,13 @@ export default function Home() {
 
           {/* ART GALLERY — texto masivo debajo de la papa */}
           <div style={{
-            position: "absolute", left: 0, bottom: d.artGalleryBottom,
-            width: "100vw", zIndex: 1,
-            overflow: "hidden", pointerEvents: "none",
-            display: "flex", alignItems: "baseline", gap: "2vw",
-            paddingLeft: "1vw",
+            position: "absolute", left: `${d.artGalleryLeft}vw`, bottom: d.artGalleryBottom,
+            width: "110vw", zIndex: 1,
+            pointerEvents: "none",
           }}>
-            <div style={{
-              ...F.mono, fontSize: "0.55rem", letterSpacing: "0.2em",
-              color: C.tinta, opacity: 0.45, whiteSpace: "nowrap",
-              display: "flex", flexDirection: "column", gap: 3,
-              paddingBottom: 6,
-            }}>
-              <span>S24 ↗</span>
-              <span style={{ fontSize: "0.45rem", opacity: 0.7 }}>SPRINGS</span>
-            </div>
             <h2 style={{
               ...F.display,
-              fontSize: `clamp(40px, ${d.artGallerySize}vw, 280px)`,
+              fontSize: `clamp(40px, ${d.artGallerySize}vw, 400px)`,
               color: C.tinta, lineHeight: 0.88,
               margin: 0, letterSpacing: "-0.025em",
               textTransform: "uppercase", whiteSpace: "nowrap",
