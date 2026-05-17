@@ -14,6 +14,7 @@ export interface DesignValues {
   bodyCopyLeft: number;    // vw
   artGallerySize: number;  // vw
   artGalleryBottom: number;// px
+  artGalleryLeft: number;  // vw
 }
 
 interface Props {
@@ -43,6 +44,7 @@ const SLIDERS: Array<{
   { key: "bodyCopyLeft",      label: "Texto body left",    min: 30,  max: 60,  step: 1,   unit: "vw" },
   { key: "artGallerySize",   label: "ART GALLERY tamaño", min: 5,   max: 22,  step: 0.5, unit: "vw" },
   { key: "artGalleryBottom", label: "ART GALLERY bottom",  min: 0,   max: 200, step: 5,   unit: "px" },
+  { key: "artGalleryLeft",   label: "ART GALLERY left",    min: -20, max: 60,  step: 1,   unit: "vw" },
 ];
 
 export default function DevPanel({ values, onChange, potatoDragOffset }: Props) {
@@ -64,7 +66,8 @@ titleTop:         "${values.titleTop}vh"
 subtitleSize:     "clamp(18px, ${values.subtitleSize}vw, 42px)"
 bodyCopyLeft:     "${values.bodyCopyLeft}vw"
 artGallerySize:   "${values.artGallerySize}vw"
-artGalleryBottom: "${values.artGalleryBottom}px"`;
+artGalleryBottom: "${values.artGalleryBottom}px"
+artGalleryLeft:   "${values.artGalleryLeft}vw"`;
     navigator.clipboard.writeText(code);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

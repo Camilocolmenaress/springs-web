@@ -56,6 +56,7 @@ const DEFAULT_DESIGN: DesignValues = {
   bodyCopyLeft:     54,
   artGallerySize:   14,
   artGalleryBottom: 44,
+  artGalleryLeft:   1,
 };
 
 export default function Home() {
@@ -224,11 +225,10 @@ export default function Home() {
 
           {/* ART GALLERY — texto masivo debajo de la papa */}
           <div style={{
-            position: "absolute", left: 0, bottom: design.artGalleryBottom,
+            position: "absolute", left: `${design.artGalleryLeft}vw`, bottom: design.artGalleryBottom,
             width: "100vw", zIndex: 1,
             overflow: "hidden", pointerEvents: "none",
             display: "flex", alignItems: "baseline", gap: "2vw",
-            paddingLeft: "1vw",
           }}>
             <div style={{
               ...F.mono, fontSize: "0.55rem", letterSpacing: "0.2em",
