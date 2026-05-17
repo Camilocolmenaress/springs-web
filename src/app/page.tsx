@@ -46,14 +46,16 @@ function Reveal({ children, delay = 0, style }: { children: React.ReactNode; del
 }
 
 const DEFAULT_DESIGN: DesignValues = {
-  titleSize:    19.5,
-  titleLeft:    42,
-  titleTop:     15,
-  potatoWidth:  48,
-  potatoLeft:   -4.2,
-  potatoBottom: 195,
-  subtitleSize: 2.3,
-  bodyCopyLeft: 54,
+  titleSize:        19.5,
+  titleLeft:        42,
+  titleTop:         15,
+  potatoWidth:      48,
+  potatoLeft:       -4.2,
+  potatoBottom:     195,
+  subtitleSize:     2.3,
+  bodyCopyLeft:     54,
+  artGallerySize:   14,
+  artGalleryBottom: 44,
 };
 
 export default function Home() {
@@ -222,7 +224,7 @@ export default function Home() {
 
           {/* ART GALLERY — texto masivo debajo de la papa */}
           <div style={{
-            position: "absolute", left: 0, bottom: 44,
+            position: "absolute", left: 0, bottom: design.artGalleryBottom,
             width: "100vw", zIndex: 1,
             overflow: "hidden", pointerEvents: "none",
             display: "flex", alignItems: "baseline", gap: "2vw",
@@ -239,7 +241,7 @@ export default function Home() {
             </div>
             <h2 style={{
               ...F.display,
-              fontSize: "clamp(70px, 14vw, 210px)",
+              fontSize: `clamp(40px, ${design.artGallerySize}vw, 280px)`,
               color: C.tinta, lineHeight: 0.88,
               margin: 0, letterSpacing: "-0.025em",
               textTransform: "uppercase", whiteSpace: "nowrap",
