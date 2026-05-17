@@ -52,7 +52,7 @@ export const productos: Producto[] = [
     precio: 35900,
     categoria: "jacket",
     disponible: true,
-    imagen_url: "/images/jacket-2.png",
+    imagen_url: "/images/la-pesada.png",
     orden: 11,
   },
   {
