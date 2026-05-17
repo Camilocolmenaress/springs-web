@@ -195,8 +195,8 @@ export default function Menu({ onAgregar }: Props) {
                     src={imgSrc(p)}
                     alt={p.nombre}
                     style={{
-                      width:  isCenter ? "min(60vh, 88vw)" : "min(30vh, 38vw, 260px)",
-                      height: isCenter ? "min(60vh, 88vw)" : "min(30vh, 38vw, 260px)",
+                      width:  isCenter ? "min(75vh, 92vw)" : "min(40vh, 46vw, 340px)",
+                      height: isCenter ? "min(75vh, 92vw)" : "min(40vh, 46vw, 340px)",
                       objectFit: "contain",
                       display: "block",
                     }}
