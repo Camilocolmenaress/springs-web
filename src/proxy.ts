@@ -21,25 +21,37 @@ const authLimit = new Ratelimit({
 });
 
 export async function proxy(request: NextRequest) {
-  const ip = request.headers.get("x-forwarded-for")?.split(",")[0] ?? "anon";
+  const ip =
+    (request as NextRequest & { ip?: string }).ip ??
+    request.headers.get("x-real-ip") ??
+    request.headers.get("x-forwarded-for")?.split(",").at(-1)?.trim() ??
+    "anon";
 
   if (request.nextUrl.pathname === "/api/orders" && request.method === "POST") {
-    const { success } = await ordersLimit.limit(ip);
-    if (!success) {
-      return NextResponse.json(
-        { error: "Demasiadas solicitudes. Intente en un momento." },
-        { status: 429 }
-      );
+    try {
+      const { success } = await ordersLimit.limit(ip);
+      if (!success) {
+        return NextResponse.json(
+          { error: "Demasiadas solicitudes. Intente en un momento." },
+          { status: 429 }
+        );
+      }
+    } catch {
+      console.error("[rate-limit] Redis no disponible — permitiendo solicitud");
     }
   }
 
   if (request.nextUrl.pathname === "/api/auth" && request.method === "POST") {
-    const { success } = await authLimit.limit(ip);
-    if (!success) {
-      return NextResponse.json(
-        { error: "Demasiados intentos. Espere 1 minuto." },
-        { status: 429 }
-      );
+    try {
+      const { success } = await authLimit.limit(ip);
+      if (!success) {
+        return NextResponse.json(
+          { error: "Demasiados intentos. Espere 1 minuto." },
+          { status: 429 }
+        );
+      }
+    } catch {
+      console.error("[rate-limit] Redis no disponible — permitiendo solicitud");
     }
   }
 
