@@ -1,12 +1,21 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import Lenis from "lenis";
 import { motion, useInView } from "framer-motion";
 import DragSticker from "@/components/DragSticker";
+import DevPanel, { type DesignValues } from "@/components/DevPanel";
 import MobileCanvas from "@/components/MobileCanvas";
 
 const DESKTOP_BREAKPOINT = 1024;
+
+function useEditMode() {
+  const [editMode, setEditMode] = useState(false);
+  useEffect(() => {
+    setEditMode(new URLSearchParams(window.location.search).get("edit") === "1");
+  }, []);
+  return editMode;
+}
 
 function useIsDesktop() {
   const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
@@ -36,11 +45,30 @@ function Reveal({ children, delay = 0, style }: { children: React.ReactNode; del
   );
 }
 
+const DEFAULT_DESIGN: DesignValues = {
+  titleSize:    22,
+  titleLeft:    37,
+  titleTop:     14,
+  potatoWidth:  52,
+  potatoLeft:   -2,
+  potatoBottom: 40,
+  subtitleSize: 2.6,
+  bodyCopyLeft: 38,
+};
+
 export default function Home() {
   const isDesktop = useIsDesktop();
+  const editMode = useEditMode();
   const wrapperRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const lenisRef = useRef<Lenis | null>(null);
+  const [design, setDesign] = useState<DesignValues>(DEFAULT_DESIGN);
+  const [potatoDrag, setPotatoDrag] = useState({ x: 0, y: 0 });
+
+  const setVal = useCallback(
+    (key: keyof DesignValues, val: number) => setDesign(d => ({ ...d, [key]: val })),
+    [],
+  );
 
   const pauseScroll = () => lenisRef.current?.stop();
   const resumeScroll = () => lenisRef.current?.start();
@@ -172,14 +200,23 @@ export default function Home() {
           ═══════════════════════════════════════ */}
 
           {/* Papa hero — izquierda desde abajo */}
-          <img
+          <motion.img
             src="/images/la-fija.png"
             alt="SPRINGS Jacket"
+            drag={editMode}
+            dragMomentum={false}
+            onDrag={(_, info) => setPotatoDrag({ x: info.offset.x, y: info.offset.y })}
+            onDragEnd={(_, info) => setPotatoDrag({ x: info.offset.x, y: info.offset.y })}
             style={{
-              position: "absolute", left: "-2vw", bottom: "40px",
-              width: "52vw", height: "calc(100vh - 104px)",
+              position: "absolute",
+              left: `${design.potatoLeft}vw`,
+              bottom: `${design.potatoBottom}px`,
+              width: `${design.potatoWidth}vw`,
+              height: "calc(100vh - 104px)",
               objectFit: "contain", objectPosition: "bottom left",
               zIndex: 2,
+              cursor: editMode ? "grab" : "default",
+              outline: editMode ? "2px dashed rgba(197,135,31,0.6)" : "none",
             }}
           />
 
@@ -214,10 +251,10 @@ export default function Home() {
           </div>
 
           {/* SPRINGS — título masivo */}
-          <div style={{ position: "absolute", left: "37vw", top: "14vh", zIndex: 3 }}>
+          <div style={{ position: "absolute", left: `${design.titleLeft}vw`, top: `${design.titleTop}vh`, zIndex: 3 }}>
             <h1 style={{
               ...F.display,
-              fontSize: "clamp(160px, 22vw, 340px)",
+              fontSize: `clamp(120px, ${design.titleSize}vw, 340px)`,
               color: C.tinta, lineHeight: 0.85,
               letterSpacing: "-0.01em", margin: 0,
               textTransform: "uppercase", position: "relative",
@@ -231,7 +268,7 @@ export default function Home() {
               <div style={{
                 fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
                 fontStyle: "italic", fontWeight: 800,
-                fontSize: "clamp(20px, 2.6vw, 42px)",
+                fontSize: `clamp(18px, ${design.subtitleSize}vw, 42px)`,
                 color: C.burgundy, letterSpacing: "0.02em",
                 textTransform: "uppercase", lineHeight: 1,
                 paddingBottom: 10,
@@ -253,7 +290,7 @@ export default function Home() {
           </div>
 
           {/* Body copy */}
-          <div style={{ position: "absolute", left: "38vw", bottom: "12vh", zIndex: 5 }}>
+          <div style={{ position: "absolute", left: `${design.bodyCopyLeft}vw`, bottom: "12vh", zIndex: 5 }}>
             <div style={{ ...F.mono, fontSize: "0.68rem", letterSpacing: "0.14em", color: C.tinta, lineHeight: 2.1, textTransform: "uppercase", opacity: 0.85 }}>
               NO ES SOLO COMIDA.<br />
               ES UN PLAN.<br />
@@ -845,6 +882,15 @@ export default function Home() {
 
         </div>
       </div>
+
+      {/* ── DEV PANEL — solo visible en ?edit=1 ── */}
+      {editMode && (
+        <DevPanel
+          values={design}
+          onChange={setVal}
+          potatoDragOffset={potatoDrag}
+        />
+      )}
     </>
   );
 }
