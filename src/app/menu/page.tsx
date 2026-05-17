@@ -2,8 +2,12 @@
 
 import Link from "next/link";
 import Menu from "@/components/Menu";
+import DevPanel from "@/components/DevPanel";
+import { useDesignConfig } from "@/hooks/useDesignConfig";
 
 export default function MenuPage() {
+  const { config, editMode, saved, updateProp, save, reset, exportValues } = useDesignConfig("menu");
+
   return (
     <main style={{ width: "100vw", height: "100vh", overflowY: "auto", background: "var(--cream)", position: "relative" }}>
       <Link
@@ -32,6 +36,16 @@ export default function MenuPage() {
         <span aria-hidden>←</span> VOLVER
       </Link>
       <Menu onAgregar={(p) => console.log("AGREGAR", p.nombre)} />
+      {editMode && (
+        <DevPanel
+          config={config}
+          saved={saved}
+          onUpdate={updateProp}
+          onSave={save}
+          onExport={exportValues}
+          onReset={reset}
+        />
+      )}
     </main>
   );
 }

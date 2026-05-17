@@ -1,21 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import Lenis from "lenis";
 import { motion, useInView } from "framer-motion";
 import DragSticker from "@/components/DragSticker";
-import DevPanel, { type DesignValues } from "@/components/DevPanel";
+import DevPanel from "@/components/DevPanel";
+import { useDesignConfig } from "@/hooks/useDesignConfig";
 import MobileCanvas from "@/components/MobileCanvas";
 
 const DESKTOP_BREAKPOINT = 1024;
 
-function useEditMode() {
-  const [editMode, setEditMode] = useState(false);
-  useEffect(() => {
-    setEditMode(new URLSearchParams(window.location.search).get("edit") === "1");
-  }, []);
-  return editMode;
-}
 
 function useIsDesktop() {
   const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
@@ -45,33 +39,29 @@ function Reveal({ children, delay = 0, style }: { children: React.ReactNode; del
   );
 }
 
-const DEFAULT_DESIGN: DesignValues = {
-  titleSize:        19.5,
-  titleLeft:        42,
-  titleTop:         15,
-  potatoWidth:      48,
-  potatoLeft:       -4.2,
-  potatoBottom:     195,
-  subtitleSize:     2.3,
-  bodyCopyLeft:     54,
-  artGallerySize:   7,
-  artGalleryBottom: 120,
-  artGalleryLeft:   2,
-};
 
 export default function Home() {
   const isDesktop = useIsDesktop();
-  const editMode = useEditMode();
+  const { config, editMode, saved, updateProp, save, reset, exportValues } = useDesignConfig("home");
   const wrapperRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const lenisRef = useRef<Lenis | null>(null);
-  const [design, setDesign] = useState<DesignValues>(DEFAULT_DESIGN);
-  const [potatoDrag, setPotatoDrag] = useState({ x: 0, y: 0 });
 
-  const setVal = useCallback(
-    (key: keyof DesignValues, val: number) => setDesign(d => ({ ...d, [key]: val })),
-    [],
-  );
+  const hero = config.zones.hero?.elements;
+  const d = {
+    titleSize:    (hero?.title?.props?.fontSize as { value: number })?.value ?? 19.5,
+    titleLeft:    (hero?.title?.props?.left as { value: number })?.value ?? 42,
+    titleTop:     (hero?.title?.props?.top as { value: number })?.value ?? 15,
+    potatoWidth:  (hero?.image?.props?.width as { value: number })?.value ?? 48,
+    potatoLeft:   (hero?.image?.props?.left as { value: number })?.value ?? -4.2,
+    potatoBottom: (hero?.image?.props?.bottom as { value: number })?.value ?? 195,
+    subtitleSize: (hero?.subtitle?.props?.fontSize as { value: number })?.value ?? 2.3,
+    bodyCopyLeft: (hero?.bodyCopy?.props?.left as { value: number })?.value ?? 54,
+    artGallerySize:   (hero?.artGallery?.props?.fontSize as { value: number })?.value ?? 7,
+    artGalleryBottom: (hero?.artGallery?.props?.bottom as { value: number })?.value ?? 120,
+    artGalleryLeft:   (hero?.artGallery?.props?.left as { value: number })?.value ?? 2,
+    heroImage:    (hero?.image?.props?.src as { value: string })?.value ?? "/images/la-fija.png",
+  };
 
   const pauseScroll = () => lenisRef.current?.stop();
   const resumeScroll = () => lenisRef.current?.start();
@@ -204,17 +194,15 @@ export default function Home() {
 
           {/* Papa hero — izquierda desde abajo */}
           <motion.img
-            src="/images/la-fija.png"
+            src={d.heroImage}
             alt="SPRINGS Jacket"
             drag={editMode}
             dragMomentum={false}
-            onDrag={(_, info) => setPotatoDrag({ x: info.offset.x, y: info.offset.y })}
-            onDragEnd={(_, info) => setPotatoDrag({ x: info.offset.x, y: info.offset.y })}
             style={{
               position: "absolute",
-              left: `${design.potatoLeft}vw`,
-              bottom: `${design.potatoBottom}px`,
-              width: `${design.potatoWidth}vw`,
+              left: `${d.potatoLeft}vw`,
+              bottom: `${d.potatoBottom}px`,
+              width: `${d.potatoWidth}vw`,
               height: "auto",
               zIndex: 2,
               cursor: editMode ? "grab" : "default",
@@ -224,13 +212,13 @@ export default function Home() {
 
           {/* ART GALLERY — texto masivo debajo de la papa */}
           <div style={{
-            position: "absolute", left: `${design.artGalleryLeft}vw`, bottom: design.artGalleryBottom,
+            position: "absolute", left: `${d.artGalleryLeft}vw`, bottom: d.artGalleryBottom,
             width: "110vw", zIndex: 1,
             pointerEvents: "none",
           }}>
             <h2 style={{
               ...F.display,
-              fontSize: `clamp(40px, ${design.artGallerySize}vw, 400px)`,
+              fontSize: `clamp(40px, ${d.artGallerySize}vw, 400px)`,
               color: C.tinta, lineHeight: 0.88,
               margin: 0, letterSpacing: "-0.025em",
               textTransform: "uppercase", whiteSpace: "nowrap",
@@ -270,10 +258,10 @@ export default function Home() {
           </div>
 
           {/* SPRINGS — título masivo */}
-          <div style={{ position: "absolute", left: `${design.titleLeft}vw`, top: `${design.titleTop}vh`, zIndex: 3 }}>
+          <div style={{ position: "absolute", left: `${d.titleLeft}vw`, top: `${d.titleTop}vh`, zIndex: 3 }}>
             <h1 style={{
               ...F.display,
-              fontSize: `clamp(120px, ${design.titleSize}vw, 340px)`,
+              fontSize: `clamp(120px, ${d.titleSize}vw, 340px)`,
               color: C.tinta, lineHeight: 0.85,
               letterSpacing: "-0.01em", margin: 0,
               textTransform: "uppercase", position: "relative",
@@ -287,7 +275,7 @@ export default function Home() {
               <div style={{
                 fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
                 fontStyle: "italic", fontWeight: 800,
-                fontSize: `clamp(18px, ${design.subtitleSize}vw, 42px)`,
+                fontSize: `clamp(18px, ${d.subtitleSize}vw, 42px)`,
                 color: C.burgundy, letterSpacing: "0.02em",
                 textTransform: "uppercase", lineHeight: 1,
                 paddingBottom: 10,
@@ -309,7 +297,7 @@ export default function Home() {
           </div>
 
           {/* Body copy */}
-          <div style={{ position: "absolute", left: `${design.bodyCopyLeft}vw`, bottom: "12vh", zIndex: 5 }}>
+          <div style={{ position: "absolute", left: `${d.bodyCopyLeft}vw`, bottom: "12vh", zIndex: 5 }}>
             <div style={{ ...F.mono, fontSize: "0.68rem", letterSpacing: "0.14em", color: C.tinta, lineHeight: 2.1, textTransform: "uppercase", opacity: 0.85 }}>
               NO ES SOLO COMIDA.<br />
               ES UN PLAN.<br />
@@ -905,9 +893,12 @@ export default function Home() {
       {/* ── DEV PANEL — solo visible en ?edit=1 ── */}
       {editMode && (
         <DevPanel
-          values={design}
-          onChange={setVal}
-          potatoDragOffset={potatoDrag}
+          config={config}
+          saved={saved}
+          onUpdate={updateProp}
+          onSave={save}
+          onExport={exportValues}
+          onReset={reset}
         />
       )}
     </>

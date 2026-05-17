@@ -1,0 +1,50 @@
+{
+  "page": "home",
+  "zones": {
+    "hero": {
+      "label": "Hero principal",
+      "elements": {
+        "title": {
+          "type": "text",
+          "props": {
+            "content": "SPRINGS",
+            "fontSize": { "value": 22, "unit": "vw", "min": 10, "max": 30, "step": 0.5 },
+            "left": { "value": 37, "unit": "vw", "min": 10, "max": 70, "step": 1 },
+            "top": { "value": 14, "unit": "vh", "min": 0, "max": 50, "step": 1 },
+            "fontFamily": { "value": "display", "options": ["display", "sans", "mono"] },
+            "color": { "value": "tinta", "options": ["burgundy", "cream", "tinta", "mostaza"] }
+          }
+        },
+        "subtitle": {
+          "type": "text",
+          "props": {
+            "content": "Jackets That Hit Different.",
+            "fontSize": { "value": 2.6, "unit": "vw", "min": 1, "max": 6, "step": 0.1 },
+            "fontFamily": { "value": "sans", "options": ["display", "sans", "mono"] },
+            "color": { "value": "burgundy", "options": ["burgundy", "cream", "tinta", "mostaza"] },
+            "animation": { "value": "fade-up", "options": ["none", "fade-up", "fade-in", "slide-left", "scale-in"] }
+          }
+        },
+        "image": {
+          "type": "image",
+          "props": {
+            "src": { "value": "/images/la-fija.png", "folder": "/images" },
+            "width": { "value": 52, "unit": "vw", "min": 20, "max": 90, "step": 1 },
+            "left": { "value": -2, "unit": "vw", "min": -20, "max": 50, "step": 1 },
+            "bottom": { "value": 40, "unit": "px", "min": -100, "max": 300, "step": 5 }
+          }
+        },
+        "bodyCopy": {
+          "type": "text",
+          "props": {
+            "content": "NO ES SOLO COMIDA.\nES UN PLAN.\nES UN LUGAR.\nES SPRINGS.",
+            "left": { "value": 38, "unit": "vw", "min": 20, "max": 70, "step": 1 },
+            "fontSize": { "value": 0.68, "unit": "rem", "min": 0.5, "max": 1.5, "step": 0.02 },
+            "color": { "value": "tinta", "options": ["burgundy", "cream", "tinta", "mostaza"] },
+            "animation": { "value": "fade-up", "options": ["none", "fade-up", "fade-in", "slide-left", "scale-in"] }
+          }
+        }
+      }
+    }
+  }
+}
