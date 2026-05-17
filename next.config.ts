@@ -7,14 +7,8 @@ export default withSentryConfig(nextConfig, {
   org: "camilo-colmenares",
   project: "springs-web",
   silent: true,
-  widenClientFileUpload: true,
+  automaticVercelMonitors: false,
   sourcemaps: {
     disable: true,
-  },
-  webpack: {
-    treeshake: {
-      removeDebugLogging: true,
-    },
-    automaticVercelMonitors: false,
   },
 });
