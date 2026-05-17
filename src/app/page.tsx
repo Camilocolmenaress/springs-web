@@ -229,13 +229,6 @@ export default function Home() {
             width: "110vw", zIndex: 1,
             pointerEvents: "none",
           }}>
-            {/* Línea punteada mostaza — solo en modo editor */}
-            {editMode && (
-              <div style={{
-                width: "100%", height: 2, marginBottom: 6,
-                backgroundImage: `repeating-linear-gradient(to right, ${C.mostaza} 0px, ${C.mostaza} 8px, transparent 8px, transparent 18px)`,
-              }} />
-            )}
             <h2 style={{
               ...F.display,
               fontSize: `clamp(40px, ${design.artGallerySize}vw, 400px)`,
