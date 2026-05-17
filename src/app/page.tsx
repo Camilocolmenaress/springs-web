@@ -220,6 +220,34 @@ export default function Home() {
             }}
           />
 
+          {/* ART GALLERY — texto masivo debajo de la papa */}
+          <div style={{
+            position: "absolute", left: 0, bottom: 44,
+            width: "100vw", zIndex: 1,
+            overflow: "hidden", pointerEvents: "none",
+            display: "flex", alignItems: "baseline", gap: "2vw",
+            paddingLeft: "1vw",
+          }}>
+            <div style={{
+              ...F.mono, fontSize: "0.55rem", letterSpacing: "0.2em",
+              color: C.tinta, opacity: 0.45, whiteSpace: "nowrap",
+              display: "flex", flexDirection: "column", gap: 3,
+              paddingBottom: 6,
+            }}>
+              <span>S24 ↗</span>
+              <span style={{ fontSize: "0.45rem", opacity: 0.7 }}>SPRINGS</span>
+            </div>
+            <h2 style={{
+              ...F.display,
+              fontSize: "clamp(70px, 14vw, 210px)",
+              color: C.tinta, lineHeight: 0.88,
+              margin: 0, letterSpacing: "-0.025em",
+              textTransform: "uppercase", whiteSpace: "nowrap",
+            }}>
+              ART GALLERY
+            </h2>
+          </div>
+
           {/* Sello circular "HECHA PARA LOS DE VERDAD" */}
           <svg
             viewBox="0 0 130 130" width="120" height="120"
