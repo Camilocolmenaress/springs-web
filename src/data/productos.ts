@@ -82,7 +82,7 @@ export const productos: Producto[] = [
     precio: 28900,
     categoria: "jacket",
     disponible: true,
-    imagen_url: "/images/jacket-2.png",
+    imagen_url: "/images/la-honesta.png",
     orden: 14,
   },
 
