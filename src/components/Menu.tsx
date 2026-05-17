@@ -99,7 +99,7 @@ export default function Menu({ onAgregar }: Props) {
       background: C.cream,
       overflow: "hidden",
       display: "flex", flexDirection: "column",
-      paddingTop:    "max(52px, env(safe-area-inset-top,    52px))",
+      paddingTop:    "max(40px, env(safe-area-inset-top,    40px))",
       paddingBottom: "max(12px, env(safe-area-inset-bottom, 12px))",
     }}>
 
@@ -140,9 +140,9 @@ export default function Menu({ onAgregar }: Props) {
       <div aria-hidden style={{
         pointerEvents: "none",
         position: "absolute",
-        /* Offset below header ≈ 120px, so watermark centers in carousel area */
-        top: "50%", left: 0, right: 0,
-        transform: "translateY(calc(-50% + 40px))",
+        /* Watermark en zona superior, detrás de las papas */
+        top: "35%", left: 0, right: 0,
+        transform: "translateY(-50%)",
         display: "flex", alignItems: "center", justifyContent: "center",
         fontFamily: "var(--font-anton), sans-serif",
         fontSize: "clamp(100px, 19vw, 300px)", lineHeight: 0.85,
@@ -157,7 +157,7 @@ export default function Menu({ onAgregar }: Props) {
       <div style={{ position: "relative", flex: 1, display: "flex", flexDirection: "column", zIndex: 2, overflowX: "hidden", justifyContent: "center" }}>
 
         {/* Carousel track */}
-        <div style={{ position: "relative", flexShrink: 0, height: "clamp(420px, 70vh, 640px)" }}>
+        <div style={{ position: "relative", flexShrink: 0, height: "clamp(440px, 68vh, 680px)" }}>
           <AnimatePresence>
             {OFFSETS.map(offset => {
               const v   = vIdx + offset;
@@ -195,8 +195,8 @@ export default function Menu({ onAgregar }: Props) {
                     src={imgSrc(p)}
                     alt={p.nombre}
                     style={{
-                      width:  isCenter ? "min(64vh, 90vw)" : "min(34vh, 40vw, 300px)",
-                      height: isCenter ? "min(64vh, 90vw)" : "min(34vh, 40vw, 300px)",
+                      width:  isCenter ? "min(66vh, 92vw, 660px)" : "min(40vh, 46vw, 360px)",
+                      height: isCenter ? "min(66vh, 92vw, 660px)" : "min(40vh, 46vw, 360px)",
                       objectFit: "contain",
                       display: "block",
                     }}
