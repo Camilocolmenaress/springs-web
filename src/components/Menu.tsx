@@ -99,7 +99,7 @@ export default function Menu({ onAgregar }: Props) {
       background: C.cream,
       overflow: "hidden",
       display: "flex", flexDirection: "column",
-      paddingTop:    "max(40px, env(safe-area-inset-top,    40px))",
+      paddingTop:    "max(72px, env(safe-area-inset-top,    72px))",
       paddingBottom: "max(12px, env(safe-area-inset-bottom, 12px))",
     }}>
 
