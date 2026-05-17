@@ -8,8 +8,8 @@
           "type": "text",
           "props": {
             "content": "SPRINGS",
-            "fontSize": { "value": 22, "unit": "vw", "min": 10, "max": 30, "step": 0.5 },
-            "left": { "value": 37, "unit": "vw", "min": 10, "max": 70, "step": 1 },
+            "fontSize": { "value": 20.5, "unit": "vw", "min": 10, "max": 30, "step": 0.5 },
+            "left": { "value": 40, "unit": "vw", "min": 10, "max": 70, "step": 1 },
             "top": { "value": 14, "unit": "vh", "min": 0, "max": 50, "step": 1 },
             "fontFamily": { "value": "display", "options": ["display", "sans", "mono"] },
             "color": { "value": "tinta", "options": ["burgundy", "cream", "tinta", "mostaza"] }
@@ -28,10 +28,10 @@
         "image": {
           "type": "image",
           "props": {
-            "src": { "value": "/images/la-fija.png", "folder": "/images" },
-            "width": { "value": 52, "unit": "vw", "min": 20, "max": 90, "step": 1 },
-            "left": { "value": -2, "unit": "vw", "min": -20, "max": 50, "step": 1 },
-            "bottom": { "value": 40, "unit": "px", "min": -100, "max": 300, "step": 5 }
+            "src": { "value": "/images/la-brava.png", "folder": "/images" },
+            "width": { "value": 47, "unit": "vw", "min": 20, "max": 90, "step": 1 },
+            "left": { "value": -4, "unit": "vw", "min": -20, "max": 50, "step": 1 },
+            "bottom": { "value": 205, "unit": "px", "min": -100, "max": 400, "step": 5 }
           }
         },
         "bodyCopy": {
