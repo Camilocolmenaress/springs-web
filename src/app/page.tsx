@@ -177,7 +177,7 @@ export default function Home() {
             alt="SPRINGS Jacket"
             style={{
               position: "absolute", left: "-2vw", bottom: "40px",
-              width: "46vw", height: "calc(100vh - 104px)",
+              width: "52vw", height: "calc(100vh - 104px)",
               objectFit: "contain", objectPosition: "bottom left",
               zIndex: 2,
             }}
@@ -206,7 +206,7 @@ export default function Home() {
           </svg>
 
           {/* Globe + ubicación */}
-          <div style={{ position: "absolute", left: "27vw", top: "42vh", zIndex: 5, display: "flex", alignItems: "flex-start", gap: 8 }}>
+          <div style={{ position: "absolute", left: "33vw", top: "36vh", zIndex: 5, display: "flex", alignItems: "flex-start", gap: 8 }}>
             <span style={{ ...F.mono, fontSize: "0.9rem", color: C.tinta, opacity: 0.55, lineHeight: 1 }}>⊕</span>
             <div style={{ ...F.mono, fontSize: "0.54rem", letterSpacing: "0.18em", color: C.tinta, lineHeight: 1.6, textTransform: "uppercase", opacity: 0.7 }}>
               BGA – COLOMBIA<br />EST. 2024
@@ -214,27 +214,41 @@ export default function Home() {
           </div>
 
           {/* SPRINGS — título masivo */}
-          <div style={{ position: "absolute", left: "37vw", top: "17vh", zIndex: 3 }}>
+          <div style={{ position: "absolute", left: "37vw", top: "14vh", zIndex: 3 }}>
             <h1 style={{
               ...F.display,
-              fontSize: "clamp(120px, 18vw, 280px)",
+              fontSize: "clamp(160px, 22vw, 340px)",
               color: C.tinta, lineHeight: 0.85,
               letterSpacing: "-0.01em", margin: 0,
               textTransform: "uppercase", position: "relative",
               whiteSpace: "nowrap",
             }}>
               SPRINGS
-              <span style={{ position: "absolute", top: "30%", right: "20%", fontSize: "0.12em", color: C.tinta, opacity: 0.9 }}>✦</span>
+              <span style={{ position: "absolute", top: "30%", right: "22%", fontSize: "0.12em", color: C.tinta, opacity: 0.9 }}>✦</span>
             </h1>
-            <div style={{
-              ...F.sans, fontStyle: "italic", fontWeight: 800,
-              fontSize: "clamp(16px, 2.2vw, 34px)",
-              color: C.burgundy, letterSpacing: "0.04em",
-              textTransform: "uppercase", marginTop: 8,
-              borderBottom: `2px solid ${C.burgundy}`,
-              paddingBottom: 4, width: "fit-content",
-            }}>
-              Jackets That Hit Different.
+            {/* Subtítulo — Playfair Display Italic + brush underline SVG */}
+            <div style={{ position: "relative", width: "fit-content", marginTop: 6 }}>
+              <div style={{
+                fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
+                fontStyle: "italic", fontWeight: 800,
+                fontSize: "clamp(20px, 2.6vw, 42px)",
+                color: C.burgundy, letterSpacing: "0.02em",
+                textTransform: "uppercase", lineHeight: 1,
+                paddingBottom: 10,
+              }}>
+                Jackets That Hit Different.
+              </div>
+              {/* Brush stroke underline */}
+              <svg viewBox="0 0 520 14" preserveAspectRatio="none"
+                style={{ position: "absolute", bottom: -2, left: 0, width: "100%", height: 14 }}
+              >
+                <path
+                  d="M4,10 C60,5 120,13 180,8 C240,3 300,12 360,7 C420,2 470,11 516,7"
+                  fill="none" stroke={C.burgundy} strokeWidth="3.5"
+                  strokeLinecap="round" strokeLinejoin="round"
+                  opacity={0.85}
+                />
+              </svg>
             </div>
           </div>
 
@@ -278,7 +292,7 @@ export default function Home() {
           <DragSticker rotate={-5} idleRotateRange={3} idleDuration={8}
             onDragStart={pauseScroll} onDragEnd={resumeScroll}
             style={{
-              position: "absolute", left: "22vw", top: "18vh", zIndex: 18,
+              position: "absolute", left: "28vw", top: "28vh", zIndex: 1,
               width: "8vw", height: "8vw",
               background: C.cream,
               boxShadow: `0 0 0 5px ${C.cream}, 0 0 0 7px ${C.tinta}`,
