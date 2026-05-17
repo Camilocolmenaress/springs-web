@@ -51,7 +51,7 @@ const DEFAULT_DESIGN: DesignValues = {
   titleTop:     15,
   potatoWidth:  48,
   potatoLeft:   -4.2,
-  potatoBottom: 109,
+  potatoBottom: 195,
   subtitleSize: 2.3,
   bodyCopyLeft: 54,
 };
