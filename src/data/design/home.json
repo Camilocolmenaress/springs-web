@@ -37,9 +37,11 @@
         "globeSticker": {
           "type": "text",
           "props": {
-            "left":       { "value": 28, "unit": "vw", "min": 0,   "max": 90,  "step": 0.5 },
-            "top":        { "value": 28, "unit": "vh", "min": 0,   "max": 90,  "step": 0.5 },
-            "textOffset": { "value": 0,  "unit": "%",  "min": 0,   "max": 100, "step": 1   }
+            "left":       { "value": 28,  "unit": "vw", "min": 0,  "max": 90,  "step": 0.5 },
+            "top":        { "value": 28,  "unit": "vh", "min": 0,  "max": 90,  "step": 0.5 },
+            "textOffset": { "value": 0,   "unit": "%",  "min": 0,  "max": 100, "step": 1   },
+            "textRadius": { "value": 46,  "unit": "px", "min": 25, "max": 52,  "step": 1   },
+            "fontSize":   { "value": 7.5, "unit": "px", "min": 4,  "max": 14,  "step": 0.5 }
           }
         },
         "menuList": {

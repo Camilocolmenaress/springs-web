@@ -65,6 +65,8 @@ export default function Home() {
     globeStickerLeft:   (hero?.globeSticker?.props?.left as { value: number })?.value ?? 28,
     globeStickerTop:    (hero?.globeSticker?.props?.top as { value: number })?.value ?? 28,
     globeTextOffset:    (hero?.globeSticker?.props?.textOffset as { value: number })?.value ?? 0,
+    globeTextRadius:    (hero?.globeSticker?.props?.textRadius as { value: number })?.value ?? 46,
+    globeFontSize:      (hero?.globeSticker?.props?.fontSize as { value: number })?.value ?? 7.5,
     menuListSize:   (hero?.menuList?.props?.fontSize as { value: number })?.value ?? 0.65,
     menuListLeft:   (hero?.menuList?.props?.left as { value: number })?.value ?? 2,
     menuListBottom: (hero?.menuList?.props?.bottom as { value: number })?.value ?? 6,
@@ -518,11 +520,21 @@ export default function Home() {
               {/* Líneas centrales */}
               <line x1="33" y1="55" x2="77" y2="55" stroke={C.tinta} strokeWidth="0.8" opacity={0.45}/>
               <line x1="55" y1="33" x2="55" y2="77" stroke={C.tinta} strokeWidth="0.8" opacity={0.45}/>
-              {/* Texto — círculo que empieza en las 7 del reloj y va por encima */}
-              <path id="hot-circle" fill="none" d="M32,95 a46,46 0 0,1 46,-80 a46,46 0 0,1 -46,80"/>
-              <text fontFamily="JetBrains Mono, monospace" fontSize="7.5" letterSpacing="1.0" fill={C.tinta} fillOpacity={0.8}>
-                <textPath href="#hot-circle" startOffset={`${d.globeTextOffset}%`}>FOR THE MOST CHIMBA PEOPLE ✦ </textPath>
-              </text>
+              {/* Texto — círculo dinámico que empieza en las 7 del reloj */}
+              {(() => {
+                const r = d.globeTextRadius;
+                const sx = +(55 - r * 0.5).toFixed(1);
+                const sy = +(55 + r * 0.866).toFixed(1);
+                const dy = +(r * 1.732).toFixed(1);
+                return (
+                  <>
+                    <path id="hot-circle" fill="none" d={`M${sx},${sy} a${r},${r} 0 0,1 ${r},${-dy} a${r},${r} 0 0,1 ${-r},${dy}`}/>
+                    <text fontFamily="JetBrains Mono, monospace" fontSize={d.globeFontSize} letterSpacing="1.0" fill={C.tinta} fillOpacity={0.8}>
+                      <textPath href="#hot-circle" startOffset={`${d.globeTextOffset}%`}>FOR THE MOST CHIMBA PEOPLE ✦ </textPath>
+                    </text>
+                  </>
+                );
+              })()}
             </svg>
           </DragSticker>
 

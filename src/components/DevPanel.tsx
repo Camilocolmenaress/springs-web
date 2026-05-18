@@ -19,6 +19,7 @@ const PROP_LABELS: Record<string, string> = {
   color: "Color", src: "Imagen", animation: "Animación",
   rotation: "Rotación",
   textOffset: "Posición texto",
+  textRadius: "Distancia al globo",
 };
 
 interface Props {
