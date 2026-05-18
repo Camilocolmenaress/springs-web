@@ -8,10 +8,10 @@ const MONO = { fontFamily: "JetBrains Mono, monospace" } as const;
 
 const WARNING = "Warning: Puedes quedar así de hot después de comer Springs.";
 
-// Imagen natural: 447×558 (portrait). Tras rotar -90°: 558×447 (landscape).
+// Imagen natural: 1122×1402 (portrait). Tras rotar -90°: 1402×1122 (landscape).
 // Inner wrapper portrait dentro del contenedor landscape:
-const INNER_W_PCT = (447 / 558) * 100; // 80.11%
-const INNER_H_PCT = (558 / 447) * 100; // 124.83%
+const INNER_W_PCT = (1122 / 1402) * 100; // 80.03%
+const INNER_H_PCT = (1402 / 1122) * 100; // 124.96%
 
 interface Props {
   src: string;

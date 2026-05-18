@@ -876,7 +876,7 @@ export default function Home() {
               left: `${d.sensitiveLeft}vw`,
               bottom: `${d.sensitiveBottom}vh`,
               width: `${d.sensitiveSize}vw`,
-              aspectRatio: "558 / 447",
+              aspectRatio: "1402 / 1122",
               rotate: d.sensitiveRotation,
               zIndex: 10,
             }}
