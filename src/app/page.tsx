@@ -62,6 +62,10 @@ export default function Home() {
     subtitleLeft:     (hero?.subtitle?.props?.left as { value: number })?.value ?? 42,
     subtitleBottom:   (hero?.subtitle?.props?.bottom as { value: number })?.value ?? 30,
     subtitleRotation: (hero?.subtitle?.props?.rotation as { value: number })?.value ?? -2,
+    menuListSize:   (hero?.menuList?.props?.fontSize as { value: number })?.value ?? 0.65,
+    menuListLeft:   (hero?.menuList?.props?.left as { value: number })?.value ?? 2,
+    menuListBottom: (hero?.menuList?.props?.bottom as { value: number })?.value ?? 6,
+    menuListWidth:  (hero?.menuList?.props?.width as { value: number })?.value ?? 28,
     jacketClubLeft:  (hero?.jacketClub?.props?.left as { value: number })?.value ?? 3,
     jacketClubTop:   (hero?.jacketClub?.props?.top as { value: number })?.value ?? 10,
     jacketClubWidth: (hero?.jacketClub?.props?.width as { value: number })?.value ?? 12,
@@ -292,6 +296,28 @@ export default function Home() {
                 </h2>
               </motion.div>
             </div>
+          </div>
+
+          {/* Listado de productos — debajo de ART GALLERY */}
+          <div style={{
+            position: "absolute",
+            left: `${d.menuListLeft}vw`,
+            bottom: `${d.menuListBottom}vh`,
+            width: `${d.menuListWidth}vw`,
+            zIndex: 2,
+          }}>
+            <p style={{
+              ...F.mono,
+              fontSize: `clamp(9px, ${d.menuListSize}vw, 18px)`,
+              color: C.tinta,
+              letterSpacing: "0.12em",
+              lineHeight: 1.9,
+              textTransform: "uppercase",
+              margin: 0,
+              opacity: 0.75,
+            }}>
+              LA FIJA / LA PESADA / LA BRAVA / LA SIMPLE / LA HONESTA / LOADED POLLO / LOADED MOLIDA / LOADED DESMECHADA / LOADED CHORIZO /
+            </p>
           </div>
 
           {/* Sello circular "HECHA PARA LOS DE VERDAD" */}
