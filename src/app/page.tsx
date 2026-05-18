@@ -535,14 +535,13 @@ export default function Home() {
                         color: C.burgundy,
                         letterSpacing: "0.04em",
                         lineHeight: 1,
-                        marginRight: "0.5em",
                       }}>SPRINGS</span>
                       <span style={{
                         ...F.display,
                         fontSize: `clamp(16px, ${d.marqueeSize * 0.8}vw, 52px)`,
                         color: C.burgundy,
                         WebkitTextStroke: `2px ${C.burgundy}`,
-                        margin: "0 0.5em",
+                        margin: "0 0.75em",
                         lineHeight: 1,
                       }}>&lt;</span>
                       {/* Outline */}
@@ -553,14 +552,13 @@ export default function Home() {
                         WebkitTextStroke: `1.5px ${C.burgundy}`,
                         letterSpacing: "0.04em",
                         lineHeight: 1,
-                        marginRight: "0.5em",
                       }}>SPRINGS</span>
                       <span style={{
                         ...F.display,
                         fontSize: `clamp(16px, ${d.marqueeSize * 0.8}vw, 52px)`,
                         color: C.burgundy,
                         WebkitTextStroke: `2px ${C.burgundy}`,
-                        margin: "0 0.5em",
+                        margin: "0 0.75em",
                         lineHeight: 1,
                       }}>&lt;</span>
                     </span>
