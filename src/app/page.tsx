@@ -11,6 +11,8 @@ import MobileCanvas from "@/components/MobileCanvas";
 
 const DESKTOP_BREAKPOINT = 1024;
 
+// Easing suave para slides
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 function useIsDesktop() {
   const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
@@ -154,13 +156,10 @@ export default function Home() {
     };
   }, [isDesktop]);
 
-  // Default a mobile mientras detectamos viewport (mobile-first).
-  // Switcheamos a canvas desktop solo si confirmamos ancho >= 1024.
   if (isDesktop !== true) {
     return <MobileCanvas />;
   }
 
-  // Estilos base
   const F = {
     display: { fontFamily: "Anton, sans-serif" },
     sans:    { fontFamily: "Inter, sans-serif" },
@@ -176,12 +175,17 @@ export default function Home() {
   return (
     <>
       {/* ── NAV TOP FIJO ── */}
-      <nav style={{
-        position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-        padding: "0 32px", height: 64,
-        background: "transparent",
-      }}>
+      <motion.nav
+        initial={{ opacity: 0, y: -16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: EASE, delay: 0.05 }}
+        style={{
+          position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          padding: "0 32px", height: 64,
+          background: "transparent",
+        }}
+      >
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
           <a href="/" style={{ ...F.display, fontSize: "1.9rem", letterSpacing: "0.05em", color: C.burgundy, textDecoration: "none" }}>SPRINGS</a>
           <span style={{ color: C.tinta, fontSize: "0.85rem" }}>✦</span>
@@ -198,15 +202,20 @@ export default function Home() {
         }}>
           PEDIR AHORA <span>↗</span>
         </a>
-      </nav>
+      </motion.nav>
 
       {/* ── FOOTER BAR FIJO ── */}
-      <div style={{
-        position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 100,
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-        padding: "0 32px", height: 40,
-        background: "transparent",
-      }}>
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: EASE, delay: 0.8 }}
+        style={{
+          position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 100,
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          padding: "0 32px", height: 40,
+          background: "transparent",
+        }}
+      >
         <div style={{ display: "flex", gap: 22 }}>
           {["INSTAGRAM", "TIKTOK", "SPOTIFY"].map(s => (
             <a key={s} href="#" style={{ ...F.mono, fontSize: "0.58rem", letterSpacing: "0.18em", color: C.tinta, textDecoration: "none", opacity: 0.6 }}>{s}</a>
@@ -251,16 +260,19 @@ export default function Home() {
             </motion.a>
           ))}
         </div>
-      </div>
+      </motion.div>
 
       {/* ── BARCODE FIXED ── */}
-      <img
+      <motion.img
         src="/images/barcode-springs.png"
         alt="SPRINGS 2024"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: d.barcodeOpacity / 100 }}
+        transition={{ duration: 0.6, delay: 1.0 }}
         style={{
           position: "fixed", bottom: 4, left: `${d.barcodeLeft}vw`,
           height: d.barcodeHeight, width: d.barcodeWidth,
-          objectFit: "contain", opacity: d.barcodeOpacity / 100,
+          objectFit: "contain",
           zIndex: 101, pointerEvents: "none",
         }}
       />
@@ -274,12 +286,15 @@ export default function Home() {
               ZONA 1 — HERO (0 → 100vw)
           ═══════════════════════════════════════ */}
 
-          {/* Papa hero — izquierda desde abajo */}
+          {/* Papa hero — sube desde abajo */}
           <motion.img
             src={d.heroImage}
             alt="SPRINGS Jacket"
             drag={editMode}
             dragMomentum={false}
+            initial={{ y: 80, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1.0, ease: EASE, delay: 0.1 }}
             style={{
               position: "absolute",
               left: `${d.potatoLeft}vw`,
@@ -292,11 +307,13 @@ export default function Home() {
             }}
           />
 
-          {/* ART GALLERY — efecto cubo real con preserve-3d (mismo patrón que SPRINGS) */}
-          <div style={{
-            position: "absolute", left: `${d.artGalleryLeft}vw`, bottom: d.artGalleryBottom,
-            zIndex: 1,
-          }}>
+          {/* ART GALLERY — entra desde la izquierda */}
+          <motion.div
+            initial={{ x: -50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.65, ease: EASE, delay: 0.5 }}
+            style={{ position: "absolute", left: `${d.artGalleryLeft}vw`, bottom: d.artGalleryBottom, zIndex: 1 }}
+          >
             <div
               onMouseEnter={() => setArtGalleryHovered(true)}
               onMouseLeave={() => setArtGalleryHovered(false)}
@@ -318,7 +335,6 @@ export default function Home() {
                   transformOrigin: "50% 50% -0.5em",
                 }}
               >
-                {/* Cara FRONT */}
                 <h2
                   style={{
                     ...F.display,
@@ -336,7 +352,6 @@ export default function Home() {
                   ART GALLERY
                 </h2>
 
-                {/* Cara TOP */}
                 <h2
                   style={{
                     ...F.display,
@@ -359,16 +374,21 @@ export default function Home() {
                 </h2>
               </motion.div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Listado de productos — debajo de ART GALLERY */}
-          <div style={{
-            position: "absolute",
-            left: `${d.menuListLeft}vw`,
-            bottom: `${d.menuListBottom}vh`,
-            width: `${d.menuListWidth}vw`,
-            zIndex: 2,
-          }}>
+          {/* Listado de productos — entra desde la izquierda con delay */}
+          <motion.div
+            initial={{ x: -35, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.6, ease: EASE, delay: 0.55 }}
+            style={{
+              position: "absolute",
+              left: `${d.menuListLeft}vw`,
+              bottom: `${d.menuListBottom}vh`,
+              width: `${d.menuListWidth}vw`,
+              zIndex: 2,
+            }}
+          >
             <p style={{
               ...F.mono,
               fontSize: `clamp(9px, ${d.menuListSize}vw, 18px)`,
@@ -382,21 +402,29 @@ export default function Home() {
             }}>
               LA FIJA / LA PESADA / LA BRAVA / LA SIMPLE / LA HONESTA / LOADED POLLO / LOADED MOLIDA / LOADED DESMECHADA / LOADED CHORIZO /
             </p>
-          </div>
+          </motion.div>
 
 
-          {/* Globe + ubicación */}
-          <div style={{ position: "absolute", left: `${d.locationLeft}vw`, top: `${d.locationTop}vh`, zIndex: 5, display: "flex", alignItems: "flex-start", gap: d.locationGap }}>
+          {/* Globe + ubicación — fade + sube */}
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, ease: EASE, delay: 0.45 }}
+            style={{ position: "absolute", left: `${d.locationLeft}vw`, top: `${d.locationTop}vh`, zIndex: 5, display: "flex", alignItems: "flex-start", gap: d.locationGap }}
+          >
             <span style={{ ...F.mono, fontSize: `${d.locationGlobeSize}rem`, color: C.tinta, opacity: 0.55, lineHeight: 1, marginTop: d.locationGlobeOffY }}>⊕</span>
             <div style={{ ...F.mono, fontSize: `${d.locationFontSize}rem`, letterSpacing: "0.18em", color: C.tinta, lineHeight: d.locationLineHeight, textTransform: "uppercase", opacity: 0.7 }}>
               Barbosa STDR – COLOMBIA<br />EST. 2025
             </div>
-          </div>
+          </motion.div>
 
-          {/* SPRINGS — cubo real con preserve-3d. Las dos caras son parte de UNA
-              estructura 3D rígida (front + top del cubo). El wrapper rota -90° y
-              ambas caras viajan juntas, manteniendo siempre la arista compartida. */}
-          <div style={{ position: "absolute", left: `${d.titleLeft}vw`, top: `${d.titleTop}vh`, zIndex: 3 }}>
+          {/* SPRINGS — cae desde arriba */}
+          <motion.div
+            initial={{ y: -60, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.75, ease: EASE, delay: 0.15 }}
+            style={{ position: "absolute", left: `${d.titleLeft}vw`, top: `${d.titleTop}vh`, zIndex: 3 }}
+          >
             <div
               onMouseEnter={() => setTitleHovered(true)}
               onMouseLeave={() => setTitleHovered(false)}
@@ -409,8 +437,6 @@ export default function Home() {
                 clipPath: "inset(0 -800px)",
               }}
             >
-              {/* Wrapper cubo: preserve-3d, pivot en el CENTRO del cubo (0.5em atrás)
-                  para que la rotación sea como un cubo rodando hacia adelante. */}
               <motion.div
                 animate={titleHovered ? { rotateX: -90 } : { rotateX: 0 }}
                 transition={{ type: "tween", duration: 0.45, ease: [0.45, 0, 0.55, 1] }}
@@ -420,9 +446,6 @@ export default function Home() {
                   transformOrigin: "50% 50% -0.5em",
                 }}
               >
-                {/* Cara FRONT — en flujo, define el tamaño del wrapper.
-                    backface-visibility: hidden la oculta cuando rota -90° (la cara queda
-                    mirando hacia abajo y el espectador ve el reverso, que se oculta). */}
                 <h1
                   style={{
                     ...F.display,
@@ -440,12 +463,6 @@ export default function Home() {
                   SPRINGS
                 </h1>
 
-                {/* Cara TOP — acostada horizontalmente arriba del front.
-                    Transform: rotateX(+90) la pone con la SUPERFICIE DEL TEXTO mirando
-                    hacia ARRIBA (no abajo). Luego translateZ(-0.5em) la mueve hacia atrás
-                    (a la profundidad del cubo) y translateY(-50%) la sube al borde superior.
-                    Resultado: acostada en el plano y=0, extendiéndose en -Z, texto facing UP.
-                    Al rotar el wrapper -90°, queda al frente con el texto orientado correcto. */}
                 <h1
                   style={{
                     ...F.display,
@@ -468,21 +485,22 @@ export default function Home() {
                 </h1>
               </motion.div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Subtítulo handmade — tipografía marker + trazo sketchy.
-              Posición independiente controlable desde el DevPanel
-              (left, bottom, fontSize, rotation). */}
-          {/* Subtítulo handmade */}
-          <div style={{
-            position: "absolute",
-            left: `${d.subtitleLeft}vw`,
-            bottom: `${d.subtitleBottom}vh`,
-            transform: `rotate(${d.subtitleRotation}deg)`,
-            transformOrigin: "left center",
-            zIndex: 5,
-            width: "fit-content",
-          }}>
+          {/* Subtítulo — desliza desde la derecha con rotación */}
+          <motion.div
+            initial={{ x: 60, opacity: 0, rotate: d.subtitleRotation - 8 }}
+            animate={{ x: 0, opacity: 1, rotate: d.subtitleRotation }}
+            transition={{ duration: 0.65, ease: EASE, delay: 0.3 }}
+            style={{
+              position: "absolute",
+              left: `${d.subtitleLeft}vw`,
+              bottom: `${d.subtitleBottom}vh`,
+              transformOrigin: "left center",
+              zIndex: 5,
+              width: "fit-content",
+            }}
+          >
             <div style={{
               fontFamily: "var(--font-marker), cursive",
               fontSize: `clamp(20px, ${d.subtitleSize}vw, 96px)`,
@@ -494,38 +512,45 @@ export default function Home() {
             }}>
               {d.subtitleText}
             </div>
-          </div>
+          </motion.div>
 
-          {/* Trazo de pincel — PNG con fondo transparente */}
-          <img
+          {/* Trazo de pincel — desliza desde la derecha */}
+          <motion.img
             src="/images/underline-stroke.png"
             alt=""
+            initial={{ x: 50, opacity: 0, rotate: d.underlineRotation + 6 }}
+            animate={{ x: 0, opacity: 1, rotate: d.underlineRotation }}
+            transition={{ duration: 0.6, ease: EASE, delay: 0.35 }}
             style={{
               position: "absolute",
               left: `${d.underlineLeft}vw`,
               bottom: `${d.underlineBottom}vh`,
               width: `${d.underlineWidth}vw`,
               height: "auto",
-              transform: `rotate(${d.underlineRotation}deg)`,
               transformOrigin: "left center",
               zIndex: 5,
               pointerEvents: "none",
             }}
           />
 
-          {/* ─── MARQUEE TAPE ─── */}
-          <div style={{
-            position: "absolute",
-            left: `${d.marqueeLeft}vw`,
-            top: `${d.marqueeTop}vh`,
-            width: `${400 - d.marqueeLeft}vw`,
-            overflow: "hidden",
-            zIndex: 6,
-            borderTop: `1.5px solid ${C.tinta}`,
-            borderBottom: `1.5px solid ${C.tinta}`,
-            padding: "6px 0",
-            background: C.cream,
-          }}>
+          {/* ─── MARQUEE TAPE — sube desde abajo ─── */}
+          <motion.div
+            initial={{ y: 40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.75, ease: EASE, delay: 0.7 }}
+            style={{
+              position: "absolute",
+              left: `${d.marqueeLeft}vw`,
+              top: `${d.marqueeTop}vh`,
+              width: `${400 - d.marqueeLeft}vw`,
+              overflow: "hidden",
+              zIndex: 6,
+              borderTop: `1.5px solid ${C.tinta}`,
+              borderBottom: `1.5px solid ${C.tinta}`,
+              padding: "6px 0",
+              background: C.cream,
+            }}
+          >
             <motion.div
               animate={{ x: ["0%", "-50%"] }}
               transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
@@ -535,7 +560,6 @@ export default function Home() {
                 <span key={copy} style={{ display: "inline-flex", alignItems: "center" }}>
                   {Array.from({ length: 20 }).map((_, i) => (
                     <span key={i} style={{ display: "inline-flex", alignItems: "center" }}>
-                      {/* Sólido */}
                       <span style={{
                         ...F.display,
                         fontSize: `clamp(18px, ${d.marqueeSize}vw, 60px)`,
@@ -551,7 +575,6 @@ export default function Home() {
                         margin: "0 0.75em",
                         lineHeight: 1,
                       }}>&lt;</span>
-                      {/* Outline */}
                       <span style={{
                         ...F.display,
                         fontSize: `clamp(18px, ${d.marqueeSize}vw, 60px)`,
@@ -573,10 +596,15 @@ export default function Home() {
                 </span>
               ))}
             </motion.div>
-          </div>
+          </motion.div>
 
-          {/* Body copy */}
-          <div style={{ position: "absolute", left: `${d.bodyCopyLeft}vw`, bottom: `${d.bodyCopyBottom}vh`, zIndex: 5 }}>
+          {/* Body copy — fade + sube */}
+          <motion.div
+            initial={{ opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, ease: EASE, delay: 0.6 }}
+            style={{ position: "absolute", left: `${d.bodyCopyLeft}vw`, bottom: `${d.bodyCopyBottom}vh`, zIndex: 5 }}
+          >
             <div style={{ ...F.display, fontSize: `clamp(20px, ${d.bodyCopySize}vw, 72px)`, color: C.tinta, letterSpacing: "-0.01em", lineHeight: 1.1 }}>
               <div style={{ display: "flex", alignItems: "center", gap: "0.3em" }}>
                 <svg width="0.7em" height="0.7em" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, marginBottom: "0.1em" }}>
@@ -587,14 +615,19 @@ export default function Home() {
               </div>
               <div style={{ paddingLeft: "calc(0.7em + 0.3em)" }}>La Fija</div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* + símbolo top-right */}
-          <span style={{ position: "absolute", left: "97vw", top: "42vh", ...F.display, fontSize: "1.8rem", color: C.tinta, opacity: 0.4, zIndex: 5 }}>+</span>
+          {/* + símbolo — fade in */}
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.4 }}
+            transition={{ duration: 0.4, delay: 0.65 }}
+            style={{ position: "absolute", left: "97vw", top: "42vh", ...F.display, fontSize: "1.8rem", color: C.tinta, zIndex: 5 }}
+          >+</motion.span>
 
           {/* ─── STICKERS ────────────────────────────────── */}
 
-          {/* 1. SPRINGS Jacket Club — sticker imagen, drag + hover swap + link */}
+          {/* 1. SPRINGS Jacket Club — sticker slam */}
           <motion.img
             src={jacketClubHovered ? "/images/jacket-club-sticker-hover.png" : "/images/jacket-club-sticker.png"}
             alt="SPRINGS Jacket Club"
@@ -603,10 +636,13 @@ export default function Home() {
             onPointerDown={() => { jacketClubDragged.current = false; }}
             onDragStart={() => { jacketClubDragged.current = true; pauseScroll(); }}
             onDragEnd={resumeScroll}
-            whileDrag={{ scale: 1.03 }}
+            whileDrag={{ scale: 1.06 }}
             onHoverStart={() => setJacketClubHovered(true)}
             onHoverEnd={() => setJacketClubHovered(false)}
             onTap={() => { if (!jacketClubDragged.current) router.push("/springs-jacket-club"); }}
+            initial={{ scale: 0, opacity: 0, rotate: -25 }}
+            animate={{ scale: 1, opacity: 1, rotate: 0 }}
+            transition={{ type: "spring", stiffness: 380, damping: 18, delay: 1.1 }}
             style={{
               position: "absolute",
               left: `${d.jacketClubLeft}vw`,
@@ -618,53 +654,64 @@ export default function Home() {
             }}
           />
 
-          {/* 2. FOR THE MOST CHIMBA PEOPLE — círculo con globo */}
-          <DragSticker rotate={-5} idleRotateRange={3} idleDuration={8}
-            onDragStart={pauseScroll} onDragEnd={resumeScroll}
+          {/* 2. FOR THE MOST CHIMBA PEOPLE — sticker slam con spring */}
+          <motion.div
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 360, damping: 20, delay: 0.9 }}
             style={{
-              position: "absolute", left: `${d.globeStickerLeft}vw`, top: `${d.globeStickerTop}vh`, zIndex: 1,
-              width: `${d.globeStickerSize}vw`, height: `${d.globeStickerSize}vw`,
-              background: C.cream,
-              boxShadow: `0 0 0 5px ${C.cream}, 0 0 0 7px ${C.tinta}`,
-              clipPath: "circle(50%)",
-              display: "flex", alignItems: "center", justifyContent: "center",
+              position: "absolute",
+              left: `${d.globeStickerLeft}vw`,
+              top: `${d.globeStickerTop}vh`,
+              zIndex: 1,
+              width: `${d.globeStickerSize}vw`,
+              height: `${d.globeStickerSize}vw`,
             }}
           >
-            <svg viewBox="0 0 110 110" width="100%" height="100%">
-              {/* Globo con más líneas — radio dinámico */}
-              {(() => {
-                const gr = d.globeRadius;
-                return (
-                  <>
-                    <circle cx="55" cy="55" r={gr} fill="none" stroke={C.tinta} strokeWidth="1.2" opacity={0.8}/>
-                    <ellipse cx="55" cy="55" rx={+(gr*0.36).toFixed(1)} ry={gr} fill="none" stroke={C.tinta} strokeWidth="0.9" opacity={0.6}/>
-                    <ellipse cx="55" cy="55" rx={+(gr*0.77).toFixed(1)} ry={gr} fill="none" stroke={C.tinta} strokeWidth="0.9" opacity={0.5}/>
-                    <ellipse cx="55" cy="55" rx={gr} ry={+(gr*0.41).toFixed(1)} fill="none" stroke={C.tinta} strokeWidth="0.9" opacity={0.6}/>
-                    <ellipse cx="55" cy="55" rx={gr} ry={+(gr*0.77).toFixed(1)} fill="none" stroke={C.tinta} strokeWidth="0.8" opacity={0.45}/>
-                    <line x1={55-gr} y1="55" x2={55+gr} y2="55" stroke={C.tinta} strokeWidth="0.8" opacity={0.45}/>
-                    <line x1="55" y1={55-gr} x2="55" y2={55+gr} stroke={C.tinta} strokeWidth="0.8" opacity={0.45}/>
-                  </>
-                );
-              })()}
-              {/* Texto — círculo dinámico que empieza en las 7 del reloj */}
-              {(() => {
-                const r = d.globeTextRadius;
-                const sx = +(55 - r * 0.5).toFixed(1);
-                const sy = +(55 + r * 0.866).toFixed(1);
-                const dy = +(r * 1.732).toFixed(1);
-                return (
-                  <>
-                    <path id="hot-circle" fill="none" d={`M${sx},${sy} a${r},${r} 0 0,1 ${r},${-dy} a${r},${r} 0 0,1 ${-r},${dy}`}/>
-                    <text fontFamily="JetBrains Mono, monospace" fontSize={d.globeFontSize} letterSpacing="1.0" fill={C.tinta} fillOpacity={0.8}>
-                      <textPath href="#hot-circle" startOffset={`${d.globeTextOffset}%`}>FOR THE MOST CHIMBA PEOPLE ✦ </textPath>
-                    </text>
-                  </>
-                );
-              })()}
-            </svg>
-          </DragSticker>
+            <DragSticker rotate={-5} idleRotateRange={3} idleDuration={8}
+              onDragStart={pauseScroll} onDragEnd={resumeScroll}
+              style={{
+                width: `${d.globeStickerSize}vw`, height: `${d.globeStickerSize}vw`,
+                background: C.cream,
+                boxShadow: `0 0 0 5px ${C.cream}, 0 0 0 7px ${C.tinta}`,
+                clipPath: "circle(50%)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+              }}
+            >
+              <svg viewBox="0 0 110 110" width="100%" height="100%">
+                {(() => {
+                  const gr = d.globeRadius;
+                  return (
+                    <>
+                      <circle cx="55" cy="55" r={gr} fill="none" stroke={C.tinta} strokeWidth="1.2" opacity={0.8}/>
+                      <ellipse cx="55" cy="55" rx={+(gr*0.36).toFixed(1)} ry={gr} fill="none" stroke={C.tinta} strokeWidth="0.9" opacity={0.6}/>
+                      <ellipse cx="55" cy="55" rx={+(gr*0.77).toFixed(1)} ry={gr} fill="none" stroke={C.tinta} strokeWidth="0.9" opacity={0.5}/>
+                      <ellipse cx="55" cy="55" rx={gr} ry={+(gr*0.41).toFixed(1)} fill="none" stroke={C.tinta} strokeWidth="0.9" opacity={0.6}/>
+                      <ellipse cx="55" cy="55" rx={gr} ry={+(gr*0.77).toFixed(1)} fill="none" stroke={C.tinta} strokeWidth="0.8" opacity={0.45}/>
+                      <line x1={55-gr} y1="55" x2={55+gr} y2="55" stroke={C.tinta} strokeWidth="0.8" opacity={0.45}/>
+                      <line x1="55" y1={55-gr} x2="55" y2={55+gr} stroke={C.tinta} strokeWidth="0.8" opacity={0.45}/>
+                    </>
+                  );
+                })()}
+                {(() => {
+                  const r = d.globeTextRadius;
+                  const sx = +(55 - r * 0.5).toFixed(1);
+                  const sy = +(55 + r * 0.866).toFixed(1);
+                  const dy = +(r * 1.732).toFixed(1);
+                  return (
+                    <>
+                      <path id="hot-circle" fill="none" d={`M${sx},${sy} a${r},${r} 0 0,1 ${r},${-dy} a${r},${r} 0 0,1 ${-r},${dy}`}/>
+                      <text fontFamily="JetBrains Mono, monospace" fontSize={d.globeFontSize} letterSpacing="1.0" fill={C.tinta} fillOpacity={0.8}>
+                        <textPath href="#hot-circle" startOffset={`${d.globeTextOffset}%`}>FOR THE MOST CHIMBA PEOPLE ✦ </textPath>
+                      </text>
+                    </>
+                  );
+                })()}
+              </svg>
+            </DragSticker>
+          </motion.div>
 
-          {/* 9. MIÉRCOLES DE DADOS */}
+          {/* 9. MIÉRCOLES DE DADOS — sticker slam con más spin */}
           <motion.img
             src={miercolesDadosHovered ? "/images/miercoles-dados-sticker-hover.png" : "/images/miercoles-dados-sticker.png"}
             alt="Miércoles de Dados"
@@ -673,10 +720,13 @@ export default function Home() {
             onPointerDown={() => { miercolesDadosDragged.current = false; }}
             onDragStart={() => { miercolesDadosDragged.current = true; pauseScroll(); }}
             onDragEnd={resumeScroll}
-            whileDrag={{ scale: 1.03 }}
+            whileDrag={{ scale: 1.06 }}
             onHoverStart={() => setMiercolesDadosHovered(true)}
             onHoverEnd={() => setMiercolesDadosHovered(false)}
             onTap={() => { if (!miercolesDadosDragged.current) router.push("/prueba-tu-suerte"); }}
+            initial={{ scale: 0, opacity: 0, rotate: d.miercolesDadosRotation + 35 }}
+            animate={{ scale: 1, opacity: 1, rotate: d.miercolesDadosRotation }}
+            transition={{ type: "spring", stiffness: 340, damping: 16, delay: 1.3 }}
             style={{
               position: "absolute",
               left: `${d.miercolesDadosLeft}vw`,
@@ -685,14 +735,13 @@ export default function Home() {
               height: "auto",
               zIndex: 22,
               cursor: miercolesDadosHovered ? "pointer" : "grab",
-              transform: `rotate(${d.miercolesDadosRotation}deg)`,
               clipPath: "inset(12% 22%)",
             }}
           />
 
 
           {/* ═══════════════════════════════════════
-              ZONA 2 — PEDIR YA (100 → 220vw)
+              ZONA 2 — PEDIR YA (300 → 400vw)
           ═══════════════════════════════════════ */}
 
           {/* Fondo burgundy panel pedir */}
@@ -771,7 +820,7 @@ export default function Home() {
             </div>
           </Reveal>
 
-          {/* "BUCARAMANGA" fantasma */}
+          {/* "DIFFERENT BY DEFAULT" fantasma */}
           <div style={{
             position: "absolute", left: "470vw", top: "50%", transform: "translateY(-50%) rotate(-90deg)",
             transformOrigin: "left center", whiteSpace: "nowrap", zIndex: 2,
