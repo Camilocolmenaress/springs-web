@@ -129,17 +129,6 @@ export default function Home() {
     return Math.max(0, Math.min(1, (s - vw * 0.32) / (vw * 0.18)));
   });
 
-  // Brazo hero — entra desde la derecha al hacer scroll
-  const handArmX = useTransform(scrollXMV, (s) => {
-    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    const p = Math.max(0, Math.min(1, s / (vw * 0.45)));
-    const e = 1 - Math.pow(1 - p, 3);
-    return (1 - e) * vw * 0.60;
-  });
-  const handArmOpacity = useTransform(scrollXMV, (s) => {
-    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, s / (vw * 0.08)));
-  });
 
   const FONT_MAP: Record<string, string> = {
     display: "Anton, sans-serif",
@@ -852,12 +841,15 @@ export default function Home() {
           />
 
 
-          {/* ─── BRAZO HERO — entra desde la derecha con el scroll ─── */}
+          {/* ─── BRAZO HERO — entra desde la derecha al cargar ─── */}
           <motion.img
             src={d.handArmSrc}
             alt=""
             drag={editMode}
             dragMomentum={false}
+            initial={{ x: "65vw", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 130, damping: 22, mass: 1.2, delay: 1.4 }}
             style={{
               position: "absolute",
               left: `${d.handArmLeft}vw`,
@@ -865,8 +857,6 @@ export default function Home() {
               width: `${d.handArmWidth}vw`,
               height: "auto",
               zIndex: 8,
-              x: editMode ? 0 : handArmX,
-              opacity: editMode ? 1 : handArmOpacity,
               pointerEvents: editMode ? "auto" : "none",
               cursor: editMode ? "grab" : "default",
               outline: editMode ? "2px dashed rgba(197,135,31,0.6)" : "none",
