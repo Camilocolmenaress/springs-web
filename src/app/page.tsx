@@ -227,6 +227,11 @@ export default function Home() {
     handArmWidth:  (hero?.handArm?.props?.width as { value: number })?.value ?? 48,
     handArmLeft:   (hero?.handArm?.props?.left as { value: number })?.value ?? 50,
     handArmBottom: (hero?.handArm?.props?.bottom as { value: number })?.value ?? 10,
+    sensitiveSrc:    (hero?.sensitiveImage?.props?.src as { value: string })?.value ?? "/images/sensitive-hero.jpg",
+    sensitiveLeft:   (hero?.sensitiveImage?.props?.left as { value: number })?.value ?? 36,
+    sensitiveBottom: (hero?.sensitiveImage?.props?.bottom as { value: number })?.value ?? 18,
+    sensitiveWidth:  (hero?.sensitiveImage?.props?.width as { value: number })?.value ?? 22,
+    sensitiveHeight: (hero?.sensitiveImage?.props?.height as { value: number })?.value ?? 28,
   };
 
   const pauseScroll = () => lenisRef.current?.stop();
@@ -866,15 +871,15 @@ export default function Home() {
             transition={{ delay: 0.6, duration: 0.5 }}
             style={{
               position: "absolute",
-              left: "36vw",
-              bottom: "18vh",
-              width: "22vw",
+              left: `${d.sensitiveLeft}vw`,
+              bottom: `${d.sensitiveBottom}vh`,
+              width: `${d.sensitiveWidth}vw`,
               zIndex: 10,
             }}
           >
             <SensitiveImage
-              src="/images/sensitive-hero.jpg"
-              style={{ width: "100%", height: "28vw" }}
+              src={d.sensitiveSrc}
+              style={{ width: "100%", height: `${d.sensitiveHeight}vw` }}
             />
           </motion.div>
 

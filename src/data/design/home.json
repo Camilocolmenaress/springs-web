@@ -141,6 +141,16 @@
             "left":   { "value": 86, "unit": "vw", "min": -20,"max": 95, "step": 0.5 },
             "bottom": { "value": 15, "unit": "vh", "min": -20,"max": 80, "step": 1   }
           }
+        },
+        "sensitiveImage": {
+          "type": "image",
+          "props": {
+            "src":    { "value": "/images/sensitive-hero.jpg", "folder": "/images" },
+            "left":   { "value": 36,   "unit": "vw", "min": 0,   "max": 90,  "step": 0.5 },
+            "bottom": { "value": 18,   "unit": "vh", "min": 0,   "max": 80,  "step": 0.5 },
+            "width":  { "value": 22,   "unit": "vw", "min": 10,  "max": 60,  "step": 0.5 },
+            "height": { "value": 28,   "unit": "vw", "min": 10,  "max": 80,  "step": 0.5 }
+          }
         }
       }
     }

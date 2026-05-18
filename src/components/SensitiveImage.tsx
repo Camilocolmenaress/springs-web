@@ -50,9 +50,9 @@ export default function SensitiveImage({ src, alt = "", style }: Props) {
             }}
           >
             {/* Eye icon con línea */}
-            <svg width="2.2vw" height="2.2vw" viewBox="0 0 24 24" fill="none"
+            <svg viewBox="0 0 24 24" fill="none"
               stroke={C.cream} strokeWidth="1.4" strokeLinecap="round"
-              style={{ width: "2.2vw", height: "2.2vw", flexShrink: 0 }}
+              style={{ width: "3vw", height: "3vw", flexShrink: 0 }}
             >
               <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
               <circle cx="12" cy="12" r="3" />
@@ -61,23 +61,23 @@ export default function SensitiveImage({ src, alt = "", style }: Props) {
 
             <span style={{
               ...MONO,
-              fontSize: "0.7vw",
-              letterSpacing: "0.18em",
+              fontSize: "1vw",
+              letterSpacing: "0.2em",
               color: C.cream,
               textTransform: "uppercase",
             }}>
               Sensitive content
             </span>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.35vw", width: "100%" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.5vw", width: "100%" }}>
               {WARNINGS.map((w, i) => (
                 <p key={i} style={{
                   margin: 0,
                   fontFamily: "Inter, sans-serif",
-                  fontSize: "0.52vw",
+                  fontSize: "0.82vw",
                   color: C.cream,
-                  opacity: 0.75,
-                  lineHeight: 1.5,
+                  opacity: 0.85,
+                  lineHeight: 1.55,
                   textAlign: "center",
                 }}>
                   {w}
@@ -88,13 +88,13 @@ export default function SensitiveImage({ src, alt = "", style }: Props) {
             <button
               onClick={() => setRevealed(true)}
               style={{
-                marginTop: "0.4vw",
-                padding: "0.5vw 1.2vw",
+                marginTop: "0.6vw",
+                padding: "0.65vw 1.6vw",
                 background: "transparent",
                 border: `1px solid rgba(242,232,213,0.5)`,
                 color: C.cream,
                 ...MONO,
-                fontSize: "0.45vw",
+                fontSize: "0.65vw",
                 letterSpacing: "0.14em",
                 cursor: "pointer",
                 textTransform: "uppercase",
