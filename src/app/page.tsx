@@ -506,13 +506,20 @@ export default function Home() {
             }}
           >
             <svg viewBox="0 0 110 110" width="100%" height="100%">
+              {/* Globo con más líneas */}
               <circle cx="55" cy="55" r="22" fill="none" stroke={C.tinta} strokeWidth="1.2" opacity={0.8}/>
-              <ellipse cx="55" cy="55" rx="12" ry="22" fill="none" stroke={C.tinta} strokeWidth="1.1" opacity={0.6}/>
-              <ellipse cx="55" cy="55" rx="22" ry="8" fill="none" stroke={C.tinta} strokeWidth="1" opacity={0.6}/>
+              {/* Meridianos */}
+              <ellipse cx="55" cy="55" rx="8"  ry="22" fill="none" stroke={C.tinta} strokeWidth="0.9" opacity={0.6}/>
+              <ellipse cx="55" cy="55" rx="17" ry="22" fill="none" stroke={C.tinta} strokeWidth="0.9" opacity={0.5}/>
+              {/* Paralelos */}
+              <ellipse cx="55" cy="55" rx="22" ry="9"  fill="none" stroke={C.tinta} strokeWidth="0.9" opacity={0.6}/>
+              <ellipse cx="55" cy="55" rx="22" ry="17" fill="none" stroke={C.tinta} strokeWidth="0.8" opacity={0.45}/>
+              {/* Líneas centrales */}
               <line x1="33" y1="55" x2="77" y2="55" stroke={C.tinta} strokeWidth="0.8" opacity={0.45}/>
               <line x1="55" y1="33" x2="55" y2="77" stroke={C.tinta} strokeWidth="0.8" opacity={0.45}/>
-              <path id="hot-circle" fill="none" d="M55,55 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"/>
-              <text fontFamily="JetBrains Mono, monospace" fontSize="7.5" letterSpacing="2.2" fill={C.tinta} fillOpacity={0.8}>
+              {/* Texto — círculo que empieza en las 7 del reloj y va por encima */}
+              <path id="hot-circle" fill="none" d="M32,95 a46,46 0 0,1 46,-80 a46,46 0 0,1 -46,80"/>
+              <text fontFamily="JetBrains Mono, monospace" fontSize="7.5" letterSpacing="1.0" fill={C.tinta} fillOpacity={0.8}>
                 <textPath href="#hot-circle">FOR THE MOST CHIMBA PEOPLE ✦ </textPath>
               </text>
             </svg>
