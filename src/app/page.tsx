@@ -503,6 +503,32 @@ export default function Home() {
             }}
           />
 
+          {/* ─── MARQUEE TAPE ─── */}
+          <div style={{
+            position: "absolute",
+            left: "44vw",
+            top: "68vh",
+            width: "336vw",
+            overflow: "hidden",
+            zIndex: 6,
+            borderTop: `1px solid rgba(26,10,12,0.18)`,
+            borderBottom: `1px solid rgba(26,10,12,0.18)`,
+            padding: "7px 0",
+            background: C.cream,
+          }}>
+            <motion.div
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+              style={{ display: "flex", whiteSpace: "nowrap" }}
+            >
+              {[0, 1].map(i => (
+                <span key={i} style={{ ...F.mono, fontSize: "0.6rem", letterSpacing: "0.22em", color: C.tinta, opacity: 0.7, paddingRight: "4em" }}>
+                  {"SPRINGS · DIFFERENT BY DEFAULT · JACKET POTATOES · BUCARAMANGA · EST. 2024 · SPRINGS · DIFFERENT BY DEFAULT · JACKET POTATOES · BUCARAMANGA · EST. 2024 · SPRINGS · DIFFERENT BY DEFAULT · JACKET POTATOES · BUCARAMANGA · EST. 2024 · "}
+                </span>
+              ))}
+            </motion.div>
+          </div>
+
           {/* Body copy */}
           <div style={{ position: "absolute", left: `${d.bodyCopyLeft}vw`, bottom: `${d.bodyCopyBottom}vh`, zIndex: 5 }}>
             <div style={{ ...F.display, fontSize: `clamp(20px, ${d.bodyCopySize}vw, 72px)`, color: C.tinta, letterSpacing: "-0.01em", lineHeight: 1.1 }}>
