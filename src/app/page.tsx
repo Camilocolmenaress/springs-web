@@ -62,6 +62,10 @@ export default function Home() {
     subtitleLeft:     (hero?.subtitle?.props?.left as { value: number })?.value ?? 42,
     subtitleBottom:   (hero?.subtitle?.props?.bottom as { value: number })?.value ?? 30,
     subtitleRotation: (hero?.subtitle?.props?.rotation as { value: number })?.value ?? -2,
+    underlineWidth:    (hero?.underline?.props?.width as { value: number })?.value ?? 25,
+    underlineLeft:     (hero?.underline?.props?.left as { value: number })?.value ?? 59,
+    underlineBottom:   (hero?.underline?.props?.bottom as { value: number })?.value ?? 40,
+    underlineRotation: (hero?.underline?.props?.rotation as { value: number })?.value ?? -2.5,
     bodyCopyLeft:   (hero?.bodyCopy?.props?.left as { value: number })?.value ?? 38,
     bodyCopyBottom: (hero?.bodyCopy?.props?.bottom as { value: number })?.value ?? 12,
     bodyCopySize:   (hero?.bodyCopy?.props?.fontSize as { value: number })?.value ?? 3.2,
@@ -399,6 +403,7 @@ export default function Home() {
           {/* Subtítulo handmade — tipografía marker + trazo sketchy.
               Posición independiente controlable desde el DevPanel
               (left, bottom, fontSize, rotation). */}
+          {/* Subtítulo handmade */}
           <div style={{
             position: "absolute",
             left: `${d.subtitleLeft}vw`,
@@ -409,36 +414,34 @@ export default function Home() {
             width: "fit-content",
           }}>
             <div style={{
-              fontFamily: "var(--font-marker), 'Permanent Marker', cursive",
+              fontFamily: "var(--font-marker), cursive",
               fontSize: `clamp(20px, ${d.subtitleSize}vw, 96px)`,
               color: C.burgundy,
               lineHeight: 1,
               letterSpacing: "0.02em",
               textTransform: "uppercase",
               whiteSpace: "nowrap",
-              paddingBottom: "0.35em",
-              position: "relative",
             }}>
               {d.subtitleText}
             </div>
-            {/* Trazo sketchy — 2 líneas hechas a mano */}
-            <svg viewBox="0 0 600 24" preserveAspectRatio="none"
-              style={{ position: "absolute", bottom: "-0.05em", left: 0, width: "100%", height: "0.3em", pointerEvents: "none" }}
-            >
-              <path
-                d="M6,8 C100,4 200,12 300,7 C400,3 500,11 595,8"
-                fill="none" stroke={C.burgundy} strokeWidth="3.2"
-                strokeLinecap="round" strokeLinejoin="round"
-                opacity={0.95}
-              />
-              <path
-                d="M28,19 C120,16 240,22 340,18 C440,14 520,21 572,19"
-                fill="none" stroke={C.burgundy} strokeWidth="2.2"
-                strokeLinecap="round" strokeLinejoin="round"
-                opacity={0.7}
-              />
-            </svg>
           </div>
+
+          {/* Trazo de pincel — PNG con fondo transparente */}
+          <img
+            src="/images/underline-stroke.png"
+            alt=""
+            style={{
+              position: "absolute",
+              left: `${d.underlineLeft}vw`,
+              bottom: `${d.underlineBottom}vh`,
+              width: `${d.underlineWidth}vw`,
+              height: "auto",
+              transform: `rotate(${d.underlineRotation}deg)`,
+              transformOrigin: "left center",
+              zIndex: 5,
+              pointerEvents: "none",
+            }}
+          />
 
           {/* Body copy */}
           <div style={{ position: "absolute", left: `${d.bodyCopyLeft}vw`, bottom: `${d.bodyCopyBottom}vh`, zIndex: 5 }}>

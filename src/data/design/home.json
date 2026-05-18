@@ -34,6 +34,16 @@
             "bottom": { "value": 205, "unit": "px", "min": -100, "max": 400, "step": 5 }
           }
         },
+        "underline": {
+          "type": "image",
+          "props": {
+            "src": { "value": "/images/underline-stroke.png", "folder": "/images" },
+            "width": { "value": 25, "unit": "vw", "min": 5, "max": 60, "step": 0.5 },
+            "left": { "value": 59, "unit": "vw", "min": 0, "max": 90, "step": 0.5 },
+            "bottom": { "value": 40, "unit": "vh", "min": 0, "max": 80, "step": 0.5 },
+            "rotation": { "value": -2.5, "unit": "deg", "min": -30, "max": 30, "step": 0.5 }
+          }
+        },
         "bodyCopy": {
           "type": "text",
           "props": {
