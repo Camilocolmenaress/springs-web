@@ -64,6 +64,7 @@ export default function Home() {
     subtitleRotation: (hero?.subtitle?.props?.rotation as { value: number })?.value ?? -2,
     globeStickerLeft:   (hero?.globeSticker?.props?.left as { value: number })?.value ?? 28,
     globeStickerTop:    (hero?.globeSticker?.props?.top as { value: number })?.value ?? 28,
+    globeStickerSize:   (hero?.globeSticker?.props?.width as { value: number })?.value ?? 8,
     globeTextOffset:    (hero?.globeSticker?.props?.textOffset as { value: number })?.value ?? 0,
     globeTextRadius:    (hero?.globeSticker?.props?.textRadius as { value: number })?.value ?? 46,
     globeFontSize:      (hero?.globeSticker?.props?.fontSize as { value: number })?.value ?? 7.5,
@@ -501,7 +502,7 @@ export default function Home() {
             onDragStart={pauseScroll} onDragEnd={resumeScroll}
             style={{
               position: "absolute", left: `${d.globeStickerLeft}vw`, top: `${d.globeStickerTop}vh`, zIndex: 1,
-              width: "8vw", height: "8vw",
+              width: `${d.globeStickerSize}vw`, height: `${d.globeStickerSize}vw`,
               background: C.cream,
               boxShadow: `0 0 0 5px ${C.cream}, 0 0 0 7px ${C.tinta}`,
               clipPath: "circle(50%)",
