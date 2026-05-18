@@ -312,6 +312,7 @@ export default function Home() {
               color: C.tinta,
               letterSpacing: "-0.01em",
               lineHeight: 1.3,
+              wordSpacing: "-0.15em",
               textTransform: "uppercase",
               margin: 0,
               opacity: 0.75,
