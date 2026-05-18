@@ -50,11 +50,11 @@
           "type": "text",
           "props": {
             "left":         { "value": 34,   "unit": "vw",  "min": 0,   "max": 90, "step": 0.5  },
-            "top":          { "value": 76,   "unit": "vh",  "min": 0,   "max": 90, "step": 0.5  },
+            "top":          { "value": 76.5, "unit": "vh",  "min": 0,   "max": 90, "step": 0.5  },
             "fontSize":     { "value": 0.54, "unit": "rem", "min": 0.2, "max": 2,  "step": 0.02 },
             "lineHeight":   { "value": 1.6,  "unit": "px",  "min": 1,   "max": 4,  "step": 0.1  },
             "gap":          { "value": 7,    "unit": "px",  "min": 0,   "max": 40, "step": 1    },
-            "globeOffsetY": { "value": 0,    "unit": "px",  "min": -10, "max": 20, "step": 1    },
+            "globeOffsetY": { "value": 1,    "unit": "px",  "min": -10, "max": 20, "step": 1    },
             "globeSize":    { "value": 1.1,  "unit": "rem", "min": 0.3, "max": 3,  "step": 0.1  }
           }
         },
