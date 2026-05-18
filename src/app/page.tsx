@@ -428,7 +428,6 @@ export default function Home() {
                   }}
                 >
                   SPRINGS
-                  <span style={{ position: "absolute", top: "30%", right: "22%", fontSize: "0.12em", color: C.tinta, opacity: 0.9 }}>✦</span>
                 </h1>
 
                 {/* Cara TOP — acostada horizontalmente arriba del front.
@@ -456,7 +455,6 @@ export default function Home() {
                   }}
                 >
                   SPRINGS
-                  <span style={{ position: "absolute", top: "30%", right: "22%", fontSize: "0.12em", color: C.tinta, opacity: 0.9 }}>✦</span>
                 </h1>
               </motion.div>
             </div>
