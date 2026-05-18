@@ -283,7 +283,7 @@ export default function Home() {
                   rotateX negativo = top se aleja del espectador = cara EXTERIOR del cubo. */}
               <motion.h1
                 animate={titleHovered ? { y: "100%", rotateX: -75 } : { y: 0, rotateX: 0 }}
-                transition={{ duration: 0.62, ease: [0.4, 0, 0.2, 1] }}
+                transition={{ type: "tween", duration: 0.85, ease: [0.45, 0, 0.55, 1] }}
                 style={{
                   ...F.display,
                   fontSize: `clamp(120px, ${d.titleSize}vw, 340px)`,
@@ -303,7 +303,7 @@ export default function Home() {
                   rotateX positivo = top viene hacia el espectador = cara EXTERIOR visible. */}
               <motion.h1
                 animate={titleHovered ? { y: "100%", rotateX: 0 } : { y: 0, rotateX: 75 }}
-                transition={{ duration: 0.62, ease: [0.4, 0, 0.2, 1] }}
+                transition={{ type: "tween", duration: 0.85, ease: [0.45, 0, 0.55, 1] }}
                 style={{
                   ...F.display,
                   fontSize: `clamp(120px, ${d.titleSize}vw, 340px)`,
