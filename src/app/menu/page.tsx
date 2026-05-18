@@ -1,12 +1,46 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import Menu from "@/components/Menu";
+import Cart, { type CartItem } from "@/components/Cart";
 import DevPanel from "@/components/DevPanel";
 import { useDesignConfig } from "@/hooks/useDesignConfig";
+import { type Producto } from "@/data/productos";
 
 export default function MenuPage() {
   const { config, editMode, saved, updateProp, save, reset, exportValues } = useDesignConfig("menu");
+
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+  function handleAgregar(p: Producto) {
+    setCartItems(prev => {
+      const existing = prev.find(i => i.id === p.id);
+      if (existing) {
+        return prev.map(i => i.id === p.id ? { ...i, cantidad: i.cantidad + 1 } : i);
+      }
+      return [...prev, { id: p.id, nombre: p.nombre, precio: p.precio, cantidad: 1 }];
+    });
+  }
+
+  function handleAdd(id: string) {
+    setCartItems(prev =>
+      prev.map(i => i.id === id ? { ...i, cantidad: i.cantidad + 1 } : i)
+    );
+  }
+
+  function handleRemove(id: string) {
+    setCartItems(prev => {
+      const item = prev.find(i => i.id === id);
+      if (!item) return prev;
+      if (item.cantidad <= 1) return prev.filter(i => i.id !== id);
+      return prev.map(i => i.id === id ? { ...i, cantidad: i.cantidad - 1 } : i);
+    });
+  }
+
+  function handleDelete(id: string) {
+    setCartItems(prev => prev.filter(i => i.id !== id));
+  }
 
   return (
     <main style={{ width: "100vw", height: "100vh", overflowY: "auto", background: "var(--cream)", position: "relative" }}>
@@ -35,7 +69,16 @@ export default function MenuPage() {
       >
         <span aria-hidden>←</span> VOLVER
       </Link>
-      <Menu onAgregar={(p) => console.log("AGREGAR", p.nombre)} />
+
+      <Menu onAgregar={handleAgregar} />
+
+      <Cart
+        items={cartItems}
+        onAdd={handleAdd}
+        onRemove={handleRemove}
+        onDelete={handleDelete}
+      />
+
       {editMode && (
         <DevPanel
           config={config}
