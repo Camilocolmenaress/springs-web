@@ -210,7 +210,7 @@ export default function Home() {
           ))}
         </div>
         <div style={{
-          display: "flex", gap: 28,
+          display: "flex", gap: 16,
           position: "fixed", bottom: d.footerMenuBottom, right: d.footerMenuRight,
           zIndex: 101,
         }}>
@@ -226,7 +226,7 @@ export default function Home() {
               href={item.href}
               initial="rest"
               whileHover="hover"
-              style={{ ...F.mono, fontSize: `${d.footerMenuSize}rem`, letterSpacing: "0.12em", textDecoration: "none", fontWeight: 600, position: "relative", display: "inline-block" }}
+              style={{ ...F.mono, fontSize: `${d.footerMenuSize}rem`, letterSpacing: "0.04em", textDecoration: "none", fontWeight: 600, position: "relative", display: "inline-block" }}
             >
               <motion.span
                 variants={{ rest: { color: C.tinta }, hover: { color: C.burgundy } }}
