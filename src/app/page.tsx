@@ -203,11 +203,6 @@ export default function Home() {
             <a key={s} href="#" style={{ ...F.mono, fontSize: "0.58rem", letterSpacing: "0.18em", color: C.tinta, textDecoration: "none", opacity: 0.6 }}>{s}</a>
           ))}
         </div>
-        <img
-          src="/images/barcode-springs.png"
-          alt="SPRINGS 2024"
-          style={{ height: d.barcodeHeight, width: d.barcodeWidth, objectFit: "contain", marginLeft: `${d.barcodeLeft}vw`, opacity: d.barcodeOpacity / 100 }}
-        />
         <div style={{
           display: "flex", gap: 28,
           position: "fixed", bottom: d.footerMenuBottom, right: d.footerMenuRight,
@@ -225,6 +220,18 @@ export default function Home() {
           ))}
         </div>
       </div>
+
+      {/* ── BARCODE FIXED ── */}
+      <img
+        src="/images/barcode-springs.png"
+        alt="SPRINGS 2024"
+        style={{
+          position: "fixed", bottom: 4, left: `${d.barcodeLeft}vw`,
+          height: d.barcodeHeight, width: d.barcodeWidth,
+          objectFit: "contain", opacity: d.barcodeOpacity / 100,
+          zIndex: 101, pointerEvents: "none",
+        }}
+      />
 
       {/* ── WRAPPER LENIS ── */}
       <div ref={wrapperRef} style={{ width: "100vw", height: "100vh", overflow: "hidden", background: C.cream }}>
