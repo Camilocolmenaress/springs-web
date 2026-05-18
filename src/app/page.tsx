@@ -301,12 +301,12 @@ export default function Home() {
             <div style={{ ...F.display, fontSize: "clamp(28px, 3.2vw, 56px)", color: C.tinta, letterSpacing: "-0.01em", lineHeight: 1.1 }}>
               <div style={{ display: "flex", alignItems: "center", gap: "0.3em" }}>
                 <svg width="0.7em" height="0.7em" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, marginBottom: "0.1em" }}>
-                  <line x1="20" y1="20" x2="3" y2="3" stroke={C.tinta} strokeWidth="3" strokeLinecap="round"/>
-                  <polyline points="3,10 3,3 10,3" fill="none" stroke={C.tinta} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                  <line x1="21" y1="21" x2="3" y2="3" stroke={C.tinta} strokeWidth="4.5" strokeLinecap="round"/>
+                  <polyline points="3,11 3,3 11,3" fill="none" stroke={C.tinta} strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
                 Jacket
               </div>
-              <div>La Fija</div>
+              <div style={{ paddingLeft: "calc(0.7em + 0.3em)" }}>La Fija</div>
             </div>
           </div>
 
