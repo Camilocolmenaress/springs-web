@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Anton, Inter, JetBrains_Mono, Playfair_Display } from "next/font/google";
+import { Anton, Inter, JetBrains_Mono, Playfair_Display, Caveat_Brush } from "next/font/google";
 import "./globals.css";
 import CookieBanner from "@/components/CookieBanner";
 
@@ -30,6 +30,13 @@ const playfairDisplay = Playfair_Display({
   weight: ["700", "800"],
 });
 
+const caveatBrush = Caveat_Brush({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-marker",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "SPRINGS — Jacket Potatoes",
   description:
@@ -44,7 +51,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${anton.variable} ${inter.variable} ${jetbrainsMono.variable} ${playfairDisplay.variable} h-full antialiased`}
+      className={`${anton.variable} ${inter.variable} ${jetbrainsMono.variable} ${playfairDisplay.variable} ${caveatBrush.variable} h-full antialiased`}
     >
       <body className="overflow-hidden h-full">
         {children}

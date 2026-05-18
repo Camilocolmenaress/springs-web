@@ -17,6 +17,20 @@ const PROP_LABELS: Record<string, string> = {
   fontSize: "Tamaño", left: "Left", top: "Top", bottom: "Bottom",
   width: "Ancho", content: "Texto", fontFamily: "Fuente",
   color: "Color", src: "Imagen", animation: "Animación",
+  rotation: "Rotación",
+  textOffset: "Posición texto",
+  textRadius: "Distancia al globo",
+  globeRadius: "Tamaño globo",
+  lineHeight: "Espacio líneas",
+  gap: "Separación ⊕",
+  globeOffsetY: "Altura ⊕",
+  globeSize: "Tamaño ⊕",
+  height: "Alto",
+  opacity: "Opacidad",
+  right: "Derecha",
+  letterSpacing: "Esp. letras",
+  itemGap: "Esp. entre ítems",
+  wordSpacing: "Esp. palabras",
 };
 
 interface Props {
