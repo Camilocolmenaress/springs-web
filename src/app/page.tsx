@@ -164,8 +164,7 @@ export default function Home() {
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
         display: "flex", alignItems: "center", justifyContent: "space-between",
         padding: "0 32px", height: 64,
-        background: C.cream,
-        borderBottom: `1px solid rgba(26,10,12,0.12)`,
+        background: "transparent",
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
           <a href="/" style={{ ...F.display, fontSize: "1.3rem", letterSpacing: "0.18em", color: C.tinta, textDecoration: "none" }}>SPRINGS</a>
@@ -190,8 +189,7 @@ export default function Home() {
         position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 100,
         display: "flex", alignItems: "center", justifyContent: "space-between",
         padding: "0 32px", height: 40,
-        background: C.cream,
-        borderTop: `1px solid rgba(26,10,12,0.1)`,
+        background: "transparent",
       }}>
         <div style={{ display: "flex", gap: 22 }}>
           {["INSTAGRAM", "TIKTOK", "SPOTIFY"].map(s => (
