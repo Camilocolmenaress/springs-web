@@ -16,9 +16,10 @@ const INNER_H_PCT = (900 / 748) * 100; // 120.32%
 interface Props {
   src: string;
   fontSize?: number;
+  opacity?: number; // 0–100
 }
 
-export default function SensitiveImage({ src, fontSize = 1.1 }: Props) {
+export default function SensitiveImage({ src, fontSize = 1.1, opacity = 60 }: Props) {
   const [revealed, setRevealed] = useState(false);
 
   return (
@@ -58,41 +59,44 @@ export default function SensitiveImage({ src, fontSize = 1.1 }: Props) {
               inset: 0,
               backdropFilter: "blur(22px)",
               WebkitBackdropFilter: "blur(22px)",
-              background: "rgba(26,10,12,0.6)",
+              background: `rgba(26,10,12,${opacity / 100})`,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              gap: `${fontSize * 0.7}vw`,
+              gap: `${fontSize * 1}vw`,
               padding: `${fontSize * 1.2}vw`,
             }}
           >
-            <svg viewBox="0 0 24 24" fill="none"
-              stroke={C.cream} strokeWidth="1.4" strokeLinecap="round"
-              style={{ width: `${fontSize * 2.6}vw`, height: `${fontSize * 2.6}vw`, flexShrink: 0 }}
-            >
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-              <circle cx="12" cy="12" r="3" />
-              <line x1="3" y1="3" x2="21" y2="21" />
-            </svg>
-
-            <span style={{
-              ...MONO,
-              fontSize: `${fontSize * 0.9}vw`,
-              letterSpacing: "0.2em",
-              color: C.cream,
-              textTransform: "uppercase",
-            }}>
-              Sensitive content
-            </span>
+            {/* Ojo + título pegados */}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: `${fontSize * 0.05}vw` }}>
+              <svg viewBox="0 0 24 24" fill="none"
+                stroke={C.cream} strokeWidth="1.4" strokeLinecap="round"
+                style={{ width: `${fontSize * 2.8}vw`, height: `${fontSize * 2.8}vw`, flexShrink: 0 }}
+              >
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                <circle cx="12" cy="12" r="3" />
+                <line x1="3" y1="3" x2="21" y2="21" />
+              </svg>
+              <span style={{
+                ...MONO,
+                fontSize: `${fontSize * 1.05}vw`,
+                letterSpacing: "0.2em",
+                color: C.cream,
+                textTransform: "uppercase",
+              }}>
+                Sensitive content
+              </span>
+            </div>
 
             <p style={{
               margin: 0,
               fontFamily: "Inter, sans-serif",
-              fontSize: `${fontSize}vw`,
+              fontSize: `${fontSize * 1.35}vw`,
               color: C.cream,
-              lineHeight: 1.5,
+              lineHeight: 1.4,
               textAlign: "center",
+              fontWeight: 500,
             }}>
               {WARNING}
             </p>

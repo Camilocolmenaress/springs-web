@@ -233,6 +233,7 @@ export default function Home() {
     sensitiveSize:     (hero?.sensitiveImage?.props?.size as { value: number })?.value ?? 32,
     sensitiveRotation: (hero?.sensitiveImage?.props?.rotation as { value: number })?.value ?? -4,
     sensitiveFontSize: (hero?.sensitiveImage?.props?.fontSize as { value: number })?.value ?? 1.1,
+    sensitiveOpacity:  (hero?.sensitiveImage?.props?.opacity as { value: number })?.value ?? 60,
   };
 
   const pauseScroll = () => lenisRef.current?.stop();
@@ -880,7 +881,7 @@ export default function Home() {
               zIndex: 10,
             }}
           >
-            <SensitiveImage src={d.sensitiveSrc} fontSize={d.sensitiveFontSize} />
+            <SensitiveImage src={d.sensitiveSrc} fontSize={d.sensitiveFontSize} opacity={d.sensitiveOpacity} />
           </motion.div>
 
           {/* ─── BRAZO HERO — fixed, entra desde derecha al scrollear, ancla al quedar completo ─── */}
