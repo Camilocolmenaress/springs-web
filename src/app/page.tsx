@@ -97,6 +97,9 @@ export default function Home() {
     artGalleryBottom: (hero?.artGallery?.props?.bottom as { value: number })?.value ?? 120,
     artGalleryLeft:   (hero?.artGallery?.props?.left as { value: number })?.value ?? 2,
     heroImage:    (hero?.image?.props?.src as { value: string })?.value ?? "/images/la-fija.png",
+    marqueeSize:  (hero?.marquee?.props?.fontSize as { value: number })?.value ?? 2.4,
+    marqueeTop:   (hero?.marquee?.props?.top as { value: number })?.value ?? 68,
+    marqueeLeft:  (hero?.marquee?.props?.left as { value: number })?.value ?? 44,
     footerMenuSize:   (hero?.footerMenu?.props?.fontSize as { value: number })?.value ?? 0.78,
     footerMenuBottom: (hero?.footerMenu?.props?.bottom as { value: number })?.value ?? 12,
     footerMenuRight:  (hero?.footerMenu?.props?.right as { value: number })?.value ?? 32,
@@ -506,9 +509,9 @@ export default function Home() {
           {/* ─── MARQUEE TAPE ─── */}
           <div style={{
             position: "absolute",
-            left: "44vw",
-            top: "68vh",
-            width: "336vw",
+            left: `${d.marqueeLeft}vw`,
+            top: `${d.marqueeTop}vh`,
+            width: `${380 - d.marqueeLeft}vw`,
             overflow: "hidden",
             zIndex: 6,
             borderTop: `1.5px solid ${C.tinta}`,
@@ -528,22 +531,22 @@ export default function Home() {
                       {/* Sólido */}
                       <span style={{
                         ...F.display,
-                        fontSize: "clamp(22px, 2.4vw, 42px)",
+                        fontSize: `clamp(18px, ${d.marqueeSize}vw, 60px)`,
                         color: C.burgundy,
                         letterSpacing: "0.04em",
                         lineHeight: 1,
                       }}>SPRINGS</span>
-                      <span style={{ ...F.display, fontSize: "1rem", color: C.burgundy, opacity: 0.5 }}>✦</span>
+                      <span style={{ ...F.display, fontSize: `clamp(14px, ${d.marqueeSize * 0.55}vw, 36px)`, color: C.burgundy, opacity: 0.5, margin: "0 0.4em" }}>&lt;</span>
                       {/* Outline */}
                       <span style={{
                         ...F.display,
-                        fontSize: "clamp(22px, 2.4vw, 42px)",
+                        fontSize: `clamp(18px, ${d.marqueeSize}vw, 60px)`,
                         color: "transparent",
                         WebkitTextStroke: `1.5px ${C.burgundy}`,
                         letterSpacing: "0.04em",
                         lineHeight: 1,
                       }}>SPRINGS</span>
-                      <span style={{ ...F.display, fontSize: "1rem", color: C.burgundy, opacity: 0.5 }}>✦</span>
+                      <span style={{ ...F.display, fontSize: `clamp(14px, ${d.marqueeSize * 0.55}vw, 36px)`, color: C.burgundy, opacity: 0.5, margin: "0 0.4em" }}>&lt;</span>
                     </span>
                   ))}
                 </span>
