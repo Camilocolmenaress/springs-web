@@ -47,6 +47,20 @@ export default function Home() {
   const contentRef = useRef<HTMLDivElement>(null);
   const lenisRef = useRef<Lenis | null>(null);
 
+  const FONT_MAP: Record<string, string> = {
+    display: "Anton, sans-serif",
+    sans: "Inter, sans-serif",
+    mono: "JetBrains Mono, monospace",
+  };
+  const COLOR_MAP: Record<string, string> = {
+    burgundy: "#6B1419",
+    cream: "#F2E8D5",
+    tinta: "#1A0A0C",
+    mostaza: "#C5871F",
+  };
+  const fontCSS = (key: string) => FONT_MAP[key] ?? FONT_MAP.display;
+  const colorHex = (key: string) => COLOR_MAP[key] ?? COLOR_MAP.tinta;
+
   const hero = config.zones.hero?.elements;
   const d = {
     titleSize:    (hero?.title?.props?.fontSize as { value: number })?.value ?? 19.5,
@@ -61,6 +75,11 @@ export default function Home() {
     artGalleryBottom: (hero?.artGallery?.props?.bottom as { value: number })?.value ?? 120,
     artGalleryLeft:   (hero?.artGallery?.props?.left as { value: number })?.value ?? 2,
     heroImage:    (hero?.image?.props?.src as { value: string })?.value ?? "/images/la-fija.png",
+    titleFont:    fontCSS((hero?.title?.props?.fontFamily as { value: string })?.value ?? "display"),
+    titleColor:   colorHex((hero?.title?.props?.color as { value: string })?.value ?? "tinta"),
+    subtitleFont: fontCSS((hero?.subtitle?.props?.fontFamily as { value: string })?.value ?? "sans"),
+    subtitleColor:colorHex((hero?.subtitle?.props?.color as { value: string })?.value ?? "burgundy"),
+    bodyCopyColor:colorHex((hero?.bodyCopy?.props?.color as { value: string })?.value ?? "tinta"),
   };
 
   const pauseScroll = () => lenisRef.current?.stop();
@@ -261,23 +280,23 @@ export default function Home() {
           {/* SPRINGS — título masivo */}
           <div style={{ position: "absolute", left: `${d.titleLeft}vw`, top: `${d.titleTop}vh`, zIndex: 3 }}>
             <h1 style={{
-              ...F.display,
+              fontFamily: d.titleFont,
               fontSize: `clamp(120px, ${d.titleSize}vw, 340px)`,
-              color: C.tinta, lineHeight: 0.85,
+              color: d.titleColor, lineHeight: 0.85,
               letterSpacing: "-0.01em", margin: 0,
               textTransform: "uppercase", position: "relative",
               whiteSpace: "nowrap",
             }}>
               SPRINGS
-              <span style={{ position: "absolute", top: "30%", right: "22%", fontSize: "0.12em", color: C.tinta, opacity: 0.9 }}>✦</span>
+              <span style={{ position: "absolute", top: "30%", right: "22%", fontSize: "0.12em", color: d.titleColor, opacity: 0.9 }}>✦</span>
             </h1>
             {/* Subtítulo — Playfair Display Italic + brush underline SVG */}
             <div style={{ position: "relative", width: "fit-content", marginTop: 6 }}>
               <div style={{
-                fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
+                fontFamily: d.subtitleFont,
                 fontStyle: "italic", fontWeight: 800,
                 fontSize: `clamp(18px, ${d.subtitleSize}vw, 42px)`,
-                color: C.burgundy, letterSpacing: "0.02em",
+                color: d.subtitleColor, letterSpacing: "0.02em",
                 textTransform: "uppercase", lineHeight: 1,
                 paddingBottom: 10,
               }}>
@@ -289,7 +308,7 @@ export default function Home() {
               >
                 <path
                   d="M4,10 C60,5 120,13 180,8 C240,3 300,12 360,7 C420,2 470,11 516,7"
-                  fill="none" stroke={C.burgundy} strokeWidth="3.5"
+                  fill="none" stroke={d.subtitleColor} strokeWidth="3.5"
                   strokeLinecap="round" strokeLinejoin="round"
                   opacity={0.85}
                 />
@@ -299,13 +318,13 @@ export default function Home() {
 
           {/* Body copy */}
           <div style={{ position: "absolute", left: `${d.bodyCopyLeft}vw`, bottom: "12vh", zIndex: 5 }}>
-            <div style={{ ...F.mono, fontSize: "0.68rem", letterSpacing: "0.14em", color: C.tinta, lineHeight: 2.1, textTransform: "uppercase", opacity: 0.85 }}>
+            <div style={{ ...F.mono, fontSize: "0.68rem", letterSpacing: "0.14em", color: d.bodyCopyColor, lineHeight: 2.1, textTransform: "uppercase", opacity: 0.85 }}>
               NO ES SOLO COMIDA.<br />
               ES UN PLAN.<br />
               ES UN LUGAR.<br />
               ES SPRINGS.
             </div>
-            <span style={{ ...F.mono, fontSize: "0.8rem", color: C.tinta, opacity: 0.3, display: "block", marginTop: 14 }}>✦</span>
+            <span style={{ ...F.mono, fontSize: "0.8rem", color: d.bodyCopyColor, opacity: 0.3, display: "block", marginTop: 14 }}>✦</span>
           </div>
 
           {/* + símbolo top-right */}
