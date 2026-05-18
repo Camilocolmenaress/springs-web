@@ -227,11 +227,13 @@ export default function Home() {
     handArmWidth:  (hero?.handArm?.props?.width as { value: number })?.value ?? 48,
     handArmLeft:   (hero?.handArm?.props?.left as { value: number })?.value ?? 50,
     handArmBottom: (hero?.handArm?.props?.bottom as { value: number })?.value ?? 10,
-    sensitiveSrc:    (hero?.sensitiveImage?.props?.src as { value: string })?.value ?? "/images/sensitive-hero.jpg",
-    sensitiveLeft:   (hero?.sensitiveImage?.props?.left as { value: number })?.value ?? 36,
-    sensitiveBottom: (hero?.sensitiveImage?.props?.bottom as { value: number })?.value ?? 18,
-    sensitiveWidth:  (hero?.sensitiveImage?.props?.width as { value: number })?.value ?? 22,
-    sensitiveHeight: (hero?.sensitiveImage?.props?.height as { value: number })?.value ?? 28,
+    sensitiveSrc:      (hero?.sensitiveImage?.props?.src as { value: string })?.value ?? "/images/sensitive-hero.jpg",
+    sensitiveLeft:     (hero?.sensitiveImage?.props?.left as { value: number })?.value ?? 36,
+    sensitiveBottom:   (hero?.sensitiveImage?.props?.bottom as { value: number })?.value ?? 18,
+    sensitiveWidth:    (hero?.sensitiveImage?.props?.width as { value: number })?.value ?? 22,
+    sensitiveHeight:   (hero?.sensitiveImage?.props?.height as { value: number })?.value ?? 28,
+    sensitiveRotation: (hero?.sensitiveImage?.props?.rotation as { value: number })?.value ?? -4,
+    sensitiveFontSize: (hero?.sensitiveImage?.props?.fontSize as { value: number })?.value ?? 1.1,
   };
 
   const pauseScroll = () => lenisRef.current?.stop();
@@ -874,11 +876,13 @@ export default function Home() {
               left: `${d.sensitiveLeft}vw`,
               bottom: `${d.sensitiveBottom}vh`,
               width: `${d.sensitiveWidth}vw`,
+              rotate: d.sensitiveRotation,
               zIndex: 10,
             }}
           >
             <SensitiveImage
               src={d.sensitiveSrc}
+              fontSize={d.sensitiveFontSize}
               style={{ width: "100%", height: `${d.sensitiveHeight}vw` }}
             />
           </motion.div>

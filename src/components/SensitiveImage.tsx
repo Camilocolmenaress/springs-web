@@ -6,113 +6,138 @@ import { motion, AnimatePresence } from "framer-motion";
 const C = { burgundy: "#6B1419", cream: "#F2E8D5", tinta: "#1A0A0C", mostaza: "#C5871F" };
 const MONO = { fontFamily: "JetBrains Mono, monospace" } as const;
 
-const WARNINGS = [
-  "Warning: Esta persona comió Springs (no mentiras).",
-  "Warning: Perdón otra vez.",
-  "Warning: Puedes quedar así de hot después de comer Springs.",
-];
+const WARNING = "Warning: Puedes quedar así de hot después de comer Springs.";
 
 interface Props {
   src: string;
-  alt?: string;
+  fontSize?: number; // vw
   style?: React.CSSProperties;
 }
 
-export default function SensitiveImage({ src, alt = "", style }: Props) {
+export default function SensitiveImage({ src, fontSize = 1.1, style }: Props) {
   const [revealed, setRevealed] = useState(false);
+
+  const overlay = (
+    <motion.div
+      key="overlay"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4 }}
+      style={{
+        position: "absolute",
+        inset: 0,
+        backdropFilter: "blur(22px)",
+        WebkitBackdropFilter: "blur(22px)",
+        background: "rgba(26,10,12,0.6)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: `${fontSize * 0.7}vw`,
+        padding: `${fontSize * 1.2}vw`,
+      }}
+    >
+      {/* Ojo tachado */}
+      <svg viewBox="0 0 24 24" fill="none"
+        stroke={C.cream} strokeWidth="1.4" strokeLinecap="round"
+        style={{ width: `${fontSize * 2.6}vw`, height: `${fontSize * 2.6}vw`, flexShrink: 0 }}
+      >
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+        <circle cx="12" cy="12" r="3" />
+        <line x1="3" y1="3" x2="21" y2="21" />
+      </svg>
+
+      <span style={{
+        ...MONO,
+        fontSize: `${fontSize * 0.9}vw`,
+        letterSpacing: "0.2em",
+        color: C.cream,
+        textTransform: "uppercase",
+      }}>
+        Sensitive content
+      </span>
+
+      <p style={{
+        margin: 0,
+        fontFamily: "Inter, sans-serif",
+        fontSize: `${fontSize}vw`,
+        color: C.cream,
+        lineHeight: 1.5,
+        textAlign: "center",
+      }}>
+        {WARNING}
+      </p>
+
+      <button
+        onClick={() => setRevealed(true)}
+        style={{
+          marginTop: `${fontSize * 0.3}vw`,
+          padding: `${fontSize * 0.5}vw ${fontSize * 1.3}vw`,
+          background: "transparent",
+          border: `1px solid rgba(242,232,213,0.5)`,
+          color: C.cream,
+          ...MONO,
+          fontSize: `${fontSize * 0.6}vw`,
+          letterSpacing: "0.14em",
+          cursor: "pointer",
+          textTransform: "uppercase",
+          transition: "border-color 0.2s, color 0.2s",
+        }}
+        onMouseEnter={e => {
+          (e.target as HTMLButtonElement).style.borderColor = C.mostaza;
+          (e.target as HTMLButtonElement).style.color = C.mostaza;
+        }}
+        onMouseLeave={e => {
+          (e.target as HTMLButtonElement).style.borderColor = "rgba(242,232,213,0.5)";
+          (e.target as HTMLButtonElement).style.color = C.cream;
+        }}
+      >
+        Ver de todas formas
+      </button>
+    </motion.div>
+  );
+
+  const recensor = (
+    <motion.button
+      key="recensor"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3, delay: 0.4 }}
+      onClick={() => setRevealed(false)}
+      style={{
+        position: "absolute",
+        bottom: `${fontSize * 0.8}vw`,
+        left: "50%",
+        transform: "translateX(-50%)",
+        padding: `${fontSize * 0.4}vw ${fontSize * 1}vw`,
+        background: "rgba(26,10,12,0.7)",
+        border: `1px solid rgba(242,232,213,0.3)`,
+        color: C.cream,
+        ...MONO,
+        fontSize: `${fontSize * 0.55}vw`,
+        letterSpacing: "0.12em",
+        cursor: "pointer",
+        textTransform: "uppercase",
+        backdropFilter: "blur(4px)",
+        WebkitBackdropFilter: "blur(4px)",
+        whiteSpace: "nowrap",
+      }}
+    >
+      Volver a tapar
+    </motion.button>
+  );
 
   return (
     <div style={{ position: "relative", overflow: "hidden", ...style }}>
       <img
         src={src}
-        alt={alt}
+        alt=""
         style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
       />
-
       <AnimatePresence>
-        {!revealed && (
-          <motion.div
-            key="overlay"
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0, transition: { duration: 0.5 } }}
-            style={{
-              position: "absolute",
-              inset: 0,
-              backdropFilter: "blur(22px)",
-              WebkitBackdropFilter: "blur(22px)",
-              background: "rgba(26,10,12,0.55)",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "0.8vw",
-              padding: "1.5vw",
-            }}
-          >
-            {/* Eye icon con línea */}
-            <svg viewBox="0 0 24 24" fill="none"
-              stroke={C.cream} strokeWidth="1.4" strokeLinecap="round"
-              style={{ width: "3vw", height: "3vw", flexShrink: 0 }}
-            >
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-              <circle cx="12" cy="12" r="3" />
-              <line x1="3" y1="3" x2="21" y2="21" />
-            </svg>
-
-            <span style={{
-              ...MONO,
-              fontSize: "1vw",
-              letterSpacing: "0.2em",
-              color: C.cream,
-              textTransform: "uppercase",
-            }}>
-              Sensitive content
-            </span>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.5vw", width: "100%" }}>
-              {WARNINGS.map((w, i) => (
-                <p key={i} style={{
-                  margin: 0,
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "0.82vw",
-                  color: C.cream,
-                  opacity: 0.85,
-                  lineHeight: 1.55,
-                  textAlign: "center",
-                }}>
-                  {w}
-                </p>
-              ))}
-            </div>
-
-            <button
-              onClick={() => setRevealed(true)}
-              style={{
-                marginTop: "0.6vw",
-                padding: "0.65vw 1.6vw",
-                background: "transparent",
-                border: `1px solid rgba(242,232,213,0.5)`,
-                color: C.cream,
-                ...MONO,
-                fontSize: "0.65vw",
-                letterSpacing: "0.14em",
-                cursor: "pointer",
-                textTransform: "uppercase",
-                transition: "border-color 0.2s, color 0.2s",
-              }}
-              onMouseEnter={e => {
-                (e.target as HTMLButtonElement).style.borderColor = C.mostaza;
-                (e.target as HTMLButtonElement).style.color = C.mostaza;
-              }}
-              onMouseLeave={e => {
-                (e.target as HTMLButtonElement).style.borderColor = "rgba(242,232,213,0.5)";
-                (e.target as HTMLButtonElement).style.color = C.cream;
-              }}
-            >
-              Ver de todas formas
-            </button>
-          </motion.div>
-        )}
+        {!revealed ? overlay : recensor}
       </AnimatePresence>
     </div>
   );
