@@ -207,13 +207,12 @@ export default function Home() {
         />
         <div style={{ display: "flex", gap: 28 }}>
           {([
-            { label: "CARTA",    href: "/menu" },
-            { label: "JACKETS",  href: "/menu" },
-            { label: "LOADED",   href: "/menu" },
-            { label: "NOSOTROS", href: "#"     },
-            { label: "EL CLUB",  href: "#"     },
+            { label: "CARTA",       href: "/menu"                },
+            { label: "ART GALLERY", href: "#"                    },
+            { label: "EL CLUB",     href: "/springs-jacket-club" },
+            { label: "FAQS",        href: "#"                    },
           ] as { label: string; href: string }[]).map(item => (
-            <a key={item.label} href={item.href} style={{ ...F.display, fontSize: "1rem", letterSpacing: "0.08em", color: C.tinta, textDecoration: "none" }}>
+            <a key={item.label} href={item.href} style={{ ...F.mono, fontSize: "0.78rem", letterSpacing: "0.12em", color: C.tinta, textDecoration: "none", fontWeight: 600 }}>
               {item.label}
             </a>
           ))}
