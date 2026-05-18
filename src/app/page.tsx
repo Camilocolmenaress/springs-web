@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Lenis from "lenis";
-import { motion, useInView, useMotionValue, useTransform, useSpring } from "framer-motion";
+import { motion, useInView, useMotionValue, useTransform, useSpring, animate as animateValue } from "framer-motion";
 import DragSticker from "@/components/DragSticker";
 import DevPanel from "@/components/DevPanel";
 import { useDesignConfig } from "@/hooks/useDesignConfig";
@@ -129,6 +129,13 @@ export default function Home() {
     return Math.max(0, Math.min(1, (s - vw * 0.32) / (vw * 0.18)));
   });
 
+  // Brazo: base (entrada) + delta scroll (parallax izquierda)
+  const handArmBaseX = useMotionValue(1200);
+  const handArmScrollDelta = useTransform(scrollXMV, (s) => -(s * 0.35));
+  const handArmX = useTransform(
+    [handArmBaseX, handArmScrollDelta] as const,
+    (values: number[]) => values[0] + values[1]
+  );
 
   const FONT_MAP: Record<string, string> = {
     display: "Anton, sans-serif",
@@ -256,6 +263,14 @@ export default function Home() {
       lenisRef.current = null;
     };
   }, [isDesktop]);
+
+  // Entrada del brazo: spring desde 1200 → 0, delay 0.2s
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      animateValue(handArmBaseX, 0, { type: "spring", stiffness: 130, damping: 22, mass: 1.2 });
+    }, 200);
+    return () => clearTimeout(timeout);
+  }, [handArmBaseX]);
 
   if (isDesktop !== true) {
     return <MobileCanvas />;
@@ -841,21 +856,19 @@ export default function Home() {
           />
 
 
-          {/* ─── BRAZO HERO — entra desde la derecha al cargar ─── */}
+          {/* ─── BRAZO HERO — entra desde la derecha + parallax scroll izquierda ─── */}
           <motion.img
             src={d.handArmSrc}
             alt=""
             drag={editMode}
             dragMomentum={false}
-            initial={{ x: "65vw", opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ type: "spring", stiffness: 130, damping: 22, mass: 1.2, delay: 0.2 }}
             style={{
               position: "absolute",
               left: `${d.handArmLeft}vw`,
               bottom: `${d.handArmBottom}vh`,
               width: `${d.handArmWidth}vw`,
               height: "auto",
+              x: editMode ? 0 : handArmX,
               zIndex: 8,
               pointerEvents: editMode ? "auto" : "none",
               cursor: editMode ? "grab" : "default",
