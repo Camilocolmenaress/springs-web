@@ -137,9 +137,9 @@
           "type": "image",
           "props": {
             "src":    { "value": "/images/hero-arm.png", "folder": "/images" },
-            "width":  { "value": 28, "unit": "vw", "min": 20, "max": 90, "step": 1   },
-            "left":   { "value": 82, "unit": "vw", "min": -20,"max": 95, "step": 0.5 },
-            "bottom": { "value": 13, "unit": "vh", "min": -20,"max": 80, "step": 1   }
+            "width":  { "value": 38, "unit": "vw", "min": 20, "max": 90, "step": 1   },
+            "left":   { "value": 86, "unit": "vw", "min": -20,"max": 95, "step": 0.5 },
+            "bottom": { "value": 15, "unit": "vh", "min": -20,"max": 80, "step": 1   }
           }
         }
       }
