@@ -552,27 +552,20 @@ export default function Home() {
           </DragSticker>
 
           {/* 9. MIÉRCOLES DE DADOS */}
-          <DragSticker rotate={-14} idleRotateRange={3} idleDuration={6}
-            onDragStart={pauseScroll} onDragEnd={resumeScroll}
+          <motion.img
+            src="/images/miercoles-dados-sticker.png"
+            alt="Miércoles de Dados"
+            drag
+            dragTransition={{ power: 0.8, timeConstant: 350 }}
+            onDragStart={pauseScroll}
+            onDragEnd={resumeScroll}
+            whileDrag={{ scale: 1.03 }}
             style={{
               position: "absolute", left: "3vw", bottom: "10vh", zIndex: 22,
-              background: C.cream, color: C.tinta,
-              padding: "12px 16px", textAlign: "center",
-              boxShadow: `0 0 0 5px ${C.cream}, 0 0 0 7px ${C.tinta}`,
+              width: "13vw", height: "auto",
+              cursor: "grab",
             }}
-          >
-            <div style={{ ...F.display, fontSize: "1.0rem", letterSpacing: "0.05em", lineHeight: 1 }}>MIÉRCOLES</div>
-            <div style={{ ...F.sans, fontSize: "0.82rem", fontStyle: "italic", fontWeight: 700, lineHeight: 1, marginTop: 2 }}>de Dados</div>
-            <div style={{
-              margin: "8px auto 0", width: 32, height: 32,
-              background: C.tinta, color: C.cream,
-              ...F.display, fontSize: "1.3rem",
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}>6</div>
-            <div style={{ ...F.mono, fontSize: "0.43rem", letterSpacing: "0.12em", marginTop: 5, textTransform: "uppercase", opacity: 0.65 }}>
-              SACA 6 = GRATIS
-            </div>
-          </DragSticker>
+          />
 
 
           {/* ═══════════════════════════════════════
