@@ -46,6 +46,7 @@ export default function Home() {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const lenisRef = useRef<Lenis | null>(null);
+  const [titleHovered, setTitleHovered] = useState(false);
 
   const hero = config.zones.hero?.elements;
   const d = {
@@ -263,23 +264,52 @@ export default function Home() {
             </div>
           </div>
 
-          {/* SPRINGS — título masivo */}
+          {/* SPRINGS — título masivo con efecto cubo */}
           <div style={{ position: "absolute", left: `${d.titleLeft}vw`, top: `${d.titleTop}vh`, zIndex: 3 }}>
-            <motion.h1
-              whileHover={{ y: 8, skewX: -2 }}
-              transition={{ type: "spring", stiffness: 380, damping: 24 }}
-              style={{
-                ...F.display,
-                fontSize: `clamp(120px, ${d.titleSize}vw, 340px)`,
-                color: C.tinta, lineHeight: 0.85,
-                letterSpacing: "-0.01em", margin: 0,
-                textTransform: "uppercase", position: "relative",
-                whiteSpace: "nowrap", cursor: "default",
-              }}
+            {/* Contenedor cubo: overflow:hidden recorta la cara que sale */}
+            <div
+              onMouseEnter={() => setTitleHovered(true)}
+              onMouseLeave={() => setTitleHovered(false)}
+              style={{ perspective: "1000px", overflow: "hidden", position: "relative", cursor: "default" }}
             >
-              SPRINGS
-              <span style={{ position: "absolute", top: "30%", right: "22%", fontSize: "0.12em", color: C.tinta, opacity: 0.9 }}>✦</span>
-            </motion.h1>
+              {/* Cara 1 — visible inicialmente, sale por abajo al hover */}
+              <motion.h1
+                animate={titleHovered ? { y: "100%", rotateX: 45 } : { y: 0, rotateX: 0 }}
+                transition={{ type: "spring", stiffness: 240, damping: 28 }}
+                style={{
+                  ...F.display,
+                  fontSize: `clamp(120px, ${d.titleSize}vw, 340px)`,
+                  color: C.tinta, lineHeight: 0.85,
+                  letterSpacing: "-0.01em", margin: 0,
+                  textTransform: "uppercase", position: "relative",
+                  whiteSpace: "nowrap",
+                  transformOrigin: "center bottom",
+                }}
+              >
+                SPRINGS
+                <span style={{ position: "absolute", top: "30%", right: "22%", fontSize: "0.12em", color: C.tinta, opacity: 0.9 }}>✦</span>
+              </motion.h1>
+
+              {/* Cara 2 — entra desde arriba al hover */}
+              <motion.h1
+                animate={titleHovered ? { y: 0, rotateX: 0 } : { y: "-100%", rotateX: -45 }}
+                transition={{ type: "spring", stiffness: 240, damping: 28 }}
+                style={{
+                  ...F.display,
+                  fontSize: `clamp(120px, ${d.titleSize}vw, 340px)`,
+                  color: C.tinta, lineHeight: 0.85,
+                  letterSpacing: "-0.01em", margin: 0,
+                  textTransform: "uppercase",
+                  whiteSpace: "nowrap",
+                  position: "absolute", top: 0, left: 0,
+                  transformOrigin: "center top",
+                }}
+              >
+                SPRINGS
+                <span style={{ position: "absolute", top: "30%", right: "22%", fontSize: "0.12em", color: C.tinta, opacity: 0.9 }}>✦</span>
+              </motion.h1>
+            </div>
+
             {/* Subtítulo — Playfair Display Italic + brush underline SVG */}
             <div style={{ position: "relative", width: "fit-content", marginTop: 6 }}>
               <div style={{
