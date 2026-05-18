@@ -130,16 +130,15 @@ export default function Home() {
   });
 
   // Brazo hero — entra desde la derecha al hacer scroll
-  const handArmXBase = useTransform(scrollXMV, (s) => {
+  const handArmX = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    const p = Math.max(0, Math.min(1, (s - vw * 0.03) / (vw * 0.20)));
+    const p = Math.max(0, Math.min(1, s / (vw * 0.45)));
     const e = 1 - Math.pow(1 - p, 3);
-    return (1 - e) * vw * 0.95;
+    return (1 - e) * vw * 0.60;
   });
-  const handArmX = useSpring(handArmXBase, { stiffness: 110, damping: 20, mass: 1.5 });
   const handArmOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * 0.02) / (vw * 0.12)));
+    return Math.max(0, Math.min(1, s / (vw * 0.08)));
   });
 
   const hero = config.zones.hero?.elements;
