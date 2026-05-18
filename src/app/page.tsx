@@ -62,6 +62,8 @@ export default function Home() {
     subtitleLeft:     (hero?.subtitle?.props?.left as { value: number })?.value ?? 42,
     subtitleBottom:   (hero?.subtitle?.props?.bottom as { value: number })?.value ?? 30,
     subtitleRotation: (hero?.subtitle?.props?.rotation as { value: number })?.value ?? -2,
+    globeStickerLeft: (hero?.globeSticker?.props?.left as { value: number })?.value ?? 28,
+    globeStickerTop:  (hero?.globeSticker?.props?.top as { value: number })?.value ?? 28,
     menuListSize:   (hero?.menuList?.props?.fontSize as { value: number })?.value ?? 0.65,
     menuListLeft:   (hero?.menuList?.props?.left as { value: number })?.value ?? 2,
     menuListBottom: (hero?.menuList?.props?.bottom as { value: number })?.value ?? 6,
@@ -491,11 +493,11 @@ export default function Home() {
             }}
           />
 
-          {/* 2. FOR THE HOTTEST PEOPLE — círculo con globo */}
+          {/* 2. FOR THE MOST CHIMBA PEOPLE — círculo con globo */}
           <DragSticker rotate={-5} idleRotateRange={3} idleDuration={8}
             onDragStart={pauseScroll} onDragEnd={resumeScroll}
             style={{
-              position: "absolute", left: "28vw", top: "28vh", zIndex: 1,
+              position: "absolute", left: `${d.globeStickerLeft}vw`, top: `${d.globeStickerTop}vh`, zIndex: 1,
               width: "8vw", height: "8vw",
               background: C.cream,
               boxShadow: `0 0 0 5px ${C.cream}, 0 0 0 7px ${C.tinta}`,
@@ -511,7 +513,7 @@ export default function Home() {
               <line x1="55" y1="33" x2="55" y2="77" stroke={C.tinta} strokeWidth="0.8" opacity={0.45}/>
               <path id="hot-circle" fill="none" d="M55,55 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"/>
               <text fontFamily="JetBrains Mono, monospace" fontSize="7.5" letterSpacing="2.2" fill={C.tinta} fillOpacity={0.8}>
-                <textPath href="#hot-circle">FOR THE HOTTEST PEOPLE ✦ </textPath>
+                <textPath href="#hot-circle">FOR THE MOST CHIMBA PEOPLE ✦ </textPath>
               </text>
             </svg>
           </DragSticker>
