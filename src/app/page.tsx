@@ -849,7 +849,7 @@ export default function Home() {
             dragMomentum={false}
             initial={{ x: "65vw", opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ type: "spring", stiffness: 130, damping: 22, mass: 1.2, delay: 1.4 }}
+            transition={{ type: "spring", stiffness: 130, damping: 22, mass: 1.2, delay: 0.75 }}
             style={{
               position: "absolute",
               left: `${d.handArmLeft}vw`,
