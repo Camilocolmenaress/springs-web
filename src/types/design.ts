@@ -4,7 +4,7 @@ export type Animation = "none" | "fade-up" | "fade-in" | "slide-left" | "scale-i
 
 export interface SliderProp {
   value: number;
-  unit: "vw" | "vh" | "px" | "rem";
+  unit: "vw" | "vh" | "px" | "rem" | "deg";
   min: number;
   max: number;
   step: number;
