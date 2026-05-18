@@ -98,6 +98,8 @@ export default function Home() {
     artGalleryLeft:   (hero?.artGallery?.props?.left as { value: number })?.value ?? 2,
     heroImage:    (hero?.image?.props?.src as { value: string })?.value ?? "/images/la-fija.png",
     barcodeHeight:  (hero?.barcode?.props?.height as { value: number })?.value ?? 32,
+    barcodeWidth:   (hero?.barcode?.props?.width as { value: number })?.value ?? 160,
+    barcodeLeft:    (hero?.barcode?.props?.left as { value: number })?.value ?? 0,
     barcodeOpacity: (hero?.barcode?.props?.opacity as { value: number })?.value ?? 75,
     miercolesDadosWidth:    (hero?.miercolesDados?.props?.width as { value: number })?.value ?? 13,
     miercolesDadosLeft:     (hero?.miercolesDados?.props?.left as { value: number })?.value ?? 3,
@@ -201,7 +203,7 @@ export default function Home() {
         <img
           src="/images/barcode-springs.png"
           alt="SPRINGS 2024"
-          style={{ height: d.barcodeHeight, width: "auto", opacity: d.barcodeOpacity / 100 }}
+          style={{ height: d.barcodeHeight, width: d.barcodeWidth, objectFit: "contain", marginLeft: `${d.barcodeLeft}vw`, opacity: d.barcodeOpacity / 100 }}
         />
         <div style={{ display: "flex", gap: 28 }}>
           {([
