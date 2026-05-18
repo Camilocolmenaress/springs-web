@@ -174,21 +174,7 @@ export default function Home() {
             BRITISH SOUL<br />FOR HUNGRY PEOPLE.
           </div>
         </div>
-        <ul style={{ display: "flex", gap: 34, listStyle: "none", margin: 0, padding: 0 }}>
-          {([
-            { label: "CARTA",    href: "/menu" },
-            { label: "JACKETS",  href: "/menu" },
-            { label: "LOADED",   href: "/menu" },
-            { label: "NOSOTROS", href: "#"     },
-            { label: "EL CLUB",  href: "#"     },
-          ] as { label: string; href: string }[]).map(item => (
-            <li key={item.label}>
-              <a href={item.href} style={{ ...F.mono, fontSize: "0.6rem", letterSpacing: "0.2em", color: C.tinta, textDecoration: "none", opacity: 0.7 }}>
-                {item.label}
-              </a>
-            </li>
-          ))}
-        </ul>
+        <div />
         <a href="/menu" style={{
           ...F.display, fontSize: "0.82rem", letterSpacing: "0.14em",
           background: C.burgundy, color: C.cream,
@@ -218,8 +204,18 @@ export default function Home() {
           ))}
           <span style={{ ...F.mono, fontSize: "0.42rem", color: C.tinta, opacity: 0.5, marginLeft: 6 }}>SPRINGS · 2024 ©</span>
         </div>
-        <div style={{ ...F.mono, fontSize: "0.58rem", letterSpacing: "0.18em", color: C.tinta, opacity: 0.65 }}>
-          LA JACKET ES EL PRODUCTO HOY. ✦
+        <div style={{ display: "flex", gap: 28 }}>
+          {([
+            { label: "CARTA",    href: "/menu" },
+            { label: "JACKETS",  href: "/menu" },
+            { label: "LOADED",   href: "/menu" },
+            { label: "NOSOTROS", href: "#"     },
+            { label: "EL CLUB",  href: "#"     },
+          ] as { label: string; href: string }[]).map(item => (
+            <a key={item.label} href={item.href} style={{ ...F.mono, fontSize: "0.58rem", letterSpacing: "0.18em", color: C.tinta, textDecoration: "none", opacity: 0.65 }}>
+              {item.label}
+            </a>
+          ))}
         </div>
       </div>
 
