@@ -266,25 +266,27 @@ export default function Home() {
 
           {/* SPRINGS — título masivo con efecto cubo */}
           <div style={{ position: "absolute", left: `${d.titleLeft}vw`, top: `${d.titleTop}vh`, zIndex: 3 }}>
-            {/* Contenedor cubo: clipPath recorta solo top/bottom, no los lados */}
+            {/* Contenedor cubo: overflow:hidden recorta en layout (no solo visual).
+                La cara 2 vive en bottom:100% — fuera del contenedor en layout,
+                por eso overflow la oculta correctamente sin que se vea doble. */}
             <div
               onMouseEnter={() => setTitleHovered(true)}
               onMouseLeave={() => setTitleHovered(false)}
               style={{
-                perspective: "1200px",
-                clipPath: "inset(0 -600px)",
                 position: "relative",
+                overflow: "hidden",
+                perspective: "1200px",
                 cursor: "default",
               }}
             >
-              {/* Cara 1 — visible, rota 90° hacia abajo al hover */}
+              {/* Cara 1 — en flujo normal (define la altura del contenedor), sale abajo */}
               <motion.h1
-                animate={titleHovered ? { rotateX: 90 } : { rotateX: 0 }}
-                transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
+                animate={titleHovered ? { y: "100%", rotateX: 75 } : { y: 0, rotateX: 0 }}
+                transition={{ duration: 0.62, ease: [0.4, 0, 0.2, 1] }}
                 style={{
                   ...F.display,
                   fontSize: `clamp(120px, ${d.titleSize}vw, 340px)`,
-                  color: C.tinta, lineHeight: 0.85,
+                  color: C.tinta, lineHeight: 1,
                   letterSpacing: "-0.01em", margin: 0,
                   textTransform: "uppercase", position: "relative",
                   whiteSpace: "nowrap",
@@ -295,19 +297,20 @@ export default function Home() {
                 <span style={{ position: "absolute", top: "30%", right: "22%", fontSize: "0.12em", color: C.tinta, opacity: 0.9 }}>✦</span>
               </motion.h1>
 
-              {/* Cara 2 — empieza -90° (oculta arriba), rota hasta 0° al hover */}
+              {/* Cara 2 — bottom:100% la pone en layout ENCIMA del contenedor,
+                  overflow:hidden la oculta. Al hover, y:"100%" la baja al frame visible. */}
               <motion.h1
-                animate={titleHovered ? { rotateX: 0 } : { rotateX: -90 }}
-                transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
+                animate={titleHovered ? { y: "100%", rotateX: 0 } : { y: 0, rotateX: -75 }}
+                transition={{ duration: 0.62, ease: [0.4, 0, 0.2, 1] }}
                 style={{
                   ...F.display,
                   fontSize: `clamp(120px, ${d.titleSize}vw, 340px)`,
-                  color: C.tinta, lineHeight: 0.85,
+                  color: C.tinta, lineHeight: 1,
                   letterSpacing: "-0.01em", margin: 0,
                   textTransform: "uppercase",
                   whiteSpace: "nowrap",
-                  position: "absolute", top: 0, left: 0,
-                  transformOrigin: "center top",
+                  position: "absolute", bottom: "100%", left: 0,
+                  transformOrigin: "center bottom",
                 }}
               >
                 SPRINGS
