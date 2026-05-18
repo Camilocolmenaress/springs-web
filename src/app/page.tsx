@@ -129,11 +129,14 @@ export default function Home() {
     return Math.max(0, Math.min(1, (s - vw * 0.32) / (vw * 0.18)));
   });
 
-  // Brazo: sigue el scroll 1:1 (queda fijo en viewport) hasta maxScroll, luego se libera
+  // Brazo: entra naturalmente con el scroll (drift izquierda) hasta quedar completo,
+  // luego sticks (sigue 1:1) para nunca mostrar el corte derecho.
+  // left:86vw + width:38vw = 124vw → necesita moverse -24vw para que borde derecho = 100vw viewport
   const handArmBaseX = useMotionValue(1200);
   const handArmScrollDelta = useTransform(scrollXMV, (s) => {
-    const maxScroll = typeof window !== "undefined" ? window.innerWidth * 0.9 : 900;
-    return Math.min(s, maxScroll);
+    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
+    const stickyStart = vw * 0.24; // scroll en que el brazo queda completamente visible
+    return Math.max(0, s - stickyStart);
   });
   const handArmX = useTransform(
     [handArmBaseX, handArmScrollDelta] as const,
