@@ -216,17 +216,21 @@ export default function Home() {
           <div style={{
             position: "absolute", left: `${d.artGalleryLeft}vw`, bottom: d.artGalleryBottom,
             width: "110vw", zIndex: 1,
-            pointerEvents: "none",
           }}>
-            <h2 style={{
-              ...F.display,
-              fontSize: `clamp(40px, ${d.artGallerySize}vw, 400px)`,
-              color: C.tinta, lineHeight: 0.88,
-              margin: 0, letterSpacing: "-0.025em",
-              textTransform: "uppercase", whiteSpace: "nowrap",
-            }}>
+            <motion.h2
+              whileHover={{ y: -10, opacity: 0.38 }}
+              transition={{ type: "spring", stiffness: 320, damping: 22 }}
+              style={{
+                ...F.display,
+                fontSize: `clamp(40px, ${d.artGallerySize}vw, 400px)`,
+                color: C.tinta, lineHeight: 0.88,
+                margin: 0, letterSpacing: "-0.025em",
+                textTransform: "uppercase", whiteSpace: "nowrap",
+                cursor: "default",
+              }}
+            >
               ART GALLERY
-            </h2>
+            </motion.h2>
           </div>
 
           {/* Sello circular "HECHA PARA LOS DE VERDAD" */}
@@ -261,17 +265,21 @@ export default function Home() {
 
           {/* SPRINGS — título masivo */}
           <div style={{ position: "absolute", left: `${d.titleLeft}vw`, top: `${d.titleTop}vh`, zIndex: 3 }}>
-            <h1 style={{
-              ...F.display,
-              fontSize: `clamp(120px, ${d.titleSize}vw, 340px)`,
-              color: C.tinta, lineHeight: 0.85,
-              letterSpacing: "-0.01em", margin: 0,
-              textTransform: "uppercase", position: "relative",
-              whiteSpace: "nowrap",
-            }}>
+            <motion.h1
+              whileHover={{ y: 8, skewX: -2 }}
+              transition={{ type: "spring", stiffness: 380, damping: 24 }}
+              style={{
+                ...F.display,
+                fontSize: `clamp(120px, ${d.titleSize}vw, 340px)`,
+                color: C.tinta, lineHeight: 0.85,
+                letterSpacing: "-0.01em", margin: 0,
+                textTransform: "uppercase", position: "relative",
+                whiteSpace: "nowrap", cursor: "default",
+              }}
+            >
               SPRINGS
               <span style={{ position: "absolute", top: "30%", right: "22%", fontSize: "0.12em", color: C.tinta, opacity: 0.9 }}>✦</span>
-            </h1>
+            </motion.h1>
             {/* Subtítulo — Playfair Display Italic + brush underline SVG */}
             <div style={{ position: "relative", width: "fit-content", marginTop: 6 }}>
               <div style={{
