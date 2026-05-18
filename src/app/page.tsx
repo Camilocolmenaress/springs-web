@@ -264,60 +264,76 @@ export default function Home() {
             </div>
           </div>
 
-          {/* SPRINGS — título masivo con efecto cubo */}
+          {/* SPRINGS — cubo real con preserve-3d. Las dos caras son parte de UNA
+              estructura 3D rígida (front + top del cubo). El wrapper rota -90° y
+              ambas caras viajan juntas, manteniendo siempre la arista compartida. */}
           <div style={{ position: "absolute", left: `${d.titleLeft}vw`, top: `${d.titleTop}vh`, zIndex: 3 }}>
-            {/* Contenedor cubo: overflow:hidden recorta en layout (no solo visual).
-                La cara 2 vive en bottom:100% — fuera del contenedor en layout,
-                por eso overflow la oculta correctamente sin que se vea doble. */}
             <div
               onMouseEnter={() => setTitleHovered(true)}
               onMouseLeave={() => setTitleHovered(false)}
               style={{
-                position: "relative",
-                overflow: "hidden",
-                perspective: "1200px",
+                perspective: "2500px",
+                fontSize: `clamp(120px, ${d.titleSize}vw, 340px)`,
+                lineHeight: 1,
                 cursor: "default",
+                width: "fit-content",
+                clipPath: "inset(0 -800px)",
               }}
             >
-              {/* Cara 1 — en flujo normal (define la altura del contenedor), sale abajo.
-                  rotateX negativo = top se aleja del espectador = cara EXTERIOR del cubo. */}
-              <motion.h1
-                animate={titleHovered ? { y: "100%", rotateX: -75 } : { y: 0, rotateX: 0 }}
-                transition={{ type: "tween", duration: 0.85, ease: [0.45, 0, 0.55, 1] }}
+              {/* Wrapper cubo: preserve-3d, pivot en el CENTRO del cubo (0.5em atrás)
+                  para que la rotación sea como un cubo rodando hacia adelante. */}
+              <motion.div
+                animate={titleHovered ? { rotateX: -90 } : { rotateX: 0 }}
+                transition={{ type: "tween", duration: 0.7, ease: [0.45, 0, 0.55, 1] }}
                 style={{
-                  ...F.display,
-                  fontSize: `clamp(120px, ${d.titleSize}vw, 340px)`,
-                  color: C.tinta, lineHeight: 1,
-                  letterSpacing: "-0.01em", margin: 0,
-                  textTransform: "uppercase", position: "relative",
-                  whiteSpace: "nowrap",
-                  transformOrigin: "center bottom",
+                  position: "relative",
+                  transformStyle: "preserve-3d",
+                  transformOrigin: "50% 50% -0.5em",
                 }}
               >
-                SPRINGS
-                <span style={{ position: "absolute", top: "30%", right: "22%", fontSize: "0.12em", color: C.tinta, opacity: 0.9 }}>✦</span>
-              </motion.h1>
+                {/* Cara FRONT — en flujo, define el tamaño del wrapper */}
+                <h1
+                  style={{
+                    ...F.display,
+                    fontSize: "1em",
+                    color: C.tinta,
+                    lineHeight: 1,
+                    letterSpacing: "-0.01em",
+                    margin: 0,
+                    textTransform: "uppercase",
+                    whiteSpace: "nowrap",
+                    position: "relative",
+                  }}
+                >
+                  SPRINGS
+                  <span style={{ position: "absolute", top: "30%", right: "22%", fontSize: "0.12em", color: C.tinta, opacity: 0.9 }}>✦</span>
+                </h1>
 
-              {/* Cara 2 — bottom:100% la pone en layout ENCIMA del contenedor,
-                  overflow:hidden la oculta. Al hover, y:"100%" la baja al frame visible.
-                  rotateX positivo = top viene hacia el espectador = cara EXTERIOR visible. */}
-              <motion.h1
-                animate={titleHovered ? { y: "100%", rotateX: 0 } : { y: 0, rotateX: 75 }}
-                transition={{ type: "tween", duration: 0.85, ease: [0.45, 0, 0.55, 1] }}
-                style={{
-                  ...F.display,
-                  fontSize: `clamp(120px, ${d.titleSize}vw, 340px)`,
-                  color: C.tinta, lineHeight: 1,
-                  letterSpacing: "-0.01em", margin: 0,
-                  textTransform: "uppercase",
-                  whiteSpace: "nowrap",
-                  position: "absolute", bottom: "100%", left: 0,
-                  transformOrigin: "center bottom",
-                }}
-              >
-                SPRINGS
-                <span style={{ position: "absolute", top: "30%", right: "22%", fontSize: "0.12em", color: C.tinta, opacity: 0.9 }}>✦</span>
-              </motion.h1>
+                {/* Cara TOP — acostada horizontalmente arriba del front.
+                    Pivot en su borde superior + rotateX(-90) la deja plana
+                    extendiéndose HACIA ATRÁS del front (z negativo). */}
+                <h1
+                  style={{
+                    ...F.display,
+                    fontSize: "1em",
+                    color: C.tinta,
+                    lineHeight: 1,
+                    letterSpacing: "-0.01em",
+                    margin: 0,
+                    textTransform: "uppercase",
+                    whiteSpace: "nowrap",
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    transformOrigin: "50% 0",
+                    transform: "rotateX(-90deg)",
+                  }}
+                >
+                  SPRINGS
+                  <span style={{ position: "absolute", top: "30%", right: "22%", fontSize: "0.12em", color: C.tinta, opacity: 0.9 }}>✦</span>
+                </h1>
+              </motion.div>
             </div>
 
             {/* Subtítulo — Playfair Display Italic + brush underline SVG */}
