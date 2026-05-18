@@ -28,6 +28,9 @@ const PROP_LABELS: Record<string, string> = {
   height: "Alto",
   opacity: "Opacidad",
   right: "Derecha",
+  letterSpacing: "Esp. letras",
+  itemGap: "Esp. entre ítems",
+  wordSpacing: "Esp. palabras",
 };
 
 interface Props {

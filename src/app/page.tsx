@@ -103,9 +103,12 @@ export default function Home() {
     marqueeSize:  (hero?.marquee?.props?.fontSize as { value: number })?.value ?? 2.4,
     marqueeTop:   (hero?.marquee?.props?.top as { value: number })?.value ?? 68,
     marqueeLeft:  (hero?.marquee?.props?.left as { value: number })?.value ?? 44,
-    footerMenuSize:   (hero?.footerMenu?.props?.fontSize as { value: number })?.value ?? 0.78,
-    footerMenuBottom: (hero?.footerMenu?.props?.bottom as { value: number })?.value ?? 12,
-    footerMenuRight:  (hero?.footerMenu?.props?.right as { value: number })?.value ?? 32,
+    footerMenuSize:          (hero?.footerMenu?.props?.fontSize      as { value: number })?.value ?? 0.78,
+    footerMenuBottom:        (hero?.footerMenu?.props?.bottom        as { value: number })?.value ?? 12,
+    footerMenuRight:         (hero?.footerMenu?.props?.right         as { value: number })?.value ?? 32,
+    footerMenuLetterSpacing: (hero?.footerMenu?.props?.letterSpacing as { value: number })?.value ?? 0.04,
+    footerMenuItemGap:       (hero?.footerMenu?.props?.itemGap       as { value: number })?.value ?? 36,
+    footerMenuWordSpacing:   (hero?.footerMenu?.props?.wordSpacing   as { value: number })?.value ?? 0,
     barcodeHeight:  (hero?.barcode?.props?.height as { value: number })?.value ?? 32,
     barcodeWidth:   (hero?.barcode?.props?.width as { value: number })?.value ?? 160,
     barcodeLeft:    (hero?.barcode?.props?.left as { value: number })?.value ?? 0,
@@ -210,7 +213,7 @@ export default function Home() {
           ))}
         </div>
         <div style={{
-          display: "flex", gap: 36,
+          display: "flex", gap: d.footerMenuItemGap,
           position: "fixed", bottom: d.footerMenuBottom, right: d.footerMenuRight,
           zIndex: 101,
         }}>
@@ -226,7 +229,7 @@ export default function Home() {
               href={item.href}
               initial="rest"
               whileHover="hover"
-              style={{ ...F.mono, fontSize: `${d.footerMenuSize}rem`, letterSpacing: "0.04em", textDecoration: "none", fontWeight: 600, position: "relative", display: "inline-block" }}
+              style={{ ...F.mono, fontSize: `${d.footerMenuSize}rem`, letterSpacing: `${d.footerMenuLetterSpacing}em`, wordSpacing: `${d.footerMenuWordSpacing}px`, textDecoration: "none", fontWeight: 600, position: "relative", display: "inline-block" }}
             >
               <motion.span
                 variants={{ rest: { color: C.tinta }, hover: { color: C.burgundy } }}
