@@ -284,7 +284,7 @@ export default function Home() {
                   para que la rotación sea como un cubo rodando hacia adelante. */}
               <motion.div
                 animate={titleHovered ? { rotateX: -90 } : { rotateX: 0 }}
-                transition={{ type: "tween", duration: 0.7, ease: [0.45, 0, 0.55, 1] }}
+                transition={{ type: "tween", duration: 0.45, ease: [0.45, 0, 0.55, 1] }}
                 style={{
                   position: "relative",
                   transformStyle: "preserve-3d",
