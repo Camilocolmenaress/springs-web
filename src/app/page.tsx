@@ -210,7 +210,7 @@ export default function Home() {
           ))}
         </div>
         <div style={{
-          display: "flex", gap: 16,
+          display: "flex", gap: 36,
           position: "fixed", bottom: d.footerMenuBottom, right: d.footerMenuRight,
           zIndex: 101,
         }}>
