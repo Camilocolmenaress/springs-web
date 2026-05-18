@@ -141,6 +141,20 @@ export default function Home() {
     return Math.max(0, Math.min(1, s / (vw * 0.08)));
   });
 
+  const FONT_MAP: Record<string, string> = {
+    display: "Anton, sans-serif",
+    sans: "Inter, sans-serif",
+    mono: "JetBrains Mono, monospace",
+  };
+  const COLOR_MAP: Record<string, string> = {
+    burgundy: "#6B1419",
+    cream: "#F2E8D5",
+    tinta: "#1A0A0C",
+    mostaza: "#C5871F",
+  };
+  const fontCSS = (key: string) => FONT_MAP[key] ?? FONT_MAP.display;
+  const colorHex = (key: string) => COLOR_MAP[key] ?? COLOR_MAP.tinta;
+
   const hero = config.zones.hero?.elements;
   const d = {
     titleSize:    (hero?.title?.props?.fontSize as { value: number })?.value ?? 19.5,
@@ -186,6 +200,11 @@ export default function Home() {
     artGalleryBottom: (hero?.artGallery?.props?.bottom as { value: number })?.value ?? 120,
     artGalleryLeft:   (hero?.artGallery?.props?.left as { value: number })?.value ?? 2,
     heroImage:    (hero?.image?.props?.src as { value: string })?.value ?? "/images/la-fija.png",
+    titleFont:    fontCSS((hero?.title?.props?.fontFamily as { value: string })?.value ?? "display"),
+    titleColor:   colorHex((hero?.title?.props?.color as { value: string })?.value ?? "tinta"),
+    subtitleFont: fontCSS((hero?.subtitle?.props?.fontFamily as { value: string })?.value ?? "sans"),
+    subtitleColor:colorHex((hero?.subtitle?.props?.color as { value: string })?.value ?? "burgundy"),
+    bodyCopyColor:colorHex((hero?.bodyCopy?.props?.color as { value: string })?.value ?? "tinta"),
     marqueeSize:  (hero?.marquee?.props?.fontSize as { value: number })?.value ?? 2.4,
     marqueeTop:   (hero?.marquee?.props?.top as { value: number })?.value ?? 68,
     marqueeLeft:  (hero?.marquee?.props?.left as { value: number })?.value ?? 44,
@@ -540,9 +559,9 @@ export default function Home() {
               >
                 <h1
                   style={{
-                    ...F.display,
+                    fontFamily: d.titleFont,
                     fontSize: "1em",
-                    color: C.tinta,
+                    color: d.titleColor,
                     lineHeight: 1,
                     letterSpacing: "-0.01em",
                     margin: 0,
@@ -557,9 +576,9 @@ export default function Home() {
 
                 <h1
                   style={{
-                    ...F.display,
+                    fontFamily: d.titleFont,
                     fontSize: "1em",
-                    color: C.tinta,
+                    color: d.titleColor,
                     lineHeight: 1,
                     letterSpacing: "-0.01em",
                     margin: 0,
@@ -594,9 +613,9 @@ export default function Home() {
             }}
           >
             <div style={{
-              fontFamily: "var(--font-marker), cursive",
+              fontFamily: d.subtitleFont,
               fontSize: `clamp(20px, ${d.subtitleSize}vw, 96px)`,
-              color: C.burgundy,
+              color: d.subtitleColor,
               lineHeight: 1,
               letterSpacing: "0.02em",
               textTransform: "uppercase",
@@ -697,11 +716,11 @@ export default function Home() {
             transition={{ duration: 0.55, ease: EASE, delay: 0.6 }}
             style={{ position: "absolute", left: `${d.bodyCopyLeft}vw`, bottom: `${d.bodyCopyBottom}vh`, zIndex: 5 }}
           >
-            <div style={{ ...F.display, fontSize: `clamp(20px, ${d.bodyCopySize}vw, 72px)`, color: C.tinta, letterSpacing: "-0.01em", lineHeight: 1.1 }}>
+            <div style={{ ...F.display, fontSize: `clamp(20px, ${d.bodyCopySize}vw, 72px)`, color: d.bodyCopyColor, letterSpacing: "-0.01em", lineHeight: 1.1 }}>
               <div style={{ display: "flex", alignItems: "center", gap: "0.3em" }}>
                 <svg width="0.7em" height="0.7em" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, marginBottom: "0.1em" }}>
-                  <line x1="21" y1="21" x2="3" y2="3" stroke={C.tinta} strokeWidth="4.5" strokeLinecap="round"/>
-                  <polyline points="3,11 3,3 11,3" fill="none" stroke={C.tinta} strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <line x1="21" y1="21" x2="3" y2="3" stroke={d.bodyCopyColor} strokeWidth="4.5" strokeLinecap="round"/>
+                  <polyline points="3,11 3,3 11,3" fill="none" stroke={d.bodyCopyColor} strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
                 Jacket
               </div>
