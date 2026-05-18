@@ -682,6 +682,7 @@ export default function Home() {
               zIndex: 22,
               cursor: miercolesDadosHovered ? "pointer" : "grab",
               transform: `rotate(${d.miercolesDadosRotation}deg)`,
+              clipPath: "inset(12% 0%)",
             }}
           />
 
