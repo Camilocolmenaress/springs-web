@@ -230,8 +230,7 @@ export default function Home() {
     sensitiveSrc:      (hero?.sensitiveImage?.props?.src as { value: string })?.value ?? "/images/sensitive-hero.jpg",
     sensitiveLeft:     (hero?.sensitiveImage?.props?.left as { value: number })?.value ?? 36,
     sensitiveBottom:   (hero?.sensitiveImage?.props?.bottom as { value: number })?.value ?? 18,
-    sensitiveWidth:    (hero?.sensitiveImage?.props?.width as { value: number })?.value ?? 22,
-    sensitiveHeight:   (hero?.sensitiveImage?.props?.height as { value: number })?.value ?? 28,
+    sensitiveSize:     (hero?.sensitiveImage?.props?.size as { value: number })?.value ?? 32,
     sensitiveRotation: (hero?.sensitiveImage?.props?.rotation as { value: number })?.value ?? -4,
     sensitiveFontSize: (hero?.sensitiveImage?.props?.fontSize as { value: number })?.value ?? 1.1,
   };
@@ -875,16 +874,13 @@ export default function Home() {
               position: "absolute",
               left: `${d.sensitiveLeft}vw`,
               bottom: `${d.sensitiveBottom}vh`,
-              width: `${d.sensitiveWidth}vw`,
+              width: `${d.sensitiveSize}vw`,
+              aspectRatio: "900 / 748",
               rotate: d.sensitiveRotation,
               zIndex: 10,
             }}
           >
-            <SensitiveImage
-              src={d.sensitiveSrc}
-              fontSize={d.sensitiveFontSize}
-              style={{ width: "100%", height: `${d.sensitiveHeight}vw` }}
-            />
+            <SensitiveImage src={d.sensitiveSrc} fontSize={d.sensitiveFontSize} />
           </motion.div>
 
           {/* ─── BRAZO HERO — fixed, entra desde derecha al scrollear, ancla al quedar completo ─── */}

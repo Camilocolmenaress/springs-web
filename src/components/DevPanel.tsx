@@ -14,7 +14,7 @@ const C = { burgundy: "#6B1419", cream: "#F2E8D5", tinta: "#1A0A0C", mostaza: "#
 const MONO = { fontFamily: "JetBrains Mono, monospace" } as const;
 
 const PROP_LABELS: Record<string, string> = {
-  fontSize: "Tamaño", left: "Left", top: "Top", bottom: "Bottom",
+  fontSize: "Tamaño", size: "Tamaño cuadro", left: "Left", top: "Top", bottom: "Bottom",
   width: "Ancho", content: "Texto", fontFamily: "Fuente",
   color: "Color", src: "Imagen", animation: "Animación",
   rotation: "Rotación",
