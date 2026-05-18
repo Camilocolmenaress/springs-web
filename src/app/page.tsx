@@ -97,6 +97,8 @@ export default function Home() {
     artGalleryBottom: (hero?.artGallery?.props?.bottom as { value: number })?.value ?? 120,
     artGalleryLeft:   (hero?.artGallery?.props?.left as { value: number })?.value ?? 2,
     heroImage:    (hero?.image?.props?.src as { value: string })?.value ?? "/images/la-fija.png",
+    barcodeHeight:  (hero?.barcode?.props?.height as { value: number })?.value ?? 32,
+    barcodeOpacity: (hero?.barcode?.props?.opacity as { value: number })?.value ?? 75,
     miercolesDadosWidth:    (hero?.miercolesDados?.props?.width as { value: number })?.value ?? 13,
     miercolesDadosLeft:     (hero?.miercolesDados?.props?.left as { value: number })?.value ?? 3,
     miercolesDadosBottom:   (hero?.miercolesDados?.props?.bottom as { value: number })?.value ?? 10,
@@ -196,12 +198,11 @@ export default function Home() {
             <a key={s} href="#" style={{ ...F.mono, fontSize: "0.58rem", letterSpacing: "0.18em", color: C.tinta, textDecoration: "none", opacity: 0.6 }}>{s}</a>
           ))}
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 1 }}>
-          {[2,1,3,1,1,2,1,3,2,1,1,2,3,1,2,1,1,3,2,1,1,2,1,2].map((w, i) => (
-            <div key={i} style={{ width: w * 2, height: 18, background: i % 2 === 0 ? C.tinta : "transparent" }} />
-          ))}
-          <span style={{ ...F.mono, fontSize: "0.42rem", color: C.tinta, opacity: 0.5, marginLeft: 6 }}>SPRINGS · 2024 ©</span>
-        </div>
+        <img
+          src="/images/barcode-springs.png"
+          alt="SPRINGS 2024"
+          style={{ height: d.barcodeHeight, width: "auto", opacity: d.barcodeOpacity / 100 }}
+        />
         <div style={{ display: "flex", gap: 28 }}>
           {([
             { label: "CARTA",    href: "/menu" },

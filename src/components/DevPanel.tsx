@@ -25,6 +25,8 @@ const PROP_LABELS: Record<string, string> = {
   gap: "Separación ⊕",
   globeOffsetY: "Altura ⊕",
   globeSize: "Tamaño ⊕",
+  height: "Alto",
+  opacity: "Opacidad",
 };
 
 interface Props {

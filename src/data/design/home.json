@@ -94,6 +94,14 @@
             "fontSize": { "value": 1.5, "unit": "vw", "min": 1.5, "max": 8,   "step": 0.1 }
           }
         },
+        "barcode": {
+          "type": "image",
+          "props": {
+            "src":    { "value": "/images/barcode-springs.png", "folder": "/images" },
+            "height": { "value": 32, "unit": "px", "min": 16, "max": 80, "step": 2 },
+            "opacity": { "value": 75, "unit": "%", "min": 10, "max": 100, "step": 5 }
+          }
+        },
         "miercolesDados": {
           "type": "image",
           "props": {
