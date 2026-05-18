@@ -511,19 +511,41 @@ export default function Home() {
             width: "336vw",
             overflow: "hidden",
             zIndex: 6,
-            borderTop: `1px solid rgba(26,10,12,0.18)`,
-            borderBottom: `1px solid rgba(26,10,12,0.18)`,
-            padding: "7px 0",
+            borderTop: `1.5px solid ${C.tinta}`,
+            borderBottom: `1.5px solid ${C.tinta}`,
+            padding: "6px 0",
             background: C.cream,
           }}>
             <motion.div
               animate={{ x: ["0%", "-50%"] }}
-              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-              style={{ display: "flex", whiteSpace: "nowrap" }}
+              transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
+              style={{ display: "flex", alignItems: "center", whiteSpace: "nowrap" }}
             >
-              {[0, 1].map(i => (
-                <span key={i} style={{ ...F.mono, fontSize: "0.6rem", letterSpacing: "0.22em", color: C.tinta, opacity: 0.7, paddingRight: "4em" }}>
-                  {"SPRINGS · DIFFERENT BY DEFAULT · JACKET POTATOES · BUCARAMANGA · EST. 2024 · SPRINGS · DIFFERENT BY DEFAULT · JACKET POTATOES · BUCARAMANGA · EST. 2024 · SPRINGS · DIFFERENT BY DEFAULT · JACKET POTATOES · BUCARAMANGA · EST. 2024 · "}
+              {[0, 1].map(copy => (
+                <span key={copy} style={{ display: "inline-flex", alignItems: "center" }}>
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: "0.5em" }}>
+                      {/* Sólido */}
+                      <span style={{
+                        ...F.display,
+                        fontSize: "clamp(22px, 2.4vw, 42px)",
+                        color: C.burgundy,
+                        letterSpacing: "0.04em",
+                        lineHeight: 1,
+                      }}>SPRINGS</span>
+                      <span style={{ ...F.display, fontSize: "1rem", color: C.burgundy, opacity: 0.5 }}>✦</span>
+                      {/* Outline */}
+                      <span style={{
+                        ...F.display,
+                        fontSize: "clamp(22px, 2.4vw, 42px)",
+                        color: "transparent",
+                        WebkitTextStroke: `1.5px ${C.burgundy}`,
+                        letterSpacing: "0.04em",
+                        lineHeight: 1,
+                      }}>SPRINGS</span>
+                      <span style={{ ...F.display, fontSize: "1rem", color: C.burgundy, opacity: 0.5 }}>✦</span>
+                    </span>
+                  ))}
                 </span>
               ))}
             </motion.div>
