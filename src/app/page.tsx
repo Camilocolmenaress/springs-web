@@ -68,6 +68,7 @@ export default function Home() {
     globeTextOffset:    (hero?.globeSticker?.props?.textOffset as { value: number })?.value ?? 0,
     globeTextRadius:    (hero?.globeSticker?.props?.textRadius as { value: number })?.value ?? 46,
     globeFontSize:      (hero?.globeSticker?.props?.fontSize as { value: number })?.value ?? 7.5,
+    globeRadius:        (hero?.globeSticker?.props?.globeRadius as { value: number })?.value ?? 22,
     menuListSize:   (hero?.menuList?.props?.fontSize as { value: number })?.value ?? 0.65,
     menuListLeft:   (hero?.menuList?.props?.left as { value: number })?.value ?? 2,
     menuListBottom: (hero?.menuList?.props?.bottom as { value: number })?.value ?? 6,
@@ -510,17 +511,21 @@ export default function Home() {
             }}
           >
             <svg viewBox="0 0 110 110" width="100%" height="100%">
-              {/* Globo con más líneas */}
-              <circle cx="55" cy="55" r="22" fill="none" stroke={C.tinta} strokeWidth="1.2" opacity={0.8}/>
-              {/* Meridianos */}
-              <ellipse cx="55" cy="55" rx="8"  ry="22" fill="none" stroke={C.tinta} strokeWidth="0.9" opacity={0.6}/>
-              <ellipse cx="55" cy="55" rx="17" ry="22" fill="none" stroke={C.tinta} strokeWidth="0.9" opacity={0.5}/>
-              {/* Paralelos */}
-              <ellipse cx="55" cy="55" rx="22" ry="9"  fill="none" stroke={C.tinta} strokeWidth="0.9" opacity={0.6}/>
-              <ellipse cx="55" cy="55" rx="22" ry="17" fill="none" stroke={C.tinta} strokeWidth="0.8" opacity={0.45}/>
-              {/* Líneas centrales */}
-              <line x1="33" y1="55" x2="77" y2="55" stroke={C.tinta} strokeWidth="0.8" opacity={0.45}/>
-              <line x1="55" y1="33" x2="55" y2="77" stroke={C.tinta} strokeWidth="0.8" opacity={0.45}/>
+              {/* Globo con más líneas — radio dinámico */}
+              {(() => {
+                const gr = d.globeRadius;
+                return (
+                  <>
+                    <circle cx="55" cy="55" r={gr} fill="none" stroke={C.tinta} strokeWidth="1.2" opacity={0.8}/>
+                    <ellipse cx="55" cy="55" rx={+(gr*0.36).toFixed(1)} ry={gr} fill="none" stroke={C.tinta} strokeWidth="0.9" opacity={0.6}/>
+                    <ellipse cx="55" cy="55" rx={+(gr*0.77).toFixed(1)} ry={gr} fill="none" stroke={C.tinta} strokeWidth="0.9" opacity={0.5}/>
+                    <ellipse cx="55" cy="55" rx={gr} ry={+(gr*0.41).toFixed(1)} fill="none" stroke={C.tinta} strokeWidth="0.9" opacity={0.6}/>
+                    <ellipse cx="55" cy="55" rx={gr} ry={+(gr*0.77).toFixed(1)} fill="none" stroke={C.tinta} strokeWidth="0.8" opacity={0.45}/>
+                    <line x1={55-gr} y1="55" x2={55+gr} y2="55" stroke={C.tinta} strokeWidth="0.8" opacity={0.45}/>
+                    <line x1="55" y1={55-gr} x2="55" y2={55+gr} stroke={C.tinta} strokeWidth="0.8" opacity={0.45}/>
+                  </>
+                );
+              })()}
               {/* Texto — círculo dinámico que empieza en las 7 del reloj */}
               {(() => {
                 const r = d.globeTextRadius;

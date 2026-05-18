@@ -20,6 +20,7 @@ const PROP_LABELS: Record<string, string> = {
   rotation: "Rotación",
   textOffset: "Posición texto",
   textRadius: "Distancia al globo",
+  globeRadius: "Tamaño globo",
 };
 
 interface Props {
