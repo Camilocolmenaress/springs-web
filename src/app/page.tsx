@@ -62,6 +62,9 @@ export default function Home() {
     subtitleLeft:     (hero?.subtitle?.props?.left as { value: number })?.value ?? 42,
     subtitleBottom:   (hero?.subtitle?.props?.bottom as { value: number })?.value ?? 30,
     subtitleRotation: (hero?.subtitle?.props?.rotation as { value: number })?.value ?? -2,
+    jacketClubLeft:  (hero?.jacketClub?.props?.left as { value: number })?.value ?? 3,
+    jacketClubTop:   (hero?.jacketClub?.props?.top as { value: number })?.value ?? 10,
+    jacketClubWidth: (hero?.jacketClub?.props?.width as { value: number })?.value ?? 12,
     underlineWidth:    (hero?.underline?.props?.width as { value: number })?.value ?? 25,
     underlineLeft:     (hero?.underline?.props?.left as { value: number })?.value ?? 59,
     underlineBottom:   (hero?.underline?.props?.bottom as { value: number })?.value ?? 40,
@@ -462,25 +465,26 @@ export default function Home() {
 
           {/* ─── STICKERS ────────────────────────────────── */}
 
-          {/* 1. SPRINGS Jacket Club */}
-          <DragSticker rotate={-8} idleRotateRange={2} idleDuration={7}
-            onDragStart={pauseScroll} onDragEnd={resumeScroll}
+          {/* 1. SPRINGS Jacket Club — sticker imagen, solo drag manual */}
+          <motion.img
+            src="/images/jacket-club-sticker.png"
+            alt="SPRINGS Jacket Club"
+            drag
+            dragMomentum={false}
+            dragElastic={0}
+            onDragStart={pauseScroll}
+            onDragEnd={resumeScroll}
+            whileDrag={{ scale: 1.03 }}
             style={{
-              position: "absolute", left: "3vw", top: "10vh", zIndex: 20,
-              background: C.burgundy, padding: "14px 16px", textAlign: "center",
-              boxShadow: `0 0 0 5px ${C.cream}, 0 0 0 7px ${C.tinta}`,
-              width: "12vw",
+              position: "absolute",
+              left: `${d.jacketClubLeft}vw`,
+              top: `${d.jacketClubTop}vh`,
+              width: `${d.jacketClubWidth}vw`,
+              height: "auto",
+              zIndex: 20,
+              cursor: "grab",
             }}
-          >
-            <div style={{ ...F.display, fontSize: "1.05rem", letterSpacing: "0.06em", lineHeight: 1, color: C.cream }}>SPRINGS</div>
-            <div style={{ ...F.sans, fontSize: "0.78rem", fontStyle: "italic", fontWeight: 700, lineHeight: 1, marginTop: 2, color: C.cream }}>Jacket Club</div>
-            <div style={{ ...F.mono, fontSize: "0.43rem", letterSpacing: "0.08em", marginTop: 8, lineHeight: 1.55, textTransform: "uppercase", color: C.cream, opacity: 0.85 }}>
-              ESTO ES ALGO ASÍ<br />COMO QUE TE PAGAMOS<br />POR COMER SPRINGS
-            </div>
-            <div style={{ marginTop: 10, background: C.tinta, color: C.cream, padding: "5px 16px", display: "inline-flex", alignItems: "center", gap: 6, ...F.display, fontSize: "0.62rem", letterSpacing: "0.18em" }}>
-              ENTRAR <span style={{ fontSize: "0.55rem" }}>✦</span>
-            </div>
-          </DragSticker>
+          />
 
           {/* 2. FOR THE HOTTEST PEOPLE — círculo con globo */}
           <DragSticker rotate={-5} idleRotateRange={3} idleDuration={8}

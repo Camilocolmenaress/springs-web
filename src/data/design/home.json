@@ -34,6 +34,15 @@
             "bottom": { "value": 205, "unit": "px", "min": -100, "max": 400, "step": 5 }
           }
         },
+        "jacketClub": {
+          "type": "image",
+          "props": {
+            "src": { "value": "/images/jacket-club-sticker.png", "folder": "/images" },
+            "width": { "value": 12, "unit": "vw", "min": 5, "max": 30, "step": 0.5 },
+            "left": { "value": 3, "unit": "vw", "min": -10, "max": 80, "step": 0.5 },
+            "top": { "value": 10, "unit": "vh", "min": 0, "max": 90, "step": 0.5 }
+          }
+        },
         "underline": {
           "type": "image",
           "props": {
