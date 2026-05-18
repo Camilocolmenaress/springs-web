@@ -213,7 +213,7 @@ export default function Home() {
             { label: "NOSOTROS", href: "#"     },
             { label: "EL CLUB",  href: "#"     },
           ] as { label: string; href: string }[]).map(item => (
-            <a key={item.label} href={item.href} style={{ ...F.mono, fontSize: "0.58rem", letterSpacing: "0.18em", color: C.tinta, textDecoration: "none", opacity: 0.65 }}>
+            <a key={item.label} href={item.href} style={{ ...F.display, fontSize: "1rem", letterSpacing: "0.08em", color: C.tinta, textDecoration: "none" }}>
               {item.label}
             </a>
           ))}
