@@ -291,7 +291,9 @@ export default function Home() {
                   transformOrigin: "50% 50% -0.5em",
                 }}
               >
-                {/* Cara FRONT — en flujo, define el tamaño del wrapper */}
+                {/* Cara FRONT — en flujo, define el tamaño del wrapper.
+                    backface-visibility: hidden la oculta cuando rota -90° (la cara queda
+                    mirando hacia abajo y el espectador ve el reverso, que se oculta). */}
                 <h1
                   style={{
                     ...F.display,
@@ -303,6 +305,7 @@ export default function Home() {
                     textTransform: "uppercase",
                     whiteSpace: "nowrap",
                     position: "relative",
+                    backfaceVisibility: "hidden",
                   }}
                 >
                   SPRINGS
@@ -310,8 +313,11 @@ export default function Home() {
                 </h1>
 
                 {/* Cara TOP — acostada horizontalmente arriba del front.
-                    Pivot en su borde superior + rotateX(-90) la deja plana
-                    extendiéndose HACIA ATRÁS del front (z negativo). */}
+                    Transform: rotateX(+90) la pone con la SUPERFICIE DEL TEXTO mirando
+                    hacia ARRIBA (no abajo). Luego translateZ(-0.5em) la mueve hacia atrás
+                    (a la profundidad del cubo) y translateY(-50%) la sube al borde superior.
+                    Resultado: acostada en el plano y=0, extendiéndose en -Z, texto facing UP.
+                    Al rotar el wrapper -90°, queda al frente con el texto orientado correcto. */}
                 <h1
                   style={{
                     ...F.display,
@@ -326,8 +332,8 @@ export default function Home() {
                     top: 0,
                     left: 0,
                     width: "100%",
-                    transformOrigin: "50% 0",
-                    transform: "rotateX(-90deg)",
+                    transform: "translateY(-50%) translateZ(-0.5em) rotateX(90deg)",
+                    backfaceVisibility: "hidden",
                   }}
                 >
                   SPRINGS
