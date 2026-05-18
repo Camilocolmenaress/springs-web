@@ -129,6 +129,13 @@ export default function Home() {
     return Math.max(0, Math.min(1, (s - vw * 0.32) / (vw * 0.18)));
   });
 
+  // Brazo: fixed al borde derecho. x va de +24vw → 0 mientras scrolleas,
+  // dejando solo la caja+mano al inicio y anclándose al llegar completo.
+  const handArmX = useTransform(scrollXMV, (s) => {
+    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
+    return Math.max(0, vw * 0.24 - s);
+  });
+
   const FONT_MAP: Record<string, string> = {
     display: "Anton, sans-serif",
     sans: "Inter, sans-serif",
@@ -841,19 +848,20 @@ export default function Home() {
           />
 
 
-          {/* ─── BRAZO HERO — fixed al borde derecho del viewport, encima de todo ─── */}
+          {/* ─── BRAZO HERO — fixed, entra desde derecha al scrollear, ancla al quedar completo ─── */}
           <motion.img
             src={d.handArmSrc}
             alt=""
-            initial={{ x: "30vw", opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ type: "spring", stiffness: 130, damping: 22, mass: 1.2, delay: 0.2 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
             style={{
               position: "fixed",
               right: 0,
               bottom: `${d.handArmBottom}vh`,
               width: `${d.handArmWidth}vw`,
               height: "auto",
+              x: handArmX,
               zIndex: 9500,
               pointerEvents: "none",
               filter: "drop-shadow(0 20px 48px rgba(26,10,12,0.14))",
