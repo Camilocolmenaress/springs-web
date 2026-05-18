@@ -129,19 +129,10 @@ export default function Home() {
     return Math.max(0, Math.min(1, (s - vw * 0.32) / (vw * 0.18)));
   });
 
-  // Brazo: entra naturalmente con el scroll (drift izquierda) hasta quedar completo,
-  // luego sticks (sigue 1:1) para nunca mostrar el corte derecho.
-  // left:86vw + width:38vw = 124vw → necesita moverse -24vw para que borde derecho = 100vw viewport
-  const handArmBaseX = useMotionValue(1200);
-  const handArmScrollDelta = useTransform(scrollXMV, (s) => {
-    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    const stickyStart = vw * 0.24; // scroll en que el brazo queda completamente visible
-    return Math.max(0, s - stickyStart);
-  });
-  const handArmX = useTransform(
-    [handArmBaseX, handArmScrollDelta] as const,
-    (values: number[]) => values[0] + values[1]
-  );
+  // Brazo: x se setea directamente en el callback de Lenis (mismo frame que el canvas)
+  // para cero frame-gap. Entrada spring separada vía ref de controles.
+  const handArmFinalX = useMotionValue(1200);
+  const handArmCtrlRef = useRef<{ stop: () => void } | null>(null);
 
   const FONT_MAP: Record<string, string> = {
     display: "Anton, sans-serif",
@@ -253,7 +244,15 @@ export default function Home() {
     lenisRef.current = lenis;
 
     lenis.on("scroll", () => {
-      scrollXMV.set(lenis.scroll);
+      const s = lenis.scroll;
+      scrollXMV.set(s);
+      // Set x directo en el mismo frame que el canvas — sin frame-gap
+      if (handArmCtrlRef.current) {
+        handArmCtrlRef.current.stop();
+        handArmCtrlRef.current = null;
+      }
+      const vw = window.innerWidth;
+      handArmFinalX.set(Math.max(0, s - vw * 0.24));
     });
 
     let raf: number;
@@ -270,13 +269,15 @@ export default function Home() {
     };
   }, [isDesktop]);
 
-  // Entrada del brazo: spring desde 1200 → 0, delay 0.2s
+  // Entrada del brazo: spring 1200 → 0, delay 0.2s. Controles guardados para cancelar al scrollear.
   useEffect(() => {
     const timeout = setTimeout(() => {
-      animateValue(handArmBaseX, 0, { type: "spring", stiffness: 130, damping: 22, mass: 1.2 });
+      handArmCtrlRef.current = animateValue(handArmFinalX, 0, {
+        type: "spring", stiffness: 130, damping: 22, mass: 1.2,
+      }) as unknown as { stop: () => void };
     }, 200);
     return () => clearTimeout(timeout);
-  }, [handArmBaseX]);
+  }, [handArmFinalX]);
 
   if (isDesktop !== true) {
     return <MobileCanvas />;
@@ -877,7 +878,7 @@ export default function Home() {
               bottom: `${d.handArmBottom}vh`,
               width: `${d.handArmWidth}vw`,
               height: "auto",
-              x: editMode ? 0 : handArmX,
+              x: editMode ? 0 : handArmFinalX,
               zIndex: 8,
               pointerEvents: editMode ? "auto" : "none",
               cursor: editMode ? "grab" : "default",
