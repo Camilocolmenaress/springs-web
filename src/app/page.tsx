@@ -47,6 +47,7 @@ export default function Home() {
   const contentRef = useRef<HTMLDivElement>(null);
   const lenisRef = useRef<Lenis | null>(null);
   const [titleHovered, setTitleHovered] = useState(false);
+  const [artGalleryHovered, setArtGalleryHovered] = useState(false);
 
   const hero = config.zones.hero?.elements;
   const d = {
@@ -213,25 +214,73 @@ export default function Home() {
             }}
           />
 
-          {/* ART GALLERY — texto masivo debajo de la papa */}
+          {/* ART GALLERY — efecto cubo real con preserve-3d (mismo patrón que SPRINGS) */}
           <div style={{
             position: "absolute", left: `${d.artGalleryLeft}vw`, bottom: d.artGalleryBottom,
-            width: "110vw", zIndex: 1,
+            zIndex: 1,
           }}>
-            <motion.h2
-              whileHover={{ y: -10, opacity: 0.38 }}
-              transition={{ type: "spring", stiffness: 320, damping: 22 }}
+            <div
+              onMouseEnter={() => setArtGalleryHovered(true)}
+              onMouseLeave={() => setArtGalleryHovered(false)}
               style={{
-                ...F.display,
+                perspective: "2500px",
                 fontSize: `clamp(40px, ${d.artGallerySize}vw, 400px)`,
-                color: C.tinta, lineHeight: 0.88,
-                margin: 0, letterSpacing: "-0.025em",
-                textTransform: "uppercase", whiteSpace: "nowrap",
+                lineHeight: 1,
                 cursor: "default",
+                width: "fit-content",
+                clipPath: "inset(0 -800px)",
               }}
             >
-              ART GALLERY
-            </motion.h2>
+              <motion.div
+                animate={artGalleryHovered ? { rotateX: -90 } : { rotateX: 0 }}
+                transition={{ type: "tween", duration: 0.45, ease: [0.45, 0, 0.55, 1] }}
+                style={{
+                  position: "relative",
+                  transformStyle: "preserve-3d",
+                  transformOrigin: "50% 50% -0.5em",
+                }}
+              >
+                {/* Cara FRONT */}
+                <h2
+                  style={{
+                    ...F.display,
+                    fontSize: "1em",
+                    color: C.tinta,
+                    lineHeight: 1,
+                    letterSpacing: "-0.025em",
+                    margin: 0,
+                    textTransform: "uppercase",
+                    whiteSpace: "nowrap",
+                    position: "relative",
+                    backfaceVisibility: "hidden",
+                  }}
+                >
+                  ART GALLERY
+                </h2>
+
+                {/* Cara TOP */}
+                <h2
+                  style={{
+                    ...F.display,
+                    fontSize: "1em",
+                    color: C.tinta,
+                    lineHeight: 1,
+                    letterSpacing: "-0.025em",
+                    margin: 0,
+                    textTransform: "uppercase",
+                    whiteSpace: "nowrap",
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    transform: "translateY(-50%) translateZ(-0.5em) rotateX(90deg)",
+                    backfaceVisibility: "hidden",
+                  }}
+                >
+                  ART GALLERY
+                </h2>
+              </motion.div>
+            </div>
           </div>
 
           {/* Sello circular "HECHA PARA LOS DE VERDAD" */}
