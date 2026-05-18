@@ -267,8 +267,8 @@ export default function Home() {
 
       {/* ── WRAPPER LENIS ── */}
       <div ref={wrapperRef} style={{ width: "100vw", height: "100vh", overflow: "hidden", background: C.cream }}>
-        {/* ── CANVAS CONTINUO 270vw ── */}
-        <div ref={contentRef} style={{ position: "relative", width: "270vw", height: "100vh" }}>
+        {/* ── CANVAS CONTINUO 420vw ── */}
+        <div ref={contentRef} style={{ position: "relative", width: "420vw", height: "100vh" }}>
 
           {/* ═══════════════════════════════════════
               ZONA 1 — HERO (0 → 100vw)
@@ -518,7 +518,7 @@ export default function Home() {
             position: "absolute",
             left: `${d.marqueeLeft}vw`,
             top: `${d.marqueeTop}vh`,
-            width: `${270 - d.marqueeLeft}vw`,
+            width: `${420 - d.marqueeLeft}vw`,
             overflow: "hidden",
             zIndex: 6,
             borderTop: `1.5px solid ${C.tinta}`,
@@ -697,13 +697,13 @@ export default function Home() {
 
           {/* Fondo burgundy panel pedir */}
           <div style={{
-            position: "absolute", left: "150vw", top: 0,
+            position: "absolute", left: "300vw", top: 0,
             width: "120vw", height: "100vh",
             background: C.burgundy, zIndex: 1,
           }} />
 
           {/* PEDIR YA gigante */}
-          <Reveal style={{ position: "absolute", left: "158vw", top: "20vh", zIndex: 3, whiteSpace: "nowrap" }}>
+          <Reveal style={{ position: "absolute", left: "308vw", top: "20vh", zIndex: 3, whiteSpace: "nowrap" }}>
             <h2 id="pedir" style={{
               ...F.display,
               fontSize: "clamp(120px, 18vw, 320px)",
@@ -715,14 +715,14 @@ export default function Home() {
             </h2>
           </Reveal>
 
-          <Reveal delay={0.1} style={{ position: "absolute", left: "158vw", top: "12vh", zIndex: 5 }}>
+          <Reveal delay={0.1} style={{ position: "absolute", left: "308vw", top: "12vh", zIndex: 5 }}>
             <div style={{ ...F.mono, fontSize: "0.65rem", letterSpacing: "0.22em", color: C.mostaza, textTransform: "uppercase" }}>
               ↗ SIN EXCUSAS · ESTO ES SPRINGS
             </div>
           </Reveal>
 
           {/* Apps */}
-          <Reveal delay={0.2} style={{ position: "absolute", left: "160vw", bottom: "16vh", zIndex: 5, width: "26vw" }}>
+          <Reveal delay={0.2} style={{ position: "absolute", left: "310vw", bottom: "16vh", zIndex: 5, width: "26vw" }}>
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               <a href="#" style={{
                 ...F.display, fontSize: "1rem", letterSpacing: "0.12em",
@@ -754,7 +754,7 @@ export default function Home() {
           </Reveal>
 
           {/* Info derecha */}
-          <Reveal delay={0.3} style={{ position: "absolute", left: "194vw", bottom: "16vh", zIndex: 5, width: "30vw" }}>
+          <Reveal delay={0.3} style={{ position: "absolute", left: "344vw", bottom: "16vh", zIndex: 5, width: "30vw" }}>
             <div style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
               {[
                 { label: "Horario", val: "12PM — 9PM", sub: "Lunes a domingo" },
