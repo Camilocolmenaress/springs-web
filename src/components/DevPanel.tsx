@@ -17,6 +17,7 @@ const PROP_LABELS: Record<string, string> = {
   fontSize: "Tamaño", left: "Left", top: "Top", bottom: "Bottom",
   width: "Ancho", content: "Texto", fontFamily: "Fuente",
   color: "Color", src: "Imagen", animation: "Animación",
+  rotation: "Rotación",
 };
 
 interface Props {

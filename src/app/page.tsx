@@ -57,7 +57,11 @@ export default function Home() {
     potatoWidth:  (hero?.image?.props?.width as { value: number })?.value ?? 48,
     potatoLeft:   (hero?.image?.props?.left as { value: number })?.value ?? -4.2,
     potatoBottom: (hero?.image?.props?.bottom as { value: number })?.value ?? 195,
-    subtitleSize: (hero?.subtitle?.props?.fontSize as { value: number })?.value ?? 2.3,
+    subtitleText:     (hero?.subtitle?.props?.content as string) ?? "JACKETS DIFFERENT BY DEFAULT",
+    subtitleSize:     (hero?.subtitle?.props?.fontSize as { value: number })?.value ?? 3,
+    subtitleLeft:     (hero?.subtitle?.props?.left as { value: number })?.value ?? 42,
+    subtitleBottom:   (hero?.subtitle?.props?.bottom as { value: number })?.value ?? 30,
+    subtitleRotation: (hero?.subtitle?.props?.rotation as { value: number })?.value ?? -2,
     bodyCopyLeft:   (hero?.bodyCopy?.props?.left as { value: number })?.value ?? 38,
     bodyCopyBottom: (hero?.bodyCopy?.props?.bottom as { value: number })?.value ?? 12,
     bodyCopySize:   (hero?.bodyCopy?.props?.fontSize as { value: number })?.value ?? 3.2,
@@ -390,31 +394,50 @@ export default function Home() {
                 </h1>
               </motion.div>
             </div>
+          </div>
 
-            {/* Subtítulo — Playfair Display Italic + brush underline SVG */}
-            <div style={{ position: "relative", width: "fit-content", marginTop: 6 }}>
-              <div style={{
-                fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
-                fontStyle: "italic", fontWeight: 800,
-                fontSize: `clamp(18px, ${d.subtitleSize}vw, 42px)`,
-                color: C.burgundy, letterSpacing: "0.02em",
-                textTransform: "uppercase", lineHeight: 1,
-                paddingBottom: 10,
-              }}>
-                Jackets That Hit Different.
-              </div>
-              {/* Brush stroke underline */}
-              <svg viewBox="0 0 520 14" preserveAspectRatio="none"
-                style={{ position: "absolute", bottom: -2, left: 0, width: "100%", height: 14 }}
-              >
-                <path
-                  d="M4,10 C60,5 120,13 180,8 C240,3 300,12 360,7 C420,2 470,11 516,7"
-                  fill="none" stroke={C.burgundy} strokeWidth="3.5"
-                  strokeLinecap="round" strokeLinejoin="round"
-                  opacity={0.85}
-                />
-              </svg>
+          {/* Subtítulo handmade — tipografía marker + trazo sketchy.
+              Posición independiente controlable desde el DevPanel
+              (left, bottom, fontSize, rotation). */}
+          <div style={{
+            position: "absolute",
+            left: `${d.subtitleLeft}vw`,
+            bottom: `${d.subtitleBottom}vh`,
+            transform: `rotate(${d.subtitleRotation}deg)`,
+            transformOrigin: "left center",
+            zIndex: 5,
+            width: "fit-content",
+          }}>
+            <div style={{
+              fontFamily: "var(--font-marker), 'Permanent Marker', cursive",
+              fontSize: `clamp(20px, ${d.subtitleSize}vw, 96px)`,
+              color: C.burgundy,
+              lineHeight: 1,
+              letterSpacing: "0.02em",
+              textTransform: "uppercase",
+              whiteSpace: "nowrap",
+              paddingBottom: "0.35em",
+              position: "relative",
+            }}>
+              {d.subtitleText}
             </div>
+            {/* Trazo sketchy — 2 líneas hechas a mano */}
+            <svg viewBox="0 0 600 24" preserveAspectRatio="none"
+              style={{ position: "absolute", bottom: "-0.05em", left: 0, width: "100%", height: "0.3em", pointerEvents: "none" }}
+            >
+              <path
+                d="M6,8 C100,4 200,12 300,7 C400,3 500,11 595,8"
+                fill="none" stroke={C.burgundy} strokeWidth="3.2"
+                strokeLinecap="round" strokeLinejoin="round"
+                opacity={0.95}
+              />
+              <path
+                d="M28,19 C120,16 240,22 340,18 C440,14 520,21 572,19"
+                fill="none" stroke={C.burgundy} strokeWidth="2.2"
+                strokeLinecap="round" strokeLinejoin="round"
+                opacity={0.7}
+              />
+            </svg>
           </div>
 
           {/* Body copy */}
