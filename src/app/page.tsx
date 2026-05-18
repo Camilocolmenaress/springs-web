@@ -62,8 +62,9 @@ export default function Home() {
     subtitleLeft:     (hero?.subtitle?.props?.left as { value: number })?.value ?? 42,
     subtitleBottom:   (hero?.subtitle?.props?.bottom as { value: number })?.value ?? 30,
     subtitleRotation: (hero?.subtitle?.props?.rotation as { value: number })?.value ?? -2,
-    globeStickerLeft: (hero?.globeSticker?.props?.left as { value: number })?.value ?? 28,
-    globeStickerTop:  (hero?.globeSticker?.props?.top as { value: number })?.value ?? 28,
+    globeStickerLeft:   (hero?.globeSticker?.props?.left as { value: number })?.value ?? 28,
+    globeStickerTop:    (hero?.globeSticker?.props?.top as { value: number })?.value ?? 28,
+    globeTextOffset:    (hero?.globeSticker?.props?.textOffset as { value: number })?.value ?? 0,
     menuListSize:   (hero?.menuList?.props?.fontSize as { value: number })?.value ?? 0.65,
     menuListLeft:   (hero?.menuList?.props?.left as { value: number })?.value ?? 2,
     menuListBottom: (hero?.menuList?.props?.bottom as { value: number })?.value ?? 6,
@@ -520,7 +521,7 @@ export default function Home() {
               {/* Texto — círculo que empieza en las 7 del reloj y va por encima */}
               <path id="hot-circle" fill="none" d="M32,95 a46,46 0 0,1 46,-80 a46,46 0 0,1 -46,80"/>
               <text fontFamily="JetBrains Mono, monospace" fontSize="7.5" letterSpacing="1.0" fill={C.tinta} fillOpacity={0.8}>
-                <textPath href="#hot-circle">FOR THE MOST CHIMBA PEOPLE ✦ </textPath>
+                <textPath href="#hot-circle" startOffset={`${d.globeTextOffset}%`}>FOR THE MOST CHIMBA PEOPLE ✦ </textPath>
               </text>
             </svg>
           </DragSticker>
