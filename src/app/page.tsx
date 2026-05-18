@@ -266,16 +266,21 @@ export default function Home() {
 
           {/* SPRINGS — título masivo con efecto cubo */}
           <div style={{ position: "absolute", left: `${d.titleLeft}vw`, top: `${d.titleTop}vh`, zIndex: 3 }}>
-            {/* Contenedor cubo: overflow:hidden recorta la cara que sale */}
+            {/* Contenedor cubo: clipPath recorta solo top/bottom, no los lados */}
             <div
               onMouseEnter={() => setTitleHovered(true)}
               onMouseLeave={() => setTitleHovered(false)}
-              style={{ perspective: "1000px", overflow: "hidden", position: "relative", cursor: "default" }}
+              style={{
+                perspective: "1200px",
+                clipPath: "inset(0 -600px)",
+                position: "relative",
+                cursor: "default",
+              }}
             >
-              {/* Cara 1 — visible inicialmente, sale por abajo al hover */}
+              {/* Cara 1 — visible, rota 90° hacia abajo al hover */}
               <motion.h1
-                animate={titleHovered ? { y: "100%", rotateX: 45 } : { y: 0, rotateX: 0 }}
-                transition={{ type: "spring", stiffness: 240, damping: 28 }}
+                animate={titleHovered ? { rotateX: 90 } : { rotateX: 0 }}
+                transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
                 style={{
                   ...F.display,
                   fontSize: `clamp(120px, ${d.titleSize}vw, 340px)`,
@@ -290,10 +295,10 @@ export default function Home() {
                 <span style={{ position: "absolute", top: "30%", right: "22%", fontSize: "0.12em", color: C.tinta, opacity: 0.9 }}>✦</span>
               </motion.h1>
 
-              {/* Cara 2 — entra desde arriba al hover */}
+              {/* Cara 2 — empieza -90° (oculta arriba), rota hasta 0° al hover */}
               <motion.h1
-                animate={titleHovered ? { y: 0, rotateX: 0 } : { y: "-100%", rotateX: -45 }}
-                transition={{ type: "spring", stiffness: 240, damping: 28 }}
+                animate={titleHovered ? { rotateX: 0 } : { rotateX: -90 }}
+                transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
                 style={{
                   ...F.display,
                   fontSize: `clamp(120px, ${d.titleSize}vw, 340px)`,
