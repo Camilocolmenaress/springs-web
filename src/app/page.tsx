@@ -51,6 +51,8 @@ export default function Home() {
   const [artGalleryHovered, setArtGalleryHovered] = useState(false);
   const [jacketClubHovered, setJacketClubHovered] = useState(false);
   const jacketClubDragged = useRef(false);
+  const [miercolesDadosHovered, setMiercolesDadosHovered] = useState(false);
+  const miercolesDadosDragged = useRef(false);
   const router = useRouter();
 
   const hero = config.zones.hero?.elements;
@@ -660,13 +662,17 @@ export default function Home() {
 
           {/* 9. MIÉRCOLES DE DADOS */}
           <motion.img
-            src="/images/miercoles-dados-sticker.png"
+            src={miercolesDadosHovered ? "/images/miercoles-dados-sticker-hover.png" : "/images/miercoles-dados-sticker.png"}
             alt="Miércoles de Dados"
             drag
             dragTransition={{ power: 0.8, timeConstant: 350 }}
-            onDragStart={pauseScroll}
+            onPointerDown={() => { miercolesDadosDragged.current = false; }}
+            onDragStart={() => { miercolesDadosDragged.current = true; pauseScroll(); }}
             onDragEnd={resumeScroll}
             whileDrag={{ scale: 1.03 }}
+            onHoverStart={() => setMiercolesDadosHovered(true)}
+            onHoverEnd={() => setMiercolesDadosHovered(false)}
+            onTap={() => { if (!miercolesDadosDragged.current) router.push("/prueba-tu-suerte"); }}
             style={{
               position: "absolute",
               left: `${d.miercolesDadosLeft}vw`,
@@ -674,7 +680,7 @@ export default function Home() {
               width: `${d.miercolesDadosWidth}vw`,
               height: "auto",
               zIndex: 22,
-              cursor: "grab",
+              cursor: miercolesDadosHovered ? "pointer" : "grab",
               transform: `rotate(${d.miercolesDadosRotation}deg)`,
             }}
           />
