@@ -94,6 +94,9 @@ export default function Home() {
     artGalleryBottom: (hero?.artGallery?.props?.bottom as { value: number })?.value ?? 120,
     artGalleryLeft:   (hero?.artGallery?.props?.left as { value: number })?.value ?? 2,
     heroImage:    (hero?.image?.props?.src as { value: string })?.value ?? "/images/la-fija.png",
+    miercolesDadosWidth:  (hero?.miercolesDados?.props?.width as { value: number })?.value ?? 13,
+    miercolesDadosLeft:   (hero?.miercolesDados?.props?.left as { value: number })?.value ?? 3,
+    miercolesDadosBottom: (hero?.miercolesDados?.props?.bottom as { value: number })?.value ?? 10,
   };
 
   const pauseScroll = () => lenisRef.current?.stop();
@@ -561,8 +564,12 @@ export default function Home() {
             onDragEnd={resumeScroll}
             whileDrag={{ scale: 1.03 }}
             style={{
-              position: "absolute", left: "3vw", bottom: "10vh", zIndex: 22,
-              width: "13vw", height: "auto",
+              position: "absolute",
+              left: `${d.miercolesDadosLeft}vw`,
+              bottom: `${d.miercolesDadosBottom}vh`,
+              width: `${d.miercolesDadosWidth}vw`,
+              height: "auto",
+              zIndex: 22,
               cursor: "grab",
             }}
           />
