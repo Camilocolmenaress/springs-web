@@ -99,9 +99,9 @@
           "props": {
             "src":     { "value": "/images/barcode-springs.png", "folder": "/images" },
             "height":  { "value": 32,  "unit": "px",  "min": 16,  "max": 80,  "step": 2   },
-            "width":   { "value": 160, "unit": "px",  "min": 60,  "max": 400, "step": 4   },
-            "left":    { "value": 0,   "unit": "vw",  "min": -10, "max": 80,  "step": 0.5 },
-            "opacity": { "value": 75,  "unit": "%",   "min": 10,  "max": 100, "step": 5   }
+            "width":   { "value": 212,  "unit": "px",  "min": 60,  "max": 400, "step": 4   },
+            "left":    { "value": 13.5, "unit": "vw",  "min": -10, "max": 80,  "step": 0.5 },
+            "opacity": { "value": 100,  "unit": "%",   "min": 10,  "max": 100, "step": 5   }
           }
         },
         "miercolesDados": {
