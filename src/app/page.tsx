@@ -8,6 +8,7 @@ import DragSticker from "@/components/DragSticker";
 import DevPanel from "@/components/DevPanel";
 import { useDesignConfig } from "@/hooks/useDesignConfig";
 import MobileCanvas from "@/components/MobileCanvas";
+import SensitiveImage from "@/components/SensitiveImage";
 
 const DESKTOP_BREAKPOINT = 1024;
 
@@ -857,6 +858,25 @@ export default function Home() {
             }}
           />
 
+
+          {/* ─── SENSITIVE IMAGE — centro del hero ─── */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.5 }}
+            style={{
+              position: "absolute",
+              left: "36vw",
+              bottom: "18vh",
+              width: "22vw",
+              zIndex: 10,
+            }}
+          >
+            <SensitiveImage
+              src="/images/sensitive-hero.jpg"
+              style={{ width: "100%", height: "28vw" }}
+            />
+          </motion.div>
 
           {/* ─── BRAZO HERO — fixed, entra desde derecha al scrollear, ancla al quedar completo ─── */}
           <motion.img
