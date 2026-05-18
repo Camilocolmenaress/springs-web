@@ -299,8 +299,12 @@ export default function Home() {
           {/* Body copy */}
           <div style={{ position: "absolute", left: `${d.bodyCopyLeft}vw`, bottom: "12vh", zIndex: 5 }}>
             <div style={{ ...F.display, fontSize: "clamp(28px, 3.2vw, 56px)", color: C.tinta, letterSpacing: "-0.01em", lineHeight: 1.1 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.25em" }}>
-                Jacket <span style={{ fontSize: "0.65em", opacity: 0.7 }}>↗</span>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.3em" }}>
+                <svg width="0.7em" height="0.7em" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, marginBottom: "0.1em" }}>
+                  <line x1="20" y1="20" x2="3" y2="3" stroke={C.tinta} strokeWidth="3" strokeLinecap="round"/>
+                  <polyline points="3,10 3,3 10,3" fill="none" stroke={C.tinta} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Jacket
               </div>
               <div>La Fija</div>
             </div>
