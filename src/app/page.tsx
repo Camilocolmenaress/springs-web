@@ -227,7 +227,7 @@ export default function Home() {
     handArmWidth:  (hero?.handArm?.props?.width as { value: number })?.value ?? 48,
     handArmLeft:   (hero?.handArm?.props?.left as { value: number })?.value ?? 50,
     handArmBottom: (hero?.handArm?.props?.bottom as { value: number })?.value ?? 10,
-    sensitiveSrc:      (hero?.sensitiveImage?.props?.src as { value: string })?.value ?? "/images/sensitive-hero.jpg",
+    sensitiveSrc:      (hero?.sensitiveImage?.props?.src as { value: string })?.value ?? "/images/sensitive-hero.png",
     sensitiveLeft:     (hero?.sensitiveImage?.props?.left as { value: number })?.value ?? 36,
     sensitiveBottom:   (hero?.sensitiveImage?.props?.bottom as { value: number })?.value ?? 18,
     sensitiveSize:     (hero?.sensitiveImage?.props?.size as { value: number })?.value ?? 32,
@@ -876,7 +876,7 @@ export default function Home() {
               left: `${d.sensitiveLeft}vw`,
               bottom: `${d.sensitiveBottom}vh`,
               width: `${d.sensitiveSize}vw`,
-              aspectRatio: "900 / 748",
+              aspectRatio: "558 / 447",
               rotate: d.sensitiveRotation,
               zIndex: 10,
             }}

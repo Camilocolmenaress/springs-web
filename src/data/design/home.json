@@ -145,7 +145,7 @@
         "sensitiveImage": {
           "type": "image",
           "props": {
-            "src":      { "value": "/images/sensitive-hero.jpg", "folder": "/images" },
+            "src":      { "value": "/images/sensitive-hero.png", "folder": "/images" },
             "left":     { "value": 61,   "unit": "vw",  "min": 0,   "max": 90,  "step": 0.5 },
             "bottom":   { "value": 19.5, "unit": "vh",  "min": 0,   "max": 80,  "step": 0.5 },
             "size":     { "value": 18,   "unit": "vw",  "min": 10,  "max": 70,  "step": 0.5 },
