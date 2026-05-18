@@ -129,9 +129,12 @@ export default function Home() {
     return Math.max(0, Math.min(1, (s - vw * 0.32) / (vw * 0.18)));
   });
 
-  // Brazo: base (entrada) + delta scroll (parallax izquierda)
+  // Brazo: sigue el scroll 1:1 (queda fijo en viewport) hasta maxScroll, luego se libera
   const handArmBaseX = useMotionValue(1200);
-  const handArmScrollDelta = useTransform(scrollXMV, (s) => -(s * 0.35));
+  const handArmScrollDelta = useTransform(scrollXMV, (s) => {
+    const maxScroll = typeof window !== "undefined" ? window.innerWidth * 0.9 : 900;
+    return Math.min(s, maxScroll);
+  });
   const handArmX = useTransform(
     [handArmBaseX, handArmScrollDelta] as const,
     (values: number[]) => values[0] + values[1]
@@ -856,12 +859,15 @@ export default function Home() {
           />
 
 
-          {/* ─── BRAZO HERO — entra desde la derecha + parallax scroll izquierda ─── */}
+          {/* ─── BRAZO HERO — entrada spring + sticky scroll (sigue 1:1 hasta el límite) ─── */}
           <motion.img
             src={d.handArmSrc}
             alt=""
             drag={editMode}
             dragMomentum={false}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
             style={{
               position: "absolute",
               left: `${d.handArmLeft}vw`,
