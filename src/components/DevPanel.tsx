@@ -27,6 +27,7 @@ const PROP_LABELS: Record<string, string> = {
   globeSize: "Tamaño ⊕",
   height: "Alto",
   opacity: "Opacidad",
+  right: "Derecha",
 };
 
 interface Props {

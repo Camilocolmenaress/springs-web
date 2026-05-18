@@ -97,6 +97,9 @@ export default function Home() {
     artGalleryBottom: (hero?.artGallery?.props?.bottom as { value: number })?.value ?? 120,
     artGalleryLeft:   (hero?.artGallery?.props?.left as { value: number })?.value ?? 2,
     heroImage:    (hero?.image?.props?.src as { value: string })?.value ?? "/images/la-fija.png",
+    footerMenuSize:   (hero?.footerMenu?.props?.fontSize as { value: number })?.value ?? 0.78,
+    footerMenuBottom: (hero?.footerMenu?.props?.bottom as { value: number })?.value ?? 12,
+    footerMenuRight:  (hero?.footerMenu?.props?.right as { value: number })?.value ?? 32,
     barcodeHeight:  (hero?.barcode?.props?.height as { value: number })?.value ?? 32,
     barcodeWidth:   (hero?.barcode?.props?.width as { value: number })?.value ?? 160,
     barcodeLeft:    (hero?.barcode?.props?.left as { value: number })?.value ?? 0,
@@ -205,14 +208,18 @@ export default function Home() {
           alt="SPRINGS 2024"
           style={{ height: d.barcodeHeight, width: d.barcodeWidth, objectFit: "contain", marginLeft: `${d.barcodeLeft}vw`, opacity: d.barcodeOpacity / 100 }}
         />
-        <div style={{ display: "flex", gap: 28 }}>
+        <div style={{
+          display: "flex", gap: 28,
+          position: "fixed", bottom: d.footerMenuBottom, right: d.footerMenuRight,
+          zIndex: 101,
+        }}>
           {([
             { label: "CARTA",       href: "/menu"                },
             { label: "ART GALLERY", href: "#"                    },
             { label: "EL CLUB",     href: "/springs-jacket-club" },
             { label: "FAQS",        href: "#"                    },
           ] as { label: string; href: string }[]).map(item => (
-            <a key={item.label} href={item.href} style={{ ...F.mono, fontSize: "0.78rem", letterSpacing: "0.12em", color: C.tinta, textDecoration: "none", fontWeight: 600 }}>
+            <a key={item.label} href={item.href} style={{ ...F.mono, fontSize: `${d.footerMenuSize}rem`, letterSpacing: "0.12em", color: C.tinta, textDecoration: "none", fontWeight: 600 }}>
               {item.label}
             </a>
           ))}
