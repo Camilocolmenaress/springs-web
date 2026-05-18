@@ -167,7 +167,7 @@ export default function Home() {
         background: "transparent",
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          <a href="/" style={{ ...F.display, fontSize: "1.3rem", letterSpacing: "0.18em", color: C.tinta, textDecoration: "none" }}>SPRINGS</a>
+          <a href="/" style={{ ...F.display, fontSize: "1.3rem", letterSpacing: "-0.02em", color: C.burgundy, textDecoration: "none" }}>SPRINGS</a>
           <span style={{ color: C.tinta, fontSize: "0.85rem" }}>✦</span>
           <div style={{ ...F.mono, fontSize: "0.5rem", letterSpacing: "0.1em", color: C.tinta, lineHeight: 1.4, textTransform: "uppercase", opacity: 0.6 }}>
             BRITISH SOUL<br />FOR HUNGRY PEOPLE.
