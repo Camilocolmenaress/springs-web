@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Lenis from "lenis";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useMotionValue, useTransform, useSpring } from "framer-motion";
 import DragSticker from "@/components/DragSticker";
 import DevPanel from "@/components/DevPanel";
 import { useDesignConfig } from "@/hooks/useDesignConfig";
@@ -56,6 +56,78 @@ export default function Home() {
   const [miercolesDadosHovered, setMiercolesDadosHovered] = useState(false);
   const miercolesDadosDragged = useRef(false);
   const router = useRouter();
+
+  // ─── Scroll-driven packaging ───
+  const scrollXMV = useMotionValue(0);
+
+  const boxYBase = useTransform(scrollXMV, (s) => {
+    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
+    const vh = typeof window !== "undefined" ? window.innerHeight : 900;
+    const p = Math.max(0, Math.min(1, (s - vw * 0.10) / (vw * 0.32)));
+    const e = 1 - Math.pow(1 - p, 3);
+    return (1 - e) * -vh * 1.35;
+  });
+  const boxY = useSpring(boxYBase, { stiffness: 180, damping: 22, mass: 1.1 });
+  const boxRotate = useTransform(scrollXMV, (s) => {
+    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
+    const p = Math.max(0, Math.min(1, (s - vw * 0.10) / (vw * 0.32)));
+    const e = 1 - Math.pow(1 - p, 3);
+    return 25 - 32 * e; // 25° → -7°
+  });
+  const boxOpacity = useTransform(scrollXMV, (s) => {
+    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
+    return Math.max(0, Math.min(1, (s - vw * 0.06) / (vw * 0.15)));
+  });
+
+  const bagYBase = useTransform(scrollXMV, (s) => {
+    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
+    const vh = typeof window !== "undefined" ? window.innerHeight : 900;
+    const p = Math.max(0, Math.min(1, (s - vw * 0.52) / (vw * 0.32)));
+    const e = 1 - Math.pow(1 - p, 3);
+    return (1 - e) * -vh * 1.5;
+  });
+  const bagY = useSpring(bagYBase, { stiffness: 160, damping: 20, mass: 1.2 });
+  const bagRotate = useTransform(scrollXMV, (s) => {
+    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
+    const p = Math.max(0, Math.min(1, (s - vw * 0.52) / (vw * 0.32)));
+    const e = 1 - Math.pow(1 - p, 3);
+    return -22 + 27 * e; // -22° → 5°
+  });
+  const bagOpacity = useTransform(scrollXMV, (s) => {
+    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
+    return Math.max(0, Math.min(1, (s - vw * 0.48) / (vw * 0.15)));
+  });
+
+  const cupYBase = useTransform(scrollXMV, (s) => {
+    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
+    const vh = typeof window !== "undefined" ? window.innerHeight : 900;
+    const p = Math.max(0, Math.min(1, (s - vw * 0.95) / (vw * 0.32)));
+    const e = 1 - Math.pow(1 - p, 3);
+    return (1 - e) * -vh * 1.2;
+  });
+  const cupY = useSpring(cupYBase, { stiffness: 200, damping: 24, mass: 0.9 });
+  const cupRotate = useTransform(scrollXMV, (s) => {
+    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
+    const p = Math.max(0, Math.min(1, (s - vw * 0.95) / (vw * 0.32)));
+    const e = 1 - Math.pow(1 - p, 3);
+    return 18 - 21 * e; // 18° → -3°
+  });
+  const cupOpacity = useTransform(scrollXMV, (s) => {
+    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
+    return Math.max(0, Math.min(1, (s - vw * 0.91) / (vw * 0.15)));
+  });
+
+  const textXBase = useTransform(scrollXMV, (s) => {
+    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
+    const p = Math.max(0, Math.min(1, (s - vw * 0.35) / (vw * 0.38)));
+    const e = 1 - Math.pow(1 - p, 3);
+    return (1 - e) * vw * 0.32;
+  });
+  const textX = useSpring(textXBase, { stiffness: 140, damping: 22 });
+  const textOpacity = useTransform(scrollXMV, (s) => {
+    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
+    return Math.max(0, Math.min(1, (s - vw * 0.32) / (vw * 0.18)));
+  });
 
   const hero = config.zones.hero?.elements;
   const d = {
@@ -141,6 +213,10 @@ export default function Home() {
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     });
     lenisRef.current = lenis;
+
+    lenis.on("scroll", () => {
+      scrollXMV.set(lenis.scroll);
+    });
 
     let raf: number;
     const animate = (time: number) => {
@@ -739,6 +815,101 @@ export default function Home() {
             }}
           />
 
+
+          {/* ═══════════════════════════════════════
+              ZONA 1.5 — EMPAQUE (100 → 300vw)
+          ═══════════════════════════════════════ */}
+
+          {/* Texto fondo muy suave */}
+          <div style={{
+            position: "absolute", left: "106vw", top: "50%",
+            transform: "translateY(-50%)",
+            ...F.display, fontSize: "clamp(80px, 14vw, 260px)",
+            color: C.tinta, opacity: 0.035,
+            letterSpacing: "-0.02em", whiteSpace: "nowrap",
+            zIndex: 1, pointerEvents: "none", userSelect: "none",
+          }}>
+            SPRINGS
+          </div>
+
+          {/* Tagline — desliza desde la derecha */}
+          <motion.div
+            style={{
+              position: "absolute", left: "118vw", top: "13vh",
+              x: textX, opacity: textOpacity,
+              zIndex: 5, pointerEvents: "none",
+            }}
+          >
+            <div style={{
+              ...F.display,
+              fontSize: "clamp(40px, 6.5vw, 130px)",
+              color: C.burgundy, lineHeight: 0.88,
+              letterSpacing: "-0.02em", textTransform: "uppercase",
+            }}>
+              DIFFERENT<br />BY DEFAULT.
+            </div>
+            <div style={{
+              ...F.mono, fontSize: "0.55rem", letterSpacing: "0.22em",
+              color: C.tinta, opacity: 0.4, marginTop: "2em",
+              textTransform: "uppercase",
+            }}>
+              BUCARAMANGA · EST. 2025
+            </div>
+          </motion.div>
+
+          {/* Empaque — Caja */}
+          <motion.img
+            src="/images/packaging-box.png"
+            alt=""
+            style={{
+              position: "absolute",
+              left: "110vw", top: "22vh",
+              width: "22vw", height: "auto",
+              zIndex: 14,
+              y: boxY,
+              rotate: boxRotate,
+              opacity: boxOpacity,
+              transformOrigin: "center bottom",
+              pointerEvents: "none",
+              filter: "drop-shadow(0 28px 52px rgba(26,10,12,0.20))",
+            }}
+          />
+
+          {/* Empaque — Bolsa */}
+          <motion.img
+            src="/images/packaging-bag.png"
+            alt=""
+            style={{
+              position: "absolute",
+              left: "153vw", top: "17vh",
+              width: "26vw", height: "auto",
+              zIndex: 14,
+              y: bagY,
+              rotate: bagRotate,
+              opacity: bagOpacity,
+              transformOrigin: "center bottom",
+              pointerEvents: "none",
+              filter: "drop-shadow(0 32px 60px rgba(26,10,12,0.18))",
+            }}
+          />
+
+          {/* Empaque — Vaso */}
+          <motion.img
+            src="/images/packaging-cup.png"
+            alt=""
+            style={{
+              position: "absolute",
+              left: "196vw", top: "19vh",
+              width: "18vw", height: "auto",
+              zIndex: 14,
+              y: cupY,
+              rotate: cupRotate,
+              opacity: cupOpacity,
+              transformOrigin: "center bottom",
+              pointerEvents: "none",
+              filter: "drop-shadow(0 24px 44px rgba(26,10,12,0.22))",
+            }}
+          />
 
           {/* ═══════════════════════════════════════
               ZONA 2 — PEDIR YA (300 → 400vw)
