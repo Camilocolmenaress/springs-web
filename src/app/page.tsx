@@ -470,8 +470,7 @@ export default function Home() {
             src="/images/jacket-club-sticker.png"
             alt="SPRINGS Jacket Club"
             drag
-            dragMomentum={false}
-            dragElastic={0}
+            dragTransition={{ power: 0.8, timeConstant: 350 }}
             onDragStart={pauseScroll}
             onDragEnd={resumeScroll}
             whileDrag={{ scale: 1.03 }}
