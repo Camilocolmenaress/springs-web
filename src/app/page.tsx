@@ -217,6 +217,7 @@ export default function Home() {
           {([
             { label: "CARTA",       href: "/menu"                },
             { label: "ART GALLERY", href: "#"                    },
+            { label: "NOSOTROS",    href: "#"                    },
             { label: "EL CLUB",     href: "/springs-jacket-club" },
             { label: "FAQS",        href: "#"                    },
           ] as { label: string; href: string }[]).map(item => (
