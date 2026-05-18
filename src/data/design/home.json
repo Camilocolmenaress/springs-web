@@ -37,9 +37,9 @@
         "bodyCopy": {
           "type": "text",
           "props": {
-            "left":     { "value": 38,  "unit": "vw", "min": 20,  "max": 80,  "step": 1   },
-            "bottom":   { "value": 12,  "unit": "vh", "min": 0,   "max": 50,  "step": 1   },
-            "fontSize": { "value": 3.2, "unit": "vw", "min": 1.5, "max": 8,   "step": 0.1 }
+            "left":     { "value": 35,  "unit": "vw", "min": 20,  "max": 80,  "step": 1   },
+            "bottom":   { "value": 25,  "unit": "vh", "min": 0,   "max": 50,  "step": 1   },
+            "fontSize": { "value": 1.5, "unit": "vw", "min": 1.5, "max": 8,   "step": 0.1 }
           }
         }
       }
