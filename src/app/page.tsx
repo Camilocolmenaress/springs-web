@@ -321,27 +321,6 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Sello circular "HECHA PARA LOS DE VERDAD" */}
-          <svg
-            viewBox="0 0 130 130" width="120" height="120"
-            style={{ position: "absolute", left: "-1vw", top: "37vh", zIndex: 5 }}
-          >
-            <circle cx="65" cy="65" r="58" fill="none" stroke={C.tinta} strokeWidth="1.2" opacity={0.5} />
-            <circle cx="65" cy="65" r="50" fill="none" stroke={C.tinta} strokeWidth="0.5" opacity={0.25} />
-            <path id="stamp-path" fill="none" d="M65,65 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0" />
-            <text fontFamily="JetBrains Mono, monospace" fontSize="7.5" letterSpacing="2.5" fill={C.tinta} fillOpacity={0.7}>
-              <textPath href="#stamp-path">★ HECHA PARA LOS DE VERDAD ★ </textPath>
-            </text>
-            <text x="44" y="52" fontFamily="sans-serif" fontSize="8" fill={C.tinta} fillOpacity={0.5}>★</text>
-            <text x="76" y="52" fontFamily="sans-serif" fontSize="8" fill={C.tinta} fillOpacity={0.5}>★</text>
-            {/* Icono linterna */}
-            <rect x="60" y="86" width="10" height="4" fill={C.tinta} opacity={0.55}/>
-            <rect x="57" y="68" width="16" height="18" fill="none" stroke={C.tinta} strokeWidth="1.4" opacity={0.55}/>
-            <path d="M61 68 L61 62 Q65 57 69 62 L69 68" fill="none" stroke={C.tinta} strokeWidth="1.3" opacity={0.55}/>
-            <rect x="59" y="70" width="12" height="12" fill={C.mostaza} opacity={0.15}/>
-            <line x1="57" y1="68" x2="73" y2="68" stroke={C.tinta} strokeWidth="1.2" opacity={0.55}/>
-            <line x1="57" y1="86" x2="73" y2="86" stroke={C.tinta} strokeWidth="1.2" opacity={0.55}/>
-          </svg>
 
           {/* Globe + ubicación */}
           <div style={{ position: "absolute", left: "33vw", top: "36vh", zIndex: 5, display: "flex", alignItems: "flex-start", gap: 8 }}>
