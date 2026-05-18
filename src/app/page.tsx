@@ -267,8 +267,8 @@ export default function Home() {
 
       {/* ── WRAPPER LENIS ── */}
       <div ref={wrapperRef} style={{ width: "100vw", height: "100vh", overflow: "hidden", background: C.cream }}>
-        {/* ── CANVAS CONTINUO 500vw ── */}
-        <div ref={contentRef} style={{ position: "relative", width: "500vw", height: "100vh" }}>
+        {/* ── CANVAS CONTINUO 220vw ── */}
+        <div ref={contentRef} style={{ position: "relative", width: "220vw", height: "100vh" }}>
 
           {/* ═══════════════════════════════════════
               ZONA 1 — HERO (0 → 100vw)
@@ -518,7 +518,7 @@ export default function Home() {
             position: "absolute",
             left: `${d.marqueeLeft}vw`,
             top: `${d.marqueeTop}vh`,
-            width: `${380 - d.marqueeLeft}vw`,
+            width: `${220 - d.marqueeLeft}vw`,
             overflow: "hidden",
             zIndex: 6,
             borderTop: `1.5px solid ${C.tinta}`,
@@ -692,290 +692,18 @@ export default function Home() {
 
 
           {/* ═══════════════════════════════════════
-              ZONA 2 — JACKETS GRID (100 → 220vw)
-          ═══════════════════════════════════════ */}
-
-          {/* Foto editorial 1 — modelo con gafas */}
-          <Reveal style={{ position: "absolute", left: "108vw", top: "22vh", zIndex: 4 }}>
-            <div style={{
-              width: "20vw", height: "60vh",
-              background: `linear-gradient(160deg, ${C.burgundy} 0%, #4A0E12 100%)`,
-              display: "flex", alignItems: "flex-end", padding: "16px",
-            }}>
-              <div>
-                <div style={{ ...F.display, fontSize: "0.9rem", color: C.cream, letterSpacing: "0.08em" }}>LA FIJA</div>
-                <div style={{ ...F.mono, fontSize: "0.7rem", color: C.mostaza, fontWeight: 600 }}>32,900</div>
-              </div>
-            </div>
-          </Reveal>
-
-          {/* Foto editorial 2 — packshot */}
-          <Reveal delay={0.1} style={{ position: "absolute", left: "131vw", top: "18vh", zIndex: 4 }}>
-            <div style={{
-              width: "16vw", height: "52vh",
-              background: `linear-gradient(180deg, #3a1818 0%, ${C.tinta} 100%)`,
-              border: `2px solid ${C.cream}`,
-              display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "16px",
-              position: "relative",
-            }}>
-              <div style={{
-                ...F.display, fontSize: "clamp(28px, 3vw, 48px)",
-                color: C.cream, letterSpacing: "0.02em",
-                textAlign: "center", lineHeight: 0.95,
-              }}>
-                ESTO<br />ES<br />SPRINGS
-              </div>
-              <div style={{ position: "absolute", bottom: "14px", left: "16px", ...F.mono, fontSize: "0.55rem", letterSpacing: "0.15em", color: C.mostaza }}>LA PESADA</div>
-              <div style={{ position: "absolute", bottom: "14px", right: "16px", ...F.mono, fontSize: "0.6rem", color: C.mostaza, fontWeight: 600 }}>35,900</div>
-            </div>
-          </Reveal>
-
-          {/* Foto editorial 3 — packaging */}
-          <Reveal delay={0.2} style={{ position: "absolute", left: "150vw", top: "26vh", zIndex: 4 }}>
-            <div style={{
-              width: "18vw", height: "56vh",
-              background: C.tinta,
-              backgroundImage: `repeating-linear-gradient(45deg, ${C.burgundy} 0px, ${C.burgundy} 24px, ${C.tinta} 24px, ${C.tinta} 48px)`,
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}>
-              <div style={{ ...F.display, fontSize: "2.4rem", color: C.cream, letterSpacing: "0.04em", transform: "rotate(-90deg)", whiteSpace: "nowrap" }}>
-                SPRINGS
-              </div>
-            </div>
-          </Reveal>
-
-          {/* Sticker holográfico MUY RICA — draggable */}
-          <DragSticker
-            rotate={-4}
-            idleRotateRange={4}
-            idleDuration={5}
-            onDragStart={pauseScroll}
-            onDragEnd={resumeScroll}
-            style={{
-              position: "absolute", left: "127vw", top: "15vh", zIndex: 25,
-              width: "60px", height: "60px",
-              background: "linear-gradient(135deg, #c0e0ff 0%, #ffd0e0 50%, #e0e0ff 100%)",
-              border: `1.5px solid ${C.tinta}`,
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}
-          >
-            <span style={{ ...F.mono, fontSize: "0.5rem", letterSpacing: "0.1em", color: C.tinta, textAlign: "center" }}>SPRINGS<br />MUY RICA</span>
-          </DragSticker>
-
-          {/* Sticker DROP — papa de temporada — draggable */}
-          <DragSticker
-            rotate={9}
-            idleRotateRange={3}
-            idleDuration={5.5}
-            onDragStart={pauseScroll}
-            onDragEnd={resumeScroll}
-            style={{
-              position: "absolute", left: "164vw", top: "10vh", zIndex: 25,
-              background: C.tinta, color: C.mostaza,
-              padding: "10px 18px",
-              border: `2px solid ${C.mostaza}`,
-              textAlign: "center",
-            }}
-          >
-            <div style={{ ...F.mono, fontSize: "0.5rem", letterSpacing: "0.22em", opacity: 0.7, marginBottom: "2px" }}>W25 · DROP</div>
-            <div style={{ ...F.display, fontSize: "1.6rem", letterSpacing: "0.04em", color: C.cream, lineHeight: 1 }}>SOLO 20</div>
-            <div style={{ ...F.mono, fontSize: "0.55rem", letterSpacing: "0.14em", marginTop: "4px" }}>POR NOCHE</div>
-          </DragSticker>
-
-          {/* "TE DAMOS LO TUYO" continuación */}
-          <Reveal delay={0.1} style={{ position: "absolute", left: "172vw", top: "20vh", zIndex: 5 }}>
-            <div style={{ ...F.sans, fontSize: "0.78rem", color: C.tinta, fontStyle: "italic" }}>TE DAMOS LO TUYO</div>
-            <div style={{ ...F.mono, fontSize: "0.62rem", letterSpacing: "0.1em", color: C.tinta, opacity: 0.5, marginTop: "3px" }}>@SPRINGS.COL</div>
-          </Reveal>
-
-          {/* QR + Daily Dose */}
-          <Reveal style={{ position: "absolute", left: "172vw", top: "32vh", zIndex: 5 }}>
-            <div style={{ ...F.mono, fontSize: "0.7rem", letterSpacing: "0.1em", color: C.tinta, textTransform: "uppercase", marginBottom: "8px", maxWidth: "120px", lineHeight: 1.3 }}>
-              DAILY DOSE<br />OF SPRINGS HERE
-            </div>
-            <div style={{
-              width: "84px", height: "84px",
-              background: C.tinta,
-              backgroundImage: `repeating-linear-gradient(0deg, transparent 0px, transparent 4px, ${C.cream} 4px, ${C.cream} 6px), repeating-linear-gradient(90deg, transparent 0px, transparent 4px, ${C.cream} 4px, ${C.cream} 6px)`,
-              border: `2px solid ${C.tinta}`,
-            }} />
-            <div style={{ marginTop: "10px", display: "flex", gap: "10px", alignItems: "center" }}>
-              <span style={{ ...F.display, fontSize: "1rem", color: C.tinta }}>↗</span>
-              <span style={{ width: "16px", height: "16px", border: `1.5px solid ${C.tinta}`, borderRadius: "50%" }} />
-            </div>
-          </Reveal>
-
-          {/* Big black rectangle (como Vicio) */}
-          <div style={{
-            position: "absolute", left: "192vw", top: "12vh", zIndex: 3,
-            width: "16vw", height: "32vh",
-            background: C.tinta,
-          }} />
-
-          {/* Lista de Jackets en columna a la derecha */}
-          <Reveal delay={0.3} style={{ position: "absolute", left: "108vw", bottom: "10vh", zIndex: 6, maxWidth: "90vw" }}>
-            <div style={{ ...F.mono, fontSize: "0.62rem", letterSpacing: "0.08em", color: C.tinta, lineHeight: 1.8, textTransform: "uppercase", opacity: 0.55 }}>
-              LA FIJA · POLLO DESMECHADO · 32,900 / LA PESADA · CARNE DESMECHADA · 35,900 /<br />
-              LA BRAVA · CHORIZO SANTANDEREANO · 34,900 / LA SIMPLE · CARNE MOLIDA · 28,900 /<br />
-              LA HONESTA · SIN CARNE · 28,900 /
-            </div>
-          </Reveal>
-
-
-          {/* ═══════════════════════════════════════
-              ZONA 3 — ABOUT / LOADED (220 → 380vw)
-          ═══════════════════════════════════════ */}
-
-          {/* Logo 3D placeholder — chrome SPRINGS */}
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.8 }}
-            style={{
-              position: "absolute", left: "225vw", top: "18vh", zIndex: 4,
-              width: "26vw", height: "32vh",
-              background: `radial-gradient(ellipse at 30% 30%, #e8b8b8 0%, ${C.burgundy} 40%, ${C.tinta} 100%)`,
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}
-          >
-            <div style={{
-              ...F.display, fontSize: "clamp(60px, 7vw, 130px)",
-              color: C.cream, letterSpacing: "0.02em",
-              filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.4))",
-              fontStyle: "italic",
-            }}>
-              Springs
-            </div>
-            <span style={{ position: "absolute", top: "12%", right: "12%", color: C.cream, fontSize: "1.2rem", opacity: 0.8 }}>✦</span>
-          </motion.div>
-
-          {/* Foto packaging trio */}
-          <Reveal style={{ position: "absolute", left: "256vw", top: "30vh", zIndex: 5 }}>
-            <div style={{
-              width: "18vw", height: "44vh",
-              background: `repeating-linear-gradient(45deg, ${C.burgundy} 0, ${C.burgundy} 18px, ${C.tinta} 18px, ${C.tinta} 36px)`,
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}>
-              <div style={{ ...F.display, fontSize: "2rem", color: C.cream, letterSpacing: "0.04em" }}>SPRINGS</div>
-            </div>
-          </Reveal>
-
-          {/* Sneakers / brand artifact */}
-          <Reveal delay={0.1} style={{ position: "absolute", left: "276vw", top: "12vh", zIndex: 4 }}>
-            <div style={{
-              width: "14vw", height: "36vh",
-              background: `linear-gradient(180deg, ${C.tinta} 0%, #2a1010 100%)`,
-              display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "16px",
-            }}>
-              <div style={{ ...F.mono, fontSize: "0.55rem", letterSpacing: "0.15em", color: C.cream, opacity: 0.5, textTransform: "uppercase", marginBottom: "4px" }}>
-                ▮▮▮▮ ▮▮ ▮▮▮ ▮▮▮▮
-              </div>
-              <div style={{ ...F.sans, fontSize: "0.7rem", color: C.cream, fontStyle: "italic" }}>
-                Y BUCARAMANGA<br />NOS DIÓ LO NUESTRO
-              </div>
-            </div>
-          </Reveal>
-
-          {/* FAQS rotada */}
-          <div style={{
-            position: "absolute", left: "292vw", top: "16vh", zIndex: 5,
-            transform: "rotate(-90deg)", transformOrigin: "left top",
-          }}>
-            <div style={{ ...F.display, fontSize: "clamp(40px, 5vw, 80px)", color: C.tinta, letterSpacing: "0.04em", display: "flex", alignItems: "center", gap: "12px" }}>
-              <span style={{ ...F.mono, fontSize: "0.5em", opacity: 0.4 }}>↗</span> FAQS
-            </div>
-          </div>
-
-          {/* Foto especial — La Brava */}
-          <Reveal delay={0.2} style={{ position: "absolute", left: "298vw", top: "12vh", zIndex: 4 }}>
-            <div style={{
-              width: "14vw", height: "32vh",
-              backgroundImage: "url('/images/jacket-placeholder.png')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              display: "flex", alignItems: "center", justifyContent: "center", padding: "16px",
-            }}>
-              <div style={{ ...F.display, fontSize: "1.6rem", color: C.cream, letterSpacing: "0.04em", textAlign: "center" }}>LA<br />BRAVA</div>
-            </div>
-          </Reveal>
-
-          {/* ABOUT US gigante */}
-          <Reveal delay={0.2} style={{ position: "absolute", left: "236vw", bottom: "20vh", zIndex: 3, whiteSpace: "nowrap" }}>
-            <h2 style={{
-              ...F.display,
-              fontSize: "clamp(100px, 16vw, 280px)",
-              color: C.tinta, lineHeight: 0.85,
-              letterSpacing: "-0.005em", margin: 0,
-              textTransform: "uppercase",
-            }}>
-              ABOUT US
-            </h2>
-          </Reveal>
-
-          {/* Banner SPRINGS JACKET CLUB */}
-          <Reveal delay={0.3} style={{ position: "absolute", left: "234vw", bottom: "10vh", zIndex: 4 }}>
-            <div style={{
-              display: "flex", alignItems: "stretch",
-              background: C.cream,
-              border: `2px solid ${C.tinta}`,
-              transform: "skewX(-4deg)",
-            }}>
-              <div style={{ background: C.burgundy, padding: "10px 18px", display: "flex", alignItems: "center" }}>
-                <span style={{ ...F.display, fontSize: "1rem", color: C.cream, letterSpacing: "0.1em" }}>SPRINGS™ — JACKET CLUB —</span>
-              </div>
-              <div style={{ padding: "10px 18px", display: "flex", alignItems: "center" }}>
-                <span style={{ ...F.mono, fontSize: "0.6rem", letterSpacing: "0.15em", color: C.tinta, textTransform: "uppercase" }}>
-                  NO BULLSHIT JACKETS. JUST INGREDIENTES SANTANDEREANOS Y MÁS CALITÉ.
-                </span>
-              </div>
-              <div style={{ background: C.burgundy, padding: "10px 18px", display: "flex", alignItems: "center" }}>
-                <span style={{ ...F.display, fontSize: "1rem", color: C.cream, letterSpacing: "0.1em" }}>— ESTO ES SPRINGS —</span>
-              </div>
-            </div>
-          </Reveal>
-
-          {/* "FAST, GOOD & LOUD" */}
-          <div style={{ position: "absolute", left: "266vw", bottom: "4vh", zIndex: 5 }}>
-            <div style={{ ...F.mono, fontSize: "0.7rem", letterSpacing: "0.15em", color: C.tinta, textTransform: "uppercase", lineHeight: 1.4 }}>
-              FAST, GOOD &amp; LOUD<br />ESTO ES SPRINGS.
-            </div>
-          </div>
-
-          {/* Burger detail bleeding al final */}
-          <div style={{
-            position: "absolute", left: "315vw", bottom: "12vh", zIndex: 4,
-            width: "28vw", height: "64vh",
-            backgroundImage: "url('/images/jacket-placeholder.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            clipPath: "ellipse(48% 50% at 50% 50%)",
-          }} />
-
-          <Reveal delay={0.2} style={{ position: "absolute", left: "318vw", top: "16vh", zIndex: 5 }}>
-            <div style={{ ...F.mono, fontSize: "0.62rem", letterSpacing: "0.15em", color: C.tinta, textTransform: "uppercase" }}>BUCARAMANGA · BGA</div>
-            <div style={{ ...F.display, fontSize: "clamp(40px, 5vw, 96px)", color: C.tinta, marginTop: "12px", lineHeight: 0.9, textTransform: "uppercase" }}>
-              SOLO<br />DELIVERY.
-            </div>
-            <div style={{ ...F.sans, fontSize: "0.85rem", fontStyle: "italic", color: C.tinta, opacity: 0.5, marginTop: "12px", maxWidth: "240px" }}>
-              Dark kitchen. Sin local físico.<br />La papa va a vos, no al revés.
-            </div>
-          </Reveal>
-
-
-          {/* ═══════════════════════════════════════
-              ZONA 4 — PEDIR YA (380 → 500vw)
+              ZONA 2 — PEDIR YA (100 → 220vw)
           ═══════════════════════════════════════ */}
 
           {/* Fondo burgundy panel pedir */}
           <div style={{
-            position: "absolute", left: "380vw", top: 0,
+            position: "absolute", left: "100vw", top: 0,
             width: "120vw", height: "100vh",
             background: C.burgundy, zIndex: 1,
           }} />
 
           {/* PEDIR YA gigante */}
-          <Reveal style={{ position: "absolute", left: "388vw", top: "20vh", zIndex: 3, whiteSpace: "nowrap" }}>
+          <Reveal style={{ position: "absolute", left: "108vw", top: "20vh", zIndex: 3, whiteSpace: "nowrap" }}>
             <h2 id="pedir" style={{
               ...F.display,
               fontSize: "clamp(120px, 18vw, 320px)",
@@ -987,14 +715,14 @@ export default function Home() {
             </h2>
           </Reveal>
 
-          <Reveal delay={0.1} style={{ position: "absolute", left: "388vw", top: "12vh", zIndex: 5 }}>
+          <Reveal delay={0.1} style={{ position: "absolute", left: "108vw", top: "12vh", zIndex: 5 }}>
             <div style={{ ...F.mono, fontSize: "0.65rem", letterSpacing: "0.22em", color: C.mostaza, textTransform: "uppercase" }}>
               ↗ SIN EXCUSAS · ESTO ES SPRINGS
             </div>
           </Reveal>
 
           {/* Apps */}
-          <Reveal delay={0.2} style={{ position: "absolute", left: "390vw", bottom: "16vh", zIndex: 5, width: "26vw" }}>
+          <Reveal delay={0.2} style={{ position: "absolute", left: "110vw", bottom: "16vh", zIndex: 5, width: "26vw" }}>
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               <a href="#" style={{
                 ...F.display, fontSize: "1rem", letterSpacing: "0.12em",
@@ -1026,7 +754,7 @@ export default function Home() {
           </Reveal>
 
           {/* Info derecha */}
-          <Reveal delay={0.3} style={{ position: "absolute", left: "424vw", bottom: "16vh", zIndex: 5, width: "30vw" }}>
+          <Reveal delay={0.3} style={{ position: "absolute", left: "144vw", bottom: "16vh", zIndex: 5, width: "30vw" }}>
             <div style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
               {[
                 { label: "Horario", val: "12PM — 9PM", sub: "Lunes a domingo" },
