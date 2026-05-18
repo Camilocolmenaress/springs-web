@@ -50,6 +50,7 @@ export default function Home() {
   const [titleHovered, setTitleHovered] = useState(false);
   const [artGalleryHovered, setArtGalleryHovered] = useState(false);
   const [jacketClubHovered, setJacketClubHovered] = useState(false);
+  const jacketClubDragged = useRef(false);
   const router = useRouter();
 
   const hero = config.zones.hero?.elements;
@@ -593,12 +594,13 @@ export default function Home() {
             alt="SPRINGS Jacket Club"
             drag
             dragTransition={{ power: 0.8, timeConstant: 350 }}
-            onDragStart={pauseScroll}
+            onPointerDown={() => { jacketClubDragged.current = false; }}
+            onDragStart={() => { jacketClubDragged.current = true; pauseScroll(); }}
             onDragEnd={resumeScroll}
             whileDrag={{ scale: 1.03 }}
             onHoverStart={() => setJacketClubHovered(true)}
             onHoverEnd={() => setJacketClubHovered(false)}
-            onTap={() => router.push("/springs-jacket-club")}
+            onTap={() => { if (!jacketClubDragged.current) router.push("/springs-jacket-club"); }}
             style={{
               position: "absolute",
               left: `${d.jacketClubLeft}vw`,
