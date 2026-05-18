@@ -526,8 +526,8 @@ export default function Home() {
             >
               {[0, 1].map(copy => (
                 <span key={copy} style={{ display: "inline-flex", alignItems: "center" }}>
-                  {Array.from({ length: 6 }).map((_, i) => (
-                    <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: "0.5em" }}>
+                  {Array.from({ length: 20 }).map((_, i) => (
+                    <span key={i} style={{ display: "inline-flex", alignItems: "center" }}>
                       {/* Sólido */}
                       <span style={{
                         ...F.display,
@@ -535,8 +535,16 @@ export default function Home() {
                         color: C.burgundy,
                         letterSpacing: "0.04em",
                         lineHeight: 1,
+                        marginRight: "0.5em",
                       }}>SPRINGS</span>
-                      <span style={{ ...F.display, fontSize: `clamp(14px, ${d.marqueeSize * 0.55}vw, 36px)`, color: C.burgundy, opacity: 0.5, margin: "0 0.4em" }}>&lt;</span>
+                      <span style={{
+                        ...F.display,
+                        fontSize: `clamp(16px, ${d.marqueeSize * 0.8}vw, 52px)`,
+                        color: C.burgundy,
+                        WebkitTextStroke: `2px ${C.burgundy}`,
+                        margin: "0 0.5em",
+                        lineHeight: 1,
+                      }}>&lt;</span>
                       {/* Outline */}
                       <span style={{
                         ...F.display,
@@ -545,8 +553,16 @@ export default function Home() {
                         WebkitTextStroke: `1.5px ${C.burgundy}`,
                         letterSpacing: "0.04em",
                         lineHeight: 1,
+                        marginRight: "0.5em",
                       }}>SPRINGS</span>
-                      <span style={{ ...F.display, fontSize: `clamp(14px, ${d.marqueeSize * 0.55}vw, 36px)`, color: C.burgundy, opacity: 0.5, margin: "0 0.4em" }}>&lt;</span>
+                      <span style={{
+                        ...F.display,
+                        fontSize: `clamp(16px, ${d.marqueeSize * 0.8}vw, 52px)`,
+                        color: C.burgundy,
+                        WebkitTextStroke: `2px ${C.burgundy}`,
+                        margin: "0 0.5em",
+                        lineHeight: 1,
+                      }}>&lt;</span>
                     </span>
                   ))}
                 </span>
