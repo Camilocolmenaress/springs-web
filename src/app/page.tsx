@@ -129,6 +129,19 @@ export default function Home() {
     return Math.max(0, Math.min(1, (s - vw * 0.32) / (vw * 0.18)));
   });
 
+  // Brazo hero — entra desde la derecha al hacer scroll
+  const handArmXBase = useTransform(scrollXMV, (s) => {
+    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
+    const p = Math.max(0, Math.min(1, (s - vw * 0.03) / (vw * 0.20)));
+    const e = 1 - Math.pow(1 - p, 3);
+    return (1 - e) * vw * 0.95;
+  });
+  const handArmX = useSpring(handArmXBase, { stiffness: 110, damping: 20, mass: 1.5 });
+  const handArmOpacity = useTransform(scrollXMV, (s) => {
+    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
+    return Math.max(0, Math.min(1, (s - vw * 0.02) / (vw * 0.12)));
+  });
+
   const hero = config.zones.hero?.elements;
   const d = {
     titleSize:    (hero?.title?.props?.fontSize as { value: number })?.value ?? 19.5,
@@ -191,6 +204,10 @@ export default function Home() {
     miercolesDadosLeft:     (hero?.miercolesDados?.props?.left as { value: number })?.value ?? 3,
     miercolesDadosBottom:   (hero?.miercolesDados?.props?.bottom as { value: number })?.value ?? 10,
     miercolesDadosRotation: (hero?.miercolesDados?.props?.rotation as { value: number })?.value ?? -14,
+    handArmSrc:    (hero?.handArm?.props?.src as { value: string })?.value ?? "/images/hero-arm.png",
+    handArmWidth:  (hero?.handArm?.props?.width as { value: number })?.value ?? 48,
+    handArmLeft:   (hero?.handArm?.props?.left as { value: number })?.value ?? 50,
+    handArmBottom: (hero?.handArm?.props?.bottom as { value: number })?.value ?? 10,
   };
 
   const pauseScroll = () => lenisRef.current?.stop();
@@ -815,6 +832,28 @@ export default function Home() {
             }}
           />
 
+
+          {/* ─── BRAZO HERO — entra desde la derecha con el scroll ─── */}
+          <motion.img
+            src={d.handArmSrc}
+            alt=""
+            drag={editMode}
+            dragMomentum={false}
+            style={{
+              position: "absolute",
+              left: `${d.handArmLeft}vw`,
+              bottom: `${d.handArmBottom}vh`,
+              width: `${d.handArmWidth}vw`,
+              height: "auto",
+              zIndex: 8,
+              x: editMode ? 0 : handArmX,
+              opacity: editMode ? 1 : handArmOpacity,
+              pointerEvents: editMode ? "auto" : "none",
+              cursor: editMode ? "grab" : "default",
+              outline: editMode ? "2px dashed rgba(197,135,31,0.6)" : "none",
+              filter: "drop-shadow(0 20px 48px rgba(26,10,12,0.14))",
+            }}
+          />
 
           {/* ═══════════════════════════════════════
               ZONA 1.5 — EMPAQUE (100 → 300vw)

@@ -132,6 +132,15 @@
             "bottom":   { "value": 0,    "unit": "vh",  "min": 0,   "max": 80,  "step": 0.5 },
             "rotation": { "value": 6.5,  "unit": "deg", "min": -45, "max": 45,  "step": 0.5 }
           }
+        },
+        "handArm": {
+          "type": "image",
+          "props": {
+            "src":    { "value": "/images/hero-arm.png", "folder": "/images" },
+            "width":  { "value": 48, "unit": "vw", "min": 20, "max": 90, "step": 1   },
+            "left":   { "value": 50, "unit": "vw", "min": -20,"max": 95, "step": 0.5 },
+            "bottom": { "value": 10, "unit": "vh", "min": -20,"max": 80, "step": 1   }
+          }
         }
       }
     }
