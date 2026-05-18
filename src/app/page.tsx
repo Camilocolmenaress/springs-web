@@ -69,6 +69,13 @@ export default function Home() {
     globeTextRadius:    (hero?.globeSticker?.props?.textRadius as { value: number })?.value ?? 46,
     globeFontSize:      (hero?.globeSticker?.props?.fontSize as { value: number })?.value ?? 7.5,
     globeRadius:        (hero?.globeSticker?.props?.globeRadius as { value: number })?.value ?? 22,
+    locationLeft:       (hero?.location?.props?.left as { value: number })?.value ?? 33,
+    locationTop:        (hero?.location?.props?.top as { value: number })?.value ?? 36,
+    locationFontSize:   (hero?.location?.props?.fontSize as { value: number })?.value ?? 0.54,
+    locationLineHeight: (hero?.location?.props?.lineHeight as { value: number })?.value ?? 1.6,
+    locationGap:        (hero?.location?.props?.gap as { value: number })?.value ?? 8,
+    locationGlobeOffY:  (hero?.location?.props?.globeOffsetY as { value: number })?.value ?? 0,
+    locationGlobeSize:  (hero?.location?.props?.globeSize as { value: number })?.value ?? 0.9,
     menuListSize:   (hero?.menuList?.props?.fontSize as { value: number })?.value ?? 0.65,
     menuListLeft:   (hero?.menuList?.props?.left as { value: number })?.value ?? 2,
     menuListBottom: (hero?.menuList?.props?.bottom as { value: number })?.value ?? 6,
@@ -330,10 +337,10 @@ export default function Home() {
 
 
           {/* Globe + ubicación */}
-          <div style={{ position: "absolute", left: "33vw", top: "36vh", zIndex: 5, display: "flex", alignItems: "flex-start", gap: 8 }}>
-            <span style={{ ...F.mono, fontSize: "0.9rem", color: C.tinta, opacity: 0.55, lineHeight: 1 }}>⊕</span>
-            <div style={{ ...F.mono, fontSize: "0.54rem", letterSpacing: "0.18em", color: C.tinta, lineHeight: 1.6, textTransform: "uppercase", opacity: 0.7 }}>
-              BGA – COLOMBIA<br />EST. 2024
+          <div style={{ position: "absolute", left: `${d.locationLeft}vw`, top: `${d.locationTop}vh`, zIndex: 5, display: "flex", alignItems: "flex-start", gap: d.locationGap }}>
+            <span style={{ ...F.mono, fontSize: `${d.locationGlobeSize}rem`, color: C.tinta, opacity: 0.55, lineHeight: 1, marginTop: d.locationGlobeOffY }}>⊕</span>
+            <div style={{ ...F.mono, fontSize: `${d.locationFontSize}rem`, letterSpacing: "0.18em", color: C.tinta, lineHeight: d.locationLineHeight, textTransform: "uppercase", opacity: 0.7 }}>
+              Barbosa STDR – COLOMBIA<br />EST. 2025
             </div>
           </div>
 

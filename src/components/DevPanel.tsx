@@ -21,6 +21,10 @@ const PROP_LABELS: Record<string, string> = {
   textOffset: "Posición texto",
   textRadius: "Distancia al globo",
   globeRadius: "Tamaño globo",
+  lineHeight: "Espacio líneas",
+  gap: "Separación ⊕",
+  globeOffsetY: "Altura ⊕",
+  globeSize: "Tamaño ⊕",
 };
 
 interface Props {

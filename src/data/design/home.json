@@ -46,6 +46,18 @@
             "globeRadius": { "value": 33,  "unit": "px", "min": 8,  "max": 40,  "step": 1   }
           }
         },
+        "location": {
+          "type": "text",
+          "props": {
+            "left":         { "value": 33,   "unit": "vw",  "min": 0,   "max": 90, "step": 0.5  },
+            "top":          { "value": 36,   "unit": "vh",  "min": 0,   "max": 90, "step": 0.5  },
+            "fontSize":     { "value": 0.54, "unit": "rem", "min": 0.2, "max": 2,  "step": 0.02 },
+            "lineHeight":   { "value": 1.6,  "unit": "px",  "min": 1,   "max": 4,  "step": 0.1  },
+            "gap":          { "value": 8,    "unit": "px",  "min": 0,   "max": 40, "step": 1    },
+            "globeOffsetY": { "value": 0,    "unit": "px",  "min": -10, "max": 20, "step": 1    },
+            "globeSize":    { "value": 0.9,  "unit": "rem", "min": 0.3, "max": 3,  "step": 0.1  }
+          }
+        },
         "menuList": {
           "type": "text",
           "props": {
