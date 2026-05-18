@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import Lenis from "lenis";
 import { motion, useInView } from "framer-motion";
 import DragSticker from "@/components/DragSticker";
@@ -48,6 +49,8 @@ export default function Home() {
   const lenisRef = useRef<Lenis | null>(null);
   const [titleHovered, setTitleHovered] = useState(false);
   const [artGalleryHovered, setArtGalleryHovered] = useState(false);
+  const [jacketClubHovered, setJacketClubHovered] = useState(false);
+  const router = useRouter();
 
   const hero = config.zones.hero?.elements;
   const d = {
@@ -489,15 +492,18 @@ export default function Home() {
 
           {/* ─── STICKERS ────────────────────────────────── */}
 
-          {/* 1. SPRINGS Jacket Club — sticker imagen, solo drag manual */}
+          {/* 1. SPRINGS Jacket Club — sticker imagen, drag + hover swap + link */}
           <motion.img
-            src="/images/jacket-club-sticker.png"
+            src={jacketClubHovered ? "/images/jacket-club-sticker-hover.png" : "/images/jacket-club-sticker.png"}
             alt="SPRINGS Jacket Club"
             drag
             dragTransition={{ power: 0.8, timeConstant: 350 }}
             onDragStart={pauseScroll}
             onDragEnd={resumeScroll}
             whileDrag={{ scale: 1.03 }}
+            onHoverStart={() => setJacketClubHovered(true)}
+            onHoverEnd={() => setJacketClubHovered(false)}
+            onTap={() => router.push("/springs-jacket-club")}
             style={{
               position: "absolute",
               left: `${d.jacketClubLeft}vw`,
@@ -505,7 +511,7 @@ export default function Home() {
               width: `${d.jacketClubWidth}vw`,
               height: "auto",
               zIndex: 20,
-              cursor: "grab",
+              cursor: jacketClubHovered ? "pointer" : "grab",
             }}
           />
 
