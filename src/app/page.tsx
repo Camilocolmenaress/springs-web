@@ -551,22 +551,6 @@ export default function Home() {
             </svg>
           </DragSticker>
 
-          {/* 6. AQUÍ TAMBIÉN NOS TOMAMOS EN SERIO LA PAPA */}
-          <DragSticker rotate={4} idleRotateRange={2} idleDuration={6}
-            onDragStart={pauseScroll} onDragEnd={resumeScroll}
-            style={{
-              position: "absolute", left: "73vw", top: "34vh", zIndex: 15,
-              background: C.tinta, padding: "14px 16px",
-              boxShadow: `0 0 0 4px ${C.cream}, 0 0 0 5.5px ${C.tinta}`,
-              width: "10vw",
-            }}
-          >
-            <div style={{ ...F.mono, fontSize: "0.5rem", letterSpacing: "0.1em", color: C.cream, lineHeight: 1.65, textTransform: "uppercase", marginBottom: 8 }}>
-              AQUÍ TAMBIÉN<br />NOS TOMAMOS<br />EN SERIO<br />LA PAPA
-            </div>
-            <span style={{ color: C.mostaza, fontSize: "0.85rem" }}>✦</span>
-          </DragSticker>
-
           {/* 9. MIÉRCOLES DE DADOS */}
           <DragSticker rotate={-14} idleRotateRange={3} idleDuration={6}
             onDragStart={pauseScroll} onDragEnd={resumeScroll}
