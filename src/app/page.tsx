@@ -214,9 +214,31 @@ export default function Home() {
             { label: "EL CLUB",     href: "/springs-jacket-club" },
             { label: "FAQS",        href: "#"                    },
           ] as { label: string; href: string }[]).map(item => (
-            <a key={item.label} href={item.href} style={{ ...F.mono, fontSize: `${d.footerMenuSize}rem`, letterSpacing: "0.12em", color: C.tinta, textDecoration: "none", fontWeight: 600 }}>
-              {item.label}
-            </a>
+            <motion.a
+              key={item.label}
+              href={item.href}
+              initial="rest"
+              whileHover="hover"
+              style={{ ...F.mono, fontSize: `${d.footerMenuSize}rem`, letterSpacing: "0.12em", textDecoration: "none", fontWeight: 600, position: "relative", display: "inline-block" }}
+            >
+              <motion.span
+                variants={{ rest: { color: C.tinta }, hover: { color: C.burgundy } }}
+                transition={{ duration: 0.2 }}
+                style={{ display: "block" }}
+              >
+                {item.label}
+              </motion.span>
+              <motion.span
+                variants={{ rest: { scaleX: 0 }, hover: { scaleX: 1 } }}
+                transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                style={{
+                  display: "block", height: 1.5,
+                  background: C.burgundy,
+                  transformOrigin: "left center",
+                  position: "absolute", bottom: -2, left: 0, right: 0,
+                }}
+              />
+            </motion.a>
           ))}
         </div>
       </div>
