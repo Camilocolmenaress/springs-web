@@ -279,9 +279,10 @@ export default function Home() {
                 cursor: "default",
               }}
             >
-              {/* Cara 1 — en flujo normal (define la altura del contenedor), sale abajo */}
+              {/* Cara 1 — en flujo normal (define la altura del contenedor), sale abajo.
+                  rotateX negativo = top se aleja del espectador = cara EXTERIOR del cubo. */}
               <motion.h1
-                animate={titleHovered ? { y: "100%", rotateX: 75 } : { y: 0, rotateX: 0 }}
+                animate={titleHovered ? { y: "100%", rotateX: -75 } : { y: 0, rotateX: 0 }}
                 transition={{ duration: 0.62, ease: [0.4, 0, 0.2, 1] }}
                 style={{
                   ...F.display,
@@ -298,9 +299,10 @@ export default function Home() {
               </motion.h1>
 
               {/* Cara 2 — bottom:100% la pone en layout ENCIMA del contenedor,
-                  overflow:hidden la oculta. Al hover, y:"100%" la baja al frame visible. */}
+                  overflow:hidden la oculta. Al hover, y:"100%" la baja al frame visible.
+                  rotateX positivo = top viene hacia el espectador = cara EXTERIOR visible. */}
               <motion.h1
-                animate={titleHovered ? { y: "100%", rotateX: 0 } : { y: 0, rotateX: -75 }}
+                animate={titleHovered ? { y: "100%", rotateX: 0 } : { y: 0, rotateX: 75 }}
                 transition={{ duration: 0.62, ease: [0.4, 0, 0.2, 1] }}
                 style={{
                   ...F.display,
