@@ -129,11 +129,6 @@ export default function Home() {
     return Math.max(0, Math.min(1, (s - vw * 0.32) / (vw * 0.18)));
   });
 
-  // Brazo: x se setea directamente en el callback de Lenis (mismo frame que el canvas)
-  // para cero frame-gap. Entrada spring separada vía ref de controles.
-  const handArmFinalX = useMotionValue(1200);
-  const handArmCtrlRef = useRef<{ stop: () => void } | null>(null);
-
   const FONT_MAP: Record<string, string> = {
     display: "Anton, sans-serif",
     sans: "Inter, sans-serif",
@@ -244,15 +239,7 @@ export default function Home() {
     lenisRef.current = lenis;
 
     lenis.on("scroll", () => {
-      const s = lenis.scroll;
-      scrollXMV.set(s);
-      // Set x directo en el mismo frame que el canvas — sin frame-gap
-      if (handArmCtrlRef.current) {
-        handArmCtrlRef.current.stop();
-        handArmCtrlRef.current = null;
-      }
-      const vw = window.innerWidth;
-      handArmFinalX.set(Math.max(0, s - vw * 0.24));
+      scrollXMV.set(lenis.scroll);
     });
 
     let raf: number;
@@ -269,15 +256,6 @@ export default function Home() {
     };
   }, [isDesktop]);
 
-  // Entrada del brazo: spring 1200 → 0, delay 0.2s. Controles guardados para cancelar al scrollear.
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      handArmCtrlRef.current = animateValue(handArmFinalX, 0, {
-        type: "spring", stiffness: 130, damping: 22, mass: 1.2,
-      }) as unknown as { stop: () => void };
-    }, 200);
-    return () => clearTimeout(timeout);
-  }, [handArmFinalX]);
 
   if (isDesktop !== true) {
     return <MobileCanvas />;
@@ -863,26 +841,21 @@ export default function Home() {
           />
 
 
-          {/* ─── BRAZO HERO — entrada spring + sticky scroll (sigue 1:1 hasta el límite) ─── */}
+          {/* ─── BRAZO HERO — fixed al borde derecho del viewport, encima de todo ─── */}
           <motion.img
             src={d.handArmSrc}
             alt=""
-            drag={editMode}
-            dragMomentum={false}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
+            initial={{ x: "30vw", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 130, damping: 22, mass: 1.2, delay: 0.2 }}
             style={{
-              position: "absolute",
-              left: `${d.handArmLeft}vw`,
+              position: "fixed",
+              right: 0,
               bottom: `${d.handArmBottom}vh`,
               width: `${d.handArmWidth}vw`,
               height: "auto",
-              x: editMode ? 0 : handArmFinalX,
-              zIndex: 8,
-              pointerEvents: editMode ? "auto" : "none",
-              cursor: editMode ? "grab" : "default",
-              outline: editMode ? "2px dashed rgba(197,135,31,0.6)" : "none",
+              zIndex: 9500,
+              pointerEvents: "none",
               filter: "drop-shadow(0 20px 48px rgba(26,10,12,0.14))",
             }}
           />
