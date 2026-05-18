@@ -180,7 +180,7 @@ export default function Home() {
           <a href="/" style={{ ...F.display, fontSize: "1.9rem", letterSpacing: "0.05em", color: C.burgundy, textDecoration: "none" }}>SPRINGS</a>
           <span style={{ color: C.tinta, fontSize: "0.85rem" }}>✦</span>
           <div style={{ ...F.mono, fontSize: "0.5rem", letterSpacing: "0.1em", color: C.tinta, lineHeight: 1.4, textTransform: "uppercase", opacity: 0.6 }}>
-            BRITISH SOUL<br />FOR HUNGRY PEOPLE.
+            BRITISH SOUL<br />COLOMBIAN HEART.
           </div>
         </div>
         <div />
