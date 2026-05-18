@@ -145,6 +145,7 @@ export default function Home() {
     display: "Anton, sans-serif",
     sans: "Inter, sans-serif",
     mono: "JetBrains Mono, monospace",
+    marker: "var(--font-marker), cursive",
   };
   const COLOR_MAP: Record<string, string> = {
     burgundy: "#6B1419",
@@ -202,7 +203,7 @@ export default function Home() {
     heroImage:    (hero?.image?.props?.src as { value: string })?.value ?? "/images/la-fija.png",
     titleFont:    fontCSS((hero?.title?.props?.fontFamily as { value: string })?.value ?? "display"),
     titleColor:   colorHex((hero?.title?.props?.color as { value: string })?.value ?? "tinta"),
-    subtitleFont: fontCSS((hero?.subtitle?.props?.fontFamily as { value: string })?.value ?? "sans"),
+    subtitleFont: fontCSS((hero?.subtitle?.props?.fontFamily as { value: string })?.value ?? "marker"),
     subtitleColor:colorHex((hero?.subtitle?.props?.color as { value: string })?.value ?? "burgundy"),
     bodyCopyColor:colorHex((hero?.bodyCopy?.props?.color as { value: string })?.value ?? "tinta"),
     marqueeSize:  (hero?.marquee?.props?.fontSize as { value: number })?.value ?? 2.4,
