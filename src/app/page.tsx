@@ -267,8 +267,8 @@ export default function Home() {
 
       {/* ── WRAPPER LENIS ── */}
       <div ref={wrapperRef} style={{ width: "100vw", height: "100vh", overflow: "hidden", background: C.cream }}>
-        {/* ── CANVAS CONTINUO 420vw ── */}
-        <div ref={contentRef} style={{ position: "relative", width: "420vw", height: "100vh" }}>
+        {/* ── CANVAS CONTINUO 400vw ── */}
+        <div ref={contentRef} style={{ position: "relative", width: "400vw", height: "100vh" }}>
 
           {/* ═══════════════════════════════════════
               ZONA 1 — HERO (0 → 100vw)
@@ -518,7 +518,7 @@ export default function Home() {
             position: "absolute",
             left: `${d.marqueeLeft}vw`,
             top: `${d.marqueeTop}vh`,
-            width: `${420 - d.marqueeLeft}vw`,
+            width: `${400 - d.marqueeLeft}vw`,
             overflow: "hidden",
             zIndex: 6,
             borderTop: `1.5px solid ${C.tinta}`,
