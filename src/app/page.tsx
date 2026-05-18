@@ -56,7 +56,9 @@ export default function Home() {
     potatoLeft:   (hero?.image?.props?.left as { value: number })?.value ?? -4.2,
     potatoBottom: (hero?.image?.props?.bottom as { value: number })?.value ?? 195,
     subtitleSize: (hero?.subtitle?.props?.fontSize as { value: number })?.value ?? 2.3,
-    bodyCopyLeft: (hero?.bodyCopy?.props?.left as { value: number })?.value ?? 54,
+    bodyCopyLeft:   (hero?.bodyCopy?.props?.left as { value: number })?.value ?? 38,
+    bodyCopyBottom: (hero?.bodyCopy?.props?.bottom as { value: number })?.value ?? 12,
+    bodyCopySize:   (hero?.bodyCopy?.props?.fontSize as { value: number })?.value ?? 3.2,
     artGallerySize:   (hero?.artGallery?.props?.fontSize as { value: number })?.value ?? 7,
     artGalleryBottom: (hero?.artGallery?.props?.bottom as { value: number })?.value ?? 120,
     artGalleryLeft:   (hero?.artGallery?.props?.left as { value: number })?.value ?? 2,
@@ -297,8 +299,8 @@ export default function Home() {
           </div>
 
           {/* Body copy */}
-          <div style={{ position: "absolute", left: `${d.bodyCopyLeft}vw`, bottom: "12vh", zIndex: 5 }}>
-            <div style={{ ...F.display, fontSize: "clamp(28px, 3.2vw, 56px)", color: C.tinta, letterSpacing: "-0.01em", lineHeight: 1.1 }}>
+          <div style={{ position: "absolute", left: `${d.bodyCopyLeft}vw`, bottom: `${d.bodyCopyBottom}vh`, zIndex: 5 }}>
+            <div style={{ ...F.display, fontSize: `clamp(20px, ${d.bodyCopySize}vw, 72px)`, color: C.tinta, letterSpacing: "-0.01em", lineHeight: 1.1 }}>
               <div style={{ display: "flex", alignItems: "center", gap: "0.3em" }}>
                 <svg width="0.7em" height="0.7em" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, marginBottom: "0.1em" }}>
                   <line x1="21" y1="21" x2="3" y2="3" stroke={C.tinta} strokeWidth="4.5" strokeLinecap="round"/>

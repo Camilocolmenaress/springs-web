@@ -37,11 +37,9 @@
         "bodyCopy": {
           "type": "text",
           "props": {
-            "content": "NO ES SOLO COMIDA.\nES UN PLAN.\nES UN LUGAR.\nES SPRINGS.",
-            "left": { "value": 38, "unit": "vw", "min": 20, "max": 70, "step": 1 },
-            "fontSize": { "value": 0.68, "unit": "rem", "min": 0.5, "max": 1.5, "step": 0.02 },
-            "color": { "value": "tinta", "options": ["burgundy", "cream", "tinta", "mostaza"] },
-            "animation": { "value": "fade-up", "options": ["none", "fade-up", "fade-in", "slide-left", "scale-in"] }
+            "left":     { "value": 38,  "unit": "vw", "min": 20,  "max": 80,  "step": 1   },
+            "bottom":   { "value": 12,  "unit": "vh", "min": 0,   "max": 50,  "step": 1   },
+            "fontSize": { "value": 3.2, "unit": "vw", "min": 1.5, "max": 8,   "step": 0.1 }
           }
         }
       }
