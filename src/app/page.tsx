@@ -94,9 +94,10 @@ export default function Home() {
     artGalleryBottom: (hero?.artGallery?.props?.bottom as { value: number })?.value ?? 120,
     artGalleryLeft:   (hero?.artGallery?.props?.left as { value: number })?.value ?? 2,
     heroImage:    (hero?.image?.props?.src as { value: string })?.value ?? "/images/la-fija.png",
-    miercolesDadosWidth:  (hero?.miercolesDados?.props?.width as { value: number })?.value ?? 13,
-    miercolesDadosLeft:   (hero?.miercolesDados?.props?.left as { value: number })?.value ?? 3,
-    miercolesDadosBottom: (hero?.miercolesDados?.props?.bottom as { value: number })?.value ?? 10,
+    miercolesDadosWidth:    (hero?.miercolesDados?.props?.width as { value: number })?.value ?? 13,
+    miercolesDadosLeft:     (hero?.miercolesDados?.props?.left as { value: number })?.value ?? 3,
+    miercolesDadosBottom:   (hero?.miercolesDados?.props?.bottom as { value: number })?.value ?? 10,
+    miercolesDadosRotation: (hero?.miercolesDados?.props?.rotation as { value: number })?.value ?? -14,
   };
 
   const pauseScroll = () => lenisRef.current?.stop();
@@ -571,6 +572,7 @@ export default function Home() {
               height: "auto",
               zIndex: 22,
               cursor: "grab",
+              transform: `rotate(${d.miercolesDadosRotation}deg)`,
             }}
           />
 
