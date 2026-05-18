@@ -129,12 +129,16 @@ export default function Home() {
     return Math.max(0, Math.min(1, (s - vw * 0.32) / (vw * 0.18)));
   });
 
-  // Brazo: fixed al borde derecho. x va de +24vw → 0 mientras scrolleas,
-  // dejando solo la caja+mano al inicio y anclándose al llegar completo.
-  const handArmX = useTransform(scrollXMV, (s) => {
+  // Brazo: entrada spring (1200→0) + scroll drift (24vw→0). Suma de ambos.
+  const handArmEntrance = useMotionValue(1200);
+  const handArmScrollPart = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     return Math.max(0, vw * 0.24 - s);
   });
+  const handArmX = useTransform(
+    [handArmEntrance, handArmScrollPart] as const,
+    (values: number[]) => values[0] + values[1]
+  );
 
   const FONT_MAP: Record<string, string> = {
     display: "Anton, sans-serif",
@@ -263,6 +267,12 @@ export default function Home() {
     };
   }, [isDesktop]);
 
+  useEffect(() => {
+    const t = setTimeout(() => {
+      animateValue(handArmEntrance, 0, { type: "spring", stiffness: 130, damping: 22, mass: 1.2 });
+    }, 200);
+    return () => clearTimeout(t);
+  }, [handArmEntrance]);
 
   if (isDesktop !== true) {
     return <MobileCanvas />;
