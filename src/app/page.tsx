@@ -290,6 +290,11 @@ export default function Home() {
     cultureImgTop:     (cult?.image?.props?.top as { value: number })?.value ?? 0,
     cultureImgWidth:   (cult?.image?.props?.width as { value: number })?.value ?? 70,
     cultureImgHeight:  (cult?.image?.props?.height as { value: number })?.value ?? 100,
+    cultureReceiptSrc:      (cult?.receipt?.props?.src as { value: string })?.value ?? "/images/culture-receipt.png",
+    cultureReceiptHeight:   (cult?.receipt?.props?.height as { value: number })?.value ?? 28,
+    cultureReceiptLeft:     (cult?.receipt?.props?.left as { value: number })?.value ?? 153,
+    cultureReceiptTop:      (cult?.receipt?.props?.top as { value: number })?.value ?? 8,
+    cultureReceiptRotation: (cult?.receipt?.props?.rotation as { value: number })?.value ?? -15,
   };
 
   const pauseScroll = () => lenisRef.current?.stop();
@@ -1107,6 +1112,22 @@ export default function Home() {
           }}>
             {d.cultureHashtag}
           </div>
+
+          {/* Receipt — flotando entre los títulos */}
+          <img
+            src={d.cultureReceiptSrc}
+            alt=""
+            style={{
+              position: "absolute",
+              left: `${d.cultureReceiptLeft}vw`,
+              top: `${d.cultureReceiptTop}vh`,
+              height: `${d.cultureReceiptHeight}vh`,
+              width: "auto",
+              transform: `rotate(${d.cultureReceiptRotation}deg)`,
+              zIndex: 6,
+              pointerEvents: "none",
+            }}
+          />
 
           {/* THIS IS / OUR CULTURE — cubo 3D unificado */}
           <div
