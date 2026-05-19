@@ -239,6 +239,7 @@ export default function Home() {
     bgSpringsTop:      (pack?.bgSprings?.props?.top as { value: number })?.value ?? 50,
     bgSpringsSize:     (pack?.bgSprings?.props?.fontSize as { value: number })?.value ?? 14,
     bgSpringsOpacity:  (pack?.bgSprings?.props?.opacity as { value: number })?.value ?? 3.5,
+    bgSpringsRotation: (pack?.bgSprings?.props?.rotation as { value: number })?.value ?? 90,
     taglineLeft:       (pack?.tagline?.props?.left as { value: number })?.value ?? 118,
     taglineTop:        (pack?.tagline?.props?.top as { value: number })?.value ?? 13,
     taglineSize:       (pack?.tagline?.props?.fontSize as { value: number })?.value ?? 6.5,
@@ -931,7 +932,8 @@ export default function Home() {
           {/* Texto fondo muy suave */}
           <div style={{
             position: "absolute", left: `${d.bgSpringsLeft}vw`, top: `${d.bgSpringsTop}vh`,
-            transform: "translateY(-50%)",
+            transform: `translateY(-50%) rotate(${d.bgSpringsRotation}deg)`,
+            transformOrigin: "left center",
             ...F.display, fontSize: `${d.bgSpringsSize}vw`,
             color: C.tinta, opacity: d.bgSpringsOpacity / 100,
             letterSpacing: "-0.02em", whiteSpace: "nowrap",
