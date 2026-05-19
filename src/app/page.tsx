@@ -61,38 +61,43 @@ export default function Home() {
   // ─── Scroll-driven packaging ───
   const scrollXMV = useMotionValue(0);
 
-  // Bolsa cae primero (trigger 42vw de scroll), vaso +7, caja +14. Rango 5vw c/u.
+  // Canvas 560vw, viewport 100vw.
+  // Bag en canvas 102.5vw → entra al viewport en scroll 2.5vw.
+  // Cup en canvas 129.5vw → entra en scroll 29.5vw.
+  // Box en canvas 139.5vw → entra en scroll 39.5vw.
+  // Dirección: sube desde abajo (y: vh*0.8 → 0) para que la animación
+  // sea visible mientras el producto está en pantalla.
   const bagY = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const p = Math.max(0, Math.min(1, (s - vw * 42) / (vw * 5)));
-    return (1 - (1 - Math.pow(1 - p, 3))) * -vh * 1.5;
+    const p = Math.max(0, Math.min(1, (s - vw * 2.5) / (vw * 12)));
+    return Math.pow(1 - p, 3) * vh * 0.8;
   });
   const bagOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * 41) / (vw * 2)));
+    return Math.max(0, Math.min(1, (s - vw * 2.5) / (vw * 5)));
   });
 
   const cupY = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const p = Math.max(0, Math.min(1, (s - vw * 49) / (vw * 5)));
-    return (1 - (1 - Math.pow(1 - p, 3))) * -vh * 1.5;
+    const p = Math.max(0, Math.min(1, (s - vw * 29.5) / (vw * 12)));
+    return Math.pow(1 - p, 3) * vh * 0.8;
   });
   const cupOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * 48) / (vw * 2)));
+    return Math.max(0, Math.min(1, (s - vw * 29.5) / (vw * 5)));
   });
 
   const boxY = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const p = Math.max(0, Math.min(1, (s - vw * 56) / (vw * 5)));
-    return (1 - (1 - Math.pow(1 - p, 3))) * -vh * 1.5;
+    const p = Math.max(0, Math.min(1, (s - vw * 39.5) / (vw * 12)));
+    return Math.pow(1 - p, 3) * vh * 0.8;
   });
   const boxOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * 55) / (vw * 2)));
+    return Math.max(0, Math.min(1, (s - vw * 39.5) / (vw * 5)));
   });
 
   const textXBase = useTransform(scrollXMV, (s) => {
@@ -974,58 +979,70 @@ export default function Home() {
           </motion.div>
 
           {/* Empaque — Caja */}
-          <motion.img
-            src={d.boxSrc}
-            alt=""
+          <motion.div
             style={{
               position: "absolute",
               left: `${d.boxLeft}vw`, top: `${d.boxTop}vh`,
-              width: `${d.boxWidth}vw`, height: "auto",
+              width: `${d.boxWidth}vw`,
               zIndex: 14,
               y: boxY,
               opacity: boxOpacity,
               rotate: d.boxRotation,
               transformOrigin: "center center",
               pointerEvents: "none",
-              filter: "drop-shadow(0 28px 52px rgba(26,10,12,0.20))",
             }}
-          />
+          >
+            <img
+              src={d.boxSrc}
+              alt=""
+              style={{ width: "100%", height: "auto", display: "block",
+                filter: "drop-shadow(0 28px 52px rgba(26,10,12,0.20))" }}
+            />
+          </motion.div>
 
           {/* Empaque — Bolsa */}
-          <motion.img
-            src={d.bagSrc}
-            alt=""
+          <motion.div
             style={{
               position: "absolute",
               left: `${d.bagLeft}vw`, top: `${d.bagTop}vh`,
-              width: `${d.bagWidth}vw`, height: "auto",
+              width: `${d.bagWidth}vw`,
               zIndex: 14,
               y: bagY,
               opacity: bagOpacity,
               rotate: d.bagRotation,
               transformOrigin: "center center",
               pointerEvents: "none",
-              filter: "drop-shadow(0 32px 60px rgba(26,10,12,0.18))",
             }}
-          />
+          >
+            <img
+              src={d.bagSrc}
+              alt=""
+              style={{ width: "100%", height: "auto", display: "block",
+                filter: "drop-shadow(0 32px 60px rgba(26,10,12,0.18))" }}
+            />
+          </motion.div>
 
           {/* Empaque — Vaso */}
-          <motion.img
-            src={d.cupSrc}
-            alt=""
+          <motion.div
             style={{
               position: "absolute",
               left: `${d.cupLeft}vw`, top: `${d.cupTop}vh`,
-              width: `${d.cupWidth}vw`, height: "auto",
+              width: `${d.cupWidth}vw`,
               zIndex: 14,
               y: cupY,
               opacity: cupOpacity,
               rotate: d.cupRotation,
               transformOrigin: "center center",
               pointerEvents: "none",
-              filter: "drop-shadow(0 24px 44px rgba(26,10,12,0.22))",
             }}
-          />
+          >
+            <img
+              src={d.cupSrc}
+              alt=""
+              style={{ width: "100%", height: "auto", display: "block",
+                filter: "drop-shadow(0 24px 44px rgba(26,10,12,0.22))" }}
+            />
+          </motion.div>
 
           {/* ═══════════════════════════════════════
               ZONA 1.7 — CULTURA (300 → 430vw)
