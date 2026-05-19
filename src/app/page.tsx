@@ -239,9 +239,6 @@ export default function Home() {
     bgSpringsSize:     (pack?.bgSprings?.props?.fontSize as { value: number })?.value ?? 14,
     bgSpringsOpacity:  (pack?.bgSprings?.props?.opacity as { value: number })?.value ?? 3.5,
     bgSpringsRotation: (pack?.bgSprings?.props?.rotation as { value: number })?.value ?? 90,
-    cultureTitleLeft:  (pack?.cultureTitle?.props?.left as { value: number })?.value ?? 148.5,
-    cultureTitleTop:   (pack?.cultureTitle?.props?.top as { value: number })?.value ?? 20,
-    cultureTitleSize:  (pack?.cultureTitle?.props?.fontSize as { value: number })?.value ?? 8,
     taglineLeft:       (pack?.tagline?.props?.left as { value: number })?.value ?? 148.5,
     taglineTop:        (pack?.tagline?.props?.top as { value: number })?.value ?? 49,
     taglineSize:       (pack?.tagline?.props?.fontSize as { value: number })?.value ?? 6.5,
@@ -971,24 +968,6 @@ export default function Home() {
           }}>
             SPRINGS
           </div>
-
-          {/* Our Culture — título grande encima del tagline */}
-          <motion.div
-            style={{
-              position: "absolute", left: `${d.cultureTitleLeft}vw`, top: `${d.cultureTitleTop}vh`,
-              x: textX, opacity: textOpacity,
-              zIndex: 5, pointerEvents: "none",
-            }}
-          >
-            <div style={{
-              ...F.display,
-              fontSize: `${d.cultureTitleSize}vw`,
-              color: C.tinta, lineHeight: 0.9,
-              letterSpacing: "-0.02em", textTransform: "uppercase",
-            }}>
-              OUR CULTURE
-            </div>
-          </motion.div>
 
           {/* Tagline — desliza desde la derecha */}
           <motion.div
