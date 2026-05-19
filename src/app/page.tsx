@@ -61,60 +61,60 @@ export default function Home() {
   // ─── Scroll-driven packaging ───
   const scrollXMV = useMotionValue(0);
 
-  // Scroll-driven puro: sin spring — la posición sigue el scroll 1:1
-  // Orden: bolsa primero, vaso segundo, caja último
+  // Scroll-driven puro — triggers calibrados para cuando packaging entra al viewport (~100*vw)
+  // Bolsa entra primero (left:100vw), vaso segundo (left:125vw), caja último (left:137.5vw)
   const bagY = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const p = Math.max(0, Math.min(1, (s - vw * 0.08) / (vw * 0.45)));
+    const p = Math.max(0, Math.min(1, (s - vw * 95) / (vw * 10)));
     const e = 1 - Math.pow(1 - p, 3);
     return (1 - e) * -vh * 1.5;
   });
   const bagRotate = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    const p = Math.max(0, Math.min(1, (s - vw * 0.08) / (vw * 0.45)));
+    const p = Math.max(0, Math.min(1, (s - vw * 95) / (vw * 10)));
     const e = 1 - Math.pow(1 - p, 3);
     return -22 + 27 * e;
   });
   const bagOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * 0.06) / (vw * 0.10)));
+    return Math.max(0, Math.min(1, (s - vw * 93) / (vw * 5)));
   });
 
   const cupY = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const p = Math.max(0, Math.min(1, (s - vw * 0.16) / (vw * 0.45)));
+    const p = Math.max(0, Math.min(1, (s - vw * 97) / (vw * 10)));
     const e = 1 - Math.pow(1 - p, 3);
     return (1 - e) * -vh * 1.2;
   });
   const cupRotate = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    const p = Math.max(0, Math.min(1, (s - vw * 0.16) / (vw * 0.45)));
+    const p = Math.max(0, Math.min(1, (s - vw * 97) / (vw * 10)));
     const e = 1 - Math.pow(1 - p, 3);
     return 18 - 21 * e;
   });
   const cupOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * 0.13) / (vw * 0.10)));
+    return Math.max(0, Math.min(1, (s - vw * 95) / (vw * 5)));
   });
 
   const boxY = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const p = Math.max(0, Math.min(1, (s - vw * 0.24) / (vw * 0.45)));
+    const p = Math.max(0, Math.min(1, (s - vw * 99) / (vw * 10)));
     const e = 1 - Math.pow(1 - p, 3);
     return (1 - e) * -vh * 1.35;
   });
   const boxRotate = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    const p = Math.max(0, Math.min(1, (s - vw * 0.24) / (vw * 0.45)));
+    const p = Math.max(0, Math.min(1, (s - vw * 99) / (vw * 10)));
     const e = 1 - Math.pow(1 - p, 3);
     return 25 - 32 * e;
   });
   const boxOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * 0.21) / (vw * 0.10)));
+    return Math.max(0, Math.min(1, (s - vw * 97) / (vw * 5)));
   });
 
   const textXBase = useTransform(scrollXMV, (s) => {
