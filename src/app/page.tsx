@@ -60,61 +60,62 @@ export default function Home() {
 
   // ─── Scroll-driven packaging ───
   const scrollXMV = useMotionValue(0);
+  const dropStartRef = useRef(95);
 
-  // Scroll-driven puro — triggers calibrados para cuando packaging entra al viewport (~100*vw)
-  // Bolsa entra primero (left:100vw), vaso segundo (left:125vw), caja último (left:137.5vw)
+  // Scroll-driven puro — trigger controlado por dropStartRef (editable desde DevPanel)
+  // Bolsa = dropStart, vaso = dropStart+2, caja = dropStart+4
   const bagY = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const p = Math.max(0, Math.min(1, (s - vw * 95) / (vw * 10)));
+    const p = Math.max(0, Math.min(1, (s - vw * dropStartRef.current) / (vw * 10)));
     const e = 1 - Math.pow(1 - p, 3);
     return (1 - e) * -vh * 1.5;
   });
   const bagRotate = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    const p = Math.max(0, Math.min(1, (s - vw * 95) / (vw * 10)));
+    const p = Math.max(0, Math.min(1, (s - vw * dropStartRef.current) / (vw * 10)));
     const e = 1 - Math.pow(1 - p, 3);
     return -22 + 27 * e;
   });
   const bagOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * 93) / (vw * 5)));
+    return Math.max(0, Math.min(1, (s - vw * (dropStartRef.current - 2)) / (vw * 5)));
   });
 
   const cupY = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const p = Math.max(0, Math.min(1, (s - vw * 97) / (vw * 10)));
+    const p = Math.max(0, Math.min(1, (s - vw * (dropStartRef.current + 2)) / (vw * 10)));
     const e = 1 - Math.pow(1 - p, 3);
     return (1 - e) * -vh * 1.2;
   });
   const cupRotate = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    const p = Math.max(0, Math.min(1, (s - vw * 97) / (vw * 10)));
+    const p = Math.max(0, Math.min(1, (s - vw * (dropStartRef.current + 2)) / (vw * 10)));
     const e = 1 - Math.pow(1 - p, 3);
     return 18 - 21 * e;
   });
   const cupOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * 95) / (vw * 5)));
+    return Math.max(0, Math.min(1, (s - vw * dropStartRef.current) / (vw * 5)));
   });
 
   const boxY = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const p = Math.max(0, Math.min(1, (s - vw * 99) / (vw * 10)));
+    const p = Math.max(0, Math.min(1, (s - vw * (dropStartRef.current + 4)) / (vw * 10)));
     const e = 1 - Math.pow(1 - p, 3);
     return (1 - e) * -vh * 1.35;
   });
   const boxRotate = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    const p = Math.max(0, Math.min(1, (s - vw * 99) / (vw * 10)));
+    const p = Math.max(0, Math.min(1, (s - vw * (dropStartRef.current + 4)) / (vw * 10)));
     const e = 1 - Math.pow(1 - p, 3);
     return 25 - 32 * e;
   });
   const boxOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * 97) / (vw * 5)));
+    return Math.max(0, Math.min(1, (s - vw * (dropStartRef.current + 2)) / (vw * 5)));
   });
 
   const textXBase = useTransform(scrollXMV, (s) => {
@@ -255,6 +256,7 @@ export default function Home() {
     cupLeft:           (pack?.cup?.props?.left as { value: number })?.value ?? 196,
     cupTop:            (pack?.cup?.props?.top as { value: number })?.value ?? 20,
     cupWidth:          (pack?.cup?.props?.width as { value: number })?.value ?? 18,
+    dropStart:         (pack?.dropAnim?.props?.dropStart as { value: number })?.value ?? 95,
     culturePanelLeft:  (cult?.panel?.props?.left as { value: number })?.value ?? 300,
     culturePanelWidth: (cult?.panel?.props?.width as { value: number })?.value ?? 130,
     cultureHashtag:    (cult?.hashtag?.props?.content as string) ?? "#SPRINGSCLUB",
@@ -325,6 +327,11 @@ export default function Home() {
     }, 200);
     return () => clearTimeout(t);
   }, [handArmEntrance]);
+
+  useEffect(() => {
+    const v = (config.zones.packaging?.elements?.dropAnim?.props?.dropStart as { value: number })?.value;
+    if (v !== undefined) dropStartRef.current = v;
+  }, [config]);
 
   if (isDesktop !== true) {
     return <MobileCanvas />;

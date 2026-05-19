@@ -203,6 +203,12 @@
             "top":    { "value": 20,   "unit": "vh", "min": 0,   "max": 80,  "step": 0.5 },
             "width":  { "value": 18,   "unit": "vw", "min": 5,   "max": 50,  "step": 0.5 }
           }
+        },
+        "dropAnim": {
+          "type": "config",
+          "props": {
+            "dropStart": { "value": 95, "unit": "vw", "min": 50, "max": 150, "step": 1 }
+          }
         }
       }
     },
