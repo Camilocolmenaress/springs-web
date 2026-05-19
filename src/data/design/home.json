@@ -777,7 +777,7 @@
           "type": "image",
           "props": {
             "left": {
-              "value": 300,
+              "value": 147,
               "unit": "vw",
               "min": 100,
               "max": 500,
