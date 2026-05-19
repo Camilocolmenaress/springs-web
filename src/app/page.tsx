@@ -275,14 +275,17 @@ export default function Home() {
     boxLeft:           (pack?.box?.props?.left as { value: number })?.value ?? 138.5,
     boxTop:            (pack?.box?.props?.top as { value: number })?.value ?? 1,
     boxWidth:          (pack?.box?.props?.width as { value: number })?.value ?? 22,
+    boxRotation:       (pack?.box?.props?.rotation as { value: number })?.value ?? 0,
     bagSrc:            (pack?.bag?.props?.src as { value: string })?.value ?? "/images/packaging-bag.png",
     bagLeft:           (pack?.bag?.props?.left as { value: number })?.value ?? 102.5,
     bagTop:            (pack?.bag?.props?.top as { value: number })?.value ?? 1,
     bagWidth:          (pack?.bag?.props?.width as { value: number })?.value ?? 36,
+    bagRotation:       (pack?.bag?.props?.rotation as { value: number })?.value ?? 0,
     cupSrc:            (pack?.cup?.props?.src as { value: string })?.value ?? "/images/packaging-cup.png",
     cupLeft:           (pack?.cup?.props?.left as { value: number })?.value ?? 129.5,
     cupTop:            (pack?.cup?.props?.top as { value: number })?.value ?? 16,
     cupWidth:          (pack?.cup?.props?.width as { value: number })?.value ?? 18,
+    cupRotation:       (pack?.cup?.props?.rotation as { value: number })?.value ?? 0,
     dropStart:         (pack?.dropAnim?.props?.dropStart as { value: number })?.value ?? 2,
     culturePanelLeft:  (cult?.panel?.props?.left as { value: number })?.value ?? 300,
     culturePanelWidth: (cult?.panel?.props?.width as { value: number })?.value ?? 130,
@@ -1020,7 +1023,7 @@ export default function Home() {
             </div>
           </motion.div>
 
-          {/* Empaque — Caja (estático — posicionar con DevPanel antes de animar) */}
+          {/* Empaque — Caja */}
           <img
             src={d.boxSrc}
             alt=""
@@ -1029,12 +1032,14 @@ export default function Home() {
               left: `${d.boxLeft}vw`, top: `${d.boxTop}vh`,
               width: `${d.boxWidth}vw`, height: "auto",
               zIndex: 14,
+              transform: `rotate(${d.boxRotation}deg)`,
+              transformOrigin: "center center",
               pointerEvents: "none",
               filter: "drop-shadow(0 28px 52px rgba(26,10,12,0.20))",
             }}
           />
 
-          {/* Empaque — Bolsa (estático) */}
+          {/* Empaque — Bolsa */}
           <img
             src={d.bagSrc}
             alt=""
@@ -1043,12 +1048,14 @@ export default function Home() {
               left: `${d.bagLeft}vw`, top: `${d.bagTop}vh`,
               width: `${d.bagWidth}vw`, height: "auto",
               zIndex: 14,
+              transform: `rotate(${d.bagRotation}deg)`,
+              transformOrigin: "center center",
               pointerEvents: "none",
               filter: "drop-shadow(0 32px 60px rgba(26,10,12,0.18))",
             }}
           />
 
-          {/* Empaque — Vaso (estático) */}
+          {/* Empaque — Vaso */}
           <img
             src={d.cupSrc}
             alt=""
@@ -1057,6 +1064,8 @@ export default function Home() {
               left: `${d.cupLeft}vw`, top: `${d.cupTop}vh`,
               width: `${d.cupWidth}vw`, height: "auto",
               zIndex: 14,
+              transform: `rotate(${d.cupRotation}deg)`,
+              transformOrigin: "center center",
               pointerEvents: "none",
               filter: "drop-shadow(0 24px 44px rgba(26,10,12,0.22))",
             }}
