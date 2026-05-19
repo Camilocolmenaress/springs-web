@@ -1020,8 +1020,8 @@ export default function Home() {
             </div>
           </motion.div>
 
-          {/* Empaque — Caja */}
-          <motion.img
+          {/* Empaque — Caja (estático — posicionar con DevPanel antes de animar) */}
+          <img
             src={d.boxSrc}
             alt=""
             style={{
@@ -1029,17 +1029,13 @@ export default function Home() {
               left: `${d.boxLeft}vw`, top: `${d.boxTop}vh`,
               width: `${d.boxWidth}vw`, height: "auto",
               zIndex: 14,
-              y: boxY,
-              rotate: boxRotate,
-              opacity: boxOpacity,
-              transformOrigin: "center bottom",
               pointerEvents: "none",
               filter: "drop-shadow(0 28px 52px rgba(26,10,12,0.20))",
             }}
           />
 
-          {/* Empaque — Bolsa */}
-          <motion.img
+          {/* Empaque — Bolsa (estático) */}
+          <img
             src={d.bagSrc}
             alt=""
             style={{
@@ -1047,17 +1043,13 @@ export default function Home() {
               left: `${d.bagLeft}vw`, top: `${d.bagTop}vh`,
               width: `${d.bagWidth}vw`, height: "auto",
               zIndex: 14,
-              y: bagY,
-              rotate: bagRotate,
-              opacity: bagOpacity,
-              transformOrigin: "center bottom",
               pointerEvents: "none",
               filter: "drop-shadow(0 32px 60px rgba(26,10,12,0.18))",
             }}
           />
 
-          {/* Empaque — Vaso */}
-          <motion.img
+          {/* Empaque — Vaso (estático) */}
+          <img
             src={d.cupSrc}
             alt=""
             style={{
@@ -1065,10 +1057,6 @@ export default function Home() {
               left: `${d.cupLeft}vw`, top: `${d.cupTop}vh`,
               width: `${d.cupWidth}vw`, height: "auto",
               zIndex: 14,
-              y: cupY,
-              rotate: cupRotate,
-              opacity: cupOpacity,
-              transformOrigin: "center bottom",
               pointerEvents: "none",
               filter: "drop-shadow(0 24px 44px rgba(26,10,12,0.22))",
             }}
