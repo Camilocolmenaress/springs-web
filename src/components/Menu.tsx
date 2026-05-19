@@ -12,6 +12,52 @@ const C = {
   mostaza:  "#C5871F",
 };
 
+export interface MenuStyles {
+  tabFontSize: string;
+  tabGap: number;
+  tabActiveBg: string;
+  tabActiveColor: string;
+  centerImageSize: string;
+  sideOffsetVw: number;
+  sideScale: number;
+  sideOpacity: number;
+  nameFontSize: string;
+  nameColor: string;
+  descFontSize: string;
+  descOpacity: number;
+  priceFontSize: string;
+  priceColor: string;
+  ctaText: string;
+  ctaFontSize: string;
+  ctaBg: string;
+  ctaColor: string;
+  watermarkOpacity: number;
+  watermarkFontSize: string;
+}
+
+const DEFAULT_STYLES: MenuStyles = {
+  tabFontSize:       "0.6rem",
+  tabGap:            6,
+  tabActiveBg:       C.tinta,
+  tabActiveColor:    C.cream,
+  centerImageSize:   "min(52vh, 42vw, 540px)",
+  sideOffsetVw:      23,
+  sideScale:         0.70,
+  sideOpacity:       0.75,
+  nameFontSize:      "clamp(28px, 5vw, 56px)",
+  nameColor:         C.tinta,
+  descFontSize:      "0.68rem",
+  descOpacity:       0.58,
+  priceFontSize:     "1.15rem",
+  priceColor:        C.tinta,
+  ctaText:           "AGREGAR ↗",
+  ctaFontSize:       "0.78rem",
+  ctaBg:             C.burgundy,
+  ctaColor:          C.cream,
+  watermarkOpacity:  0.055,
+  watermarkFontSize: "clamp(100px, 19vw, 300px)",
+};
+
 const CATEGORIAS: { key: Categoria; label: string }[] = [
   { key: "combo",  label: "COMBOS"  },
   { key: "jacket", label: "JACKETS" },
@@ -39,9 +85,14 @@ function Chevron({ dir }: { dir: "left" | "right" }) {
 }
 
 /* ── Main component ─────────────────────────────────────── */
-type Props = { onAgregar?: (p: Producto) => void };
+type Props = {
+  onAgregar?: (p: Producto) => void;
+  styles?: Partial<MenuStyles>;
+};
 
-export default function Menu({ onAgregar }: Props) {
+export default function Menu({ onAgregar, styles }: Props) {
+  const s = { ...DEFAULT_STYLES, ...styles };
+
   const [categoria, setCategoria] = useState<Categoria>("jacket");
   /*
    * vIdx es un índice virtual MONOTÓNICO (crece / decrece infinitamente).
@@ -115,16 +166,16 @@ export default function Menu({ onAgregar }: Props) {
           — AQUÍ TIENES NUESTRO MENÚ
         </div>
         {/* Fila 2: pestañas de categoría */}
-        <div style={{ display: "flex", gap: 6, overflowX: "auto", scrollbarWidth: "none" }}>
+        <div style={{ display: "flex", gap: s.tabGap, overflowX: "auto", scrollbarWidth: "none" }}>
           {CATEGORIAS.map(c => {
             const active = c.key === categoria;
             return (
               <button key={c.key} onClick={() => setCategoria(c.key)} style={{
                 fontFamily: "var(--font-jetbrains-mono), monospace",
-                fontSize: "0.6rem", letterSpacing: "0.18em", textTransform: "uppercase",
+                fontSize: s.tabFontSize, letterSpacing: "0.18em", textTransform: "uppercase",
                 padding: "7px 13px",
-                background: active ? C.tinta : "transparent",
-                color:      active ? C.cream : C.tinta,
+                background: active ? s.tabActiveBg : "transparent",
+                color:      active ? s.tabActiveColor : C.tinta,
                 border: `1px solid ${C.tinta}`,
                 cursor: "pointer", flexShrink: 0,
                 transition: "background 0.15s, color 0.15s",
@@ -140,13 +191,12 @@ export default function Menu({ onAgregar }: Props) {
       <div aria-hidden style={{
         pointerEvents: "none",
         position: "absolute",
-        /* Watermark en zona superior, detrás de las papas */
         top: "35%", left: 0, right: 0,
         transform: "translateY(-50%)",
         display: "flex", alignItems: "center", justifyContent: "center",
         fontFamily: "var(--font-anton), sans-serif",
-        fontSize: "clamp(100px, 19vw, 300px)", lineHeight: 0.85,
-        color: C.tinta, opacity: 0.055,
+        fontSize: s.watermarkFontSize, lineHeight: 0.85,
+        color: C.tinta, opacity: s.watermarkOpacity,
         textTransform: "uppercase", whiteSpace: "nowrap",
         zIndex: 1, userSelect: "none",
       }}>
@@ -165,14 +215,14 @@ export default function Menu({ onAgregar }: Props) {
               const abs = Math.abs(offset);
               const isCenter = abs === 0;
               const visible  = abs <= 2;
-              const scale   = isCenter ? 1 : abs === 1 ? 1 : 0.70;
-              const opacity = isCenter ? 1 : abs === 1 ? 0.75 : 0.50;
+              const scale   = isCenter ? 1 : abs === 1 ? s.sideScale : 0.50;
+              const opacity = isCenter ? 1 : abs === 1 ? s.sideOpacity : 0.40;
 
               return (
                 <motion.div
                   key={v}
                   initial={false}
-                  animate={{ x: `${offset * 23}vw`, scale, opacity }}
+                  animate={{ x: `${offset * s.sideOffsetVw}vw`, scale, opacity }}
                   exit={{ opacity: 0, transition: { duration: 0.12 } }}
                   transition={{ type: "spring", stiffness: 150, damping: 24, mass: 0.85 }}
                   onClick={isCenter ? undefined : () => goTo(((v % total) + total) % total)}
@@ -195,8 +245,8 @@ export default function Menu({ onAgregar }: Props) {
                     src={imgSrc(p)}
                     alt={p.nombre}
                     style={{
-                      width:  isCenter ? "max(280px, min(52vh, 40vw, 540px))" : "max(150px, min(30vh, 22vw, 300px))",
-                      height: isCenter ? "max(280px, min(52vh, 40vw, 540px))" : "max(150px, min(30vh, 22vw, 300px))",
+                      width:  isCenter ? s.centerImageSize : "max(150px, min(30vh, 22vw, 300px))",
+                      height: isCenter ? s.centerImageSize : "max(150px, min(30vh, 22vw, 300px))",
                       objectFit: "contain",
                       display: "block",
                     }}
@@ -286,9 +336,9 @@ export default function Menu({ onAgregar }: Props) {
                 <span style={{ color: C.tinta, fontSize: "0.72rem" }}>✦</span>
                 <h3 style={{
                   fontFamily: "var(--font-anton), sans-serif",
-                  fontSize: "clamp(28px, 5vw, 56px)",
+                  fontSize: s.nameFontSize,
                   textTransform: "uppercase", letterSpacing: "0.01em",
-                  lineHeight: 1, color: C.tinta, margin: 0,
+                  lineHeight: 1, color: s.nameColor, margin: 0,
                 }}>
                   {activo.nombre}
                 </h3>
@@ -296,8 +346,8 @@ export default function Menu({ onAgregar }: Props) {
               </div>
               <p style={{
                 fontFamily: "var(--font-inter), sans-serif",
-                fontSize: "0.68rem", letterSpacing: "0.12em",
-                textTransform: "uppercase", color: C.tinta, opacity: 0.58,
+                fontSize: s.descFontSize, letterSpacing: "0.12em",
+                textTransform: "uppercase", color: C.tinta, opacity: s.descOpacity,
                 margin: "0 0 10px",
               }}>
                 {activo.descripcion.toUpperCase()}
@@ -310,7 +360,7 @@ export default function Menu({ onAgregar }: Props) {
                 }}>
                   <span style={{
                     fontFamily: "var(--font-jetbrains-mono), monospace",
-                    fontSize: "1.15rem", color: C.tinta, display: "block",
+                    fontSize: s.priceFontSize, color: s.priceColor, display: "block",
                   }}>
                     {fmt(activo.precio)}
                   </span>
@@ -328,17 +378,17 @@ export default function Menu({ onAgregar }: Props) {
                   disabled={!activo.disponible}
                   style={{
                     fontFamily: "var(--font-anton), sans-serif",
-                    fontSize: "0.78rem", letterSpacing: "0.15em",
+                    fontSize: s.ctaFontSize, letterSpacing: "0.15em",
                     textTransform: "uppercase",
                     padding: "8px 28px",
-                    background: C.burgundy, color: C.cream,
+                    background: s.ctaBg, color: s.ctaColor,
                     border: "none",
                     cursor: activo.disponible ? "pointer" : "not-allowed",
                     opacity: activo.disponible ? 1 : 0.4,
                     minWidth: 130,
                   }}
                 >
-                  {activo.disponible ? "AGREGAR ↗" : "AGOTADO"}
+                  {activo.disponible ? s.ctaText : "AGOTADO"}
                 </button>
               </div>
             </motion.div>

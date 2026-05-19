@@ -1,46 +1,87 @@
 {
   "page": "menu",
   "zones": {
-    "header": {
-      "label": "Header menú",
+    "tabs": {
+      "label": "Pestañas categoría",
       "elements": {
-        "title": {
+        "tab": {
           "type": "text",
           "props": {
-            "content": "NUESTRA CARTA",
-            "fontSize": { "value": 3, "unit": "vw", "min": 1, "max": 8, "step": 0.1 },
-            "fontFamily": { "value": "display", "options": ["display", "sans", "mono"] },
-            "color": { "value": "tinta", "options": ["burgundy", "cream", "tinta", "mostaza"] }
+            "fontSize": { "value": 0.6, "unit": "rem", "min": 0.4, "max": 1.0, "step": 0.02 },
+            "gap": { "value": 6, "unit": "px", "min": 2, "max": 24, "step": 1 },
+            "activeBackground": { "value": "tinta", "options": ["burgundy", "cream", "tinta", "mostaza"] },
+            "activeColor": { "value": "cream", "options": ["burgundy", "cream", "tinta", "mostaza"] }
           }
         }
       }
     },
     "carousel": {
-      "label": "Carrusel productos",
+      "label": "Carrusel",
       "elements": {
-        "productImage": {
-          "type": "image",
-          "props": {
-            "src": { "value": "/images/la-fija.png", "folder": "/images" },
-            "width": { "value": 60, "unit": "vw", "min": 30, "max": 95, "step": 1 }
-          }
-        },
-        "productName": {
+        "centerImage": {
           "type": "text",
           "props": {
-            "content": "LA FIJA",
-            "fontSize": { "value": 2.5, "unit": "rem", "min": 1, "max": 5, "step": 0.1 },
-            "fontFamily": { "value": "display", "options": ["display", "sans", "mono"] },
+            "size": { "value": 52, "unit": "vh", "min": 25, "max": 80, "step": 1 }
+          }
+        },
+        "sideItems": {
+          "type": "text",
+          "props": {
+            "offsetVw": { "value": 23, "unit": "vw", "min": 10, "max": 40, "step": 1 },
+            "scale": { "value": 70, "unit": "%", "min": 30, "max": 100, "step": 5 },
+            "opacity": { "value": 75, "unit": "%", "min": 10, "max": 100, "step": 5 }
+          }
+        }
+      }
+    },
+    "productInfo": {
+      "label": "Info producto activo",
+      "elements": {
+        "name": {
+          "type": "text",
+          "props": {
+            "fontSize": { "value": 5, "unit": "vw", "min": 2, "max": 10, "step": 0.5 },
             "color": { "value": "tinta", "options": ["burgundy", "cream", "tinta", "mostaza"] }
+          }
+        },
+        "description": {
+          "type": "text",
+          "props": {
+            "fontSize": { "value": 0.68, "unit": "rem", "min": 0.4, "max": 1.2, "step": 0.04 },
+            "opacity": { "value": 58, "unit": "%", "min": 20, "max": 100, "step": 5 }
           }
         },
         "price": {
           "type": "text",
           "props": {
-            "content": "32,900",
-            "fontSize": { "value": 1.2, "unit": "rem", "min": 0.8, "max": 3, "step": 0.1 },
-            "fontFamily": { "value": "mono", "options": ["display", "sans", "mono"] },
+            "fontSize": { "value": 1.15, "unit": "rem", "min": 0.7, "max": 2.5, "step": 0.05 },
             "color": { "value": "tinta", "options": ["burgundy", "cream", "tinta", "mostaza"] }
+          }
+        }
+      }
+    },
+    "cta": {
+      "label": "Botón agregar",
+      "elements": {
+        "addButton": {
+          "type": "text",
+          "props": {
+            "content": "AGREGAR ↗",
+            "fontSize": { "value": 0.78, "unit": "rem", "min": 0.5, "max": 1.2, "step": 0.04 },
+            "background": { "value": "burgundy", "options": ["burgundy", "cream", "tinta", "mostaza"] },
+            "color": { "value": "cream", "options": ["burgundy", "cream", "tinta", "mostaza"] }
+          }
+        }
+      }
+    },
+    "watermark": {
+      "label": "Marca de agua",
+      "elements": {
+        "bg": {
+          "type": "text",
+          "props": {
+            "opacity": { "value": 5.5, "unit": "%", "min": 0, "max": 30, "step": 0.5 },
+            "fontSize": { "value": 19, "unit": "vw", "min": 8, "max": 35, "step": 1 }
           }
         }
       }
