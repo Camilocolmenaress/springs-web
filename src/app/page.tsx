@@ -56,6 +56,7 @@ export default function Home() {
   const jacketClubDragged = useRef(false);
   const [miercolesDadosHovered, setMiercolesDadosHovered] = useState(false);
   const miercolesDadosDragged = useRef(false);
+  const [ourCultureHovered, setOurCultureHovered] = useState(false);
   const router = useRouter();
 
   // ─── Scroll-driven packaging ───
@@ -1107,27 +1108,76 @@ export default function Home() {
             {d.cultureHashtag}
           </div>
 
-          {/* THIS IS (stroke) — estático */}
-          <div style={{
-            position: "absolute", left: `${d.cultureThisIsLeft}vw`, top: `${d.cultureThisIsTop}vh`,
-            ...F.display, fontSize: `${d.cultureThisIsSize}vw`,
-            lineHeight: 0.9, letterSpacing: "-0.01em",
-            color: "transparent",
-            WebkitTextStroke: `1.5px ${C.cream}`,
-            textTransform: "uppercase", zIndex: 5, whiteSpace: "nowrap",
-          }}>
-            {d.cultureThisIs}
-          </div>
+          {/* THIS IS / OUR CULTURE — cubo 3D unificado */}
+          <div
+            onMouseEnter={() => setOurCultureHovered(true)}
+            onMouseLeave={() => setOurCultureHovered(false)}
+            style={{
+              position: "absolute", left: `${d.cultureThisIsLeft}vw`, top: `${d.cultureThisIsTop}vh`,
+              perspective: "2500px",
+              fontSize: `${d.cultureOurSize}vw`,
+              lineHeight: 0.9,
+              cursor: "default",
+              width: "fit-content",
+              clipPath: "inset(0 -800px)",
+              zIndex: 5,
+            }}
+          >
+            <motion.div
+              animate={ourCultureHovered ? { rotateX: -90 } : { rotateX: 0 }}
+              transition={{ type: "tween", duration: 0.45, ease: [0.45, 0, 0.55, 1] }}
+              style={{
+                position: "relative",
+                transformStyle: "preserve-3d",
+                transformOrigin: "50% 50% -0.8em",
+              }}
+            >
+              {/* Front face */}
+              <div style={{ backfaceVisibility: "hidden" }}>
+                <h2 style={{
+                  ...F.display, fontSize: `${d.cultureThisIsSize / d.cultureOurSize}em`,
+                  lineHeight: 0.9, letterSpacing: "-0.01em",
+                  color: "transparent",
+                  WebkitTextStroke: `1.5px ${C.cream}`,
+                  textTransform: "uppercase", whiteSpace: "nowrap", margin: 0,
+                }}>
+                  {d.cultureThisIs}
+                </h2>
+                <h2 style={{
+                  ...F.display, fontSize: "1em",
+                  lineHeight: 0.9, letterSpacing: "-0.015em",
+                  color: C.cream,
+                  textTransform: "uppercase", whiteSpace: "nowrap", margin: 0,
+                }}>
+                  {d.cultureOurCulture}
+                </h2>
+              </div>
 
-          {/* OUR CULTURE (solid) — estático */}
-          <div style={{
-            position: "absolute", left: `${d.cultureOurLeft}vw`, top: `${d.cultureOurTop}vh`,
-            ...F.display, fontSize: `${d.cultureOurSize}vw`,
-            lineHeight: 0.9, letterSpacing: "-0.015em",
-            color: C.cream,
-            textTransform: "uppercase", zIndex: 5, whiteSpace: "nowrap",
-          }}>
-            {d.cultureOurCulture}
+              {/* Back face — solid THIS IS, stroke OUR CULTURE */}
+              <div style={{
+                position: "absolute", top: 0, left: 0, width: "100%",
+                transform: "translateY(-50%) translateZ(-0.8em) rotateX(90deg)",
+                backfaceVisibility: "hidden",
+              }}>
+                <h2 style={{
+                  ...F.display, fontSize: `${d.cultureThisIsSize / d.cultureOurSize}em`,
+                  lineHeight: 0.9, letterSpacing: "-0.01em",
+                  color: C.cream,
+                  textTransform: "uppercase", whiteSpace: "nowrap", margin: 0,
+                }}>
+                  {d.cultureThisIs}
+                </h2>
+                <h2 style={{
+                  ...F.display, fontSize: "1em",
+                  lineHeight: 0.9, letterSpacing: "-0.015em",
+                  color: "transparent",
+                  WebkitTextStroke: `1.5px ${C.cream}`,
+                  textTransform: "uppercase", whiteSpace: "nowrap", margin: 0,
+                }}>
+                  {d.cultureOurCulture}
+                </h2>
+              </div>
+            </motion.div>
           </div>
 
           {/* Description — estático */}
