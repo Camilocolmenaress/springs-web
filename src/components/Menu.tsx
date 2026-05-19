@@ -3,6 +3,7 @@
 import { useMemo, useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { productos, type Categoria, type Producto } from "@/data/productos";
+import type { PageConfig, SliderProp } from "@/types/design";
 
 /* ── Design tokens ─────────────────────────────────────── */
 const C = {
@@ -10,52 +11,6 @@ const C = {
   cream:    "#F2E8D5",
   tinta:    "#1A0A0C",
   mostaza:  "#C5871F",
-};
-
-export interface MenuStyles {
-  tabFontSize: string;
-  tabGap: number;
-  tabActiveBg: string;
-  tabActiveColor: string;
-  centerImageSize: string;
-  sideOffsetVw: number;
-  sideScale: number;
-  sideOpacity: number;
-  nameFontSize: string;
-  nameColor: string;
-  descFontSize: string;
-  descOpacity: number;
-  priceFontSize: string;
-  priceColor: string;
-  ctaText: string;
-  ctaFontSize: string;
-  ctaBg: string;
-  ctaColor: string;
-  watermarkOpacity: number;
-  watermarkFontSize: string;
-}
-
-const DEFAULT_STYLES: MenuStyles = {
-  tabFontSize:       "0.6rem",
-  tabGap:            6,
-  tabActiveBg:       C.tinta,
-  tabActiveColor:    C.cream,
-  centerImageSize:   "min(52vh, 42vw, 540px)",
-  sideOffsetVw:      23,
-  sideScale:         0.70,
-  sideOpacity:       0.75,
-  nameFontSize:      "clamp(28px, 5vw, 56px)",
-  nameColor:         C.tinta,
-  descFontSize:      "0.68rem",
-  descOpacity:       0.58,
-  priceFontSize:     "1.15rem",
-  priceColor:        C.tinta,
-  ctaText:           "AGREGAR ↗",
-  ctaFontSize:       "0.78rem",
-  ctaBg:             C.burgundy,
-  ctaColor:          C.cream,
-  watermarkOpacity:  0.055,
-  watermarkFontSize: "clamp(100px, 19vw, 300px)",
 };
 
 const CATEGORIAS: { key: Categoria; label: string }[] = [
@@ -70,29 +25,85 @@ const fmt = (n: number) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
 
 /* ── Chevron ────────────────────────────────────────────── */
-function Chevron({ dir }: { dir: "left" | "right" }) {
+function Chevron({ dir, size = 10 }: { dir: "left" | "right"; size?: number }) {
   return (
     <span style={{
       display: "block",
-      width: 11, height: 11,
-      borderRight: `2px solid ${C.tinta}`,
-      borderTop:   `2px solid ${C.tinta}`,
+      width: size, height: size,
+      borderRight: `1.5px solid ${C.tinta}`,
+      borderTop:   `1.5px solid ${C.tinta}`,
       transform: dir === "right"
-        ? "rotate(45deg)  translate(-2px, 2px)"
-        : "rotate(-135deg) translate(2px, -2px)",
+        ? "rotate(45deg)  translate(-1px, 1px)"
+        : "rotate(-135deg) translate(1px, -1px)",
     }} />
   );
 }
 
+/* ── Config helpers ─────────────────────────────────────── */
+function sv(prop: unknown, fallback: number): number {
+  if (prop && typeof prop === "object" && "value" in prop) return (prop as SliderProp).value;
+  return fallback;
+}
+function su(prop: unknown, fallback: string): string {
+  if (prop && typeof prop === "object" && "unit" in prop) return (prop as SliderProp).unit;
+  return fallback;
+}
+function scv(prop: unknown, fallback: number): string {
+  return `${sv(prop, fallback)}${su(prop, "")}`;
+}
+
 /* ── Main component ─────────────────────────────────────── */
-type Props = {
-  onAgregar?: (p: Producto) => void;
-  styles?: Partial<MenuStyles>;
-};
+type Props = { onAgregar?: (p: Producto) => void; config?: PageConfig };
 
-export default function Menu({ onAgregar, styles }: Props) {
-  const s = { ...DEFAULT_STYLES, ...styles };
+export default function Menu({ onAgregar, config }: Props) {
+  const z = config?.zones;
+  const c  = z?.carousel?.elements;
+  const wi = z?.watermark?.elements;
+  const pi = z?.productInfo?.elements;
 
+  // Center potato
+  const centerImgSize = scv(c?.centerImage?.props?.size, 52) || "52vh";
+  const centerOffsetY = sv(c?.centerImage?.props?.offsetY, 0);
+  const centerOffsetX = sv(c?.centerImage?.props?.offsetX, 0);
+  // Near potatoes (±1)
+  const nearImgSize   = scv(c?.nearImage?.props?.size, 30) || "30vh";
+  const nearOffsetY   = sv(c?.nearImage?.props?.offsetY, 0);
+  const nearOffsetX   = sv(c?.nearImage?.props?.offsetX, 0);
+  // Far potatoes (±2)
+  const farImgSize    = scv(c?.farImage?.props?.size, 22) || "22vh";
+  const farOffsetY    = sv(c?.farImage?.props?.offsetY, 0);
+  const farOffsetX    = sv(c?.farImage?.props?.offsetX, 0);
+  // Track
+  const trackOffsetY  = sv(c?.track?.props?.offsetY, 0);
+  const trackOffsetX  = sv(c?.track?.props?.offsetX, 0);
+  // Spacing
+  const carouselGap   = sv(c?.spacing?.props?.gap, 23);
+  // Arrows
+  const ai = z?.arrows?.elements;
+  const arrowSize    = sv(ai?.btn?.props?.size,    72);
+  const arrowOffsetX = sv(ai?.btn?.props?.offsetX, 30);
+  const arrowOffsetY = sv(ai?.btn?.props?.offsetY, 0);
+  // Watermark
+  const wmFontSize    = scv(wi?.title?.props?.fontSize, 19) || "19vw";
+  const wmOpacity     = sv(wi?.title?.props?.opacity, 5.5) / 100;
+  const wmTop         = scv(wi?.title?.props?.top, 35) || "35%";
+  const wmOffsetX     = sv(wi?.title?.props?.offsetX, 0);
+  // Side card
+  const sc = z?.sideCard?.elements;
+  const scWidth   = sv(sc?.container?.props?.width,   200);
+  const scOffsetY = sv(sc?.container?.props?.offsetY, 10);
+  const scOffsetX = sv(sc?.container?.props?.offsetX, 0);
+  const scNameFs  = scv(sc?.name?.props?.fontSize, 2.6) || "2.6vw";
+  const scDescFs  = scv(sc?.desc?.props?.fontSize, 0.58) || "0.58rem";
+  const scPriceFs = scv(sc?.price?.props?.fontSize, 0.78) || "0.78rem";
+  // Product info
+  const nameFontSize  = scv(pi?.name?.props?.fontSize, 5) || "5vw";
+  const nameOffsetX   = sv(pi?.name?.props?.offsetX, 0);
+  const starsFontSize = scv(pi?.stars?.props?.fontSize, 0.72) || "0.72rem";
+  const starsOffsetX  = sv(pi?.stars?.props?.offsetX, 0);
+  const cardWidth     = sv(pi?.priceCard?.props?.width, 420);
+  const cardMarginTop = sv(pi?.priceCard?.props?.marginTop, -80);
+  const cardOffsetX   = sv(pi?.priceCard?.props?.offsetX, 0);
   const [categoria, setCategoria] = useState<Categoria>("jacket");
   /*
    * vIdx es un índice virtual MONOTÓNICO (crece / decrece infinitamente).
@@ -166,16 +177,16 @@ export default function Menu({ onAgregar, styles }: Props) {
           — AQUÍ TIENES NUESTRO MENÚ
         </div>
         {/* Fila 2: pestañas de categoría */}
-        <div style={{ display: "flex", gap: s.tabGap, overflowX: "auto", scrollbarWidth: "none" }}>
+        <div style={{ display: "flex", gap: 6, overflowX: "auto", scrollbarWidth: "none" }}>
           {CATEGORIAS.map(c => {
             const active = c.key === categoria;
             return (
               <button key={c.key} onClick={() => setCategoria(c.key)} style={{
                 fontFamily: "var(--font-jetbrains-mono), monospace",
-                fontSize: s.tabFontSize, letterSpacing: "0.18em", textTransform: "uppercase",
+                fontSize: "0.6rem", letterSpacing: "0.18em", textTransform: "uppercase",
                 padding: "7px 13px",
-                background: active ? s.tabActiveBg : "transparent",
-                color:      active ? s.tabActiveColor : C.tinta,
+                background: active ? C.tinta : "transparent",
+                color:      active ? C.cream : C.tinta,
                 border: `1px solid ${C.tinta}`,
                 cursor: "pointer", flexShrink: 0,
                 transition: "background 0.15s, color 0.15s",
@@ -191,12 +202,12 @@ export default function Menu({ onAgregar, styles }: Props) {
       <div aria-hidden style={{
         pointerEvents: "none",
         position: "absolute",
-        top: "35%", left: 0, right: 0,
-        transform: "translateY(-50%)",
+        top: wmTop, left: 0, right: 0,
+        transform: `translate(${wmOffsetX}px, -50%)`,
         display: "flex", alignItems: "center", justifyContent: "center",
         fontFamily: "var(--font-anton), sans-serif",
-        fontSize: s.watermarkFontSize, lineHeight: 0.85,
-        color: C.tinta, opacity: s.watermarkOpacity,
+        fontSize: wmFontSize, lineHeight: 0.85,
+        color: C.tinta, opacity: wmOpacity,
         textTransform: "uppercase", whiteSpace: "nowrap",
         zIndex: 1, userSelect: "none",
       }}>
@@ -207,22 +218,27 @@ export default function Menu({ onAgregar, styles }: Props) {
       <div style={{ position: "relative", flex: 1, display: "flex", flexDirection: "column", zIndex: 2, overflowX: "hidden", justifyContent: "center" }}>
 
         {/* Carousel track */}
-        <div style={{ position: "relative", flexShrink: 0, height: "clamp(320px, 50vh, 520px)" }}>
+        <div style={{ position: "relative", flexShrink: 0, height: centerImgSize, overflow: "visible", transform: `translate(${trackOffsetX}px, ${trackOffsetY}px)` }}>
           <AnimatePresence>
             {OFFSETS.map(offset => {
               const v   = vIdx + offset;
               const p   = getItem(v);
               const abs = Math.abs(offset);
               const isCenter = abs === 0;
+              const isNear   = abs === 1;
               const visible  = abs <= 2;
-              const scale   = isCenter ? 1 : abs === 1 ? s.sideScale : 0.50;
-              const opacity = isCenter ? 1 : abs === 1 ? s.sideOpacity : 0.40;
+              const scale   = isCenter ? 1 : isNear ? 1 : 0.70;
+              const opacity = isCenter ? 1 : isNear ? 0.75 : 0.50;
+
+              const imgSize  = isCenter ? centerImgSize : isNear ? nearImgSize : farImgSize;
+              const extraY   = isCenter ? centerOffsetY : isNear ? nearOffsetY  : farOffsetY;
+              const extraX   = isCenter ? centerOffsetX : isNear ? nearOffsetX * Math.sign(offset) : farOffsetX * Math.sign(offset);
 
               return (
                 <motion.div
                   key={v}
                   initial={false}
-                  animate={{ x: `${offset * s.sideOffsetVw}vw`, scale, opacity }}
+                  animate={{ x: `calc(${offset * carouselGap}vw + ${extraX}px)`, y: extraY, scale, opacity }}
                   exit={{ opacity: 0, transition: { duration: 0.12 } }}
                   transition={{ type: "spring", stiffness: 150, damping: 24, mass: 0.85 }}
                   onClick={isCenter ? undefined : () => goTo(((v % total) + total) % total)}
@@ -233,7 +249,7 @@ export default function Menu({ onAgregar, styles }: Props) {
                     position: "absolute",
                     top: "50%", left: "50%",
                     translateX: "-50%", translateY: "-50%",
-                    width: "min(340px, 60vw)",
+                    width: imgSize,
                     zIndex: 20 - abs * 3,
                     cursor: isCenter ? "default" : "pointer",
                     pointerEvents: visible ? "auto" : "none",
@@ -245,8 +261,8 @@ export default function Menu({ onAgregar, styles }: Props) {
                     src={imgSrc(p)}
                     alt={p.nombre}
                     style={{
-                      width:  isCenter ? s.centerImageSize : "max(150px, min(30vh, 22vw, 300px))",
-                      height: isCenter ? s.centerImageSize : "max(150px, min(30vh, 22vw, 300px))",
+                      width:  imgSize,
+                      height: imgSize,
                       objectFit: "contain",
                       display: "block",
                     }}
@@ -254,26 +270,35 @@ export default function Menu({ onAgregar, styles }: Props) {
 
                   {/* Side card text */}
                   {!isCenter && abs === 1 && (
-                    <div style={{ textAlign: "center", marginTop: 10 }}>
+                    <div style={{
+                      textAlign: "center",
+                      marginTop: scOffsetY,
+                      width: scWidth,
+                      transform: `translateX(${scOffsetX}px)`,
+                      flexShrink: 0,
+                    }}>
                       <div style={{
-                        fontFamily: "var(--font-anton), sans-serif",
-                        fontSize: "clamp(13px, 2.6vw, 20px)",
+                        fontFamily: "var(--font-inter), sans-serif",
+                        fontWeight: 600,
+                        fontSize: scNameFs,
                         textTransform: "uppercase", color: C.tinta,
-                        letterSpacing: "0.01em",
+                        letterSpacing: "0.04em",
                       }}>
                         {p.nombre.toUpperCase()}
                       </div>
                       <div style={{
                         fontFamily: "var(--font-inter), sans-serif",
-                        fontSize: "0.58rem", letterSpacing: "0.06em",
+                        fontWeight: 400,
+                        fontSize: scDescFs, letterSpacing: "0.08em",
                         textTransform: "uppercase", color: C.tinta,
-                        opacity: 0.55, marginTop: 3, lineHeight: 1.4,
+                        opacity: 0.5, marginTop: 5, lineHeight: 1.5,
                       }}>
                         {p.descripcion.toUpperCase()}
                       </div>
                       <div style={{
                         fontFamily: "var(--font-jetbrains-mono), monospace",
-                        fontSize: "0.78rem", color: C.tinta, marginTop: 4,
+                        fontSize: scPriceFs, color: C.tinta, marginTop: 6,
+                        letterSpacing: "0.05em",
                       }}>
                         {fmt(p.precio)} COP
                       </div>
@@ -284,45 +309,43 @@ export default function Menu({ onAgregar, styles }: Props) {
             })}
           </AnimatePresence>
 
-          {/* ── Nav arrows — beside center potato ─────────── */}
+          {/* ── Nav arrows ───────────────────────────────── */}
           {total > 1 && (
             <>
               <button onClick={goPrev} aria-label="Anterior" style={{
                 position: "absolute",
-                left:  "calc(50% - min(210px, 34vw))",
-                top:   "50%",
+                left:  `calc(50% - ${arrowOffsetX}vw)`,
+                top:   `calc(50% + ${arrowOffsetY}px)`,
                 transform: "translate(-50%, -50%)",
-                width: 68, height: 68,
+                width: arrowSize, height: arrowSize,
                 background: "transparent",
-                boxShadow: `inset 0 0 0 1.5px rgba(26,10,12,0.55)`,
-                clipPath: "circle(50%)",
                 border: "none",
-                display: "flex", alignItems: "center", justifyContent: "center",
+                padding: 0,
                 cursor: "pointer", zIndex: 30,
               }}>
-                <Chevron dir="left" />
+                <img src="/images/arrow-circle.png" alt="Anterior"
+                  style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
               </button>
               <button onClick={goNext} aria-label="Siguiente" style={{
                 position: "absolute",
-                left:  "calc(50% + min(160px, 28vw))",
-                top:   "50%",
+                left:  `calc(50% + ${arrowOffsetX}vw)`,
+                top:   `calc(50% + ${arrowOffsetY}px)`,
                 transform: "translate(-50%, -50%)",
-                width: 68, height: 68,
+                width: arrowSize, height: arrowSize,
                 background: "transparent",
-                boxShadow: `inset 0 0 0 1.5px rgba(26,10,12,0.55)`,
-                clipPath: "circle(50%)",
                 border: "none",
-                display: "flex", alignItems: "center", justifyContent: "center",
+                padding: 0,
                 cursor: "pointer", zIndex: 30,
               }}>
-                <Chevron dir="right" />
+                <img src="/images/arrow-circle.png" alt="Siguiente"
+                  style={{ width: "100%", height: "100%", objectFit: "contain", display: "block", transform: "scaleX(-1)" }} />
               </button>
             </>
           )}
         </div>
 
         {/* ── Center product info ───────────────────────── */}
-        <div style={{ flexShrink: 0, padding: "0 clamp(16px, 4vw, 60px)", marginTop: "-80px" }}>
+        <div style={{ flexShrink: 0, padding: "0 clamp(16px, 4vw, 60px)", marginTop: `${cardMarginTop}px` }}>
           <AnimatePresence mode="wait">
             <motion.div
               key={`${activo.id}-${activeRealIdx}`}
@@ -332,27 +355,27 @@ export default function Menu({ onAgregar, styles }: Props) {
               transition={{ duration: 0.16 }}
               style={{ textAlign: "center" }}
             >
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 4 }}>
-                <span style={{ color: C.tinta, fontSize: "0.72rem" }}>✦</span>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 4, transform: `translateX(${nameOffsetX}px)` }}>
+                <span style={{ color: C.tinta, fontSize: starsFontSize, transform: `translateX(${starsOffsetX}px)`, display: "inline-block" }}>✦</span>
                 <h3 style={{
                   fontFamily: "var(--font-anton), sans-serif",
-                  fontSize: s.nameFontSize,
+                  fontSize: nameFontSize,
                   textTransform: "uppercase", letterSpacing: "0.01em",
-                  lineHeight: 1, color: s.nameColor, margin: 0,
+                  lineHeight: 1, color: C.tinta, margin: 0,
                 }}>
                   {activo.nombre}
                 </h3>
-                <span style={{ color: C.tinta, fontSize: "0.72rem" }}>✦</span>
+                <span style={{ color: C.tinta, fontSize: starsFontSize, transform: `translateX(${-starsOffsetX}px)`, display: "inline-block" }}>✦</span>
               </div>
               <p style={{
                 fontFamily: "var(--font-inter), sans-serif",
-                fontSize: s.descFontSize, letterSpacing: "0.12em",
-                textTransform: "uppercase", color: C.tinta, opacity: s.descOpacity,
+                fontSize: "0.68rem", letterSpacing: "0.12em",
+                textTransform: "uppercase", color: C.tinta, opacity: 0.58,
                 margin: "0 0 10px",
               }}>
                 {activo.descripcion.toUpperCase()}
               </p>
-              <div style={{ display: "flex", alignItems: "stretch", border: `1px solid ${C.tinta}`, maxWidth: 420, margin: "0 auto", width: "100%" }}>
+              <div style={{ display: "flex", alignItems: "stretch", border: `1px solid ${C.tinta}`, maxWidth: cardWidth, margin: "0 auto", width: "100%", transform: `translateX(${cardOffsetX}px)` }}>
                 <div style={{
                   flex: 1, padding: "8px 20px",
                   display: "flex", flexDirection: "column", justifyContent: "center",
@@ -360,7 +383,7 @@ export default function Menu({ onAgregar, styles }: Props) {
                 }}>
                   <span style={{
                     fontFamily: "var(--font-jetbrains-mono), monospace",
-                    fontSize: s.priceFontSize, color: s.priceColor, display: "block",
+                    fontSize: "1.15rem", color: C.tinta, display: "block",
                   }}>
                     {fmt(activo.precio)}
                   </span>
@@ -378,17 +401,17 @@ export default function Menu({ onAgregar, styles }: Props) {
                   disabled={!activo.disponible}
                   style={{
                     fontFamily: "var(--font-anton), sans-serif",
-                    fontSize: s.ctaFontSize, letterSpacing: "0.15em",
+                    fontSize: "0.78rem", letterSpacing: "0.15em",
                     textTransform: "uppercase",
                     padding: "8px 28px",
-                    background: s.ctaBg, color: s.ctaColor,
+                    background: C.burgundy, color: C.cream,
                     border: "none",
                     cursor: activo.disponible ? "pointer" : "not-allowed",
                     opacity: activo.disponible ? 1 : 0.4,
                     minWidth: 130,
                   }}
                 >
-                  {activo.disponible ? s.ctaText : "AGOTADO"}
+                  {activo.disponible ? "AGREGAR ↗" : "AGOTADO"}
                 </button>
               </div>
             </motion.div>
