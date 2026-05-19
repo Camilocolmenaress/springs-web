@@ -162,7 +162,7 @@
         "bgSprings": {
           "type": "text",
           "props": {
-            "left":     { "value": 106, "unit": "vw", "min": 100, "max": 290, "step": 0.5 },
+            "left":     { "value": 178, "unit": "vw", "min": 100, "max": 290, "step": 0.5 },
             "top":      { "value": 50,  "unit": "vh", "min": 0,   "max": 100, "step": 0.5 },
             "fontSize": { "value": 14,  "unit": "vw", "min": 5,   "max": 30,  "step": 0.5 },
             "opacity":  { "value": 3.5, "unit": "%",  "min": 0,   "max": 30,  "step": 0.5 }
@@ -171,36 +171,36 @@
         "tagline": {
           "type": "text",
           "props": {
-            "left":     { "value": 118, "unit": "vw", "min": 100, "max": 290, "step": 0.5 },
-            "top":      { "value": 13,  "unit": "vh", "min": 0,   "max": 80,  "step": 0.5 },
-            "fontSize": { "value": 6.5, "unit": "vw", "min": 2,   "max": 12,  "step": 0.1 }
+            "left":     { "value": 145,  "unit": "vw", "min": 100, "max": 290, "step": 0.5 },
+            "top":      { "value": 45.5, "unit": "vh", "min": 0,   "max": 80,  "step": 0.5 },
+            "fontSize": { "value": 8.3,  "unit": "vw", "min": 2,   "max": 12,  "step": 0.1 }
           }
         },
         "box": {
           "type": "image",
           "props": {
             "src":    { "value": "/images/packaging-box.png", "folder": "/images" },
-            "left":   { "value": 110, "unit": "vw", "min": 100, "max": 290, "step": 0.5 },
-            "top":    { "value": 22,  "unit": "vh", "min": 0,   "max": 80,  "step": 0.5 },
-            "width":  { "value": 22,  "unit": "vw", "min": 5,   "max": 50,  "step": 0.5 }
+            "left":   { "value": 137.5, "unit": "vw", "min": 100, "max": 290, "step": 0.5 },
+            "top":    { "value": 0,     "unit": "vh", "min": 0,   "max": 80,  "step": 0.5 },
+            "width":  { "value": 22,    "unit": "vw", "min": 5,   "max": 50,  "step": 0.5 }
           }
         },
         "bag": {
           "type": "image",
           "props": {
             "src":    { "value": "/images/packaging-bag.png", "folder": "/images" },
-            "left":   { "value": 153, "unit": "vw", "min": 100, "max": 290, "step": 0.5 },
-            "top":    { "value": 17,  "unit": "vh", "min": 0,   "max": 80,  "step": 0.5 },
-            "width":  { "value": 26,  "unit": "vw", "min": 5,   "max": 50,  "step": 0.5 }
+            "left":   { "value": 100,  "unit": "vw", "min": 100, "max": 290, "step": 0.5 },
+            "top":    { "value": 9.5,  "unit": "vh", "min": 0,   "max": 80,  "step": 0.5 },
+            "width":  { "value": 32,   "unit": "vw", "min": 5,   "max": 50,  "step": 0.5 }
           }
         },
         "cup": {
           "type": "image",
           "props": {
             "src":    { "value": "/images/packaging-cup.png", "folder": "/images" },
-            "left":   { "value": 196, "unit": "vw", "min": 100, "max": 290, "step": 0.5 },
-            "top":    { "value": 19,  "unit": "vh", "min": 0,   "max": 80,  "step": 0.5 },
-            "width":  { "value": 18,  "unit": "vw", "min": 5,   "max": 50,  "step": 0.5 }
+            "left":   { "value": 125,  "unit": "vw", "min": 100, "max": 290, "step": 0.5 },
+            "top":    { "value": 49.5, "unit": "vh", "min": 0,   "max": 80,  "step": 0.5 },
+            "width":  { "value": 18,   "unit": "vw", "min": 5,   "max": 50,  "step": 0.5 }
           }
         }
       }
