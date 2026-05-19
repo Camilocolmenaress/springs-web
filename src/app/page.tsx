@@ -61,87 +61,54 @@ export default function Home() {
   // ─── Scroll-driven packaging ───
   const scrollXMV = useMotionValue(0);
 
-  // Cada producto tiene su propio trigger = su posición left − dropOffset
-  // Así la animación ocurre JUSTO cuando el producto entra al viewport
-  const _dropOffset = (config.zones.packaging?.elements?.dropAnim?.props?.dropStart as { value: number })?.value ?? 2;
+  // dropOffset: cuántos vw adelantar el trigger global (slider "Offset caída")
+  const _dropOffset = (config.zones.packaging?.elements?.dropAnim?.props?.dropStart as { value: number })?.value ?? 0;
   const dropOffsetRef = useRef(_dropOffset);
   dropOffsetRef.current = _dropOffset;
 
+  // Base: posición left de la bolsa (primer producto visible)
   const _bagLeft = (config.zones.packaging?.elements?.bag?.props?.left as { value: number })?.value ?? 102.5;
   const bagLeftRef = useRef(_bagLeft);
   bagLeftRef.current = _bagLeft;
 
-  const _cupLeft = (config.zones.packaging?.elements?.cup?.props?.left as { value: number })?.value ?? 129.5;
-  const cupLeftRef = useRef(_cupLeft);
-  cupLeftRef.current = _cupLeft;
-
-  const _boxLeft = (config.zones.packaging?.elements?.box?.props?.left as { value: number })?.value ?? 138.5;
-  const boxLeftRef = useRef(_boxLeft);
-  boxLeftRef.current = _boxLeft;
-
-  // Bolsa — trigger relativo a su posición, rango 12vw, caída 1.0×vh
+  // Trigger compartido: cuando la bolsa lleva ~60vw dentro del viewport
+  // Stagger: bolsa → vaso (+7vw) → caja (+14vw). Cada caída: 9vw de scroll.
   const bagY = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const trigger = vw * (bagLeftRef.current - dropOffsetRef.current);
-    const p = Math.max(0, Math.min(1, (s - trigger) / (vw * 12)));
-    const e = 1 - Math.pow(1 - p, 3);
-    return (1 - e) * -vh;
-  });
-  const bagRotate = useTransform(scrollXMV, (s) => {
-    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    const trigger = vw * (bagLeftRef.current - dropOffsetRef.current);
-    const p = Math.max(0, Math.min(1, (s - trigger) / (vw * 12)));
-    const e = 1 - Math.pow(1 - p, 3);
-    return -22 + 27 * e;
+    const trigger = vw * (bagLeftRef.current - 60 - dropOffsetRef.current);
+    const p = Math.max(0, Math.min(1, (s - trigger) / (vw * 9)));
+    return (1 - (1 - p) ** 3) * vh - vh;
   });
   const bagOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    const trigger = vw * (bagLeftRef.current - dropOffsetRef.current - 1);
+    const trigger = vw * (bagLeftRef.current - 62 - dropOffsetRef.current);
     return Math.max(0, Math.min(1, (s - trigger) / (vw * 4)));
   });
 
-  // Vaso — caída 0.8×vh (entra antes al viewport)
   const cupY = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const trigger = vw * (cupLeftRef.current - dropOffsetRef.current);
-    const p = Math.max(0, Math.min(1, (s - trigger) / (vw * 12)));
-    const e = 1 - Math.pow(1 - p, 3);
-    return (1 - e) * -vh * 0.8;
-  });
-  const cupRotate = useTransform(scrollXMV, (s) => {
-    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    const trigger = vw * (cupLeftRef.current - dropOffsetRef.current);
-    const p = Math.max(0, Math.min(1, (s - trigger) / (vw * 12)));
-    const e = 1 - Math.pow(1 - p, 3);
-    return 18 - 21 * e;
+    const trigger = vw * (bagLeftRef.current - 53 - dropOffsetRef.current);
+    const p = Math.max(0, Math.min(1, (s - trigger) / (vw * 9)));
+    return (1 - (1 - p) ** 3) * vh - vh;
   });
   const cupOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    const trigger = vw * (cupLeftRef.current - dropOffsetRef.current - 1);
+    const trigger = vw * (bagLeftRef.current - 55 - dropOffsetRef.current);
     return Math.max(0, Math.min(1, (s - trigger) / (vw * 4)));
   });
 
-  // Caja — caída 1.0×vh
   const boxY = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const trigger = vw * (boxLeftRef.current - dropOffsetRef.current);
-    const p = Math.max(0, Math.min(1, (s - trigger) / (vw * 12)));
-    const e = 1 - Math.pow(1 - p, 3);
-    return (1 - e) * -vh;
-  });
-  const boxRotate = useTransform(scrollXMV, (s) => {
-    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    const trigger = vw * (boxLeftRef.current - dropOffsetRef.current);
-    const p = Math.max(0, Math.min(1, (s - trigger) / (vw * 12)));
-    const e = 1 - Math.pow(1 - p, 3);
-    return 25 - 32 * e;
+    const trigger = vw * (bagLeftRef.current - 46 - dropOffsetRef.current);
+    const p = Math.max(0, Math.min(1, (s - trigger) / (vw * 9)));
+    return (1 - (1 - p) ** 3) * vh - vh;
   });
   const boxOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    const trigger = vw * (boxLeftRef.current - dropOffsetRef.current - 1);
+    const trigger = vw * (bagLeftRef.current - 48 - dropOffsetRef.current);
     return Math.max(0, Math.min(1, (s - trigger) / (vw * 4)));
   });
 
@@ -1024,7 +991,7 @@ export default function Home() {
           </motion.div>
 
           {/* Empaque — Caja */}
-          <img
+          <motion.img
             src={d.boxSrc}
             alt=""
             style={{
@@ -1032,7 +999,9 @@ export default function Home() {
               left: `${d.boxLeft}vw`, top: `${d.boxTop}vh`,
               width: `${d.boxWidth}vw`, height: "auto",
               zIndex: 14,
-              transform: `rotate(${d.boxRotation}deg)`,
+              y: boxY,
+              opacity: boxOpacity,
+              rotate: d.boxRotation,
               transformOrigin: "center center",
               pointerEvents: "none",
               filter: "drop-shadow(0 28px 52px rgba(26,10,12,0.20))",
@@ -1040,7 +1009,7 @@ export default function Home() {
           />
 
           {/* Empaque — Bolsa */}
-          <img
+          <motion.img
             src={d.bagSrc}
             alt=""
             style={{
@@ -1048,7 +1017,9 @@ export default function Home() {
               left: `${d.bagLeft}vw`, top: `${d.bagTop}vh`,
               width: `${d.bagWidth}vw`, height: "auto",
               zIndex: 14,
-              transform: `rotate(${d.bagRotation}deg)`,
+              y: bagY,
+              opacity: bagOpacity,
+              rotate: d.bagRotation,
               transformOrigin: "center center",
               pointerEvents: "none",
               filter: "drop-shadow(0 32px 60px rgba(26,10,12,0.18))",
@@ -1056,7 +1027,7 @@ export default function Home() {
           />
 
           {/* Empaque — Vaso */}
-          <img
+          <motion.img
             src={d.cupSrc}
             alt=""
             style={{
@@ -1064,7 +1035,9 @@ export default function Home() {
               left: `${d.cupLeft}vw`, top: `${d.cupTop}vh`,
               width: `${d.cupWidth}vw`, height: "auto",
               zIndex: 14,
-              transform: `rotate(${d.cupRotation}deg)`,
+              y: cupY,
+              opacity: cupOpacity,
+              rotate: d.cupRotation,
               transformOrigin: "center center",
               pointerEvents: "none",
               filter: "drop-shadow(0 24px 44px rgba(26,10,12,0.22))",
