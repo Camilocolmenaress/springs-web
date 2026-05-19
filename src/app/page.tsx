@@ -158,6 +158,7 @@ export default function Home() {
 
   const hero = config.zones.hero?.elements;
   const pack = config.zones.packaging?.elements;
+  const cult = config.zones.culture?.elements;
   const d = {
     titleSize:    (hero?.title?.props?.fontSize as { value: number })?.value ?? 19.5,
     titleLeft:    (hero?.title?.props?.left as { value: number })?.value ?? 42,
@@ -255,6 +256,29 @@ export default function Home() {
     cupLeft:           (pack?.cup?.props?.left as { value: number })?.value ?? 196,
     cupTop:            (pack?.cup?.props?.top as { value: number })?.value ?? 19,
     cupWidth:          (pack?.cup?.props?.width as { value: number })?.value ?? 18,
+    culturePanelLeft:  (cult?.panel?.props?.left as { value: number })?.value ?? 300,
+    culturePanelWidth: (cult?.panel?.props?.width as { value: number })?.value ?? 130,
+    cultureHashtag:    (cult?.hashtag?.props?.content as string) ?? "#SPRINGSCLUB",
+    cultureHashtagLeft:(cult?.hashtag?.props?.left as { value: number })?.value ?? 360,
+    cultureHashtagTop: (cult?.hashtag?.props?.top as { value: number })?.value ?? 11,
+    cultureHashtagSize:(cult?.hashtag?.props?.fontSize as { value: number })?.value ?? 0.85,
+    cultureThisIs:     (cult?.thisIs?.props?.content as string) ?? "THIS IS",
+    cultureThisIsLeft: (cult?.thisIs?.props?.left as { value: number })?.value ?? 308,
+    cultureThisIsTop:  (cult?.thisIs?.props?.top as { value: number })?.value ?? 14,
+    cultureThisIsSize: (cult?.thisIs?.props?.fontSize as { value: number })?.value ?? 7.5,
+    cultureOurCulture: (cult?.ourCulture?.props?.content as string) ?? "OUR CULTURE",
+    cultureOurLeft:    (cult?.ourCulture?.props?.left as { value: number })?.value ?? 308,
+    cultureOurTop:     (cult?.ourCulture?.props?.top as { value: number })?.value ?? 32,
+    cultureOurSize:    (cult?.ourCulture?.props?.fontSize as { value: number })?.value ?? 9.5,
+    cultureDesc:       (cult?.description?.props?.content as string) ?? "MÚSICA. CALLE. HUMOR.\nAMIGOS. PLANES.\nNOCHES QUE SÍ CUENTAN.\nESTO ES SPRINGS.",
+    cultureDescLeft:   (cult?.description?.props?.left as { value: number })?.value ?? 308,
+    cultureDescTop:    (cult?.description?.props?.top as { value: number })?.value ?? 68,
+    cultureDescSize:   (cult?.description?.props?.fontSize as { value: number })?.value ?? 0.85,
+    cultureImgSrc:     (cult?.image?.props?.src as { value: string })?.value ?? "/images/culture-night.jpg",
+    cultureImgLeft:    (cult?.image?.props?.left as { value: number })?.value ?? 360,
+    cultureImgTop:     (cult?.image?.props?.top as { value: number })?.value ?? 0,
+    cultureImgWidth:   (cult?.image?.props?.width as { value: number })?.value ?? 70,
+    cultureImgHeight:  (cult?.image?.props?.height as { value: number })?.value ?? 100,
   };
 
   const pauseScroll = () => lenisRef.current?.stop();
@@ -426,8 +450,8 @@ export default function Home() {
 
       {/* ── WRAPPER LENIS ── */}
       <div ref={wrapperRef} style={{ width: "100vw", height: "100vh", overflow: "hidden", background: C.cream }}>
-        {/* ── CANVAS CONTINUO 400vw ── */}
-        <div ref={contentRef} style={{ position: "relative", width: "400vw", height: "100vh" }}>
+        {/* ── CANVAS CONTINUO 560vw ── */}
+        <div ref={contentRef} style={{ position: "relative", width: "560vw", height: "100vh" }}>
 
           {/* ═══════════════════════════════════════
               ZONA 1 — HERO (0 → 100vw)
@@ -1022,18 +1046,90 @@ export default function Home() {
           />
 
           {/* ═══════════════════════════════════════
-              ZONA 2 — PEDIR YA (300 → 400vw)
+              ZONA 1.7 — CULTURA (300 → 430vw)
+          ═══════════════════════════════════════ */}
+
+          {/* Panel dark culture */}
+          <div style={{
+            position: "absolute", left: `${d.culturePanelLeft}vw`, top: 0,
+            width: `${d.culturePanelWidth}vw`, height: "100vh",
+            background: C.tinta, zIndex: 1,
+          }} />
+
+          {/* Imagen lado derecho */}
+          <div style={{
+            position: "absolute", left: `${d.cultureImgLeft}vw`, top: `${d.cultureImgTop}vh`,
+            width: `${d.cultureImgWidth}vw`, height: `${d.cultureImgHeight}vh`,
+            backgroundImage: `url(${d.cultureImgSrc}), linear-gradient(135deg, #0d0507 0%, #2a1a1d 60%, #3a2520 100%)`,
+            backgroundSize: "cover", backgroundPosition: "center",
+            zIndex: 2,
+          }} />
+
+          {/* Overlay degradado sutil sobre imagen para legibilidad */}
+          <div style={{
+            position: "absolute", left: `${d.cultureImgLeft}vw`, top: `${d.cultureImgTop}vh`,
+            width: `${d.cultureImgWidth}vw`, height: `${d.cultureImgHeight}vh`,
+            background: `linear-gradient(90deg, ${C.tinta} 0%, transparent 25%, transparent 100%)`,
+            zIndex: 3, pointerEvents: "none",
+          }} />
+
+          {/* Hashtag */}
+          <div style={{
+            position: "absolute", left: `${d.cultureHashtagLeft}vw`, top: `${d.cultureHashtagTop}vh`,
+            ...F.mono, fontSize: `${d.cultureHashtagSize}vw`,
+            letterSpacing: "0.18em", color: C.cream, opacity: 0.85,
+            textTransform: "uppercase", zIndex: 5,
+          }}>
+            {d.cultureHashtag}
+          </div>
+
+          {/* THIS IS (stroke) */}
+          <div style={{
+            position: "absolute", left: `${d.cultureThisIsLeft}vw`, top: `${d.cultureThisIsTop}vh`,
+            ...F.display, fontSize: `${d.cultureThisIsSize}vw`,
+            lineHeight: 0.9, letterSpacing: "-0.01em",
+            color: "transparent",
+            WebkitTextStroke: `1.5px ${C.cream}`,
+            textTransform: "uppercase", zIndex: 5, whiteSpace: "nowrap",
+          }}>
+            {d.cultureThisIs}
+          </div>
+
+          {/* OUR CULTURE (solid) */}
+          <div style={{
+            position: "absolute", left: `${d.cultureOurLeft}vw`, top: `${d.cultureOurTop}vh`,
+            ...F.display, fontSize: `${d.cultureOurSize}vw`,
+            lineHeight: 0.9, letterSpacing: "-0.015em",
+            color: C.cream,
+            textTransform: "uppercase", zIndex: 5, whiteSpace: "nowrap",
+          }}>
+            {d.cultureOurCulture}
+          </div>
+
+          {/* Description */}
+          <div style={{
+            position: "absolute", left: `${d.cultureDescLeft}vw`, top: `${d.cultureDescTop}vh`,
+            ...F.mono, fontSize: `${d.cultureDescSize}vw`,
+            letterSpacing: "0.14em", color: C.cream, opacity: 0.75,
+            lineHeight: 1.7, textTransform: "uppercase", zIndex: 5,
+            whiteSpace: "pre-line",
+          }}>
+            {d.cultureDesc}
+          </div>
+
+          {/* ═══════════════════════════════════════
+              ZONA 2 — PEDIR YA (430 → 560vw)
           ═══════════════════════════════════════ */}
 
           {/* Fondo burgundy panel pedir */}
           <div style={{
-            position: "absolute", left: "300vw", top: 0,
+            position: "absolute", left: "430vw", top: 0,
             width: "120vw", height: "100vh",
             background: C.burgundy, zIndex: 1,
           }} />
 
           {/* PEDIR YA gigante */}
-          <Reveal style={{ position: "absolute", left: "308vw", top: "20vh", zIndex: 3, whiteSpace: "nowrap" }}>
+          <Reveal style={{ position: "absolute", left: "438vw", top: "20vh", zIndex: 3, whiteSpace: "nowrap" }}>
             <h2 id="pedir" style={{
               ...F.display,
               fontSize: "clamp(120px, 18vw, 320px)",
@@ -1045,14 +1141,14 @@ export default function Home() {
             </h2>
           </Reveal>
 
-          <Reveal delay={0.1} style={{ position: "absolute", left: "308vw", top: "12vh", zIndex: 5 }}>
+          <Reveal delay={0.1} style={{ position: "absolute", left: "438vw", top: "12vh", zIndex: 5 }}>
             <div style={{ ...F.mono, fontSize: "0.65rem", letterSpacing: "0.22em", color: C.mostaza, textTransform: "uppercase" }}>
               ↗ SIN EXCUSAS · ESTO ES SPRINGS
             </div>
           </Reveal>
 
           {/* Apps */}
-          <Reveal delay={0.2} style={{ position: "absolute", left: "310vw", bottom: "16vh", zIndex: 5, width: "26vw" }}>
+          <Reveal delay={0.2} style={{ position: "absolute", left: "440vw", bottom: "16vh", zIndex: 5, width: "26vw" }}>
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               <a href="#" style={{
                 ...F.display, fontSize: "1rem", letterSpacing: "0.12em",
@@ -1084,7 +1180,7 @@ export default function Home() {
           </Reveal>
 
           {/* Info derecha */}
-          <Reveal delay={0.3} style={{ position: "absolute", left: "344vw", bottom: "16vh", zIndex: 5, width: "30vw" }}>
+          <Reveal delay={0.3} style={{ position: "absolute", left: "474vw", bottom: "16vh", zIndex: 5, width: "30vw" }}>
             <div style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
               {[
                 { label: "Horario", val: "12PM — 9PM", sub: "Lunes a domingo" },
@@ -1103,7 +1199,7 @@ export default function Home() {
 
           {/* "DIFFERENT BY DEFAULT" fantasma */}
           <div style={{
-            position: "absolute", left: "470vw", top: "50%", transform: "translateY(-50%) rotate(-90deg)",
+            position: "absolute", left: "600vw", top: "50%", transform: "translateY(-50%) rotate(-90deg)",
             transformOrigin: "left center", whiteSpace: "nowrap", zIndex: 2,
             ...F.display, fontSize: "clamp(40px, 5vw, 100px)", color: C.cream, opacity: 0.07,
           }}>

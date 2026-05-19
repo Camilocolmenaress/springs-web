@@ -205,6 +205,64 @@
           }
         }
       }
+    },
+    "culture": {
+      "label": "Cultura",
+      "elements": {
+        "panel": {
+          "type": "image",
+          "props": {
+            "left":  { "value": 300, "unit": "vw", "min": 100, "max": 500, "step": 1 },
+            "width": { "value": 130, "unit": "vw", "min": 50,  "max": 200, "step": 1 }
+          }
+        },
+        "hashtag": {
+          "type": "text",
+          "props": {
+            "content":  "#SPRINGSCLUB",
+            "left":     { "value": 360,  "unit": "vw", "min": 100, "max": 500, "step": 0.5 },
+            "top":      { "value": 11,   "unit": "vh", "min": 0,   "max": 100, "step": 0.5 },
+            "fontSize": { "value": 0.85, "unit": "vw", "min": 0.3, "max": 3,   "step": 0.05 }
+          }
+        },
+        "thisIs": {
+          "type": "text",
+          "props": {
+            "content":  "THIS IS",
+            "left":     { "value": 308, "unit": "vw", "min": 100, "max": 500, "step": 0.5 },
+            "top":      { "value": 14,  "unit": "vh", "min": 0,   "max": 100, "step": 0.5 },
+            "fontSize": { "value": 7.5, "unit": "vw", "min": 2,   "max": 15,  "step": 0.1 }
+          }
+        },
+        "ourCulture": {
+          "type": "text",
+          "props": {
+            "content":  "OUR CULTURE",
+            "left":     { "value": 308, "unit": "vw", "min": 100, "max": 500, "step": 0.5 },
+            "top":      { "value": 32,  "unit": "vh", "min": 0,   "max": 100, "step": 0.5 },
+            "fontSize": { "value": 9.5, "unit": "vw", "min": 2,   "max": 18,  "step": 0.1 }
+          }
+        },
+        "description": {
+          "type": "text",
+          "props": {
+            "content":  "MÚSICA. CALLE. HUMOR.\nAMIGOS. PLANES.\nNOCHES QUE SÍ CUENTAN.\nESTO ES SPRINGS.",
+            "left":     { "value": 308, "unit": "vw", "min": 100, "max": 500, "step": 0.5 },
+            "top":      { "value": 68,  "unit": "vh", "min": 0,   "max": 100, "step": 0.5 },
+            "fontSize": { "value": 0.85,"unit": "vw", "min": 0.3, "max": 3,   "step": 0.05 }
+          }
+        },
+        "image": {
+          "type": "image",
+          "props": {
+            "src":    { "value": "/images/culture-night.jpg", "folder": "/images" },
+            "left":   { "value": 360, "unit": "vw", "min": 100, "max": 500, "step": 0.5 },
+            "top":    { "value": 0,   "unit": "vh", "min": 0,   "max": 100, "step": 0.5 },
+            "width":  { "value": 70,  "unit": "vw", "min": 20,  "max": 130, "step": 0.5 },
+            "height": { "value": 100, "unit": "vh", "min": 30,  "max": 100, "step": 0.5 }
+          }
+        }
+      }
     }
   }
 }
