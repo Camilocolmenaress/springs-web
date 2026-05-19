@@ -60,7 +60,10 @@ export default function Home() {
 
   // ─── Scroll-driven packaging ───
   const scrollXMV = useMotionValue(0);
-  const dropStartRef = useRef(95);
+  // Lee dropStart del config sincrónicamente — siempre actual antes de que Lenis dispare rAF
+  const _dropStart = (config.zones.packaging?.elements?.dropAnim?.props?.dropStart as { value: number })?.value ?? 95;
+  const dropStartRef = useRef(_dropStart);
+  dropStartRef.current = _dropStart;
 
   // Scroll-driven puro — trigger controlado por dropStartRef (editable desde DevPanel)
   // Bolsa = dropStart, vaso = dropStart+2, caja = dropStart+4
@@ -328,10 +331,6 @@ export default function Home() {
     return () => clearTimeout(t);
   }, [handArmEntrance]);
 
-  useEffect(() => {
-    const v = (config.zones.packaging?.elements?.dropAnim?.props?.dropStart as { value: number })?.value;
-    if (v !== undefined) dropStartRef.current = v;
-  }, [config]);
 
   if (isDesktop !== true) {
     return <MobileCanvas />;
