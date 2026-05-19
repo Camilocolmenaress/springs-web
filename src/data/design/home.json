@@ -207,7 +207,7 @@
         "dropAnim": {
           "type": "config",
           "props": {
-            "dropStart": { "value": 95, "unit": "vw", "min": 50, "max": 150, "step": 1 }
+            "dropStart": { "value": 71, "unit": "vw", "min": 50, "max": 150, "step": 1 }
           }
         }
       }
