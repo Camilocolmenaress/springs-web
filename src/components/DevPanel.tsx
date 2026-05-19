@@ -27,7 +27,7 @@ const PROP_LABELS: Record<string, string> = {
   globeSize: "Tamaño ⊕",
   height: "Alto",
   opacity: "Opacidad",
-  dropStart: "Cuándo caen (vw×)",
+  dropStart: "Offset caída (vw antes)",
   right: "Derecha",
   letterSpacing: "Esp. letras",
   itemGap: "Esp. entre ítems",

@@ -60,65 +60,89 @@ export default function Home() {
 
   // ─── Scroll-driven packaging ───
   const scrollXMV = useMotionValue(0);
-  // Lee dropStart del config sincrónicamente — siempre actual antes de que Lenis dispare rAF
-  const _dropStart = (config.zones.packaging?.elements?.dropAnim?.props?.dropStart as { value: number })?.value ?? 95;
-  const dropStartRef = useRef(_dropStart);
-  dropStartRef.current = _dropStart;
 
-  // Scroll-driven puro — trigger controlado por dropStartRef (editable desde DevPanel)
-  // Bolsa = dropStart, vaso = dropStart+2, caja = dropStart+4
+  // Cada producto tiene su propio trigger = su posición left − dropOffset
+  // Así la animación ocurre JUSTO cuando el producto entra al viewport
+  const _dropOffset = (config.zones.packaging?.elements?.dropAnim?.props?.dropStart as { value: number })?.value ?? 3;
+  const dropOffsetRef = useRef(_dropOffset);
+  dropOffsetRef.current = _dropOffset;
+
+  const _bagLeft = (config.zones.packaging?.elements?.bag?.props?.left as { value: number })?.value ?? 175;
+  const bagLeftRef = useRef(_bagLeft);
+  bagLeftRef.current = _bagLeft;
+
+  const _cupLeft = (config.zones.packaging?.elements?.cup?.props?.left as { value: number })?.value ?? 188;
+  const cupLeftRef = useRef(_cupLeft);
+  cupLeftRef.current = _cupLeft;
+
+  const _boxLeft = (config.zones.packaging?.elements?.box?.props?.left as { value: number })?.value ?? 170;
+  const boxLeftRef = useRef(_boxLeft);
+  boxLeftRef.current = _boxLeft;
+
+  // Bolsa — trigger relativo a su posición
   const bagY = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const p = Math.max(0, Math.min(1, (s - vw * dropStartRef.current) / (vw * 10)));
+    const trigger = vw * (bagLeftRef.current - dropOffsetRef.current);
+    const p = Math.max(0, Math.min(1, (s - trigger) / (vw * 15)));
     const e = 1 - Math.pow(1 - p, 3);
     return (1 - e) * -vh * 1.5;
   });
   const bagRotate = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    const p = Math.max(0, Math.min(1, (s - vw * dropStartRef.current) / (vw * 10)));
+    const trigger = vw * (bagLeftRef.current - dropOffsetRef.current);
+    const p = Math.max(0, Math.min(1, (s - trigger) / (vw * 15)));
     const e = 1 - Math.pow(1 - p, 3);
     return -22 + 27 * e;
   });
   const bagOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * (dropStartRef.current - 2)) / (vw * 5)));
+    const trigger = vw * (bagLeftRef.current - dropOffsetRef.current - 2);
+    return Math.max(0, Math.min(1, (s - trigger) / (vw * 5)));
   });
 
+  // Vaso — trigger relativo a su posición
   const cupY = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const p = Math.max(0, Math.min(1, (s - vw * (dropStartRef.current + 2)) / (vw * 10)));
+    const trigger = vw * (cupLeftRef.current - dropOffsetRef.current);
+    const p = Math.max(0, Math.min(1, (s - trigger) / (vw * 15)));
     const e = 1 - Math.pow(1 - p, 3);
     return (1 - e) * -vh * 1.2;
   });
   const cupRotate = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    const p = Math.max(0, Math.min(1, (s - vw * (dropStartRef.current + 2)) / (vw * 10)));
+    const trigger = vw * (cupLeftRef.current - dropOffsetRef.current);
+    const p = Math.max(0, Math.min(1, (s - trigger) / (vw * 15)));
     const e = 1 - Math.pow(1 - p, 3);
     return 18 - 21 * e;
   });
   const cupOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * dropStartRef.current) / (vw * 5)));
+    const trigger = vw * (cupLeftRef.current - dropOffsetRef.current - 2);
+    return Math.max(0, Math.min(1, (s - trigger) / (vw * 5)));
   });
 
+  // Caja — trigger relativo a su posición
   const boxY = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const p = Math.max(0, Math.min(1, (s - vw * (dropStartRef.current + 4)) / (vw * 10)));
+    const trigger = vw * (boxLeftRef.current - dropOffsetRef.current);
+    const p = Math.max(0, Math.min(1, (s - trigger) / (vw * 15)));
     const e = 1 - Math.pow(1 - p, 3);
     return (1 - e) * -vh * 1.35;
   });
   const boxRotate = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    const p = Math.max(0, Math.min(1, (s - vw * (dropStartRef.current + 4)) / (vw * 10)));
+    const trigger = vw * (boxLeftRef.current - dropOffsetRef.current);
+    const p = Math.max(0, Math.min(1, (s - trigger) / (vw * 15)));
     const e = 1 - Math.pow(1 - p, 3);
     return 25 - 32 * e;
   });
   const boxOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * (dropStartRef.current + 2)) / (vw * 5)));
+    const trigger = vw * (boxLeftRef.current - dropOffsetRef.current - 2);
+    return Math.max(0, Math.min(1, (s - trigger) / (vw * 5)));
   });
 
   const textXBase = useTransform(scrollXMV, (s) => {
@@ -248,18 +272,18 @@ export default function Home() {
     taglineTop:        (pack?.tagline?.props?.top as { value: number })?.value ?? 13,
     taglineSize:       (pack?.tagline?.props?.fontSize as { value: number })?.value ?? 6.5,
     boxSrc:            (pack?.box?.props?.src as { value: string })?.value ?? "/images/packaging-box.png",
-    boxLeft:           (pack?.box?.props?.left as { value: number })?.value ?? 110,
-    boxTop:            (pack?.box?.props?.top as { value: number })?.value ?? 22,
+    boxLeft:           (pack?.box?.props?.left as { value: number })?.value ?? 170,
+    boxTop:            (pack?.box?.props?.top as { value: number })?.value ?? 5,
     boxWidth:          (pack?.box?.props?.width as { value: number })?.value ?? 22,
     bagSrc:            (pack?.bag?.props?.src as { value: string })?.value ?? "/images/packaging-bag.png",
-    bagLeft:           (pack?.bag?.props?.left as { value: number })?.value ?? 153,
-    bagTop:            (pack?.bag?.props?.top as { value: number })?.value ?? 17,
-    bagWidth:          (pack?.bag?.props?.width as { value: number })?.value ?? 26,
+    bagLeft:           (pack?.bag?.props?.left as { value: number })?.value ?? 175,
+    bagTop:            (pack?.bag?.props?.top as { value: number })?.value ?? 10,
+    bagWidth:          (pack?.bag?.props?.width as { value: number })?.value ?? 28,
     cupSrc:            (pack?.cup?.props?.src as { value: string })?.value ?? "/images/packaging-cup.png",
-    cupLeft:           (pack?.cup?.props?.left as { value: number })?.value ?? 196,
-    cupTop:            (pack?.cup?.props?.top as { value: number })?.value ?? 20,
+    cupLeft:           (pack?.cup?.props?.left as { value: number })?.value ?? 188,
+    cupTop:            (pack?.cup?.props?.top as { value: number })?.value ?? 22,
     cupWidth:          (pack?.cup?.props?.width as { value: number })?.value ?? 18,
-    dropStart:         (pack?.dropAnim?.props?.dropStart as { value: number })?.value ?? 95,
+    dropStart:         (pack?.dropAnim?.props?.dropStart as { value: number })?.value ?? 3,
     culturePanelLeft:  (cult?.panel?.props?.left as { value: number })?.value ?? 300,
     culturePanelWidth: (cult?.panel?.props?.width as { value: number })?.value ?? 130,
     cultureHashtag:    (cult?.hashtag?.props?.content as string) ?? "#SPRINGSCLUB",
