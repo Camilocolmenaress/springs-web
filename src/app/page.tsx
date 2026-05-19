@@ -61,43 +61,48 @@ export default function Home() {
   // ─── Scroll-driven packaging ───
   const scrollXMV = useMotionValue(0);
 
-  // Canvas 560vw, viewport 100vw. lenis.scroll en píxeles.
-  // bag canvas left 102.5vw → entra al viewport cuando scroll = (102.5-1)*vw = 101.5*vw
-  // cup canvas left 129.5vw → entra cuando scroll = 128.5*vw
-  // box canvas left 139.5vw → entra cuando scroll = 138.5*vw
-  // Animación: sube desde abajo (y: vh*0.8→0), stagger natural al scrollear la zona.
-  // Trigger 5vw antes de que entre, rango 12vw, para que la caída sea visible.
+  // Canvas 560vw. lenis.scroll en px. vw = window.innerWidth (p.ej. 1440px).
+  // 1vw en CSS = vw/100 px. Canvas = 560 × vw/100 = 8064px (no 806,400px).
+  // Max scroll = 8064 - 1440 = 6624px.
+  //
+  // Fórmula: el producto entra al viewport cuando scroll = (leftVW/100 - 1) × vw
+  //   bag  left 102.5vw → entra en scroll = 0.025 × vw  ≈  36px
+  //   cup  left 129.5vw → entra en scroll = 0.295 × vw  ≈ 425px
+  //   box  left 139.5vw → entra en scroll = 0.395 × vw  ≈ 569px
+  //
+  // Animación sube desde y=vh*0.55 → 0 (producto visible durante todo el recorrido).
+  // Stagger natural: cada uno empieza al entrar al viewport.
   const bagY = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const p = Math.max(0, Math.min(1, (s - vw * 96.5) / (vw * 12)));
-    return Math.pow(1 - p, 3) * vh * 0.8;
+    const p = Math.max(0, Math.min(1, (s - vw * 0.025) / (vw * 0.35)));
+    return Math.pow(1 - p, 3) * vh * 0.55;
   });
   const bagOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * 96.5) / (vw * 5)));
+    return Math.max(0, Math.min(1, (s - vw * 0.025) / (vw * 0.12)));
   });
 
   const cupY = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const p = Math.max(0, Math.min(1, (s - vw * 123.5) / (vw * 12)));
-    return Math.pow(1 - p, 3) * vh * 0.8;
+    const p = Math.max(0, Math.min(1, (s - vw * 0.295) / (vw * 0.35)));
+    return Math.pow(1 - p, 3) * vh * 0.55;
   });
   const cupOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * 123.5) / (vw * 5)));
+    return Math.max(0, Math.min(1, (s - vw * 0.295) / (vw * 0.12)));
   });
 
   const boxY = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const p = Math.max(0, Math.min(1, (s - vw * 133.5) / (vw * 12)));
-    return Math.pow(1 - p, 3) * vh * 0.8;
+    const p = Math.max(0, Math.min(1, (s - vw * 0.395) / (vw * 0.35)));
+    return Math.pow(1 - p, 3) * vh * 0.55;
   });
   const boxOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * 133.5) / (vw * 5)));
+    return Math.max(0, Math.min(1, (s - vw * 0.395) / (vw * 0.12)));
   });
 
   const textXBase = useTransform(scrollXMV, (s) => {
