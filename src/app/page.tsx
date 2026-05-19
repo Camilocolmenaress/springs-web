@@ -120,8 +120,8 @@ export default function Home() {
   const culturePanelX = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     // Panel en left: 147vw entra al viewport en scroll ≈ vw*0.47
-    const p = Math.max(0, Math.min(1, (s - vw * 0.95) / (vw * 0.75)));
-    return Math.pow(1 - p, 3) * vw * 0.7;
+    const p = Math.max(0, Math.min(1, (s - vw * 0.95) / (vw * 0.5)));
+    return Math.pow(1 - p, 3) * vw * 0.47;
   });
 
   const textXBase = useTransform(scrollXMV, (s) => {
