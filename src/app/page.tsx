@@ -61,48 +61,59 @@ export default function Home() {
   // ─── Scroll-driven packaging ───
   const scrollXMV = useMotionValue(0);
 
-  // Canvas 560vw. lenis.scroll en px. vw = window.innerWidth (p.ej. 1440px).
-  // 1vw en CSS = vw/100 px. Canvas = 560 × vw/100 = 8064px (no 806,400px).
-  // Max scroll = 8064 - 1440 = 6624px.
-  //
-  // Fórmula: el producto entra al viewport cuando scroll = (leftVW/100 - 1) × vw
-  //   bag  left 102.5vw → entra en scroll = 0.025 × vw  ≈  36px
-  //   cup  left 129.5vw → entra en scroll = 0.295 × vw  ≈ 425px
-  //   box  left 139.5vw → entra en scroll = 0.395 × vw  ≈ 569px
-  //
-  // Animación sube desde y=vh*0.55 → 0 (producto visible durante todo el recorrido).
-  // Stagger natural: cada uno empieza al entrar al viewport.
+  // Goiko-style: mismo trigger (vw*0.525), cada producto tiene amplitud Y,
+  // easing y rotación propios. transform-origin: 50% 100% → pivot desde la base.
+  const TRIGGER = 0.525;
+
+  // Bolsa — ligera, rápida, swing desde +12°
   const bagY = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const p = Math.max(0, Math.min(1, (s - vw * 0.525) / (vw * 0.35)));
-    return Math.pow(1 - p, 3) * vh * 0.55;
+    const p = Math.max(0, Math.min(1, (s - vw * TRIGGER) / (vw * 0.28)));
+    return Math.pow(1 - p, 3) * vh * 0.38;
+  });
+  const bagRotate = useTransform(scrollXMV, (s) => {
+    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
+    const p = Math.max(0, Math.min(1, (s - vw * TRIGGER) / (vw * 0.28)));
+    return Math.pow(1 - p, 3) * 12; // swing: +12° → 0°, se suma al rotate estático del JSX
   });
   const bagOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * 0.525) / (vw * 0.12)));
+    return Math.max(0, Math.min(1, (s - vw * TRIGGER) / (vw * 0.12)));
   });
 
+  // Vaso — pesado, lento, swing desde −18°
   const cupY = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const p = Math.max(0, Math.min(1, (s - vw * 0.525) / (vw * 0.35)));
-    return Math.pow(1 - p, 3) * vh * 0.55;
+    const p = Math.max(0, Math.min(1, (s - vw * TRIGGER) / (vw * 0.45)));
+    return Math.pow(1 - p, 2) * vh * 0.65;
+  });
+  const cupRotate = useTransform(scrollXMV, (s) => {
+    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
+    const p = Math.max(0, Math.min(1, (s - vw * TRIGGER) / (vw * 0.45)));
+    return -Math.pow(1 - p, 2) * 18; // swing: −18° → 0°
   });
   const cupOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * 0.525) / (vw * 0.12)));
+    return Math.max(0, Math.min(1, (s - vw * TRIGGER) / (vw * 0.12)));
   });
 
+  // Caja — media, snappy, swing desde +15° sobre su rotación de diseño
   const boxY = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const p = Math.max(0, Math.min(1, (s - vw * 0.525) / (vw * 0.35)));
-    return Math.pow(1 - p, 3) * vh * 0.55;
+    const p = Math.max(0, Math.min(1, (s - vw * TRIGGER) / (vw * 0.38)));
+    return Math.pow(1 - p, 4) * vh * 0.50;
+  });
+  const boxRotate = useTransform(scrollXMV, (s) => {
+    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
+    const p = Math.max(0, Math.min(1, (s - vw * TRIGGER) / (vw * 0.38)));
+    return -29 + Math.pow(1 - p, 4) * 15; // −14° → −29° (diseño final)
   });
   const boxOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * 0.525) / (vw * 0.12)));
+    return Math.max(0, Math.min(1, (s - vw * TRIGGER) / (vw * 0.12)));
   });
 
   const textXBase = useTransform(scrollXMV, (s) => {
@@ -992,8 +1003,8 @@ export default function Home() {
               zIndex: 14,
               y: boxY,
               opacity: boxOpacity,
-              rotate: d.boxRotation,
-              transformOrigin: "center center",
+              rotate: boxRotate,
+              transformOrigin: "50% 100%",
               pointerEvents: "none",
             }}
           >
@@ -1014,8 +1025,8 @@ export default function Home() {
               zIndex: 14,
               y: bagY,
               opacity: bagOpacity,
-              rotate: d.bagRotation,
-              transformOrigin: "center center",
+              rotate: bagRotate,
+              transformOrigin: "50% 100%",
               pointerEvents: "none",
             }}
           >
@@ -1036,8 +1047,8 @@ export default function Home() {
               zIndex: 14,
               y: cupY,
               opacity: cupOpacity,
-              rotate: d.cupRotation,
-              transformOrigin: "center center",
+              rotate: cupRotate,
+              transformOrigin: "50% 100%",
               pointerEvents: "none",
             }}
           >
