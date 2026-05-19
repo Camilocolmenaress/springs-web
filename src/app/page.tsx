@@ -67,15 +67,15 @@ export default function Home() {
   const dropOffsetRef = useRef(_dropOffset);
   dropOffsetRef.current = _dropOffset;
 
-  const _bagLeft = (config.zones.packaging?.elements?.bag?.props?.left as { value: number })?.value ?? 165;
+  const _bagLeft = (config.zones.packaging?.elements?.bag?.props?.left as { value: number })?.value ?? 102.5;
   const bagLeftRef = useRef(_bagLeft);
   bagLeftRef.current = _bagLeft;
 
-  const _cupLeft = (config.zones.packaging?.elements?.cup?.props?.left as { value: number })?.value ?? 157;
+  const _cupLeft = (config.zones.packaging?.elements?.cup?.props?.left as { value: number })?.value ?? 129.5;
   const cupLeftRef = useRef(_cupLeft);
   cupLeftRef.current = _cupLeft;
 
-  const _boxLeft = (config.zones.packaging?.elements?.box?.props?.left as { value: number })?.value ?? 162;
+  const _boxLeft = (config.zones.packaging?.elements?.box?.props?.left as { value: number })?.value ?? 138.5;
   const boxLeftRef = useRef(_boxLeft);
   boxLeftRef.current = _boxLeft;
 
@@ -272,16 +272,16 @@ export default function Home() {
     taglineTop:        (pack?.tagline?.props?.top as { value: number })?.value ?? 13,
     taglineSize:       (pack?.tagline?.props?.fontSize as { value: number })?.value ?? 6.5,
     boxSrc:            (pack?.box?.props?.src as { value: string })?.value ?? "/images/packaging-box.png",
-    boxLeft:           (pack?.box?.props?.left as { value: number })?.value ?? 162,
-    boxTop:            (pack?.box?.props?.top as { value: number })?.value ?? 8,
+    boxLeft:           (pack?.box?.props?.left as { value: number })?.value ?? 138.5,
+    boxTop:            (pack?.box?.props?.top as { value: number })?.value ?? 1,
     boxWidth:          (pack?.box?.props?.width as { value: number })?.value ?? 22,
     bagSrc:            (pack?.bag?.props?.src as { value: string })?.value ?? "/images/packaging-bag.png",
-    bagLeft:           (pack?.bag?.props?.left as { value: number })?.value ?? 165,
-    bagTop:            (pack?.bag?.props?.top as { value: number })?.value ?? 55,
-    bagWidth:          (pack?.bag?.props?.width as { value: number })?.value ?? 28,
+    bagLeft:           (pack?.bag?.props?.left as { value: number })?.value ?? 102.5,
+    bagTop:            (pack?.bag?.props?.top as { value: number })?.value ?? 1,
+    bagWidth:          (pack?.bag?.props?.width as { value: number })?.value ?? 36,
     cupSrc:            (pack?.cup?.props?.src as { value: string })?.value ?? "/images/packaging-cup.png",
-    cupLeft:           (pack?.cup?.props?.left as { value: number })?.value ?? 157,
-    cupTop:            (pack?.cup?.props?.top as { value: number })?.value ?? 32,
+    cupLeft:           (pack?.cup?.props?.left as { value: number })?.value ?? 129.5,
+    cupTop:            (pack?.cup?.props?.top as { value: number })?.value ?? 16,
     cupWidth:          (pack?.cup?.props?.width as { value: number })?.value ?? 18,
     dropStart:         (pack?.dropAnim?.props?.dropStart as { value: number })?.value ?? 2,
     culturePanelLeft:  (cult?.panel?.props?.left as { value: number })?.value ?? 300,
