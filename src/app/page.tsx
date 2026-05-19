@@ -61,30 +61,39 @@ export default function Home() {
   // ─── Scroll-driven packaging ───
   const scrollXMV = useMotionValue(0);
 
-  const _dropOffset = (config.zones.packaging?.elements?.dropAnim?.props?.dropStart as { value: number })?.value ?? 0;
-  const dropOffsetRef = useRef(_dropOffset);
-  dropOffsetRef.current = _dropOffset;
+  // Bolsa cae primero (trigger 42vw de scroll), vaso +7, caja +14. Rango 5vw c/u.
+  const bagY = useTransform(scrollXMV, (s) => {
+    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
+    const vh = typeof window !== "undefined" ? window.innerHeight : 900;
+    const p = Math.max(0, Math.min(1, (s - vw * 42) / (vw * 5)));
+    return (1 - (1 - Math.pow(1 - p, 3))) * -vh * 1.5;
+  });
+  const bagOpacity = useTransform(scrollXMV, (s) => {
+    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
+    return Math.max(0, Math.min(1, (s - vw * 41) / (vw * 2)));
+  });
 
-  const _bagLeft = (config.zones.packaging?.elements?.bag?.props?.left as { value: number })?.value ?? 102.5;
-  const bagLeftRef = useRef(_bagLeft);
-  bagLeftRef.current = _bagLeft;
+  const cupY = useTransform(scrollXMV, (s) => {
+    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
+    const vh = typeof window !== "undefined" ? window.innerHeight : 900;
+    const p = Math.max(0, Math.min(1, (s - vw * 49) / (vw * 5)));
+    return (1 - (1 - Math.pow(1 - p, 3))) * -vh * 1.5;
+  });
+  const cupOpacity = useTransform(scrollXMV, (s) => {
+    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
+    return Math.max(0, Math.min(1, (s - vw * 48) / (vw * 2)));
+  });
 
-  // Refs directos a los <img> para animación via DOM (evita cadena MotionValue)
-  const bagImgRef = useRef<HTMLImageElement>(null);
-  const cupImgRef = useRef<HTMLImageElement>(null);
-  const boxImgRef = useRef<HTMLImageElement>(null);
-
-  const _bagRot = (config.zones.packaging?.elements?.bag?.props?.rotation as { value: number })?.value ?? 0;
-  const bagRotRef = useRef(_bagRot);
-  bagRotRef.current = _bagRot;
-
-  const _cupRot = (config.zones.packaging?.elements?.cup?.props?.rotation as { value: number })?.value ?? 0;
-  const cupRotRef = useRef(_cupRot);
-  cupRotRef.current = _cupRot;
-
-  const _boxRot = (config.zones.packaging?.elements?.box?.props?.rotation as { value: number })?.value ?? -29;
-  const boxRotRef = useRef(_boxRot);
-  boxRotRef.current = _boxRot;
+  const boxY = useTransform(scrollXMV, (s) => {
+    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
+    const vh = typeof window !== "undefined" ? window.innerHeight : 900;
+    const p = Math.max(0, Math.min(1, (s - vw * 56) / (vw * 5)));
+    return (1 - (1 - Math.pow(1 - p, 3))) * -vh * 1.5;
+  });
+  const boxOpacity = useTransform(scrollXMV, (s) => {
+    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
+    return Math.max(0, Math.min(1, (s - vw * 55) / (vw * 2)));
+  });
 
   const textXBase = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
@@ -275,33 +284,7 @@ export default function Home() {
     lenisRef.current = lenis;
 
     lenis.on("scroll", () => {
-      const s = lenis.scroll;
-      scrollXMV.set(s);
-
-      const vw = window.innerWidth;
-      const vh = window.innerHeight;
-      const drop = dropOffsetRef.current;
-      const bl = bagLeftRef.current;
-
-      const calcY = (trigVw: number) => {
-        const p = Math.max(0, Math.min(1, (s - vw * trigVw) / (vw * 9)));
-        return ((1 - (1 - p) ** 3) - 1) * vh;
-      };
-      const calcOp = (trigVw: number) =>
-        Math.max(0, Math.min(1, (s - vw * trigVw) / (vw * 4)));
-
-      if (bagImgRef.current) {
-        bagImgRef.current.style.transform = `translateY(${calcY(bl - 60 - drop)}px) rotate(${bagRotRef.current}deg)`;
-        bagImgRef.current.style.opacity = String(calcOp(bl - 62 - drop));
-      }
-      if (cupImgRef.current) {
-        cupImgRef.current.style.transform = `translateY(${calcY(bl - 53 - drop)}px) rotate(${cupRotRef.current}deg)`;
-        cupImgRef.current.style.opacity = String(calcOp(bl - 55 - drop));
-      }
-      if (boxImgRef.current) {
-        boxImgRef.current.style.transform = `translateY(${calcY(bl - 46 - drop)}px) rotate(${boxRotRef.current}deg)`;
-        boxImgRef.current.style.opacity = String(calcOp(bl - 48 - drop));
-      }
+      scrollXMV.set(lenis.scroll);
     });
 
     let raf: number;
@@ -991,8 +974,7 @@ export default function Home() {
           </motion.div>
 
           {/* Empaque — Caja */}
-          <img
-            ref={boxImgRef}
+          <motion.img
             src={d.boxSrc}
             alt=""
             style={{
@@ -1000,8 +982,9 @@ export default function Home() {
               left: `${d.boxLeft}vw`, top: `${d.boxTop}vh`,
               width: `${d.boxWidth}vw`, height: "auto",
               zIndex: 14,
-              opacity: 0,
-              transform: `translateY(-100vh) rotate(${d.boxRotation}deg)`,
+              y: boxY,
+              opacity: boxOpacity,
+              rotate: d.boxRotation,
               transformOrigin: "center center",
               pointerEvents: "none",
               filter: "drop-shadow(0 28px 52px rgba(26,10,12,0.20))",
@@ -1009,8 +992,7 @@ export default function Home() {
           />
 
           {/* Empaque — Bolsa */}
-          <img
-            ref={bagImgRef}
+          <motion.img
             src={d.bagSrc}
             alt=""
             style={{
@@ -1018,8 +1000,9 @@ export default function Home() {
               left: `${d.bagLeft}vw`, top: `${d.bagTop}vh`,
               width: `${d.bagWidth}vw`, height: "auto",
               zIndex: 14,
-              opacity: 0,
-              transform: `translateY(-100vh) rotate(${d.bagRotation}deg)`,
+              y: bagY,
+              opacity: bagOpacity,
+              rotate: d.bagRotation,
               transformOrigin: "center center",
               pointerEvents: "none",
               filter: "drop-shadow(0 32px 60px rgba(26,10,12,0.18))",
@@ -1027,8 +1010,7 @@ export default function Home() {
           />
 
           {/* Empaque — Vaso */}
-          <img
-            ref={cupImgRef}
+          <motion.img
             src={d.cupSrc}
             alt=""
             style={{
@@ -1036,8 +1018,9 @@ export default function Home() {
               left: `${d.cupLeft}vw`, top: `${d.cupTop}vh`,
               width: `${d.cupWidth}vw`, height: "auto",
               zIndex: 14,
-              opacity: 0,
-              transform: `translateY(-100vh) rotate(${d.cupRotation}deg)`,
+              y: cupY,
+              opacity: cupOpacity,
+              rotate: d.cupRotation,
               transformOrigin: "center center",
               pointerEvents: "none",
               filter: "drop-shadow(0 24px 44px rgba(26,10,12,0.22))",
