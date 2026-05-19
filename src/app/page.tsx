@@ -61,43 +61,43 @@ export default function Home() {
   // ─── Scroll-driven packaging ───
   const scrollXMV = useMotionValue(0);
 
-  // Canvas 560vw, viewport 100vw.
-  // Bag en canvas 102.5vw → entra al viewport en scroll 2.5vw.
-  // Cup en canvas 129.5vw → entra en scroll 29.5vw.
-  // Box en canvas 139.5vw → entra en scroll 39.5vw.
-  // Dirección: sube desde abajo (y: vh*0.8 → 0) para que la animación
-  // sea visible mientras el producto está en pantalla.
+  // Canvas 560vw, viewport 100vw. lenis.scroll en píxeles.
+  // bag canvas left 102.5vw → entra al viewport cuando scroll = (102.5-1)*vw = 101.5*vw
+  // cup canvas left 129.5vw → entra cuando scroll = 128.5*vw
+  // box canvas left 139.5vw → entra cuando scroll = 138.5*vw
+  // Animación: sube desde abajo (y: vh*0.8→0), stagger natural al scrollear la zona.
+  // Trigger 5vw antes de que entre, rango 12vw, para que la caída sea visible.
   const bagY = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const p = Math.max(0, Math.min(1, (s - vw * 2.5) / (vw * 12)));
+    const p = Math.max(0, Math.min(1, (s - vw * 96.5) / (vw * 12)));
     return Math.pow(1 - p, 3) * vh * 0.8;
   });
   const bagOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * 2.5) / (vw * 5)));
+    return Math.max(0, Math.min(1, (s - vw * 96.5) / (vw * 5)));
   });
 
   const cupY = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const p = Math.max(0, Math.min(1, (s - vw * 29.5) / (vw * 12)));
+    const p = Math.max(0, Math.min(1, (s - vw * 123.5) / (vw * 12)));
     return Math.pow(1 - p, 3) * vh * 0.8;
   });
   const cupOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * 29.5) / (vw * 5)));
+    return Math.max(0, Math.min(1, (s - vw * 123.5) / (vw * 5)));
   });
 
   const boxY = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const p = Math.max(0, Math.min(1, (s - vw * 39.5) / (vw * 12)));
+    const p = Math.max(0, Math.min(1, (s - vw * 133.5) / (vw * 12)));
     return Math.pow(1 - p, 3) * vh * 0.8;
   });
   const boxOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * 39.5) / (vw * 5)));
+    return Math.max(0, Math.min(1, (s - vw * 133.5) / (vw * 5)));
   });
 
   const textXBase = useTransform(scrollXMV, (s) => {
