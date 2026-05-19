@@ -157,6 +157,7 @@ export default function Home() {
   const colorHex = (key: string) => COLOR_MAP[key] ?? COLOR_MAP.tinta;
 
   const hero = config.zones.hero?.elements;
+  const pack = config.zones.packaging?.elements;
   const d = {
     titleSize:    (hero?.title?.props?.fontSize as { value: number })?.value ?? 19.5,
     titleLeft:    (hero?.title?.props?.left as { value: number })?.value ?? 42,
@@ -234,6 +235,24 @@ export default function Home() {
     sensitiveRotation: (hero?.sensitiveImage?.props?.rotation as { value: number })?.value ?? -4,
     sensitiveFontSize: (hero?.sensitiveImage?.props?.fontSize as { value: number })?.value ?? 1.1,
     sensitiveOpacity:  (hero?.sensitiveImage?.props?.opacity as { value: number })?.value ?? 60,
+    bgSpringsLeft:     (pack?.bgSprings?.props?.left as { value: number })?.value ?? 106,
+    bgSpringsSize:     (pack?.bgSprings?.props?.fontSize as { value: number })?.value ?? 14,
+    bgSpringsOpacity:  (pack?.bgSprings?.props?.opacity as { value: number })?.value ?? 3.5,
+    taglineLeft:       (pack?.tagline?.props?.left as { value: number })?.value ?? 118,
+    taglineTop:        (pack?.tagline?.props?.top as { value: number })?.value ?? 13,
+    taglineSize:       (pack?.tagline?.props?.fontSize as { value: number })?.value ?? 6.5,
+    boxSrc:            (pack?.box?.props?.src as { value: string })?.value ?? "/images/packaging-box.png",
+    boxLeft:           (pack?.box?.props?.left as { value: number })?.value ?? 110,
+    boxTop:            (pack?.box?.props?.top as { value: number })?.value ?? 22,
+    boxWidth:          (pack?.box?.props?.width as { value: number })?.value ?? 22,
+    bagSrc:            (pack?.bag?.props?.src as { value: string })?.value ?? "/images/packaging-bag.png",
+    bagLeft:           (pack?.bag?.props?.left as { value: number })?.value ?? 153,
+    bagTop:            (pack?.bag?.props?.top as { value: number })?.value ?? 17,
+    bagWidth:          (pack?.bag?.props?.width as { value: number })?.value ?? 26,
+    cupSrc:            (pack?.cup?.props?.src as { value: string })?.value ?? "/images/packaging-cup.png",
+    cupLeft:           (pack?.cup?.props?.left as { value: number })?.value ?? 196,
+    cupTop:            (pack?.cup?.props?.top as { value: number })?.value ?? 19,
+    cupWidth:          (pack?.cup?.props?.width as { value: number })?.value ?? 18,
   };
 
   const pauseScroll = () => lenisRef.current?.stop();
@@ -910,10 +929,10 @@ export default function Home() {
 
           {/* Texto fondo muy suave */}
           <div style={{
-            position: "absolute", left: "106vw", top: "50%",
+            position: "absolute", left: `${d.bgSpringsLeft}vw`, top: "50%",
             transform: "translateY(-50%)",
-            ...F.display, fontSize: "clamp(80px, 14vw, 260px)",
-            color: C.tinta, opacity: 0.035,
+            ...F.display, fontSize: `${d.bgSpringsSize}vw`,
+            color: C.tinta, opacity: d.bgSpringsOpacity / 100,
             letterSpacing: "-0.02em", whiteSpace: "nowrap",
             zIndex: 1, pointerEvents: "none", userSelect: "none",
           }}>
@@ -923,14 +942,14 @@ export default function Home() {
           {/* Tagline — desliza desde la derecha */}
           <motion.div
             style={{
-              position: "absolute", left: "118vw", top: "13vh",
+              position: "absolute", left: `${d.taglineLeft}vw`, top: `${d.taglineTop}vh`,
               x: textX, opacity: textOpacity,
               zIndex: 5, pointerEvents: "none",
             }}
           >
             <div style={{
               ...F.display,
-              fontSize: "clamp(40px, 6.5vw, 130px)",
+              fontSize: `${d.taglineSize}vw`,
               color: C.burgundy, lineHeight: 0.88,
               letterSpacing: "-0.02em", textTransform: "uppercase",
             }}>
@@ -947,12 +966,12 @@ export default function Home() {
 
           {/* Empaque — Caja */}
           <motion.img
-            src="/images/packaging-box.png"
+            src={d.boxSrc}
             alt=""
             style={{
               position: "absolute",
-              left: "110vw", top: "22vh",
-              width: "22vw", height: "auto",
+              left: `${d.boxLeft}vw`, top: `${d.boxTop}vh`,
+              width: `${d.boxWidth}vw`, height: "auto",
               zIndex: 14,
               y: boxY,
               rotate: boxRotate,
@@ -965,12 +984,12 @@ export default function Home() {
 
           {/* Empaque — Bolsa */}
           <motion.img
-            src="/images/packaging-bag.png"
+            src={d.bagSrc}
             alt=""
             style={{
               position: "absolute",
-              left: "153vw", top: "17vh",
-              width: "26vw", height: "auto",
+              left: `${d.bagLeft}vw`, top: `${d.bagTop}vh`,
+              width: `${d.bagWidth}vw`, height: "auto",
               zIndex: 14,
               y: bagY,
               rotate: bagRotate,
@@ -983,12 +1002,12 @@ export default function Home() {
 
           {/* Empaque — Vaso */}
           <motion.img
-            src="/images/packaging-cup.png"
+            src={d.cupSrc}
             alt=""
             style={{
               position: "absolute",
-              left: "196vw", top: "19vh",
-              width: "18vw", height: "auto",
+              left: `${d.cupLeft}vw`, top: `${d.cupTop}vh`,
+              width: `${d.cupWidth}vw`, height: "auto",
               zIndex: 14,
               y: cupY,
               rotate: cupRotate,
