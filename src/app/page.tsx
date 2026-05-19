@@ -75,34 +75,34 @@ export default function Home() {
   const bagY = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const p = Math.max(0, Math.min(1, (s - vw * 0.025) / (vw * 1.8)));
+    const p = Math.max(0, Math.min(1, (s - vw * 0.525) / (vw * 0.7)));
     return Math.pow(1 - p, 3) * vh * 0.55;
   });
   const bagOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * 0.025) / (vw * 0.65)));
+    return Math.max(0, Math.min(1, (s - vw * 0.525) / (vw * 0.3)));
   });
 
   const cupY = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const p = Math.max(0, Math.min(1, (s - vw * 0.295) / (vw * 1.8)));
+    const p = Math.max(0, Math.min(1, (s - vw * 0.795) / (vw * 0.7)));
     return Math.pow(1 - p, 3) * vh * 0.55;
   });
   const cupOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * 0.295) / (vw * 0.65)));
+    return Math.max(0, Math.min(1, (s - vw * 0.795) / (vw * 0.3)));
   });
 
   const boxY = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const p = Math.max(0, Math.min(1, (s - vw * 0.395) / (vw * 1.8)));
+    const p = Math.max(0, Math.min(1, (s - vw * 0.895) / (vw * 0.7)));
     return Math.pow(1 - p, 3) * vh * 0.55;
   });
   const boxOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * 0.395) / (vw * 0.65)));
+    return Math.max(0, Math.min(1, (s - vw * 0.895) / (vw * 0.3)));
   });
 
   const textXBase = useTransform(scrollXMV, (s) => {
