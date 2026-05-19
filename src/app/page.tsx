@@ -116,6 +116,14 @@ export default function Home() {
     return Math.max(0, Math.min(1, (s - vw * TRIGGER) / (vw * 0.12)));
   });
 
+  // Panel cultura — desliza desde la derecha hasta su posición final
+  const culturePanelX = useTransform(scrollXMV, (s) => {
+    const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
+    // Panel en left: 147vw entra al viewport en scroll ≈ vw*0.47
+    const p = Math.max(0, Math.min(1, (s - vw * 0.47) / (vw * 0.4)));
+    return Math.pow(1 - p, 3) * vw * 0.7;
+  });
+
   const textXBase = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const p = Math.max(0, Math.min(1, (s - vw * 0.85) / (vw * 0.38)));
@@ -1064,73 +1072,76 @@ export default function Home() {
               ZONA 1.7 — CULTURA (300 → 430vw)
           ═══════════════════════════════════════ */}
 
-          {/* Panel dark culture */}
-          <div style={{
+          {/* Panel dark culture — desliza desde la derecha */}
+          <motion.div style={{
             position: "absolute", left: `${d.culturePanelLeft}vw`, top: 0,
             width: `${d.culturePanelWidth}vw`, height: "100vh",
             background: C.tinta, zIndex: 1,
+            x: culturePanelX,
           }} />
 
           {/* Imagen lado derecho */}
-          <div style={{
+          <motion.div style={{
             position: "absolute", left: `${d.cultureImgLeft}vw`, top: `${d.cultureImgTop}vh`,
             width: `${d.cultureImgWidth}vw`, height: `${d.cultureImgHeight}vh`,
             backgroundImage: `url(${d.cultureImgSrc}), linear-gradient(135deg, #0d0507 0%, #2a1a1d 60%, #3a2520 100%)`,
             backgroundSize: "cover", backgroundPosition: "center",
-            zIndex: 2,
+            zIndex: 2, x: culturePanelX,
           }} />
 
           {/* Overlay degradado sutil sobre imagen para legibilidad */}
-          <div style={{
+          <motion.div style={{
             position: "absolute", left: `${d.cultureImgLeft}vw`, top: `${d.cultureImgTop}vh`,
             width: `${d.cultureImgWidth}vw`, height: `${d.cultureImgHeight}vh`,
             background: `linear-gradient(90deg, ${C.tinta} 0%, transparent 25%, transparent 100%)`,
-            zIndex: 3, pointerEvents: "none",
+            zIndex: 3, pointerEvents: "none", x: culturePanelX,
           }} />
 
           {/* Hashtag */}
-          <div style={{
+          <motion.div style={{
             position: "absolute", left: `${d.cultureHashtagLeft}vw`, top: `${d.cultureHashtagTop}vh`,
             ...F.mono, fontSize: `${d.cultureHashtagSize}vw`,
             letterSpacing: "0.18em", color: C.cream, opacity: 0.85,
-            textTransform: "uppercase", zIndex: 5,
+            textTransform: "uppercase", zIndex: 5, x: culturePanelX,
           }}>
             {d.cultureHashtag}
-          </div>
+          </motion.div>
 
           {/* THIS IS (stroke) */}
-          <div style={{
+          <motion.div style={{
             position: "absolute", left: `${d.cultureThisIsLeft}vw`, top: `${d.cultureThisIsTop}vh`,
             ...F.display, fontSize: `${d.cultureThisIsSize}vw`,
             lineHeight: 0.9, letterSpacing: "-0.01em",
             color: "transparent",
             WebkitTextStroke: `1.5px ${C.cream}`,
             textTransform: "uppercase", zIndex: 5, whiteSpace: "nowrap",
+            x: culturePanelX,
           }}>
             {d.cultureThisIs}
-          </div>
+          </motion.div>
 
           {/* OUR CULTURE (solid) */}
-          <div style={{
+          <motion.div style={{
             position: "absolute", left: `${d.cultureOurLeft}vw`, top: `${d.cultureOurTop}vh`,
             ...F.display, fontSize: `${d.cultureOurSize}vw`,
             lineHeight: 0.9, letterSpacing: "-0.015em",
             color: C.cream,
             textTransform: "uppercase", zIndex: 5, whiteSpace: "nowrap",
+            x: culturePanelX,
           }}>
             {d.cultureOurCulture}
-          </div>
+          </motion.div>
 
           {/* Description */}
-          <div style={{
+          <motion.div style={{
             position: "absolute", left: `${d.cultureDescLeft}vw`, top: `${d.cultureDescTop}vh`,
             ...F.mono, fontSize: `${d.cultureDescSize}vw`,
             letterSpacing: "0.14em", color: C.cream, opacity: 0.75,
             lineHeight: 1.7, textTransform: "uppercase", zIndex: 5,
-            whiteSpace: "pre-line",
+            whiteSpace: "pre-line", x: culturePanelX,
           }}>
             {d.cultureDesc}
-          </div>
+          </motion.div>
 
           {/* ═══════════════════════════════════════
               ZONA 2 — PEDIR YA (430 → 560vw)
