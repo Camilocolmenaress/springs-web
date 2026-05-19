@@ -120,7 +120,7 @@ export default function Home() {
   const culturePanelX = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     // Panel en left: 147vw entra al viewport en scroll ≈ vw*0.47
-    const p = Math.max(0, Math.min(1, (s - vw * 0.75) / (vw * 0.4)));
+    const p = Math.max(0, Math.min(1, (s - vw * 0.95) / (vw * 0.4)));
     return Math.pow(1 - p, 3) * vw * 0.7;
   });
 
@@ -1097,51 +1097,49 @@ export default function Home() {
             zIndex: 3, pointerEvents: "none", x: culturePanelX,
           }} />
 
-          {/* Hashtag */}
-          <motion.div style={{
+          {/* Hashtag — estático, invisible sobre fondo cream hasta que llega el panel */}
+          <div style={{
             position: "absolute", left: `${d.cultureHashtagLeft}vw`, top: `${d.cultureHashtagTop}vh`,
             ...F.mono, fontSize: `${d.cultureHashtagSize}vw`,
             letterSpacing: "0.18em", color: C.cream, opacity: 0.85,
-            textTransform: "uppercase", zIndex: 5, x: culturePanelX,
+            textTransform: "uppercase", zIndex: 5,
           }}>
             {d.cultureHashtag}
-          </motion.div>
+          </div>
 
-          {/* THIS IS (stroke) */}
-          <motion.div style={{
+          {/* THIS IS (stroke) — estático */}
+          <div style={{
             position: "absolute", left: `${d.cultureThisIsLeft}vw`, top: `${d.cultureThisIsTop}vh`,
             ...F.display, fontSize: `${d.cultureThisIsSize}vw`,
             lineHeight: 0.9, letterSpacing: "-0.01em",
             color: "transparent",
             WebkitTextStroke: `1.5px ${C.cream}`,
             textTransform: "uppercase", zIndex: 5, whiteSpace: "nowrap",
-            x: culturePanelX,
           }}>
             {d.cultureThisIs}
-          </motion.div>
+          </div>
 
-          {/* OUR CULTURE (solid) */}
-          <motion.div style={{
+          {/* OUR CULTURE (solid) — estático */}
+          <div style={{
             position: "absolute", left: `${d.cultureOurLeft}vw`, top: `${d.cultureOurTop}vh`,
             ...F.display, fontSize: `${d.cultureOurSize}vw`,
             lineHeight: 0.9, letterSpacing: "-0.015em",
             color: C.cream,
             textTransform: "uppercase", zIndex: 5, whiteSpace: "nowrap",
-            x: culturePanelX,
           }}>
             {d.cultureOurCulture}
-          </motion.div>
+          </div>
 
-          {/* Description */}
-          <motion.div style={{
+          {/* Description — estático */}
+          <div style={{
             position: "absolute", left: `${d.cultureDescLeft}vw`, top: `${d.cultureDescTop}vh`,
             ...F.mono, fontSize: `${d.cultureDescSize}vw`,
             letterSpacing: "0.14em", color: C.cream, opacity: 0.75,
             lineHeight: 1.7, textTransform: "uppercase", zIndex: 5,
-            whiteSpace: "pre-line", x: culturePanelX,
+            whiteSpace: "pre-line",
           }}>
             {d.cultureDesc}
-          </motion.div>
+          </div>
 
           {/* ═══════════════════════════════════════
               ZONA 2 — PEDIR YA (430 → 560vw)
