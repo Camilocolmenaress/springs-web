@@ -118,14 +118,14 @@ export default function Home() {
 
   const textXBase = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    const p = Math.max(0, Math.min(1, (s - vw * 0.35) / (vw * 0.38)));
+    const p = Math.max(0, Math.min(1, (s - vw * 0.65) / (vw * 0.38)));
     const e = 1 - Math.pow(1 - p, 3);
     return (1 - e) * vw * 0.32;
   });
   const textX = useSpring(textXBase, { stiffness: 140, damping: 22 });
   const textOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * 0.32) / (vw * 0.18)));
+    return Math.max(0, Math.min(1, (s - vw * 0.62) / (vw * 0.18)));
   });
 
   // Brazo: entrada spring (1200→0) + scroll drift (24vw→0). Suma de ambos.
