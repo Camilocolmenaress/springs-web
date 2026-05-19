@@ -64,58 +64,58 @@ export default function Home() {
   const boxYBase = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const p = Math.max(0, Math.min(1, (s - vw * 0.10) / (vw * 0.32)));
+    const p = Math.max(0, Math.min(1, (s - vw * 0.10) / (vw * 0.20)));
     const e = 1 - Math.pow(1 - p, 3);
     return (1 - e) * -vh * 1.35;
   });
-  const boxY = useSpring(boxYBase, { stiffness: 180, damping: 22, mass: 1.1 });
+  const boxY = useSpring(boxYBase, { stiffness: 180, damping: 26, mass: 1.1 });
   const boxRotate = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    const p = Math.max(0, Math.min(1, (s - vw * 0.10) / (vw * 0.32)));
+    const p = Math.max(0, Math.min(1, (s - vw * 0.10) / (vw * 0.20)));
     const e = 1 - Math.pow(1 - p, 3);
-    return 25 - 32 * e; // 25° → -7°
+    return 25 - 32 * e;
   });
   const boxOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * 0.06) / (vw * 0.15)));
+    return Math.max(0, Math.min(1, (s - vw * 0.06) / (vw * 0.12)));
   });
 
   const bagYBase = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const p = Math.max(0, Math.min(1, (s - vw * 0.52) / (vw * 0.32)));
+    const p = Math.max(0, Math.min(1, (s - vw * 0.10) / (vw * 0.20)));
     const e = 1 - Math.pow(1 - p, 3);
     return (1 - e) * -vh * 1.5;
   });
-  const bagY = useSpring(bagYBase, { stiffness: 160, damping: 20, mass: 1.2 });
+  const bagY = useSpring(bagYBase, { stiffness: 160, damping: 26, mass: 1.2 });
   const bagRotate = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    const p = Math.max(0, Math.min(1, (s - vw * 0.52) / (vw * 0.32)));
+    const p = Math.max(0, Math.min(1, (s - vw * 0.10) / (vw * 0.20)));
     const e = 1 - Math.pow(1 - p, 3);
-    return -22 + 27 * e; // -22° → 5°
+    return -22 + 27 * e;
   });
   const bagOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * 0.48) / (vw * 0.15)));
+    return Math.max(0, Math.min(1, (s - vw * 0.06) / (vw * 0.12)));
   });
 
   const cupYBase = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
     const vh = typeof window !== "undefined" ? window.innerHeight : 900;
-    const p = Math.max(0, Math.min(1, (s - vw * 0.95) / (vw * 0.32)));
+    const p = Math.max(0, Math.min(1, (s - vw * 0.12) / (vw * 0.20)));
     const e = 1 - Math.pow(1 - p, 3);
     return (1 - e) * -vh * 1.2;
   });
-  const cupY = useSpring(cupYBase, { stiffness: 200, damping: 24, mass: 0.9 });
+  const cupY = useSpring(cupYBase, { stiffness: 200, damping: 32, mass: 0.9 });
   const cupRotate = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    const p = Math.max(0, Math.min(1, (s - vw * 0.95) / (vw * 0.32)));
+    const p = Math.max(0, Math.min(1, (s - vw * 0.12) / (vw * 0.20)));
     const e = 1 - Math.pow(1 - p, 3);
-    return 18 - 21 * e; // 18° → -3°
+    return 18 - 21 * e;
   });
   const cupOpacity = useTransform(scrollXMV, (s) => {
     const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
-    return Math.max(0, Math.min(1, (s - vw * 0.91) / (vw * 0.15)));
+    return Math.max(0, Math.min(1, (s - vw * 0.08) / (vw * 0.12)));
   });
 
   const textXBase = useTransform(scrollXMV, (s) => {
@@ -254,7 +254,7 @@ export default function Home() {
     bagWidth:          (pack?.bag?.props?.width as { value: number })?.value ?? 26,
     cupSrc:            (pack?.cup?.props?.src as { value: string })?.value ?? "/images/packaging-cup.png",
     cupLeft:           (pack?.cup?.props?.left as { value: number })?.value ?? 196,
-    cupTop:            (pack?.cup?.props?.top as { value: number })?.value ?? 19,
+    cupTop:            (pack?.cup?.props?.top as { value: number })?.value ?? 20,
     cupWidth:          (pack?.cup?.props?.width as { value: number })?.value ?? 18,
     culturePanelLeft:  (cult?.panel?.props?.left as { value: number })?.value ?? 300,
     culturePanelWidth: (cult?.panel?.props?.width as { value: number })?.value ?? 130,
