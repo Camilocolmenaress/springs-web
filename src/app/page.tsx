@@ -236,6 +236,7 @@ export default function Home() {
     sensitiveFontSize: (hero?.sensitiveImage?.props?.fontSize as { value: number })?.value ?? 1.1,
     sensitiveOpacity:  (hero?.sensitiveImage?.props?.opacity as { value: number })?.value ?? 60,
     bgSpringsLeft:     (pack?.bgSprings?.props?.left as { value: number })?.value ?? 106,
+    bgSpringsTop:      (pack?.bgSprings?.props?.top as { value: number })?.value ?? 50,
     bgSpringsSize:     (pack?.bgSprings?.props?.fontSize as { value: number })?.value ?? 14,
     bgSpringsOpacity:  (pack?.bgSprings?.props?.opacity as { value: number })?.value ?? 3.5,
     taglineLeft:       (pack?.tagline?.props?.left as { value: number })?.value ?? 118,
@@ -929,7 +930,7 @@ export default function Home() {
 
           {/* Texto fondo muy suave */}
           <div style={{
-            position: "absolute", left: `${d.bgSpringsLeft}vw`, top: "50%",
+            position: "absolute", left: `${d.bgSpringsLeft}vw`, top: `${d.bgSpringsTop}vh`,
             transform: "translateY(-50%)",
             ...F.display, fontSize: `${d.bgSpringsSize}vw`,
             color: C.tinta, opacity: d.bgSpringsOpacity / 100,
