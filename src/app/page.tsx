@@ -58,6 +58,7 @@ export default function Home() {
   const miercolesDadosDragged = useRef(false);
   const [ourCultureHovered, setOurCultureHovered] = useState(false);
   const [receiptVisible, setReceiptVisible] = useState(false);
+  const [footerBlend, setFooterBlend] = useState(false);
   const router = useRouter();
 
   // ─── Scroll-driven packaging ───
@@ -321,6 +322,8 @@ export default function Home() {
 
     lenis.on("scroll", () => {
       scrollXMV.set(lenis.scroll);
+      const overDark = lenis.scroll > window.innerWidth * 0.65;
+      setFooterBlend(overDark);
       if (lenis.scroll > window.innerWidth * 1.05) {
         setReceiptVisible(true);
       }
@@ -417,7 +420,7 @@ export default function Home() {
           display: "flex", gap: d.footerMenuItemGap,
           position: "fixed", bottom: d.footerMenuBottom, right: d.footerMenuRight,
           zIndex: 101,
-          mixBlendMode: "difference",
+          mixBlendMode: footerBlend ? "difference" : "normal",
         }}>
           {([
             { label: "CARTA",       href: "/menu"                },
@@ -434,9 +437,7 @@ export default function Home() {
               style={{ ...F.mono, fontSize: `${d.footerMenuSize}rem`, letterSpacing: `${d.footerMenuLetterSpacing}em`, wordSpacing: `${d.footerMenuWordSpacing}px`, textDecoration: "none", fontWeight: 600, position: "relative", display: "inline-block" }}
             >
               <motion.span
-                variants={{ rest: { color: "#ffffff" }, hover: { color: "#ffffff" } }}
-                transition={{ duration: 0.2 }}
-                style={{ display: "block" }}
+                style={{ display: "block", color: footerBlend ? "#ffffff" : C.tinta }}
               >
                 {item.label}
               </motion.span>
