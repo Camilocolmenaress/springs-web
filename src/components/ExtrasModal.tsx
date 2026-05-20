@@ -114,48 +114,42 @@ export default function ExtrasModal({ product, onClose, onConfirm }: Props) {
 }
 
 // ─── Shooting star ────────────────────────────────────────────────────────────
-// Sale directo desde el centro del modal hacia VER PEDIDO.
-// Se encoge y redondea mientras vuela — como una estrella fugaz.
+// Píldora pequeña que nace en el centro del modal y vuela al carrito.
+// El modal se desvanece por separado con opacidad.
 function GeniePill({ launch, onComplete }: { launch: LaunchState; onComplete: () => void }) {
-  const W = Math.min(880, window.innerWidth  * 0.96);
-  const H = Math.min(580, window.innerHeight * 0.92);
+  const PW = 80; const PH = 20; // tamaño de la píldora
+  const D  = 0.5;
   const ARC = -50;
 
   return (
+    // Anclado al centro exacto del modal
     <div style={{
       position: "fixed",
-      left: launch.cx - W / 2,
-      top:  launch.cy - H / 2,
-      width: W, height: H,
+      left: launch.cx - PW / 2,
+      top:  launch.cy - PH / 2,
+      width: PW, height: PH,
       pointerEvents: "none",
       zIndex: 200,
     }}>
-      <motion.div
-        style={{ width: "100%", height: "100%" }}
+      <motion.div style={{ width: "100%", height: "100%" }}
         initial={{ x: 0 }}
         animate={{ x: launch.dx }}
-        transition={{ duration: 0.65, ease: "easeIn" }}
+        transition={{ duration: D, ease: "easeIn" }}
       >
-        <motion.div
-          style={{ width: "100%", height: "100%" }}
+        <motion.div style={{ width: "100%", height: "100%" }}
           initial={{ y: 0 }}
           animate={{ y: [0, ARC, launch.dy] }}
-          transition={{ duration: 0.65, times: [0, 0.2, 1], ease: ["easeOut", "easeIn"] }}
+          transition={{ duration: D, times: [0, 0.2, 1], ease: ["easeOut", "easeIn"] }}
           onAnimationComplete={onComplete}
         >
           <motion.div
-            initial={{ scaleX: 1, scaleY: 1, borderRadius: "0%", opacity: 1 }}
-            animate={{
-              scaleX:       [1,   1,   0.08, 0.02],
-              scaleY:       [1,   1,   0.06, 0.02],
-              borderRadius: ["0%","0%","50%","50%"],
-              opacity:      [1,   1,   0.9,  0   ],
-            }}
-            transition={{ duration: 0.6, times: [0, 0.72, 0.90, 1], ease: "easeIn" }}
+            initial={{ scale: 1, opacity: 1 }}
+            animate={{ scale: [1, 0.6, 0.1], opacity: [1, 0.8, 0] }}
+            transition={{ duration: D, times: [0, 0.5, 1], ease: "easeIn" }}
             style={{
               width: "100%", height: "100%",
               background: C.cream,
-              transformOrigin: "center center",
+              borderRadius: 999,
             }}
           />
         </motion.div>
