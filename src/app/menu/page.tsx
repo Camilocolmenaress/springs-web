@@ -3,43 +3,53 @@
 import { useState } from "react";
 import Link from "next/link";
 import Menu from "@/components/Menu";
-import Cart, { type CartItem } from "@/components/Cart";
+import Cart, { type CartItem, type CartExtra } from "@/components/Cart";
+import ExtrasModal from "@/components/ExtrasModal";
 import DevPanel from "@/components/DevPanel";
 import { useDesignConfig } from "@/hooks/useDesignConfig";
-import { type Producto } from "@/data/productos";
+import { type Producto, type Categoria } from "@/data/productos";
 
 export default function MenuPage() {
   const { config, editMode, saved, updateProp, save, reset, exportValues } = useDesignConfig("menu");
 
+  const [categoria, setCategoria] = useState<Categoria>("jacket");
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [pendingProduct, setPendingProduct] = useState<Producto | null>(null);
 
   function handleAgregar(p: Producto) {
-    setCartItems(prev => {
-      const existing = prev.find(i => i.id === p.id);
-      if (existing) {
-        return prev.map(i => i.id === p.id ? { ...i, cantidad: i.cantidad + 1 } : i);
-      }
-      return [...prev, { id: p.id, nombre: p.nombre, precio: p.precio, cantidad: 1 }];
-    });
+    if (p.categoria === "bebida") {
+      addToCart(p, []);
+    } else {
+      setPendingProduct(p);
+    }
   }
 
-  function handleAdd(id: string) {
+  function addToCart(p: Producto, extras: CartExtra[]) {
+    const cartId = `${p.id}_${Date.now()}`;
+    setCartItems(prev => [...prev, { cartId, id: p.id, nombre: p.nombre, precio: p.precio, cantidad: 1, extras }]);
+  }
+
+  function handleConfirm(p: Producto, extras: CartExtra[]) {
+    addToCart(p, extras);
+  }
+
+  function handleAdd(cartId: string) {
     setCartItems(prev =>
-      prev.map(i => i.id === id ? { ...i, cantidad: i.cantidad + 1 } : i)
+      prev.map(i => i.cartId === cartId ? { ...i, cantidad: i.cantidad + 1 } : i)
     );
   }
 
-  function handleRemove(id: string) {
+  function handleRemove(cartId: string) {
     setCartItems(prev => {
-      const item = prev.find(i => i.id === id);
+      const item = prev.find(i => i.cartId === cartId);
       if (!item) return prev;
-      if (item.cantidad <= 1) return prev.filter(i => i.id !== id);
-      return prev.map(i => i.id === id ? { ...i, cantidad: i.cantidad - 1 } : i);
+      if (item.cantidad <= 1) return prev.filter(i => i.cartId !== cartId);
+      return prev.map(i => i.cartId === cartId ? { ...i, cantidad: i.cantidad - 1 } : i);
     });
   }
 
-  function handleDelete(id: string) {
-    setCartItems(prev => prev.filter(i => i.id !== id));
+  function handleDelete(cartId: string) {
+    setCartItems(prev => prev.filter(i => i.cartId !== cartId));
   }
 
   return (
@@ -70,7 +80,7 @@ export default function MenuPage() {
         <span aria-hidden>←</span> VOLVER
       </Link>
 
-      <Menu onAgregar={handleAgregar} config={config} />
+      <Menu onAgregar={handleAgregar} config={config} categoria={categoria} onCategoriaChange={setCategoria} />
 
       <Cart
         items={cartItems}
@@ -78,6 +88,14 @@ export default function MenuPage() {
         onRemove={handleRemove}
         onDelete={handleDelete}
       />
+
+      {pendingProduct && (
+        <ExtrasModal
+          product={pendingProduct}
+          onClose={() => setPendingProduct(null)}
+          onConfirm={handleConfirm}
+        />
+      )}
 
       {editMode && (
         <DevPanel
@@ -87,6 +105,7 @@ export default function MenuPage() {
           onSave={save}
           onExport={exportValues}
           onReset={reset}
+          categoria={categoria}
         />
       )}
     </main>

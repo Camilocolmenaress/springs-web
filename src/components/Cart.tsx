@@ -13,24 +13,36 @@ const fmt = (n: number) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
 const UMBRAL = 60000;
 
-export interface CartItem {
+export interface CartExtra {
   id: string;
   nombre: string;
   precio: number;
   cantidad: number;
 }
 
+export interface CartItem {
+  cartId: string;
+  id: string;
+  nombre: string;
+  precio: number;
+  cantidad: number;
+  extras: CartExtra[];
+}
+
 interface CartProps {
   items: CartItem[];
-  onAdd: (id: string) => void;
-  onRemove: (id: string) => void;
-  onDelete: (id: string) => void;
+  onAdd: (cartId: string) => void;
+  onRemove: (cartId: string) => void;
+  onDelete: (cartId: string) => void;
 }
 
 export default function Cart({ items, onAdd, onRemove, onDelete }: CartProps) {
   const [open, setOpen] = useState(false);
 
-  const total      = items.reduce((s, i) => s + i.precio * i.cantidad, 0);
+  const total      = items.reduce((s, i) => {
+    const extrasTotal = i.extras.reduce((e, x) => e + x.precio * x.cantidad, 0);
+    return s + (i.precio + extrasTotal) * i.cantidad;
+  }, 0);
   const totalItems = items.reduce((s, i) => s + i.cantidad, 0);
   const pct        = Math.min((total / UMBRAL) * 100, 100);
   const falta      = UMBRAL - total;
@@ -134,196 +146,254 @@ export default function Cart({ items, onAdd, onRemove, onDelete }: CartProps) {
           paddingBottom: "env(safe-area-inset-bottom, 0px)",
         }}
       >
-        {/* Header */}
+        {/* Header — factura */}
         <div style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "24px 24px 16px",
-          borderBottom: "1px solid rgba(26,10,12,0.1)",
+          padding: "20px 24px 14px",
+          borderBottom: "1px dashed rgba(26,10,12,0.2)",
           flexShrink: 0,
+          position: "relative",
         }}>
-          <h2 style={{
-            fontFamily: "Anton, sans-serif",
-            fontSize: "1.5rem",
-            letterSpacing: "0.08em",
-            textTransform: "uppercase",
-            color: C.tinta,
-            margin: 0,
-          }}>
-            SU PEDIDO
-          </h2>
+          {/* Close */}
           <button
             onClick={() => setOpen(false)}
             aria-label="Cerrar carrito"
             style={{
-              width: 32,
-              height: 32,
+              position: "absolute",
+              top: 20, right: 24,
+              width: 28, height: 28,
               background: "transparent",
               border: `1px solid ${C.tinta}`,
               cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              display: "flex", alignItems: "center", justifyContent: "center",
               fontFamily: "JetBrains Mono, monospace",
-              fontSize: "0.85rem",
+              fontSize: "0.75rem",
               color: C.tinta,
-              flexShrink: 0,
             }}
           >
             ✕
           </button>
+
+          {/* Brand */}
+          <div style={{
+            fontFamily: "Anton, sans-serif",
+            fontSize: "2rem",
+            letterSpacing: "0.04em",
+            textTransform: "uppercase",
+            color: C.tinta,
+            lineHeight: 1,
+          }}>
+            SPRINGS
+          </div>
+
+          {/* Receipt meta */}
+          <div style={{
+            fontFamily: "JetBrains Mono, monospace",
+            fontSize: "0.5rem",
+            letterSpacing: "0.15em",
+            color: C.tinta,
+            opacity: 0.5,
+            textTransform: "uppercase",
+            marginTop: 4,
+          }}>
+            BUCARAMANGA
+          </div>
+
+          {/* Divider line */}
+          <div style={{
+            borderTop: "1px solid rgba(26,10,12,0.15)",
+            margin: "10px 0",
+          }} />
+
+          {/* Order info row */}
+          <div style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "baseline",
+          }}>
+            <div>
+              <div style={{
+                fontFamily: "JetBrains Mono, monospace",
+                fontSize: "0.52rem",
+                letterSpacing: "0.18em",
+                color: C.tinta,
+                opacity: 0.4,
+                textTransform: "uppercase",
+              }}>
+                SU PEDIDO
+              </div>
+              <div style={{
+                fontFamily: "JetBrains Mono, monospace",
+                fontSize: "0.48rem",
+                letterSpacing: "0.1em",
+                color: C.tinta,
+                opacity: 0.3,
+                marginTop: 2,
+              }}>
+                {new Date().toLocaleDateString("es-CO", { day: "2-digit", month: "short", year: "numeric" }).toUpperCase()}
+                {" · "}
+                {new Date().toLocaleTimeString("es-CO", { hour: "2-digit", minute: "2-digit" })}
+              </div>
+            </div>
+            <div style={{
+              fontFamily: "JetBrains Mono, monospace",
+              fontSize: "0.48rem",
+              letterSpacing: "0.1em",
+              color: C.tinta,
+              opacity: 0.3,
+              textTransform: "uppercase",
+            }}>
+              {totalItems > 0 ? `${totalItems} ítem${totalItems > 1 ? "s" : ""}` : "VACÍO"}
+            </div>
+          </div>
         </div>
 
         {/* Body */}
         <div style={{ flex: 1, padding: "0 24px", overflowY: "auto" }}>
           {items.length === 0 ? (
             <p style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "0.85rem",
+              fontFamily: "JetBrains Mono, monospace",
+              fontSize: "0.72rem",
+              letterSpacing: "0.08em",
               color: C.tinta,
-              opacity: 0.4,
-              lineHeight: 1.6,
+              opacity: 0.35,
+              lineHeight: 1.8,
               margin: "32px 0",
+              textTransform: "uppercase",
             }}>
-              Su pedido está vacío. La papa no se hornea sola.
+              Su pedido está vacío.<br />La papa no se hornea sola.
             </p>
           ) : (
             <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
-              {items.map(item => (
-                <li
-                  key={item.id}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 10,
-                    padding: "14px 0",
-                    borderBottom: "1px solid rgba(26,10,12,0.1)",
-                  }}
-                >
-                  {/* Nombre + precio unitario */}
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <span style={{
-                      fontFamily: "Anton, sans-serif",
-                      fontSize: "0.88rem",
-                      letterSpacing: "0.04em",
-                      textTransform: "uppercase",
-                      color: C.tinta,
-                      display: "block",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}>
-                      {item.nombre}
-                    </span>
+              {items.map(item => {
+                const extrasTotal = item.extras.reduce((e, x) => e + x.precio * x.cantidad, 0);
+                const lineTotal = (item.precio + extrasTotal) * item.cantidad;
+                return (
+                <li key={item.cartId} style={{ padding: "16px 0", borderBottom: "1px dashed rgba(26,10,12,0.15)" }}>
+                  {/* Fila principal: cantidad×nombre + precio */}
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 8 }}>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <span style={{
+                        fontFamily: "Anton, sans-serif",
+                        fontSize: "1.15rem",
+                        letterSpacing: "0.02em",
+                        textTransform: "uppercase",
+                        color: C.tinta,
+                        lineHeight: 1.1,
+                        display: "block",
+                      }}>
+                        {item.cantidad}× {item.nombre}
+                      </span>
+                      <span style={{
+                        fontFamily: "JetBrains Mono, monospace",
+                        fontSize: "0.58rem",
+                        letterSpacing: "0.1em",
+                        color: C.tinta,
+                        opacity: 0.4,
+                        display: "block",
+                        marginTop: 3,
+                        textTransform: "uppercase",
+                      }}>
+                        {fmt(item.precio)} c/u
+                      </span>
+                    </div>
                     <span style={{
                       fontFamily: "JetBrains Mono, monospace",
-                      fontSize: "0.68rem",
+                      fontSize: "1rem",
+                      fontWeight: 700,
                       color: C.tinta,
-                      opacity: 0.5,
-                      display: "block",
-                      marginTop: 2,
+                      flexShrink: 0,
+                      paddingTop: 2,
                     }}>
-                      {fmt(item.precio)} c/u
+                      {fmt(lineTotal)}
                     </span>
                   </div>
 
-                  {/* Stepper */}
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
+                  {/* Extras */}
+                  {item.extras.length > 0 && (
+                    <div style={{ marginTop: 6, paddingLeft: 2 }}>
+                      {item.extras.map(x => (
+                        <div key={x.id} style={{
+                          display: "flex", justifyContent: "space-between",
+                          fontFamily: "JetBrains Mono, monospace",
+                          fontSize: "0.52rem",
+                          letterSpacing: "0.08em",
+                          color: C.tinta,
+                          opacity: 0.45,
+                          textTransform: "uppercase",
+                          marginTop: 3,
+                        }}>
+                          <span>+ {x.nombre}{x.cantidad > 1 ? ` ×${x.cantidad}` : ""}</span>
+                          <span>{fmt(x.precio * x.cantidad)}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Fila stepper + eliminar */}
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 10 }}>
                     <button
-                      onClick={() => onRemove(item.id)}
+                      onClick={() => onRemove(item.cartId)}
                       aria-label={`Quitar uno de ${item.nombre}`}
                       style={{
-                        width: 24,
-                        height: 24,
-                        border: `1px solid ${C.tinta}`,
+                        width: 28, height: 28,
+                        border: `1px solid rgba(26,10,12,0.3)`,
                         background: "transparent",
                         cursor: "pointer",
                         fontFamily: "JetBrains Mono, monospace",
-                        fontSize: "0.8rem",
-                        color: C.tinta,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0,
-                        padding: 0,
+                        fontSize: "1rem", color: C.tinta,
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        flexShrink: 0, padding: 0,
                       }}
-                    >
-                      –
-                    </button>
+                    >–</button>
                     <span style={{
                       fontFamily: "JetBrains Mono, monospace",
-                      fontSize: "0.9rem",
+                      fontSize: "0.85rem",
                       color: C.tinta,
-                      minWidth: 18,
+                      minWidth: 16,
                       textAlign: "center",
-                      flexShrink: 0,
                     }}>
                       {item.cantidad}
                     </span>
                     <button
-                      onClick={() => onAdd(item.id)}
+                      onClick={() => onAdd(item.cartId)}
                       aria-label={`Agregar uno más de ${item.nombre}`}
                       style={{
-                        width: 24,
-                        height: 24,
+                        width: 28, height: 28,
                         border: `1px solid ${C.tinta}`,
-                        background: C.tinta,
-                        color: C.cream,
+                        background: C.tinta, color: C.cream,
                         cursor: "pointer",
                         fontFamily: "JetBrains Mono, monospace",
-                        fontSize: "0.8rem",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0,
-                        padding: 0,
+                        fontSize: "1rem",
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        flexShrink: 0, padding: 0,
                       }}
+                    >+</button>
+                    <button
+                      onClick={() => onDelete(item.cartId)}
+                      aria-label={`Eliminar ${item.nombre}`}
+                      style={{
+                        marginLeft: "auto",
+                        background: "transparent",
+                        border: "none",
+                        cursor: "pointer",
+                        fontFamily: "JetBrains Mono, monospace",
+                        fontSize: "0.6rem",
+                        letterSpacing: "0.1em",
+                        color: C.tinta,
+                        opacity: 0.3,
+                        textTransform: "uppercase",
+                        padding: 0,
+                        transition: "opacity 0.15s",
+                      }}
+                      onMouseEnter={e => (e.currentTarget.style.opacity = "0.7")}
+                      onMouseLeave={e => (e.currentTarget.style.opacity = "0.3")}
                     >
-                      +
+                      QUITAR
                     </button>
                   </div>
-
-                  {/* Subtotal del item */}
-                  <span style={{
-                    fontFamily: "JetBrains Mono, monospace",
-                    fontSize: "0.8rem",
-                    color: C.tinta,
-                    flexShrink: 0,
-                    minWidth: 60,
-                    textAlign: "right",
-                  }}>
-                    {fmt(item.precio * item.cantidad)}
-                  </span>
-
-                  {/* Eliminar */}
-                  <button
-                    onClick={() => onDelete(item.id)}
-                    aria-label={`Eliminar ${item.nombre}`}
-                    style={{
-                      width: 20,
-                      height: 20,
-                      background: "transparent",
-                      border: "none",
-                      cursor: "pointer",
-                      fontFamily: "JetBrains Mono, monospace",
-                      fontSize: "0.72rem",
-                      color: C.tinta,
-                      opacity: 0.35,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                      padding: 0,
-                      transition: "opacity 0.15s",
-                    }}
-                    onMouseEnter={e => (e.currentTarget.style.opacity = "0.8")}
-                    onMouseLeave={e => (e.currentTarget.style.opacity = "0.35")}
-                  >
-                    ✕
-                  </button>
                 </li>
-              ))}
+                );
+              })}
             </ul>
           )}
         </div>
