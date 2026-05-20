@@ -313,6 +313,7 @@ export default function Home() {
     pedirInfoScale:    (pedir?.info?.props?.size as { value: number })?.value ?? 100,
     pedirGhostSize:    (pedir?.ghostText?.props?.fontSize as { value: number })?.value ?? 5,
     pedirGhostLeft:    (pedir?.ghostText?.props?.left as { value: number })?.value ?? 390,
+    pedirGhostTop:     (pedir?.ghostText?.props?.top as { value: number })?.value ?? 50,
     pedirGhostOpacity: (pedir?.ghostText?.props?.opacity as { value: number })?.value ?? 7,
   };
 
@@ -1344,8 +1345,8 @@ export default function Home() {
 
           {/* "DIFFERENT BY DEFAULT" fantasma */}
           <div style={{
-            position: "absolute", left: `${d.pedirGhostLeft}vw`, top: "50%",
-            transform: "translateY(-50%) rotate(-90deg)",
+            position: "absolute", left: `${d.pedirGhostLeft}vw`, top: `${d.pedirGhostTop}vh`,
+            transform: "rotate(-90deg)",
             transformOrigin: "left center", whiteSpace: "nowrap", zIndex: 2,
             ...F.display, fontSize: `${d.pedirGhostSize}vw`, color: C.cream, opacity: d.pedirGhostOpacity / 100,
           }}>
