@@ -1235,7 +1235,7 @@ export default function Home() {
           <div style={{
             position: "absolute", left: "210vw", top: 0,
             width: "210vw", height: "100vh",
-            background: `linear-gradient(90deg, ${C.tinta} 0%, ${C.burgundy} 6%, ${C.burgundy} 100%)`,
+            background: `linear-gradient(90deg, ${C.tinta} 0%, ${C.tinta} 2%, ${C.burgundy} 5%, ${C.burgundy} 100%)`,
             zIndex: 1,
           }} />
 
