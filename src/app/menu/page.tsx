@@ -15,6 +15,7 @@ export default function MenuPage() {
   const [categoria, setCategoria] = useState<Categoria>("jacket");
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [pendingProduct, setPendingProduct] = useState<Producto | null>(null);
+  const [cartBump, setCartBump] = useState(0);
 
   function handleAgregar(p: Producto) {
     if (p.categoria === "bebida") {
@@ -27,6 +28,7 @@ export default function MenuPage() {
   function addToCart(p: Producto, extras: CartExtra[]) {
     const cartId = `${p.id}_${Date.now()}`;
     setCartItems(prev => [...prev, { cartId, id: p.id, nombre: p.nombre, precio: p.precio, cantidad: 1, extras }]);
+    setCartBump(b => b + 1);
   }
 
   function handleConfirm(p: Producto, extras: CartExtra[]) {
@@ -87,6 +89,7 @@ export default function MenuPage() {
         onAdd={handleAdd}
         onRemove={handleRemove}
         onDelete={handleDelete}
+        bumpSignal={cartBump}
       />
 
       {pendingProduct && (

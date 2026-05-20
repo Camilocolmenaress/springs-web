@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { motion, useAnimation } from "framer-motion";
 
 const C = {
   burgundy: "#6B1419",
@@ -34,10 +35,23 @@ interface CartProps {
   onAdd: (cartId: string) => void;
   onRemove: (cartId: string) => void;
   onDelete: (cartId: string) => void;
+  bumpSignal?: number;
 }
 
-export default function Cart({ items, onAdd, onRemove, onDelete }: CartProps) {
+export default function Cart({ items, onAdd, onRemove, onDelete, bumpSignal = 0 }: CartProps) {
   const [open, setOpen] = useState(false);
+  const btnAnim = useAnimation();
+  const prevBump = useRef(0);
+
+  useEffect(() => {
+    if (bumpSignal > prevBump.current) {
+      prevBump.current = bumpSignal;
+      btnAnim.start({
+        scale: [1, 1.22, 0.88, 1.1, 0.96, 1],
+        transition: { duration: 0.5, times: [0, 0.2, 0.4, 0.6, 0.8, 1], ease: "easeOut" },
+      });
+    }
+  }, [bumpSignal, btnAnim]);
 
   const total      = items.reduce((s, i) => {
     const extrasTotal = i.extras.reduce((e, x) => e + x.precio * x.cantidad, 0);
@@ -64,8 +78,9 @@ export default function Cart({ items, onAdd, onRemove, onDelete }: CartProps) {
   return (
     <>
       {/* ── Floating button ──────────────────────────────── */}
-      <button
+      <motion.button
         onClick={() => setOpen(true)}
+        animate={btnAnim}
         aria-label={`Ver pedido${totalItems > 0 ? `, ${totalItems} items` : ""}`}
         style={{
           position: "fixed",
@@ -86,7 +101,6 @@ export default function Cart({ items, onAdd, onRemove, onDelete }: CartProps) {
           textTransform: "uppercase",
           whiteSpace: "nowrap",
           boxShadow: "0 4px 24px rgba(26,10,12,0.28)",
-          transition: "opacity 0.15s",
         }}
         onMouseEnter={e => (e.currentTarget.style.opacity = "0.85")}
         onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
@@ -108,7 +122,7 @@ export default function Cart({ items, onAdd, onRemove, onDelete }: CartProps) {
             {totalItems}
           </span>
         )}
-      </button>
+      </motion.button>
 
       {/* ── Overlay ──────────────────────────────────────── */}
       <div
