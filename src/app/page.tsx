@@ -508,8 +508,8 @@ export default function Home() {
 
       {/* ── WRAPPER LENIS ── */}
       <div ref={wrapperRef} style={{ width: "100vw", height: "100vh", overflow: "hidden", background: C.cream }}>
-        {/* ── CANVAS CONTINUO 560vw ── */}
-        <div ref={contentRef} style={{ position: "relative", width: "560vw", height: "100vh" }}>
+        {/* ── CANVAS CONTINUO 330vw ── */}
+        <div ref={contentRef} style={{ position: "relative", width: "330vw", height: "100vh" }}>
 
           {/* ═══════════════════════════════════════
               ZONA 1 — HERO (0 → 100vw)
@@ -1127,22 +1127,6 @@ export default function Home() {
             x: culturePanelX,
           }} />
 
-          {/* Imagen lado derecho */}
-          <motion.div style={{
-            position: "absolute", left: `${d.cultureImgLeft}vw`, top: `${d.cultureImgTop}vh`,
-            width: `${d.cultureImgWidth}vw`, height: `${d.cultureImgHeight}vh`,
-            backgroundImage: `url(${d.cultureImgSrc}), linear-gradient(135deg, #0d0507 0%, #2a1a1d 60%, #3a2520 100%)`,
-            backgroundSize: "cover", backgroundPosition: "center",
-            zIndex: 2, x: culturePanelX,
-          }} />
-
-          {/* Overlay degradado sutil sobre imagen para legibilidad */}
-          <motion.div style={{
-            position: "absolute", left: `${d.cultureImgLeft}vw`, top: `${d.cultureImgTop}vh`,
-            width: `${d.cultureImgWidth}vw`, height: `${d.cultureImgHeight}vh`,
-            background: `linear-gradient(90deg, ${C.tinta} 0%, transparent 25%, transparent 100%)`,
-            zIndex: 3, pointerEvents: "none", x: culturePanelX,
-          }} />
 
           {/* Hashtag — estático, invisible sobre fondo cream hasta que llega el panel */}
           <div style={{
