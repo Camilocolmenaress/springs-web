@@ -1228,18 +1228,19 @@ export default function Home() {
           </div>
 
           {/* ═══════════════════════════════════════
-              ZONA 2 — PEDIR YA (430 → 560vw)
+              ZONA 2 — PEDIR YA (250 → 420vw)
           ═══════════════════════════════════════ */}
 
-          {/* Fondo burgundy panel pedir */}
+          {/* Fondo burgundy panel pedir — con degradado tinta→burgundy al inicio */}
           <div style={{
-            position: "absolute", left: "430vw", top: 0,
-            width: "120vw", height: "100vh",
-            background: C.burgundy, zIndex: 1,
+            position: "absolute", left: "228vw", top: 0,
+            width: "192vw", height: "100vh",
+            background: `linear-gradient(90deg, ${C.tinta} 0%, ${C.burgundy} 12%, ${C.burgundy} 100%)`,
+            zIndex: 1,
           }} />
 
           {/* PEDIR YA gigante */}
-          <Reveal style={{ position: "absolute", left: "438vw", top: "20vh", zIndex: 3, whiteSpace: "nowrap" }}>
+          <Reveal style={{ position: "absolute", left: "258vw", top: "20vh", zIndex: 3, whiteSpace: "nowrap" }}>
             <h2 id="pedir" style={{
               ...F.display,
               fontSize: "clamp(120px, 18vw, 320px)",
@@ -1251,14 +1252,14 @@ export default function Home() {
             </h2>
           </Reveal>
 
-          <Reveal delay={0.1} style={{ position: "absolute", left: "438vw", top: "12vh", zIndex: 5 }}>
+          <Reveal delay={0.1} style={{ position: "absolute", left: "258vw", top: "12vh", zIndex: 5 }}>
             <div style={{ ...F.mono, fontSize: "0.65rem", letterSpacing: "0.22em", color: C.mostaza, textTransform: "uppercase" }}>
               ↗ SIN EXCUSAS · ESTO ES SPRINGS
             </div>
           </Reveal>
 
           {/* Apps */}
-          <Reveal delay={0.2} style={{ position: "absolute", left: "440vw", bottom: "16vh", zIndex: 5, width: "26vw" }}>
+          <Reveal delay={0.2} style={{ position: "absolute", left: "260vw", bottom: "16vh", zIndex: 5, width: "26vw" }}>
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               <a href="#" style={{
                 ...F.display, fontSize: "1rem", letterSpacing: "0.12em",
@@ -1290,7 +1291,7 @@ export default function Home() {
           </Reveal>
 
           {/* Info derecha */}
-          <Reveal delay={0.3} style={{ position: "absolute", left: "474vw", bottom: "16vh", zIndex: 5, width: "30vw" }}>
+          <Reveal delay={0.3} style={{ position: "absolute", left: "294vw", bottom: "16vh", zIndex: 5, width: "30vw" }}>
             <div style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
               {[
                 { label: "Horario", val: "12PM — 9PM", sub: "Lunes a domingo" },
@@ -1309,7 +1310,7 @@ export default function Home() {
 
           {/* "DIFFERENT BY DEFAULT" fantasma */}
           <div style={{
-            position: "absolute", left: "600vw", top: "50%", transform: "translateY(-50%) rotate(-90deg)",
+            position: "absolute", left: "390vw", top: "50%", transform: "translateY(-50%) rotate(-90deg)",
             transformOrigin: "left center", whiteSpace: "nowrap", zIndex: 2,
             ...F.display, fontSize: "clamp(40px, 5vw, 100px)", color: C.cream, opacity: 0.07,
           }}>

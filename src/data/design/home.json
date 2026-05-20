@@ -784,7 +784,7 @@
               "step": 1
             },
             "width": {
-              "value": 130,
+              "value": 85,
               "unit": "vw",
               "min": 50,
               "max": 200,
