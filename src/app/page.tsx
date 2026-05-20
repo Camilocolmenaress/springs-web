@@ -396,14 +396,14 @@ export default function Home() {
         </a>
       </motion.nav>
 
-      {/* ── FOOTER BAR FIJO ── */}
+      {/* ── FOOTER BAR FIJO — sociales ── */}
       <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         transition={{ duration: 0.5, ease: EASE, delay: 0.8 }}
         style={{
-          position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 100,
-          display: "flex", alignItems: "center", justifyContent: "space-between",
+          position: "fixed", bottom: 0, left: 0, zIndex: 100,
+          display: "flex", alignItems: "center",
           padding: "0 32px", height: 40,
           background: "transparent",
         }}
@@ -413,44 +413,49 @@ export default function Home() {
             <a key={s} href="#" style={{ ...F.mono, fontSize: "0.58rem", letterSpacing: "0.18em", color: C.tinta, textDecoration: "none", opacity: 0.6 }}>{s}</a>
           ))}
         </div>
-        <div style={{
+      </motion.div>
+
+      {/* ── FOOTER MENU — elemento independiente con mix-blend-mode ── */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, ease: EASE, delay: 0.8 }}
+        style={{
           display: "flex", gap: d.footerMenuItemGap,
           position: "fixed", bottom: d.footerMenuBottom, right: d.footerMenuRight,
           zIndex: 101,
           mixBlendMode: "difference",
-        }}>
-          {([
-            { label: "CARTA",       href: "/menu"                },
-            { label: "ART GALLERY", href: "#"                    },
-            { label: "NOSOTROS",    href: "#"                    },
-            { label: "EL CLUB",     href: "/springs-jacket-club" },
-            { label: "FAQS",        href: "#"                    },
-          ] as { label: string; href: string }[]).map(item => (
-            <motion.a
-              key={item.label}
-              href={item.href}
-              initial="rest"
-              whileHover="hover"
-              style={{ ...F.mono, fontSize: `${d.footerMenuSize}rem`, letterSpacing: `${d.footerMenuLetterSpacing}em`, wordSpacing: `${d.footerMenuWordSpacing}px`, textDecoration: "none", fontWeight: 600, position: "relative", display: "inline-block" }}
-            >
-              <motion.span
-                style={{ display: "block", color: "#ffffff" }}
-              >
-                {item.label}
-              </motion.span>
-              <motion.span
-                variants={{ rest: { scaleX: 0 }, hover: { scaleX: 1 } }}
-                transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                style={{
-                  display: "block", height: 1.5,
-                  background: C.burgundy,
-                  transformOrigin: "left center",
-                  position: "absolute", bottom: -2, left: 0, right: 0,
-                }}
-              />
-            </motion.a>
-          ))}
-        </div>
+        }}
+      >
+        {([
+          { label: "CARTA",       href: "/menu"                },
+          { label: "ART GALLERY", href: "#"                    },
+          { label: "NOSOTROS",    href: "#"                    },
+          { label: "EL CLUB",     href: "/springs-jacket-club" },
+          { label: "FAQS",        href: "#"                    },
+        ] as { label: string; href: string }[]).map(item => (
+          <motion.a
+            key={item.label}
+            href={item.href}
+            initial="rest"
+            whileHover="hover"
+            style={{ ...F.mono, fontSize: `${d.footerMenuSize}rem`, letterSpacing: `${d.footerMenuLetterSpacing}em`, wordSpacing: `${d.footerMenuWordSpacing}px`, textDecoration: "none", fontWeight: 600, position: "relative", display: "inline-block" }}
+          >
+            <motion.span style={{ display: "block", color: "#ffffff" }}>
+              {item.label}
+            </motion.span>
+            <motion.span
+              variants={{ rest: { scaleX: 0 }, hover: { scaleX: 1 } }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                display: "block", height: 1.5,
+                background: "#ffffff",
+                transformOrigin: "left center",
+                position: "absolute", bottom: -2, left: 0, right: 0,
+              }}
+            />
+          </motion.a>
+        ))}
       </motion.div>
 
       {/* ── BARCODE FIXED ── */}
