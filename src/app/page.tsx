@@ -1337,20 +1337,14 @@ export default function Home() {
             </div>
           </Reveal>
 
-          {/* "DIFFERENT BY DEFAULT" fantasma — wrapper acotado: su borde derecho = canvas borde */}
+          {/* "DIFFERENT BY DEFAULT" fantasma */}
           <div style={{
-            position: "absolute", left: `${d.pedirGhostLeft}vw`, top: 0, bottom: 0,
-            width: `${d.canvasWidth - d.pedirGhostLeft}vw`,
-            overflow: "hidden", zIndex: 2,
+            position: "absolute", left: `${d.pedirGhostLeft}vw`, top: `${d.pedirGhostTop}vh`,
+            transform: "rotate(-90deg)",
+            transformOrigin: "left center", whiteSpace: "nowrap", zIndex: 2,
+            ...F.display, fontSize: `${d.pedirGhostSize}vw`, color: C.cream, opacity: d.pedirGhostOpacity / 100,
           }}>
-            <div style={{
-              position: "absolute", left: 0, top: `${d.pedirGhostTop}vh`,
-              transform: "rotate(-90deg)",
-              transformOrigin: "left center", whiteSpace: "nowrap",
-              ...F.display, fontSize: `${d.pedirGhostSize}vw`, color: C.cream, opacity: d.pedirGhostOpacity / 100,
-            }}>
-              DIFFERENT BY DEFAULT.
-            </div>
+            DIFFERENT BY DEFAULT.
           </div>
 
         </div>
