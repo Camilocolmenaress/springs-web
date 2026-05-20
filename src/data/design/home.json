@@ -1133,6 +1133,23 @@
           }
         }
       }
+    },
+    "layout": {
+      "label": "Layout global",
+      "elements": {
+        "canvas": {
+          "type": "block",
+          "props": {
+            "width": {
+              "value": 330,
+              "unit": "vw",
+              "min": 100,
+              "max": 600,
+              "step": 5
+            }
+          }
+        }
+      }
     }
   }
 }

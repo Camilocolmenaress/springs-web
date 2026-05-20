@@ -164,10 +164,11 @@ export default function Home() {
   const fontCSS = (key: string) => FONT_MAP[key] ?? FONT_MAP.display;
   const colorHex = (key: string) => COLOR_MAP[key] ?? COLOR_MAP.tinta;
 
-  const hero  = config.zones.hero?.elements;
-  const pack  = config.zones.packaging?.elements;
-  const cult  = config.zones.culture?.elements;
-  const pedir = (config.zones as Record<string, { elements: Record<string, { props: Record<string, unknown> }> }>).pedirYa?.elements;
+  const hero   = config.zones.hero?.elements;
+  const pack   = config.zones.packaging?.elements;
+  const cult   = config.zones.culture?.elements;
+  const pedir  = (config.zones as Record<string, { elements: Record<string, { props: Record<string, unknown> }> }>).pedirYa?.elements;
+  const layout = (config.zones as Record<string, { elements: Record<string, { props: Record<string, unknown> }> }>).layout?.elements;
   const d = {
     titleSize:    (hero?.title?.props?.fontSize as { value: number })?.value ?? 19.5,
     titleLeft:    (hero?.title?.props?.left as { value: number })?.value ?? 42,
@@ -315,6 +316,7 @@ export default function Home() {
     pedirGhostLeft:    (pedir?.ghostText?.props?.left as { value: number })?.value ?? 390,
     pedirGhostTop:     (pedir?.ghostText?.props?.top as { value: number })?.value ?? 50,
     pedirGhostOpacity: (pedir?.ghostText?.props?.opacity as { value: number })?.value ?? 7,
+    canvasWidth:       (layout?.canvas?.props?.width as { value: number })?.value ?? 330,
   };
 
   const pauseScroll = () => lenisRef.current?.stop();
@@ -508,8 +510,8 @@ export default function Home() {
 
       {/* ── WRAPPER LENIS ── */}
       <div ref={wrapperRef} style={{ width: "100vw", height: "100vh", overflow: "hidden", background: C.cream }}>
-        {/* ── CANVAS CONTINUO 330vw ── */}
-        <div ref={contentRef} style={{ position: "relative", width: "330vw", height: "100vh" }}>
+        {/* ── CANVAS CONTINUO — ancho controlado por editor ── */}
+        <div ref={contentRef} style={{ position: "relative", width: `${d.canvasWidth}vw`, height: "100vh" }}>
 
           {/* ═══════════════════════════════════════
               ZONA 1 — HERO (0 → 100vw)
