@@ -94,7 +94,7 @@ export const productos: Producto[] = [
     precio: 24900,
     categoria: "loaded",
     disponible: true,
-    imagen_url: null,
+    imagen_url: "/images/loaded-placeholder.png",
     orden: 20,
   },
   {
@@ -104,7 +104,7 @@ export const productos: Producto[] = [
     precio: 22500,
     categoria: "loaded",
     disponible: true,
-    imagen_url: null,
+    imagen_url: "/images/loaded-placeholder.png",
     orden: 21,
   },
   {
@@ -114,7 +114,7 @@ export const productos: Producto[] = [
     precio: 24900,
     categoria: "loaded",
     disponible: true,
-    imagen_url: null,
+    imagen_url: "/images/loaded-placeholder.png",
     orden: 22,
   },
   {
@@ -124,7 +124,7 @@ export const productos: Producto[] = [
     precio: 24900,
     categoria: "loaded",
     disponible: true,
-    imagen_url: null,
+    imagen_url: "/images/loaded-placeholder.png",
     orden: 23,
   },
 
@@ -198,7 +198,7 @@ export const productos: Producto[] = [
     precio: 5000,
     categoria: "bebida",
     disponible: true,
-    imagen_url: null,
+    imagen_url: "/images/bebida-limonada-natural.png",
     orden: 40,
   },
   {

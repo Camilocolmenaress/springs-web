@@ -17,7 +17,6 @@ const CATEGORIAS: { key: Categoria; label: string }[] = [
   { key: "combo",  label: "COMBOS"  },
   { key: "jacket", label: "JACKETS" },
   { key: "loaded", label: "LOADED"  },
-  { key: "extra",  label: "EXTRAS"  },
   { key: "bebida", label: "BEBIDAS" },
 ];
 
@@ -50,6 +49,29 @@ function su(prop: unknown, fallback: string): string {
 }
 function scv(prop: unknown, fallback: number): string {
   return `${sv(prop, fallback)}${su(prop, "")}`;
+}
+
+/* ── Bebida image sub-component ─────────────────────────── */
+function BebidaImg({ p, isCenter, sideRatio, getBebidaConfig, imgSrc }: {
+  p: Producto; isCenter: boolean; sideRatio: number;
+  getBebidaConfig: (id: string) => { size: number; offsetX: number; offsetY: number };
+  imgSrc: (p: Producto) => string;
+}) {
+  const bc = getBebidaConfig(p.id);
+  return (
+    <img
+      src={imgSrc(p)}
+      alt={p.nombre}
+      style={{
+        width:  isCenter ? `${bc.size}vh` : `${bc.size * sideRatio}vh`,
+        height: isCenter ? `${bc.size}vh` : `${bc.size * sideRatio}vh`,
+        objectFit: "contain", display: "block",
+        transform: isCenter
+          ? `translate(${bc.offsetX}px, ${bc.offsetY}px)`
+          : `translate(${bc.offsetX * sideRatio}px, ${bc.offsetY * sideRatio}px)`,
+      }}
+    />
+  );
 }
 
 /* ── Main component ─────────────────────────────────────── */
@@ -88,13 +110,50 @@ export default function Menu({ onAgregar, config }: Props) {
   const wmOpacity     = sv(wi?.title?.props?.opacity, 5.5) / 100;
   const wmTop         = scv(wi?.title?.props?.top, 35) || "35%";
   const wmOffsetX     = sv(wi?.title?.props?.offsetX, 0);
+  // Para Uno images
+  const ci = z?.comboImage?.elements;
+  const comboPapaN      = sv(ci?.papa?.props?.size,    57);
+  const comboBebidaN    = sv(ci?.bebida?.props?.size,  53);
+  const comboPapaSize      = `${comboPapaN}vh`;
+  const comboPapaOffsetY   = sv(ci?.papa?.props?.offsetY,  -40);
+  const comboPapaOffsetX   = sv(ci?.papa?.props?.offsetX,  -24);
+  const comboBebidaSize    = `${comboBebidaN}vh`;
+  const comboBebidaOffsetY = sv(ci?.bebida?.props?.offsetY, -76);
+  const comboBebidaOffsetX = sv(ci?.bebida?.props?.offsetX, -200);
+  // Bebida image (per product)
+  const bi = z?.bebidaImage?.elements;
+  function getBebidaConfig(id: string) {
+    const el = bi?.[id as keyof typeof bi];
+    return {
+      size:    sv(el?.props?.size,    80),
+      offsetY: sv(el?.props?.offsetY, 0),
+      offsetX: sv(el?.props?.offsetX, 0),
+    };
+  }
+  // Scale ratio for side slots
+  const centerSizeN = sv(c?.centerImage?.props?.size, 67);
+  const nearSizeN   = sv(c?.nearImage?.props?.size, 41);
+  const sideRatio   = nearSizeN / centerSizeN;
+  // Para Dos images
+  const cd = z?.comboDosImage?.elements;
+  const dos = {
+    papa1:   { size: scv(cd?.papa1?.props?.size,  48)||"48vh",  y: sv(cd?.papa1?.props?.offsetY, -20), x: sv(cd?.papa1?.props?.offsetX, -60)  },
+    papa2:   { size: scv(cd?.papa2?.props?.size,  48)||"48vh",  y: sv(cd?.papa2?.props?.offsetY,  20), x: sv(cd?.papa2?.props?.offsetX, -20)  },
+    bebida1: { size: scv(cd?.bebida1?.props?.size,40)||"40vh",  y: sv(cd?.bebida1?.props?.offsetY,-60), x: sv(cd?.bebida1?.props?.offsetX,-160) },
+    bebida2: { size: scv(cd?.bebida2?.props?.size,40)||"40vh",  y: sv(cd?.bebida2?.props?.offsetY,-40), x: sv(cd?.bebida2?.props?.offsetX,-120) },
+  };
   // Side card
   const sc = z?.sideCard?.elements;
-  const scWidth   = sv(sc?.container?.props?.width,   200);
-  const scOffsetY = sv(sc?.container?.props?.offsetY, 10);
-  const scOffsetX = sv(sc?.container?.props?.offsetX, 0);
-  const scNameFs  = scv(sc?.name?.props?.fontSize, 2.6) || "2.6vw";
-  const scDescFs  = scv(sc?.desc?.props?.fontSize, 0.58) || "0.58rem";
+  const scWidth        = sv(sc?.container?.props?.width,        260);
+  const scOffsetY      = sv(sc?.container?.props?.offsetY,      -36);
+  const scOffsetX      = sv(sc?.container?.props?.offsetX,      0);
+  const scRightOffsetX = sv(sc?.container?.props?.rightOffsetX, 0);
+  const scNameFs     = scv(sc?.name?.props?.fontSize, 2.6) || "2.6vw";
+  const scNameWidth  = sv(sc?.name?.props?.width, 260);
+  const scNameLS     = sv(sc?.name?.props?.letterSpacing, 0.12);
+  const scNameWS     = sv(sc?.name?.props?.wordSpacing, 0);
+  const scDescFs    = scv(sc?.desc?.props?.fontSize, 0.58) || "0.58rem";
+  const scDescWidth = sv(sc?.desc?.props?.width, 260);
   const scPriceFs = scv(sc?.price?.props?.fontSize, 0.78) || "0.78rem";
   // Product info
   const nameFontSize  = scv(pi?.name?.props?.fontSize, 5) || "5vw";
@@ -257,16 +316,52 @@ export default function Menu({ onAgregar, config }: Props) {
                     WebkitTapHighlightColor: "transparent",
                   }}
                 >
-                  <img
-                    src={imgSrc(p)}
-                    alt={p.nombre}
-                    style={{
-                      width:  imgSize,
-                      height: imgSize,
-                      objectFit: "contain",
-                      display: "block",
-                    }}
-                  />
+                  {isCenter && p.id === "combo-1" ? (
+                    <div style={{ display: "flex", alignItems: "flex-end", width: centerImgSize, height: centerImgSize, overflow: "visible" }}>
+                      <img src="/images/combo-papa.png" alt="Papa"
+                        style={{ width: comboPapaSize, height: comboPapaSize, objectFit: "contain", display: "block", flexShrink: 0, transform: `translate(${comboPapaOffsetX}px, ${comboPapaOffsetY}px)` }} />
+                      <img src="/images/combo-bebida.png" alt="Bebida"
+                        style={{ width: comboBebidaSize, height: comboBebidaSize, objectFit: "contain", display: "block", flexShrink: 0, marginLeft: -8, transform: `translate(${comboBebidaOffsetX}px, ${comboBebidaOffsetY}px)` }} />
+                    </div>
+                  ) : isCenter && p.id === "combo-2" ? (
+                    <div style={{ display: "flex", alignItems: "flex-end", width: centerImgSize, height: centerImgSize, overflow: "visible" }}>
+                      <img src="/images/combo-papa.png" alt="Papa 1"
+                        style={{ width: dos.papa1.size, height: dos.papa1.size, objectFit: "contain", display: "block", flexShrink: 0, transform: `translate(${dos.papa1.x}px, ${dos.papa1.y}px)` }} />
+                      <img src="/images/combo-papa.png" alt="Papa 2"
+                        style={{ width: dos.papa2.size, height: dos.papa2.size, objectFit: "contain", display: "block", flexShrink: 0, marginLeft: -16, transform: `translate(${dos.papa2.x}px, ${dos.papa2.y}px)`, filter: "drop-shadow(-12px 8px 16px rgba(0,0,0,0.45))" }} />
+                      <img src="/images/combo-bebida.png" alt="Bebida 1"
+                        style={{ width: dos.bebida1.size, height: dos.bebida1.size, objectFit: "contain", display: "block", flexShrink: 0, marginLeft: -8, transform: `translate(${dos.bebida1.x}px, ${dos.bebida1.y}px)` }} />
+                      <img src="/images/combo-bebida.png" alt="Bebida 2"
+                        style={{ width: dos.bebida2.size, height: dos.bebida2.size, objectFit: "contain", display: "block", flexShrink: 0, marginLeft: -12, transform: `translate(${dos.bebida2.x}px, ${dos.bebida2.y}px)`, filter: "drop-shadow(-10px 6px 14px rgba(0,0,0,0.4))" }} />
+                    </div>
+                  ) : !isCenter && p.id === "combo-1" ? (
+                    <div style={{ display: "flex", alignItems: "flex-end", width: imgSize, height: imgSize, overflow: "visible" }}>
+                      <img src="/images/combo-papa.png" alt="Papa"
+                        style={{ width: `${comboPapaN * sideRatio}vh`, height: `${comboPapaN * sideRatio}vh`, objectFit: "contain", display: "block", flexShrink: 0, transform: `translate(${comboPapaOffsetX * sideRatio}px, ${comboPapaOffsetY * sideRatio}px)` }} />
+                      <img src="/images/combo-bebida.png" alt="Bebida"
+                        style={{ width: `${comboBebidaN * sideRatio}vh`, height: `${comboBebidaN * sideRatio}vh`, objectFit: "contain", display: "block", flexShrink: 0, marginLeft: -8 * sideRatio, transform: `translate(${comboBebidaOffsetX * sideRatio}px, ${comboBebidaOffsetY * sideRatio}px)` }} />
+                    </div>
+                  ) : !isCenter && p.id === "combo-2" ? (
+                    <div style={{ display: "flex", alignItems: "flex-end", width: imgSize, height: imgSize, overflow: "visible" }}>
+                      <img src="/images/combo-papa.png" alt="Papa 1"
+                        style={{ width: `${sv(cd?.papa1?.props?.size, 34) * sideRatio}vh`, height: `${sv(cd?.papa1?.props?.size, 34) * sideRatio}vh`, objectFit: "contain", display: "block", flexShrink: 0, transform: `translate(${dos.papa1.x * sideRatio}px, ${dos.papa1.y * sideRatio}px)` }} />
+                      <img src="/images/combo-papa.png" alt="Papa 2"
+                        style={{ width: `${sv(cd?.papa2?.props?.size, 39) * sideRatio}vh`, height: `${sv(cd?.papa2?.props?.size, 39) * sideRatio}vh`, objectFit: "contain", display: "block", flexShrink: 0, marginLeft: -16 * sideRatio, transform: `translate(${dos.papa2.x * sideRatio}px, ${dos.papa2.y * sideRatio}px)`, filter: "drop-shadow(-12px 8px 16px rgba(0,0,0,0.45))" }} />
+                      <img src="/images/combo-bebida.png" alt="Bebida 1"
+                        style={{ width: `${sv(cd?.bebida1?.props?.size, 33) * sideRatio}vh`, height: `${sv(cd?.bebida1?.props?.size, 33) * sideRatio}vh`, objectFit: "contain", display: "block", flexShrink: 0, marginLeft: -8 * sideRatio, transform: `translate(${dos.bebida1.x * sideRatio}px, ${dos.bebida1.y * sideRatio}px)` }} />
+                      <img src="/images/combo-bebida.png" alt="Bebida 2"
+                        style={{ width: `${sv(cd?.bebida2?.props?.size, 37) * sideRatio}vh`, height: `${sv(cd?.bebida2?.props?.size, 37) * sideRatio}vh`, objectFit: "contain", display: "block", flexShrink: 0, marginLeft: -12 * sideRatio, transform: `translate(${dos.bebida2.x * sideRatio}px, ${dos.bebida2.y * sideRatio}px)`, filter: "drop-shadow(-10px 6px 14px rgba(0,0,0,0.4))" }} />
+                    </div>
+                  ) : p.categoria === "bebida" ? (
+                    <BebidaImg p={p} isCenter={isCenter} sideRatio={sideRatio} getBebidaConfig={getBebidaConfig} imgSrc={imgSrc} />
+                  )
+                  ) : (
+                    <img
+                      src={imgSrc(p)}
+                      alt={p.nombre}
+                      style={{ width: imgSize, height: imgSize, objectFit: "contain", display: "block" }}
+                    />
+                  )}
 
                   {/* Side card text */}
                   {!isCenter && abs === 1 && (
@@ -274,31 +369,40 @@ export default function Menu({ onAgregar, config }: Props) {
                       textAlign: "center",
                       marginTop: scOffsetY,
                       width: scWidth,
-                      transform: `translateX(${scOffsetX}px)`,
+                      transform: `translateX(${offset > 0 ? scRightOffsetX : scOffsetX}px)`,
                       flexShrink: 0,
+                      opacity: 0.68,
                     }}>
                       <div style={{
                         fontFamily: "var(--font-inter), sans-serif",
-                        fontWeight: 600,
+                        fontWeight: 500,
                         fontSize: scNameFs,
-                        textTransform: "uppercase", color: C.tinta,
-                        letterSpacing: "0.04em",
+                        textTransform: "uppercase",
+                        color: C.tinta,
+                        letterSpacing: `${scNameLS}em`,
+                        wordSpacing: `${scNameWS}em`,
+                        lineHeight: 1.1,
+                        opacity: 0.65,
+                        width: scNameWidth,
+                        margin: "0 auto",
                       }}>
                         {p.nombre.toUpperCase()}
                       </div>
                       <div style={{
                         fontFamily: "var(--font-inter), sans-serif",
                         fontWeight: 400,
-                        fontSize: scDescFs, letterSpacing: "0.08em",
+                        fontSize: scDescFs, letterSpacing: "0.1em",
                         textTransform: "uppercase", color: C.tinta,
-                        opacity: 0.5, marginTop: 5, lineHeight: 1.5,
+                        opacity: 0.75, marginTop: 6, lineHeight: 1.55,
+                        width: scDescWidth, margin: "6px auto 0",
                       }}>
                         {p.descripcion.toUpperCase()}
                       </div>
                       <div style={{
                         fontFamily: "var(--font-jetbrains-mono), monospace",
-                        fontSize: scPriceFs, color: C.tinta, marginTop: 6,
-                        letterSpacing: "0.05em",
+                        fontWeight: 500,
+                        fontSize: scPriceFs, color: C.tinta, marginTop: 7,
+                        letterSpacing: "0.08em",
                       }}>
                         {fmt(p.precio)} COP
                       </div>
@@ -318,13 +422,13 @@ export default function Menu({ onAgregar, config }: Props) {
                 top:   `calc(50% + ${arrowOffsetY}px)`,
                 transform: "translate(-50%, -50%)",
                 width: arrowSize, height: arrowSize,
-                background: C.cream,
-                border: `1.5px solid ${C.tinta}`,
+                background: "transparent",
+                border: "none",
                 padding: 0,
                 cursor: "pointer", zIndex: 30,
-                display: "flex", alignItems: "center", justifyContent: "center",
               }}>
-                <Chevron dir="left" size={12} />
+                <img src="/images/arrow-circle.png" alt="Anterior"
+                  style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
               </button>
               <button onClick={goNext} aria-label="Siguiente" style={{
                 position: "absolute",
@@ -332,13 +436,13 @@ export default function Menu({ onAgregar, config }: Props) {
                 top:   `calc(50% + ${arrowOffsetY}px)`,
                 transform: "translate(-50%, -50%)",
                 width: arrowSize, height: arrowSize,
-                background: C.cream,
-                border: `1.5px solid ${C.tinta}`,
+                background: "transparent",
+                border: "none",
                 padding: 0,
                 cursor: "pointer", zIndex: 30,
-                display: "flex", alignItems: "center", justifyContent: "center",
               }}>
-                <Chevron dir="right" size={12} />
+                <img src="/images/arrow-circle.png" alt="Siguiente"
+                  style={{ width: "100%", height: "100%", objectFit: "contain", display: "block", transform: "scaleX(-1)" }} />
               </button>
             </>
           )}
@@ -356,6 +460,7 @@ export default function Menu({ onAgregar, config }: Props) {
               style={{ textAlign: "center" }}
             >
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 4, transform: `translateX(${nameOffsetX}px)` }}>
+                <span style={{ color: C.tinta, fontSize: starsFontSize, transform: `translateX(${starsOffsetX}px)`, display: "inline-block" }}>✦</span>
                 <h3 style={{
                   fontFamily: "var(--font-anton), sans-serif",
                   fontSize: nameFontSize,
@@ -364,6 +469,7 @@ export default function Menu({ onAgregar, config }: Props) {
                 }}>
                   {activo.nombre}
                 </h3>
+                <span style={{ color: C.tinta, fontSize: starsFontSize, transform: `translateX(${-starsOffsetX}px)`, display: "inline-block" }}>✦</span>
               </div>
               <p style={{
                 fontFamily: "var(--font-inter), sans-serif",
