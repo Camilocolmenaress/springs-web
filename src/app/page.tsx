@@ -366,31 +366,45 @@ export default function Home() {
 
   return (
     <>
-      {/* ── NAV TOP FIJO ── */}
+      {/* ── NAV LOGO + SUBTITLE — elemento independiente con mix-blend-mode ── */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, ease: EASE, delay: 0.05 }}
+        style={{
+          position: "fixed", top: 0, left: 32,
+          height: 64, zIndex: 100,
+          display: "flex", alignItems: "center", gap: 14,
+          mixBlendMode: "difference",
+          pointerEvents: "none",
+        }}
+      >
+        <a href="/" style={{ ...F.display, fontSize: "1.9rem", letterSpacing: "0.05em", color: "#ffffff", textDecoration: "none", pointerEvents: "auto" }}>SPRINGS</a>
+        <span style={{ color: "#ffffff", fontSize: "0.85rem" }}>✦</span>
+        <div style={{ ...F.mono, fontSize: "0.5rem", letterSpacing: "0.1em", color: "#ffffff", lineHeight: 1.4, textTransform: "uppercase", opacity: 0.6 }}>
+          BRITISH SOUL<br />COLOMBIAN HEART.
+        </div>
+      </motion.div>
+
+      {/* ── NAV TOP FIJO — solo botón derecho ── */}
       <motion.nav
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, ease: EASE, delay: 0.05 }}
         style={{
-          position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
-          display: "flex", alignItems: "center", justifyContent: "space-between",
+          position: "fixed", top: 0, left: 0, right: 0, zIndex: 99,
+          display: "flex", alignItems: "center", justifyContent: "flex-end",
           padding: "0 32px", height: 64,
           background: "transparent",
+          pointerEvents: "none",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 14, mixBlendMode: "difference" }}>
-          <a href="/" style={{ ...F.display, fontSize: "1.9rem", letterSpacing: "0.05em", color: "#ffffff", textDecoration: "none" }}>SPRINGS</a>
-          <span style={{ color: "#ffffff", fontSize: "0.85rem" }}>✦</span>
-          <div style={{ ...F.mono, fontSize: "0.5rem", letterSpacing: "0.1em", color: "#ffffff", lineHeight: 1.4, textTransform: "uppercase", opacity: 0.6 }}>
-            BRITISH SOUL<br />COLOMBIAN HEART.
-          </div>
-        </div>
-        <div />
         <a href="/menu" style={{
           ...F.display, fontSize: "0.82rem", letterSpacing: "0.14em",
           background: C.burgundy, color: C.cream,
           padding: "16px 26px", textDecoration: "none",
           display: "flex", alignItems: "center", gap: 10,
+          pointerEvents: "auto",
         }}>
           PEDIR AHORA <span>↗</span>
         </a>
