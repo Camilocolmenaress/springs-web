@@ -341,6 +341,12 @@ export default function Home() {
     });
     lenisRef.current = lenis;
 
+    // Limit scroll to canvas offsetWidth, ignoring child overflow (scrollWidth > offsetWidth)
+    Object.defineProperty(lenis, "limit", {
+      get: () => (contentRef.current?.offsetWidth ?? 0) - (wrapperRef.current?.clientWidth ?? window.innerWidth),
+      configurable: true,
+    });
+
     lenis.on("scroll", () => {
       scrollXMV.set(lenis.scroll);
       setScrollVw(Math.round((lenis.scroll / window.innerWidth + 1) * 100));
@@ -513,7 +519,7 @@ export default function Home() {
       {/* ── WRAPPER LENIS ── */}
       <div ref={wrapperRef} style={{ width: "100vw", height: "100vh", overflow: "hidden", background: C.cream }}>
         {/* ── CANVAS CONTINUO — ancho controlado por editor ── */}
-        <div ref={contentRef} style={{ position: "relative", width: `${d.canvasWidth}vw`, height: "100vh", overflow: "hidden" }}>
+        <div ref={contentRef} style={{ position: "relative", width: `${d.canvasWidth}vw`, height: "100vh", overflow: "clip" }}>
 
           {/* ═══════════════════════════════════════
               ZONA 1 — HERO (0 → 100vw)
@@ -1331,14 +1337,20 @@ export default function Home() {
             </div>
           </Reveal>
 
-          {/* "DIFFERENT BY DEFAULT" fantasma */}
+          {/* "DIFFERENT BY DEFAULT" fantasma — wrapper acotado: su borde derecho = canvas borde */}
           <div style={{
-            position: "absolute", left: `${d.pedirGhostLeft}vw`, top: `${d.pedirGhostTop}vh`,
-            transform: "rotate(-90deg)",
-            transformOrigin: "left center", whiteSpace: "nowrap", zIndex: 2,
-            ...F.display, fontSize: `${d.pedirGhostSize}vw`, color: C.cream, opacity: d.pedirGhostOpacity / 100,
+            position: "absolute", left: `${d.pedirGhostLeft}vw`, top: 0, bottom: 0,
+            width: `${d.canvasWidth - d.pedirGhostLeft}vw`,
+            overflow: "hidden", zIndex: 2,
           }}>
-            DIFFERENT BY DEFAULT.
+            <div style={{
+              position: "absolute", left: 0, top: `${d.pedirGhostTop}vh`,
+              transform: "rotate(-90deg)",
+              transformOrigin: "left center", whiteSpace: "nowrap",
+              ...F.display, fontSize: `${d.pedirGhostSize}vw`, color: C.cream, opacity: d.pedirGhostOpacity / 100,
+            }}>
+              DIFFERENT BY DEFAULT.
+            </div>
           </div>
 
         </div>
