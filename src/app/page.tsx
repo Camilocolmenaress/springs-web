@@ -321,7 +321,7 @@ export default function Home() {
 
     lenis.on("scroll", () => {
       scrollXMV.set(lenis.scroll);
-      if (lenis.scroll > window.innerWidth * 1.2) {
+      if (lenis.scroll > window.innerWidth * 1.05) {
         setReceiptVisible(true);
       }
     });
@@ -1132,7 +1132,7 @@ export default function Home() {
               ? { scale: 1, y: 0, rotate: d.cultureReceiptRotation, opacity: 1 }
               : { scale: 3.2, y: -120, rotate: d.cultureReceiptRotation + 8, opacity: 0 }
             }
-            transition={{ type: "spring", stiffness: 140, damping: 20, mass: 1.2, delay: 0.2 }}
+            transition={{ type: "spring", stiffness: 110, damping: 19, mass: 1.4, delay: 0.2 }}
             style={{
               position: "absolute",
               left: `${d.cultureReceiptLeft}vw`,
