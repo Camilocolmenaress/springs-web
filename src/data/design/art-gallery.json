@@ -1,0 +1,131 @@
+{
+  "zones": {
+    "layout": {
+      "label": "Layout Global",
+      "elements": {
+        "sidebar": {
+          "props": {
+            "width": { "value": 168, "unit": "px", "min": 100, "max": 320, "step": 1 }
+          }
+        },
+        "nav": {
+          "props": {
+            "height": { "value": 52, "unit": "px", "min": 32, "max": 100, "step": 1 }
+          }
+        },
+        "footer": {
+          "props": {
+            "height": { "value": 46, "unit": "px", "min": 28, "max": 80, "step": 1 }
+          }
+        },
+        "infoPanel": {
+          "props": {
+            "width": { "value": 380, "unit": "px", "min": 200, "max": 600, "step": 4 }
+          }
+        }
+      }
+    },
+
+    "sidebar_contenido": {
+      "label": "Sidebar — Contenido",
+      "elements": {
+        "globe": {
+          "props": {
+            "size":        { "value": 108, "unit": "px", "min": 60, "max": 200, "step": 2 },
+            "globeRadius": { "value": 22,  "unit": "px", "min": 10, "max": 45,  "step": 0.5 },
+            "textRadius":  { "value": 46,  "unit": "px", "min": 25, "max": 55,  "step": 0.5 }
+          }
+        },
+        "paddingSidebar": {
+          "props": {
+            "top":        { "value": 32, "unit": "px", "min": 8,  "max": 80, "step": 1 },
+            "horizontal": { "value": 18, "unit": "px", "min": 8,  "max": 40, "step": 1 }
+          }
+        },
+        "exhibitNum": {
+          "props": {
+            "fontSize": { "value": 3.8, "unit": "rem", "min": 1, "max": 8, "step": 0.1 }
+          }
+        },
+        "exhibitList": {
+          "props": {
+            "fontSize": { "value": 0.39, "unit": "rem", "min": 0.2, "max": 0.9, "step": 0.01 },
+            "gap":      { "value": 8,    "unit": "px",  "min": 2,  "max": 24,  "step": 1 }
+          }
+        }
+      }
+    },
+
+    "foto": {
+      "label": "Panel Foto",
+      "elements": {
+        "imagen": {
+          "props": {
+            "top": { "value": 20, "unit": "%", "min": 0, "max": 100, "step": 1 }
+          }
+        },
+        "viñeta": {
+          "props": {
+            "height": { "value": 35, "unit": "%", "min": 5, "max": 80, "step": 1 }
+          }
+        },
+        "placa": {
+          "props": {
+            "bottom":    { "value": 52, "unit": "px", "min": 0,   "max": 200, "step": 1 },
+            "fontSize":  { "value": 1,  "unit": "rem","min": 0.5, "max": 2.5, "step": 0.05 },
+            "paddingH":  { "value": 28, "unit": "px", "min": 8,   "max": 80,  "step": 1 },
+            "paddingV":  { "value": 12, "unit": "px", "min": 4,   "max": 40,  "step": 1 }
+          }
+        }
+      }
+    },
+
+    "infoPanel_contenido": {
+      "label": "Panel Info",
+      "elements": {
+        "paddingInfo": {
+          "props": {
+            "top":        { "value": 32, "unit": "px", "min": 8,  "max": 80, "step": 1 },
+            "horizontal": { "value": 22, "unit": "px", "min": 8,  "max": 60, "step": 1 }
+          }
+        },
+        "titulo": {
+          "props": {
+            "fontSize": { "value": 3.8, "unit": "rem", "min": 1.5, "max": 7, "step": 0.1 }
+          }
+        },
+        "subtitulo": {
+          "props": {
+            "fontSize": { "value": 0.48, "unit": "rem", "min": 0.25, "max": 1.2, "step": 0.01 }
+          }
+        },
+        "ingredientes": {
+          "props": {
+            "fontSize": { "value": 0.44, "unit": "rem", "min": 0.25, "max": 0.9, "step": 0.01 },
+            "gap":      { "value": 4,    "unit": "px",  "min": 1,    "max": 20,  "step": 1 }
+          }
+        },
+        "descripcion": {
+          "props": {
+            "fontSize": { "value": 0.44, "unit": "rem", "min": 0.25, "max": 0.9, "step": 0.01 }
+          }
+        },
+        "tagline": {
+          "props": {
+            "fontSize": { "value": 0.46, "unit": "rem", "min": 0.25, "max": 0.9, "step": 0.01 }
+          }
+        },
+        "quote": {
+          "props": {
+            "fontSize": { "value": 0.58, "unit": "rem", "min": 0.3, "max": 1.5, "step": 0.01 }
+          }
+        },
+        "specs": {
+          "props": {
+            "fontSize": { "value": 0.43, "unit": "rem", "min": 0.25, "max": 0.9, "step": 0.01 }
+          }
+        }
+      }
+    }
+  }
+}

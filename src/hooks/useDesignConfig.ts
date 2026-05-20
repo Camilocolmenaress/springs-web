@@ -3,12 +3,14 @@
 import { useState, useCallback, useEffect } from "react";
 import type { PageConfig, SliderProp, FontProp, ColorProp, ImageProp, AnimationProp } from "@/types/design";
 
-import homeConfig from "@/data/design/home.json";
-import menuConfig from "@/data/design/menu.json";
+import homeConfig       from "@/data/design/home.json";
+import menuConfig       from "@/data/design/menu.json";
+import artGalleryConfig from "@/data/design/art-gallery.json";
 
 const configs: Record<string, PageConfig> = {
-  home: homeConfig as unknown as PageConfig,
-  menu: menuConfig as unknown as PageConfig,
+  home:        homeConfig       as unknown as PageConfig,
+  menu:        menuConfig       as unknown as PageConfig,
+  "art-gallery": artGalleryConfig as unknown as PageConfig,
 };
 
 function deepClone<T>(obj: T): T {

@@ -4,6 +4,9 @@ import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Lenis from "lenis";
 import Link from "next/link";
+import DevPanel from "@/components/DevPanel";
+import { useDesignConfig } from "@/hooks/useDesignConfig";
+import type { SliderProp } from "@/types/design";
 
 const BG = "#0A0806";
 const C = {
@@ -15,14 +18,10 @@ const C = {
   fainter: "rgba(242,232,213,0.06)",
 };
 const F = {
-  display: { fontFamily: "Anton, sans-serif" }    as const,
-  sans:    { fontFamily: "Inter, sans-serif" }     as const,
-  mono:    { fontFamily: "JetBrains Mono, monospace" } as const,
+  display: { fontFamily: "Anton, sans-serif" }         as const,
+  sans:    { fontFamily: "Inter, sans-serif" }          as const,
+  mono:    { fontFamily: "JetBrains Mono, monospace" }  as const,
 };
-
-const SIDEBAR_W = 168;
-const NAV_H     = 52;
-const FOOTER_H  = 46;
 
 const EXHIBITS = [
   {
@@ -77,12 +76,61 @@ const EXHIBITS = [
   },
 ];
 
+function sv(zones: Record<string, { elements: Record<string, { props: Record<string, unknown> }> }>, zone: string, elem: string, prop: string, fallback: number): number {
+  return (zones[zone]?.elements[elem]?.props[prop] as SliderProp)?.value ?? fallback;
+}
+
 export default function ArtGallery() {
-  const [idx, setIdx]     = useState(0);
-  const wrapperRef        = useRef<HTMLDivElement>(null);
-  const contentRef        = useRef<HTMLDivElement>(null);
-  const lenisRef          = useRef<Lenis | null>(null);
-  const ex                = EXHIBITS[idx];
+  const [idx, setIdx]   = useState(0);
+  const wrapperRef      = useRef<HTMLDivElement>(null);
+  const contentRef      = useRef<HTMLDivElement>(null);
+  const lenisRef        = useRef<Lenis | null>(null);
+  const ex              = EXHIBITS[idx];
+
+  const { config, editMode, saved, updateProp, save, reset, exportValues } = useDesignConfig("art-gallery");
+  const z = config.zones as Record<string, { elements: Record<string, { props: Record<string, unknown> }> }>;
+
+  const d = {
+    // layout
+    sidebarW:      sv(z, "layout",            "sidebar",      "width",      168),
+    navH:          sv(z, "layout",            "nav",          "height",     52),
+    footerH:       sv(z, "layout",            "footer",       "height",     46),
+    infoPanelW:    sv(z, "layout",            "infoPanel",    "width",      380),
+    // sidebar
+    globeSize:     sv(z, "sidebar_contenido", "globe",        "size",       108),
+    globeRadius:   sv(z, "sidebar_contenido", "globe",        "globeRadius",22),
+    textRadius:    sv(z, "sidebar_contenido", "globe",        "textRadius", 46),
+    sidebarPadT:   sv(z, "sidebar_contenido", "paddingSidebar","top",       32),
+    sidebarPadH:   sv(z, "sidebar_contenido", "paddingSidebar","horizontal",18),
+    exhibitNumFs:  sv(z, "sidebar_contenido", "exhibitNum",   "fontSize",   3.8),
+    exhibitListFs: sv(z, "sidebar_contenido", "exhibitList",  "fontSize",   0.39),
+    exhibitListGap:sv(z, "sidebar_contenido", "exhibitList",  "gap",        8),
+    // foto
+    imageTop:      sv(z, "foto",              "imagen",       "top",        20),
+    vignetteH:     sv(z, "foto",              "viñeta",       "height",     35),
+    placaBottom:   sv(z, "foto",              "placa",        "bottom",     52),
+    placaFs:       sv(z, "foto",              "placa",        "fontSize",   1),
+    placaPadH:     sv(z, "foto",              "placa",        "paddingH",   28),
+    placaPadV:     sv(z, "foto",              "placa",        "paddingV",   12),
+    // info panel
+    infoPadT:      sv(z, "infoPanel_contenido","paddingInfo", "top",        32),
+    infoPadH:      sv(z, "infoPanel_contenido","paddingInfo", "horizontal", 22),
+    tituloFs:      sv(z, "infoPanel_contenido","titulo",      "fontSize",   3.8),
+    subtituloFs:   sv(z, "infoPanel_contenido","subtitulo",   "fontSize",   0.48),
+    ingredientesFs:sv(z, "infoPanel_contenido","ingredientes","fontSize",   0.44),
+    ingredientesGap:sv(z,"infoPanel_contenido","ingredientes","gap",        4),
+    descripcionFs: sv(z, "infoPanel_contenido","descripcion", "fontSize",   0.44),
+    taglineFs:     sv(z, "infoPanel_contenido","tagline",     "fontSize",   0.46),
+    quoteFs:       sv(z, "infoPanel_contenido","quote",       "fontSize",   0.58),
+    specsFs:       sv(z, "infoPanel_contenido","specs",       "fontSize",   0.43),
+  };
+
+  // Globe text path — recalculated from textRadius
+  const gr  = d.globeRadius;
+  const tr  = d.textRadius;
+  const gsx = +(55 - tr * 0.5).toFixed(1);
+  const gsy = +(55 + tr * 0.866).toFixed(1);
+  const gdy = +(tr * 1.732).toFixed(1);
 
   useEffect(() => {
     const wrapper = wrapperRef.current;
@@ -126,9 +174,9 @@ export default function ArtGallery() {
   return (
     <main style={{ background: BG, height: "100vh", overflow: "hidden", color: C.cream }}>
 
-      {/* ── NAV — solo logo + CTA ─────────────────────────── */}
+      {/* ── NAV ─────────────────────────────────────────── */}
       <div style={{
-        position: "fixed", top: 0, left: 0, right: 0, height: NAV_H, zIndex: 200,
+        position: "fixed", top: 0, left: 0, right: 0, height: d.navH, zIndex: 200,
         display: "flex", alignItems: "center", justifyContent: "space-between",
         padding: "0 28px",
         background: "rgba(10,8,6,0.96)",
@@ -150,32 +198,32 @@ export default function ArtGallery() {
       {/* ── SIDEBAR FIJO ─────────────────────────────────── */}
       <aside style={{
         position: "fixed",
-        left: 0, top: NAV_H, bottom: FOOTER_H, width: SIDEBAR_W,
+        left: 0, top: d.navH, bottom: d.footerH, width: d.sidebarW,
         zIndex: 100,
         borderRight: `1px solid ${C.faint}`,
-        padding: "32px 18px 24px",
+        padding: `${d.sidebarPadT}px ${d.sidebarPadH}px 24px`,
         display: "flex", flexDirection: "column",
         background: BG,
         overflow: "hidden",
       }}>
 
         {/* Globe con texto circular */}
-        <div style={{ width: 108, height: 108, flexShrink: 0, marginBottom: 18 }}>
+        <div style={{ width: d.globeSize, height: d.globeSize, flexShrink: 0, marginBottom: 18 }}>
           <svg viewBox="0 0 110 110" width="100%" height="100%">
-            <circle cx="55" cy="55" r="22" fill="none" stroke={C.dim} strokeWidth="1.2" opacity={0.8}/>
+            <circle cx="55" cy="55" r={gr} fill="none" stroke={C.dim} strokeWidth="1.2" opacity={0.8}/>
             <motion.g
               animate={{ rotate: 360 }}
               transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
               style={{ transformBox: "fill-box", transformOrigin: "center" }}
             >
-              <ellipse cx="55" cy="55" rx="7.9" ry="22" fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.6}/>
-              <ellipse cx="55" cy="55" rx="16.9" ry="22" fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.5}/>
-              <ellipse cx="55" cy="55" rx="22" ry="9" fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.6}/>
-              <ellipse cx="55" cy="55" rx="22" ry="16.9" fill="none" stroke={C.dim} strokeWidth="0.8" opacity={0.45}/>
-              <line x1="33" y1="55" x2="77" y2="55" stroke={C.dim} strokeWidth="0.8" opacity={0.45}/>
-              <line x1="55" y1="33" x2="55" y2="77" stroke={C.dim} strokeWidth="0.8" opacity={0.45}/>
+              <ellipse cx="55" cy="55" rx={+(gr*0.36).toFixed(1)} ry={gr} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.6}/>
+              <ellipse cx="55" cy="55" rx={+(gr*0.77).toFixed(1)} ry={gr} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.5}/>
+              <ellipse cx="55" cy="55" rx={gr} ry={+(gr*0.41).toFixed(1)} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.6}/>
+              <ellipse cx="55" cy="55" rx={gr} ry={+(gr*0.77).toFixed(1)} fill="none" stroke={C.dim} strokeWidth="0.8" opacity={0.45}/>
+              <line x1={55-gr} y1="55" x2={55+gr} y2="55" stroke={C.dim} strokeWidth="0.8" opacity={0.45}/>
+              <line x1="55" y1={55-gr} x2="55" y2={55+gr} stroke={C.dim} strokeWidth="0.8" opacity={0.45}/>
             </motion.g>
-            <path id="gallery-chimba-circle" fill="none" d="M32,94.8 a46,46 0 0,1 46,-79.7 a46,46 0 0,1 -46,79.7"/>
+            <path id="gallery-chimba-circle" fill="none" d={`M${gsx},${gsy} a${tr},${tr} 0 0,1 ${tr},${-gdy} a${tr},${tr} 0 0,1 ${-tr},${gdy}`}/>
             <text fontFamily="JetBrains Mono, monospace" fontSize="7.5" letterSpacing="1.0" fill={C.dim} fillOpacity={0.9}>
               <textPath href="#gallery-chimba-circle" startOffset="0%">FOR THE MOST CHIMBA PEOPLE ✦ </textPath>
             </text>
@@ -184,7 +232,7 @@ export default function ArtGallery() {
 
         {/* Exhibit number */}
         <div style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.2em", color: C.dim, marginBottom: 2 }}>EXHIBIT</div>
-        <div style={{ ...F.display, fontSize: "3.8rem", color: C.burgundy, lineHeight: 1, marginBottom: 14 }}>
+        <div style={{ ...F.display, fontSize: `${d.exhibitNumFs}rem`, color: C.burgundy, lineHeight: 1, marginBottom: 14 }}>
           {ex.id}
         </div>
 
@@ -209,16 +257,16 @@ export default function ArtGallery() {
         <div style={{ width: 7, height: 7, borderRadius: "50%", background: C.burgundy, marginBottom: 16 }} />
 
         {/* Exhibit list */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: d.exhibitListGap }}>
           {EXHIBITS.map((e, i) => (
             <button key={e.id} onClick={() => goTo(i)} style={{
               background: "none", border: "none", cursor: "pointer",
               display: "flex", alignItems: "center", gap: 7, padding: 0,
             }}>
-              <span style={{ ...F.mono, fontSize: "0.39rem", color: i === idx ? C.burgundy : "rgba(242,232,213,0.22)" }}>
+              <span style={{ ...F.mono, fontSize: `${d.exhibitListFs}rem`, color: i === idx ? C.burgundy : "rgba(242,232,213,0.22)" }}>
                 {e.id}
               </span>
-              <span style={{ ...F.mono, fontSize: "0.39rem", letterSpacing: "0.06em", color: i === idx ? C.cream : "rgba(242,232,213,0.25)" }}>
+              <span style={{ ...F.mono, fontSize: `${d.exhibitListFs}rem`, letterSpacing: "0.06em", color: i === idx ? C.cream : "rgba(242,232,213,0.25)" }}>
                 {e.name}
               </span>
             </button>
@@ -230,8 +278,7 @@ export default function ArtGallery() {
           <div style={{ display: "flex", gap: 4 }}>
             {EXHIBITS.map((_, i) => (
               <div key={i} style={{
-                height: 2,
-                flex: 1,
+                height: 2, flex: 1,
                 background: i === idx ? C.cream : "rgba(242,232,213,0.15)",
                 transition: "background 0.3s",
               }} />
@@ -248,10 +295,10 @@ export default function ArtGallery() {
         ref={wrapperRef}
         style={{
           position: "fixed",
-          left: SIDEBAR_W,
-          top: NAV_H,
+          left: d.sidebarW,
+          top: d.navH,
           right: 0,
-          bottom: FOOTER_H,
+          bottom: d.footerH,
           overflow: "hidden",
         }}
       >
@@ -260,45 +307,44 @@ export default function ArtGallery() {
           style={{
             display: "flex",
             height: "100%",
-            width: `calc((100vw - ${SIDEBAR_W}px) * ${EXHIBITS.length})`,
+            width: `calc((100vw - ${d.sidebarW}px) * ${EXHIBITS.length})`,
           }}
         >
           {EXHIBITS.map((exhibit) => (
             <div
               key={exhibit.id}
               style={{
-                width: `calc(100vw - ${SIDEBAR_W}px)`,
+                width: `calc(100vw - ${d.sidebarW}px)`,
                 height: "100%",
                 flexShrink: 0,
                 display: "grid",
-                gridTemplateColumns: "1fr 380px",
+                gridTemplateColumns: `1fr ${d.infoPanelW}px`,
                 borderRight: `1px solid ${C.fainter}`,
               }}
             >
-              {/* ── Photo ── */}
+              {/* ── Foto ── */}
               <div style={{ position: "relative", overflow: "hidden" }}>
                 <img
                   src={exhibit.img}
                   alt={exhibit.name}
-                  style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%", display: "block" }}
+                  style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: `center ${d.imageTop}%`, display: "block" }}
                 />
 
-                {/* Vignette bottom */}
                 <div style={{
-                  position: "absolute", bottom: 0, left: 0, right: 0, height: "35%",
+                  position: "absolute", bottom: 0, left: 0, right: 0, height: `${d.vignetteH}%`,
                   background: `linear-gradient(to top, ${BG} 0%, transparent 100%)`,
                   pointerEvents: "none",
                 }} />
 
-                {/* Museum plaque */}
+                {/* Placa museo */}
                 <div style={{
-                  position: "absolute", bottom: 52, left: "50%", transform: "translateX(-50%)",
+                  position: "absolute", bottom: d.placaBottom, left: "50%", transform: "translateX(-50%)",
                   border: "1px solid rgba(242,232,213,0.25)",
-                  padding: "12px 28px", textAlign: "center",
+                  padding: `${d.placaPadV}px ${d.placaPadH}px`, textAlign: "center",
                   background: "rgba(10,8,6,0.7)", backdropFilter: "blur(6px)",
                   whiteSpace: "nowrap",
                 }}>
-                  <div style={{ ...F.display, fontSize: "1rem", letterSpacing: "0.14em", color: C.cream }}>
+                  <div style={{ ...F.display, fontSize: `${d.placaFs}rem`, letterSpacing: "0.14em", color: C.cream }}>
                     {exhibit.name}
                   </div>
                   <div style={{ ...F.mono, fontSize: "0.42rem", letterSpacing: "0.2em", color: C.dim, marginTop: 3 }}>
@@ -313,7 +359,7 @@ export default function ArtGallery() {
               {/* ── Info panel ── */}
               <div style={{
                 borderLeft: `1px solid ${C.faint}`,
-                padding: "32px 22px 24px",
+                padding: `${d.infoPadT}px ${d.infoPadH}px 24px`,
                 overflowY: "auto",
                 display: "flex", flexDirection: "column",
               }}>
@@ -321,29 +367,29 @@ export default function ArtGallery() {
                   SPRINGS ART GALLERY
                 </div>
 
-                <h2 style={{ ...F.display, fontSize: "clamp(2.4rem, 4vw, 4.5rem)", color: C.cream, lineHeight: 0.95, letterSpacing: "-0.01em", margin: "0 0 10px" }}>
+                <h2 style={{ ...F.display, fontSize: `${d.tituloFs}rem`, color: C.cream, lineHeight: 0.95, letterSpacing: "-0.01em", margin: "0 0 10px" }}>
                   {exhibit.name}
                 </h2>
 
-                <div style={{ ...F.mono, fontSize: "0.48rem", letterSpacing: "0.18em", color: C.mostaza, marginBottom: 14 }}>
+                <div style={{ ...F.mono, fontSize: `${d.subtituloFs}rem`, letterSpacing: "0.18em", color: C.mostaza, marginBottom: 14 }}>
                   {exhibit.subtitle} +
                 </div>
 
                 <div style={{ height: "1px", background: C.faint, marginBottom: 14, width: "80%" }} />
 
-                <div style={{ display: "flex", flexDirection: "column", gap: 4, marginBottom: 12 }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: d.ingredientesGap, marginBottom: 12 }}>
                   {exhibit.ingredients.map(ing => (
-                    <div key={ing} style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.09em", color: C.cream }}>
+                    <div key={ing} style={{ ...F.mono, fontSize: `${d.ingredientesFs}rem`, letterSpacing: "0.09em", color: C.cream }}>
                       {ing}
                     </div>
                   ))}
                 </div>
 
-                <p style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.06em", color: C.dim, lineHeight: 1.7, margin: "0 0 10px", whiteSpace: "pre-line" }}>
+                <p style={{ ...F.mono, fontSize: `${d.descripcionFs}rem`, letterSpacing: "0.06em", color: C.dim, lineHeight: 1.7, margin: "0 0 10px", whiteSpace: "pre-line" }}>
                   {exhibit.description}
                 </p>
 
-                <div style={{ ...F.mono, fontSize: "0.46rem", letterSpacing: "0.1em", color: C.burgundy, marginBottom: 16 }}>
+                <div style={{ ...F.mono, fontSize: `${d.taglineFs}rem`, letterSpacing: "0.1em", color: C.burgundy, marginBottom: 16 }}>
                   {exhibit.tagline}
                 </div>
 
@@ -363,7 +409,7 @@ export default function ArtGallery() {
                       <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.14em", color: "rgba(242,232,213,0.28)", marginBottom: 2 }}>
                         {item.label}
                       </div>
-                      <div style={{ ...F.mono, fontSize: "0.43rem", letterSpacing: "0.07em", color: C.cream }}>
+                      <div style={{ ...F.mono, fontSize: `${d.specsFs}rem`, letterSpacing: "0.07em", color: C.cream }}>
                         {item.val}
                       </div>
                     </div>
@@ -374,7 +420,7 @@ export default function ArtGallery() {
                 <div style={{ display: "flex", gap: 10, alignItems: "flex-start", marginTop: "auto" }}>
                   <div style={{ flex: 1 }}>
                     <span style={{ ...F.sans, fontSize: "1.4rem", color: C.cream, lineHeight: 0.8, display: "block", marginBottom: 3 }}>"</span>
-                    <p style={{ ...F.sans, fontSize: "0.58rem", fontWeight: 500, color: C.cream, lineHeight: 1.5, margin: "0 0 5px", whiteSpace: "pre-line" }}>
+                    <p style={{ ...F.sans, fontSize: `${d.quoteFs}rem`, fontWeight: 500, color: C.cream, lineHeight: 1.5, margin: "0 0 5px", whiteSpace: "pre-line" }}>
                       {exhibit.quote}
                     </p>
                     <div style={{ ...F.sans, fontSize: "0.5rem", fontStyle: "italic", color: C.dim }}>Springs Crew</div>
@@ -391,7 +437,7 @@ export default function ArtGallery() {
 
       {/* ── FOOTER ───────────────────────────────────────── */}
       <footer style={{
-        position: "fixed", bottom: 0, left: 0, right: 0, height: FOOTER_H, zIndex: 100,
+        position: "fixed", bottom: 0, left: 0, right: 0, height: d.footerH, zIndex: 100,
         display: "flex", alignItems: "center", justifyContent: "space-between",
         padding: "0 28px",
         background: "rgba(10,8,6,0.96)",
@@ -410,11 +456,11 @@ export default function ArtGallery() {
 
         <div style={{ display: "flex", gap: 20 }}>
           {[
-            { label: "CARTA",       href: "/menu"        },
+            { label: "CARTA",       href: "/menu"         },
             { label: "ART GALLERY", href: "/art-gallery", active: true },
-            { label: "NOSOTROS",    href: "#"             },
-            { label: "EL CLUB",     href: "#"             },
-            { label: "FAQS",        href: "#"             },
+            { label: "NOSOTROS",    href: "#"              },
+            { label: "EL CLUB",     href: "#"              },
+            { label: "FAQS",        href: "#"              },
           ].map(item => (
             <Link key={item.label} href={item.href} style={{
               ...F.mono, fontSize: "0.43rem", letterSpacing: "0.1em",
@@ -441,6 +487,18 @@ export default function ArtGallery() {
           </div>
         </div>
       </footer>
+
+      {/* ── EDITOR ───────────────────────────────────────── */}
+      {editMode && (
+        <DevPanel
+          config={config}
+          saved={saved}
+          onUpdate={updateProp}
+          onSave={save}
+          onExport={exportValues}
+          onReset={reset}
+        />
+      )}
 
     </main>
   );
