@@ -1103,7 +1103,7 @@
           "type": "text",
           "props": {
             "fontSize": {
-              "value": 4.5,
+              "value": 5.0,
               "unit": "vw",
               "min": 2,
               "max": 12,
@@ -1124,7 +1124,7 @@
               "step": 1
             },
             "top": {
-              "value": 50,
+              "value": 75.0,
               "unit": "vh",
               "min": 0,
               "max": 100,
