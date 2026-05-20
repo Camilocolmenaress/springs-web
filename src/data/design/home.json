@@ -1063,14 +1063,14 @@
           "type": "block",
           "props": {
             "left": {
-              "value": 251.0,
+              "value": 257.0,
               "unit": "vw",
               "min": 230,
               "max": 380,
               "step": 1
             },
             "bottom": {
-              "value": 19.0,
+              "value": 16.0,
               "unit": "vh",
               "min": 0,
               "max": 60,
@@ -1084,14 +1084,14 @@
               "step": 0.5
             },
             "height": {
-              "value": 45.0,
+              "value": 44.0,
               "unit": "vh",
               "min": 0,
               "max": 80,
               "step": 1
             },
             "size": {
-              "value": 100,
+              "value": 81.0,
               "unit": "%",
               "min": 30,
               "max": 150,
@@ -1103,21 +1103,21 @@
           "type": "text",
           "props": {
             "fontSize": {
-              "value": 5,
+              "value": 4.5,
               "unit": "vw",
               "min": 2,
               "max": 12,
               "step": 0.5
             },
             "left": {
-              "value": 390,
+              "value": 291.0,
               "unit": "vw",
               "min": 280,
               "max": 500,
               "step": 1
             },
             "opacity": {
-              "value": 7,
+              "value": 9.0,
               "unit": "%",
               "min": 1,
               "max": 30,
