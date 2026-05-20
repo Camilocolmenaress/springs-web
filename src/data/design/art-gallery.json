@@ -61,7 +61,9 @@
       "elements": {
         "imagen": {
           "props": {
-            "top": { "value": 39, "unit": "%", "min": 0, "max": 100, "step": 1 }
+            "top":   { "value": 39,  "unit": "%", "min": 0,   "max": 100, "step": 1 },
+            "left":  { "value": 50,  "unit": "%", "min": 0,   "max": 100, "step": 1 },
+            "scale": { "value": 1.0, "unit": "x", "min": 0.5, "max": 2.5, "step": 0.05 }
           }
         },
         "viñeta": {

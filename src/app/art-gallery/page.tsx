@@ -106,7 +106,9 @@ export default function ArtGallery() {
     exhibitListFs: sv(z, "sidebar_contenido", "exhibitList",  "fontSize",   0.39),
     exhibitListGap:sv(z, "sidebar_contenido", "exhibitList",  "gap",        8),
     // foto
-    imageTop:      sv(z, "foto",              "imagen",       "top",        20),
+    imageTop:      sv(z, "foto",              "imagen",       "top",        39),
+    imageLeft:     sv(z, "foto",              "imagen",       "left",       50),
+    imageScale:    sv(z, "foto",              "imagen",       "scale",      1.0),
     vignetteH:     sv(z, "foto",              "viñeta",       "height",     35),
     placaBottom:   sv(z, "foto",              "placa",        "bottom",     52),
     placaFs:       sv(z, "foto",              "placa",        "fontSize",   1),
@@ -325,7 +327,7 @@ export default function ArtGallery() {
                 <img
                   src={exhibit.img}
                   alt={exhibit.name}
-                  style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: `center ${d.imageTop}%`, display: "block" }}
+                  style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: `${d.imageLeft}% ${d.imageTop}%`, transform: `scale(${d.imageScale})`, transformOrigin: "center center", display: "block" }}
                 />
 
                 <div style={{
