@@ -472,7 +472,7 @@ export default function Home() {
       >
         {([
           { label: "CARTA",       href: "/menu"                },
-          { label: "ART GALLERY", href: "#"                    },
+          { label: "ART GALLERY", href: "/art-gallery"            },
           { label: "NOSOTROS",    href: "#"                    },
           { label: "EL CLUB",     href: "/springs-jacket-club" },
           { label: "FAQS",        href: "#"                    },
@@ -553,6 +553,7 @@ export default function Home() {
             transition={{ duration: 0.65, ease: EASE, delay: 0.5 }}
             style={{ position: "absolute", left: `${d.artGalleryLeft}vw`, bottom: d.artGalleryBottom, zIndex: 1 }}
           >
+            <a href="/art-gallery" style={{ textDecoration: "none" }}>
             <div
               onMouseEnter={() => setArtGalleryHovered(true)}
               onMouseLeave={() => setArtGalleryHovered(false)}
@@ -560,7 +561,7 @@ export default function Home() {
                 perspective: "2500px",
                 fontSize: `clamp(40px, ${d.artGallerySize}vw, 400px)`,
                 lineHeight: 1,
-                cursor: "default",
+                cursor: "pointer",
                 width: "fit-content",
                 clipPath: "inset(0 -800px)",
               }}
@@ -613,6 +614,7 @@ export default function Home() {
                 </h2>
               </motion.div>
             </div>
+            </a>
           </motion.div>
 
           {/* Listado de productos — entra desde la izquierda con delay */}
