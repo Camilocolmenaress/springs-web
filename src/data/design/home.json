@@ -1141,7 +1141,7 @@
           "type": "block",
           "props": {
             "width": {
-              "value": 320,
+              "value": 315,
               "unit": "vw",
               "min": 100,
               "max": 600,
