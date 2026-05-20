@@ -368,8 +368,8 @@ export default function Home() {
     <>
       {/* ── NAV TOP FIJO ── */}
       <motion.nav
-        initial={{ opacity: 0, y: -16 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         transition={{ duration: 0.5, ease: EASE, delay: 0.05 }}
         style={{
           position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
@@ -378,10 +378,10 @@ export default function Home() {
           background: "transparent",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          <a href="/" style={{ ...F.display, fontSize: "1.9rem", letterSpacing: "0.05em", color: C.burgundy, textDecoration: "none" }}>SPRINGS</a>
-          <span style={{ color: C.tinta, fontSize: "0.85rem" }}>✦</span>
-          <div style={{ ...F.mono, fontSize: "0.5rem", letterSpacing: "0.1em", color: C.tinta, lineHeight: 1.4, textTransform: "uppercase", opacity: 0.6 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 14, mixBlendMode: "difference" }}>
+          <a href="/" style={{ ...F.display, fontSize: "1.9rem", letterSpacing: "0.05em", color: "#ffffff", textDecoration: "none" }}>SPRINGS</a>
+          <span style={{ color: "#ffffff", fontSize: "0.85rem" }}>✦</span>
+          <div style={{ ...F.mono, fontSize: "0.5rem", letterSpacing: "0.1em", color: "#ffffff", lineHeight: 1.4, textTransform: "uppercase", opacity: 0.6 }}>
             BRITISH SOUL<br />COLOMBIAN HEART.
           </div>
         </div>
