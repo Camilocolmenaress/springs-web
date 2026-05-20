@@ -164,9 +164,10 @@ export default function Home() {
   const fontCSS = (key: string) => FONT_MAP[key] ?? FONT_MAP.display;
   const colorHex = (key: string) => COLOR_MAP[key] ?? COLOR_MAP.tinta;
 
-  const hero = config.zones.hero?.elements;
-  const pack = config.zones.packaging?.elements;
-  const cult = config.zones.culture?.elements;
+  const hero  = config.zones.hero?.elements;
+  const pack  = config.zones.packaging?.elements;
+  const cult  = config.zones.culture?.elements;
+  const pedir = (config.zones as Record<string, { elements: Record<string, { props: Record<string, unknown> }> }>).pedirYa?.elements;
   const d = {
     titleSize:    (hero?.title?.props?.fontSize as { value: number })?.value ?? 19.5,
     titleLeft:    (hero?.title?.props?.left as { value: number })?.value ?? 42,
@@ -296,6 +297,21 @@ export default function Home() {
     cultureReceiptLeft:     (cult?.receipt?.props?.left as { value: number })?.value ?? 153,
     cultureReceiptTop:      (cult?.receipt?.props?.top as { value: number })?.value ?? 8,
     cultureReceiptRotation: (cult?.receipt?.props?.rotation as { value: number })?.value ?? -15,
+    pedirTitleSize:    (pedir?.title?.props?.fontSize as { value: number })?.value ?? 18,
+    pedirTitleLeft:    (pedir?.title?.props?.left as { value: number })?.value ?? 258,
+    pedirTitleTop:     (pedir?.title?.props?.top as { value: number })?.value ?? 20,
+    pedirTaglineSize:  (pedir?.tagline?.props?.fontSize as { value: number })?.value ?? 0.65,
+    pedirTaglineLeft:  (pedir?.tagline?.props?.left as { value: number })?.value ?? 258,
+    pedirTaglineTop:   (pedir?.tagline?.props?.top as { value: number })?.value ?? 12,
+    pedirAppsLeft:     (pedir?.apps?.props?.left as { value: number })?.value ?? 260,
+    pedirAppsBottom:   (pedir?.apps?.props?.bottom as { value: number })?.value ?? 16,
+    pedirAppsWidth:    (pedir?.apps?.props?.width as { value: number })?.value ?? 26,
+    pedirInfoLeft:     (pedir?.info?.props?.left as { value: number })?.value ?? 294,
+    pedirInfoBottom:   (pedir?.info?.props?.bottom as { value: number })?.value ?? 16,
+    pedirInfoWidth:    (pedir?.info?.props?.width as { value: number })?.value ?? 30,
+    pedirGhostSize:    (pedir?.ghostText?.props?.fontSize as { value: number })?.value ?? 5,
+    pedirGhostLeft:    (pedir?.ghostText?.props?.left as { value: number })?.value ?? 390,
+    pedirGhostOpacity: (pedir?.ghostText?.props?.opacity as { value: number })?.value ?? 7,
   };
 
   const pauseScroll = () => lenisRef.current?.stop();
@@ -1259,10 +1275,10 @@ export default function Home() {
           }} />
 
           {/* PEDIR YA gigante */}
-          <Reveal style={{ position: "absolute", left: "258vw", top: "20vh", zIndex: 3, whiteSpace: "nowrap" }}>
+          <Reveal style={{ position: "absolute", left: `${d.pedirTitleLeft}vw`, top: `${d.pedirTitleTop}vh`, zIndex: 3, whiteSpace: "nowrap" }}>
             <h2 id="pedir" style={{
               ...F.display,
-              fontSize: "clamp(120px, 18vw, 320px)",
+              fontSize: `${d.pedirTitleSize}vw`,
               color: C.cream, lineHeight: 0.85,
               margin: 0, letterSpacing: "-0.005em",
               textTransform: "uppercase",
@@ -1271,14 +1287,14 @@ export default function Home() {
             </h2>
           </Reveal>
 
-          <Reveal delay={0.1} style={{ position: "absolute", left: "258vw", top: "12vh", zIndex: 5 }}>
-            <div style={{ ...F.mono, fontSize: "0.65rem", letterSpacing: "0.22em", color: C.mostaza, textTransform: "uppercase" }}>
+          <Reveal delay={0.1} style={{ position: "absolute", left: `${d.pedirTaglineLeft}vw`, top: `${d.pedirTaglineTop}vh`, zIndex: 5 }}>
+            <div style={{ ...F.mono, fontSize: `${d.pedirTaglineSize}rem`, letterSpacing: "0.22em", color: C.mostaza, textTransform: "uppercase" }}>
               ↗ SIN EXCUSAS · ESTO ES SPRINGS
             </div>
           </Reveal>
 
           {/* Apps */}
-          <Reveal delay={0.2} style={{ position: "absolute", left: "260vw", bottom: "16vh", zIndex: 5, width: "26vw" }}>
+          <Reveal delay={0.2} style={{ position: "absolute", left: `${d.pedirAppsLeft}vw`, bottom: `${d.pedirAppsBottom}vh`, zIndex: 5, width: `${d.pedirAppsWidth}vw` }}>
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               <a href="#" style={{
                 ...F.display, fontSize: "1rem", letterSpacing: "0.12em",
@@ -1310,7 +1326,7 @@ export default function Home() {
           </Reveal>
 
           {/* Info derecha */}
-          <Reveal delay={0.3} style={{ position: "absolute", left: "294vw", bottom: "16vh", zIndex: 5, width: "30vw" }}>
+          <Reveal delay={0.3} style={{ position: "absolute", left: `${d.pedirInfoLeft}vw`, bottom: `${d.pedirInfoBottom}vh`, zIndex: 5, width: `${d.pedirInfoWidth}vw` }}>
             <div style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
               {[
                 { label: "Horario", val: "12PM — 9PM", sub: "Lunes a domingo" },
@@ -1329,9 +1345,10 @@ export default function Home() {
 
           {/* "DIFFERENT BY DEFAULT" fantasma */}
           <div style={{
-            position: "absolute", left: "390vw", top: "50%", transform: "translateY(-50%) rotate(-90deg)",
+            position: "absolute", left: `${d.pedirGhostLeft}vw`, top: "50%",
+            transform: "translateY(-50%) rotate(-90deg)",
             transformOrigin: "left center", whiteSpace: "nowrap", zIndex: 2,
-            ...F.display, fontSize: "clamp(40px, 5vw, 100px)", color: C.cream, opacity: 0.07,
+            ...F.display, fontSize: `${d.pedirGhostSize}vw`, color: C.cream, opacity: d.pedirGhostOpacity / 100,
           }}>
             DIFFERENT BY DEFAULT.
           </div>
