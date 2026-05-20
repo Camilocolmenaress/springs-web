@@ -1113,19 +1113,28 @@ export default function Home() {
             {d.cultureHashtag}
           </div>
 
-          {/* Receipt — flotando entre los títulos */}
-          <img
+          {/* Receipt — sticker arrastrable, entra volando desde arriba */}
+          <motion.img
             src={d.cultureReceiptSrc}
             alt=""
+            drag
+            dragMomentum={false}
+            dragTransition={{ power: 0.8, timeConstant: 350 }}
+            onDragStart={pauseScroll}
+            onDragEnd={resumeScroll}
+            whileDrag={{ scale: 1.06 }}
+            initial={{ y: -280, rotate: d.cultureReceiptRotation - 45, opacity: 0, scale: 0.5 }}
+            whileInView={{ y: 0, rotate: d.cultureReceiptRotation, opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.05 }}
+            transition={{ type: "spring", stiffness: 160, damping: 13, mass: 1.5 }}
             style={{
               position: "absolute",
               left: `${d.cultureReceiptLeft}vw`,
               top: `${d.cultureReceiptTop}vh`,
               height: `${d.cultureReceiptHeight}vh`,
               width: "auto",
-              transform: `rotate(${d.cultureReceiptRotation}deg)`,
               zIndex: 6,
-              pointerEvents: "none",
+              cursor: "grab",
             }}
           />
 
