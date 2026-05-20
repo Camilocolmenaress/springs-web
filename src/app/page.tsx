@@ -310,6 +310,7 @@ export default function Home() {
     pedirInfoBottom:   (pedir?.info?.props?.bottom as { value: number })?.value ?? 16,
     pedirInfoWidth:    (pedir?.info?.props?.width as { value: number })?.value ?? 30,
     pedirInfoHeight:   (pedir?.info?.props?.height as { value: number })?.value ?? 0,
+    pedirInfoScale:    (pedir?.info?.props?.size as { value: number })?.value ?? 100,
     pedirGhostSize:    (pedir?.ghostText?.props?.fontSize as { value: number })?.value ?? 5,
     pedirGhostLeft:    (pedir?.ghostText?.props?.left as { value: number })?.value ?? 390,
     pedirGhostOpacity: (pedir?.ghostText?.props?.opacity as { value: number })?.value ?? 7,
@@ -1327,7 +1328,7 @@ export default function Home() {
           </Reveal>
 
           {/* Info derecha */}
-          <Reveal delay={0.3} style={{ position: "absolute", left: `${d.pedirInfoLeft}vw`, bottom: `${d.pedirInfoBottom}vh`, zIndex: 5, width: `${d.pedirInfoWidth}vw`, ...(d.pedirInfoHeight > 0 ? { height: `${d.pedirInfoHeight}vh`, overflow: "hidden" } : {}) }}>
+          <Reveal delay={0.3} style={{ position: "absolute", left: `${d.pedirInfoLeft}vw`, bottom: `${d.pedirInfoBottom}vh`, zIndex: 5, width: `${d.pedirInfoWidth}vw`, transform: `scale(${d.pedirInfoScale / 100})`, transformOrigin: "bottom left", ...(d.pedirInfoHeight > 0 ? { height: `${d.pedirInfoHeight}vh`, overflow: "hidden" } : {}) }}>
             <div style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
               {[
                 { label: "Horario", val: "12PM — 9PM", sub: "Lunes a domingo" },
