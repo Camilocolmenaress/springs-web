@@ -417,6 +417,9 @@ export default function Home() {
           display: "flex", gap: d.footerMenuItemGap,
           position: "fixed", bottom: d.footerMenuBottom, right: d.footerMenuRight,
           zIndex: 101,
+          background: C.cream,
+          borderRadius: "999px",
+          padding: "7px 20px",
         }}>
           {([
             { label: "CARTA",       href: "/menu"                },
