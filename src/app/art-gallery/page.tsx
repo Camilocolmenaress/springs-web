@@ -159,24 +159,26 @@ export default function ArtGallery() {
         overflow: "hidden",
       }}>
 
-        {/* Globe */}
-        <div style={{
-          width: 44, height: 44,
-          background: "rgba(26,10,12,0.88)",
-          border: `1px solid ${C.faint}`,
-          display: "flex", alignItems: "center", justifyContent: "center",
-          marginBottom: 22,
-        }}>
-          <svg viewBox="0 0 24 24" fill="none" stroke={C.dim} strokeWidth="1.2" style={{ width: 24, height: 24 }}>
-            <circle cx="12" cy="12" r="10" />
+        {/* Globe con texto circular */}
+        <div style={{ width: 108, height: 108, flexShrink: 0, marginBottom: 18 }}>
+          <svg viewBox="0 0 110 110" width="100%" height="100%">
+            <circle cx="55" cy="55" r="22" fill="none" stroke={C.dim} strokeWidth="1.2" opacity={0.8}/>
             <motion.g
               animate={{ rotate: 360 }}
               transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
               style={{ transformBox: "fill-box", transformOrigin: "center" }}
             >
-              <ellipse cx="12" cy="12" rx="4" ry="10" />
-              <line x1="2" y1="12" x2="22" y2="12" />
+              <ellipse cx="55" cy="55" rx="7.9" ry="22" fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.6}/>
+              <ellipse cx="55" cy="55" rx="16.9" ry="22" fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.5}/>
+              <ellipse cx="55" cy="55" rx="22" ry="9" fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.6}/>
+              <ellipse cx="55" cy="55" rx="22" ry="16.9" fill="none" stroke={C.dim} strokeWidth="0.8" opacity={0.45}/>
+              <line x1="33" y1="55" x2="77" y2="55" stroke={C.dim} strokeWidth="0.8" opacity={0.45}/>
+              <line x1="55" y1="33" x2="55" y2="77" stroke={C.dim} strokeWidth="0.8" opacity={0.45}/>
             </motion.g>
+            <path id="gallery-chimba-circle" fill="none" d="M32,94.8 a46,46 0 0,1 46,-79.7 a46,46 0 0,1 -46,79.7"/>
+            <text fontFamily="JetBrains Mono, monospace" fontSize="7.5" letterSpacing="1.0" fill={C.dim} fillOpacity={0.9}>
+              <textPath href="#gallery-chimba-circle" startOffset="0%">FOR THE MOST CHIMBA PEOPLE ✦ </textPath>
+            </text>
           </svg>
         </div>
 
