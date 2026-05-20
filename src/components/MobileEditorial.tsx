@@ -2,7 +2,6 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import DragSticker from "@/components/DragSticker";
 
 const C = {
   burgundy: "#6B1419",
@@ -41,12 +40,7 @@ function Reveal({
   );
 }
 
-type Props = {
-  pauseScroll?: () => void;
-  resumeScroll?: () => void;
-};
-
-export default function MobileEditorial({ pauseScroll, resumeScroll }: Props) {
+export default function MobileEditorial() {
   return (
     <div style={{ display: "flex", height: "100vh", width: "300vw", flexShrink: 0 }}>
 
@@ -63,7 +57,7 @@ export default function MobileEditorial({ pauseScroll, resumeScroll }: Props) {
         scrollSnapAlign: "start",
       }}>
 
-        {/* Papa hero — llena el tercio izquierdo desde el fondo */}
+        {/* Papa hero */}
         <div style={{
           position: "absolute",
           bottom: 0,
@@ -76,7 +70,7 @@ export default function MobileEditorial({ pauseScroll, resumeScroll }: Props) {
           zIndex: 2,
         }} />
 
-        {/* SPRINGS — tipografía dominante */}
+        {/* SPRINGS */}
         <Reveal style={{ position: "absolute", left: "30vw", top: "26vh", zIndex: 3, whiteSpace: "nowrap" }}>
           <h1 style={{
             ...F.display,
@@ -91,18 +85,19 @@ export default function MobileEditorial({ pauseScroll, resumeScroll }: Props) {
           </h1>
         </Reveal>
 
-        {/* CARTA 2025 */}
-        <Reveal delay={0.1} style={{ position: "absolute", left: "20vw", top: "41vh", zIndex: 3 }}>
+        {/* JACKETS DIFFERENT BY DEFAULT */}
+        <Reveal delay={0.1} style={{ position: "absolute", left: "30vw", top: "42vh", zIndex: 3 }}>
           <div style={{
-            ...F.display,
-            fontSize: "clamp(32px, 11vw, 60px)",
+            ...F.sans,
+            fontSize: "clamp(11px, 3.2vw, 16px)",
             color: C.tinta,
-            lineHeight: 0.9,
-            letterSpacing: "-0.005em",
-            textTransform: "uppercase",
+            fontStyle: "italic",
+            letterSpacing: "0.01em",
             opacity: 0.72,
+            maxWidth: "60vw",
+            lineHeight: 1.3,
           }}>
-            CARTA 2025
+            Jackets different by default.
           </div>
         </Reveal>
 
@@ -112,21 +107,15 @@ export default function MobileEditorial({ pauseScroll, resumeScroll }: Props) {
           <div style={{ ...F.mono, fontSize: "0.52rem", letterSpacing: "0.15em", color: C.tinta, opacity: 0.5, marginTop: 3 }}>W25 [BGA]</div>
         </div>
 
-        {/* Sticker SPRINGS JACKET CLUB — draggable */}
-        <DragSticker
-          rotate={-8}
-          idleRotateRange={2}
-          idleDuration={7}
-          onDragStart={pauseScroll}
-          onDragEnd={resumeScroll}
-          style={{
-            position: "absolute", right: "4vw", top: "8vh", zIndex: 20,
-            background: C.burgundy, color: C.cream,
-            padding: "10px 14px",
-            textAlign: "center",
-            border: `2px solid ${C.tinta}`,
-          }}
-        >
+        {/* Sticker SPRINGS JACKET CLUB — estático */}
+        <div style={{
+          position: "absolute", right: "4vw", top: "8vh", zIndex: 20,
+          background: C.burgundy, color: C.cream,
+          padding: "10px 14px",
+          textAlign: "center",
+          border: `2px solid ${C.tinta}`,
+          transform: "rotate(-8deg)",
+        }}>
           <div style={{ ...F.display, fontSize: "0.9rem", letterSpacing: "0.08em", lineHeight: 1 }}>SPRINGS</div>
           <div style={{ ...F.display, fontSize: "0.8rem", fontStyle: "italic", lineHeight: 1, marginTop: 2 }}>Jacket Club</div>
           <div style={{ ...F.mono, fontSize: "0.42rem", letterSpacing: "0.1em", marginTop: 6, lineHeight: 1.4, textTransform: "uppercase" }}>
@@ -139,23 +128,17 @@ export default function MobileEditorial({ pauseScroll, resumeScroll }: Props) {
           }}>
             ACCEDER
           </div>
-        </DragSticker>
+        </div>
 
-        {/* Sticker RÓBALA — mostaza */}
-        <DragSticker
-          rotate={12}
-          idleRotateRange={3}
-          idleDuration={5}
-          onDragStart={pauseScroll}
-          onDragEnd={resumeScroll}
-          style={{
-            position: "absolute", right: "4vw", bottom: "30vh", zIndex: 22,
-            background: C.mostaza, color: C.tinta,
-            padding: "10px 14px",
-            border: `2px solid ${C.tinta}`,
-            textAlign: "center",
-          }}
-        >
+        {/* Sticker RÓBALA — estático */}
+        <div style={{
+          position: "absolute", right: "4vw", bottom: "30vh", zIndex: 22,
+          background: C.mostaza, color: C.tinta,
+          padding: "10px 14px",
+          border: `2px solid ${C.tinta}`,
+          textAlign: "center",
+          transform: "rotate(12deg)",
+        }}>
           <div style={{ ...F.display, fontSize: "1.2rem", letterSpacing: "0.06em", lineHeight: 1 }}>RÓBALA</div>
           <div style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.14em", marginTop: 4, lineHeight: 1.4, textTransform: "uppercase" }}>
             BONO ESCONDIDO<br />EN LA CIUDAD
@@ -167,7 +150,7 @@ export default function MobileEditorial({ pauseScroll, resumeScroll }: Props) {
           }}>
             STORIES ↗
           </div>
-        </DragSticker>
+        </div>
 
         {/* Menú corrido */}
         <div style={{ position: "absolute", left: "5vw", right: "5vw", bottom: "9vh", zIndex: 6 }}>
@@ -237,25 +220,19 @@ export default function MobileEditorial({ pauseScroll, resumeScroll }: Props) {
           </div>
         </Reveal>
 
-        {/* Sticker SOLO 20 */}
-        <DragSticker
-          rotate={9}
-          idleRotateRange={3}
-          idleDuration={5.5}
-          onDragStart={pauseScroll}
-          onDragEnd={resumeScroll}
-          style={{
-            position: "absolute", right: "4vw", bottom: "26vh", zIndex: 25,
-            background: C.tinta, color: C.mostaza,
-            padding: "8px 14px",
-            border: `2px solid ${C.mostaza}`,
-            textAlign: "center",
-          }}
-        >
+        {/* Sticker SOLO 20 — estático */}
+        <div style={{
+          position: "absolute", right: "4vw", bottom: "26vh", zIndex: 25,
+          background: C.tinta, color: C.mostaza,
+          padding: "8px 14px",
+          border: `2px solid ${C.mostaza}`,
+          textAlign: "center",
+          transform: "rotate(9deg)",
+        }}>
           <div style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.22em", opacity: 0.7, marginBottom: 2 }}>W25 · DROP</div>
           <div style={{ ...F.display, fontSize: "1.3rem", letterSpacing: "0.04em", color: C.cream, lineHeight: 1 }}>SOLO 20</div>
           <div style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.14em", marginTop: 3 }}>POR NOCHE</div>
-        </DragSticker>
+        </div>
 
         {/* TE DAMOS LO TUYO */}
         <Reveal delay={0.1} style={{ position: "absolute", left: "4vw", bottom: "26vh", zIndex: 5 }}>
@@ -289,7 +266,7 @@ export default function MobileEditorial({ pauseScroll, resumeScroll }: Props) {
         scrollSnapAlign: "start",
       }}>
 
-        {/* Bloque 3D SPRINGS */}
+        {/* Bloque SPRINGS — color sólido, sin gradiente */}
         <motion.div
           initial={{ scale: 0.88, opacity: 0 }}
           whileInView={{ scale: 1, opacity: 1 }}
@@ -298,14 +275,13 @@ export default function MobileEditorial({ pauseScroll, resumeScroll }: Props) {
           style={{
             position: "absolute", left: "4vw", top: "14vh", zIndex: 4,
             width: "54vw", height: "34vh",
-            background: `radial-gradient(ellipse at 30% 30%, #e8b8b8 0%, ${C.burgundy} 40%, ${C.tinta} 100%)`,
+            background: C.burgundy,
             display: "flex", alignItems: "center", justifyContent: "center",
           }}
         >
           <div style={{
             ...F.display, fontSize: "clamp(40px, 13vw, 72px)",
             color: C.cream, letterSpacing: "0.02em",
-            filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.4))",
             fontStyle: "italic",
           }}>
             Springs
@@ -329,7 +305,7 @@ export default function MobileEditorial({ pauseScroll, resumeScroll }: Props) {
           </div>
         </Reveal>
 
-        {/* Bloque packaging */}
+        {/* Bloque packaging — rayas diagonales */}
         <Reveal delay={0.2} style={{ position: "absolute", right: "4vw", top: "50vh", zIndex: 4 }}>
           <div style={{
             width: "36vw", height: "27vh",

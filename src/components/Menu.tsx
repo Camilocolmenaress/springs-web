@@ -177,14 +177,14 @@ export default function Menu({ onAgregar, config }: Props) {
           — AQUÍ TIENES NUESTRO MENÚ
         </div>
         {/* Fila 2: pestañas de categoría */}
-        <div style={{ display: "flex", gap: 6, overflowX: "auto", scrollbarWidth: "none" }}>
+        <div style={{ display: "flex", gap: 4, overflowX: "auto", scrollbarWidth: "none" }}>
           {CATEGORIAS.map(c => {
             const active = c.key === categoria;
             return (
               <button key={c.key} onClick={() => setCategoria(c.key)} style={{
                 fontFamily: "var(--font-jetbrains-mono), monospace",
-                fontSize: "0.6rem", letterSpacing: "0.18em", textTransform: "uppercase",
-                padding: "7px 13px",
+                fontSize: "clamp(0.45rem, 1.8vw, 0.6rem)", letterSpacing: "0.12em", textTransform: "uppercase",
+                padding: "6px clamp(8px, 2.5vw, 13px)",
                 background: active ? C.tinta : "transparent",
                 color:      active ? C.cream : C.tinta,
                 border: `1px solid ${C.tinta}`,
@@ -318,13 +318,13 @@ export default function Menu({ onAgregar, config }: Props) {
                 top:   `calc(50% + ${arrowOffsetY}px)`,
                 transform: "translate(-50%, -50%)",
                 width: arrowSize, height: arrowSize,
-                background: "transparent",
-                border: "none",
+                background: C.cream,
+                border: `1.5px solid ${C.tinta}`,
                 padding: 0,
                 cursor: "pointer", zIndex: 30,
+                display: "flex", alignItems: "center", justifyContent: "center",
               }}>
-                <img src="/images/arrow-circle.png" alt="Anterior"
-                  style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
+                <Chevron dir="left" size={12} />
               </button>
               <button onClick={goNext} aria-label="Siguiente" style={{
                 position: "absolute",
@@ -332,13 +332,13 @@ export default function Menu({ onAgregar, config }: Props) {
                 top:   `calc(50% + ${arrowOffsetY}px)`,
                 transform: "translate(-50%, -50%)",
                 width: arrowSize, height: arrowSize,
-                background: "transparent",
-                border: "none",
+                background: C.cream,
+                border: `1.5px solid ${C.tinta}`,
                 padding: 0,
                 cursor: "pointer", zIndex: 30,
+                display: "flex", alignItems: "center", justifyContent: "center",
               }}>
-                <img src="/images/arrow-circle.png" alt="Siguiente"
-                  style={{ width: "100%", height: "100%", objectFit: "contain", display: "block", transform: "scaleX(-1)" }} />
+                <Chevron dir="right" size={12} />
               </button>
             </>
           )}
@@ -356,7 +356,6 @@ export default function Menu({ onAgregar, config }: Props) {
               style={{ textAlign: "center" }}
             >
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 4, transform: `translateX(${nameOffsetX}px)` }}>
-                <span style={{ color: C.tinta, fontSize: starsFontSize, transform: `translateX(${starsOffsetX}px)`, display: "inline-block" }}>✦</span>
                 <h3 style={{
                   fontFamily: "var(--font-anton), sans-serif",
                   fontSize: nameFontSize,
@@ -365,7 +364,6 @@ export default function Menu({ onAgregar, config }: Props) {
                 }}>
                   {activo.nombre}
                 </h3>
-                <span style={{ color: C.tinta, fontSize: starsFontSize, transform: `translateX(${-starsOffsetX}px)`, display: "inline-block" }}>✦</span>
               </div>
               <p style={{
                 fontFamily: "var(--font-inter), sans-serif",
