@@ -1140,11 +1140,12 @@ export default function Home() {
             src={d.cultureReceiptSrc}
             alt=""
             drag
-            dragMomentum={false}
-            dragTransition={{ power: 0.8, timeConstant: 350 }}
+            dragMomentum={true}
+            dragTransition={{ power: 0.25, timeConstant: 220, bounceStiffness: 280, bounceDamping: 22 }}
             onDragStart={pauseScroll}
             onDragEnd={resumeScroll}
-            whileDrag={{ scale: 1.06 }}
+            whileHover={{ scale: 1.03 }}
+            whileDrag={{ scale: 1.06, cursor: "grabbing" }}
             initial={{ scale: 3.2, y: -120, rotate: d.cultureReceiptRotation + 8, opacity: 0 }}
             animate={receiptVisible
               ? { scale: 1, y: 0, rotate: d.cultureReceiptRotation, opacity: 1 }
@@ -1157,7 +1158,7 @@ export default function Home() {
               top: `${d.cultureReceiptTop}vh`,
               height: `${d.cultureReceiptHeight}vh`,
               width: "auto",
-              zIndex: 6,
+              zIndex: 20,
               cursor: "grab",
             }}
           />
