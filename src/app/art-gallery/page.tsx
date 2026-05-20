@@ -198,10 +198,12 @@ export default function ArtGallery() {
         position: "fixed",
         left: 0, top: 0, bottom: 0, width: d.sidebarW,
         zIndex: 100,
-        borderRight: `1px solid ${C.faint}`,
+        borderRight: `1px solid rgba(242,232,213,0.08)`,
         padding: `${d.sidebarPadT}px ${d.sidebarPadH}px 24px`,
         display: "flex", flexDirection: "column",
-        background: BG,
+        background: "rgba(10,8,6,0.55)",
+        backdropFilter: "blur(24px)",
+        WebkitBackdropFilter: "blur(24px)",
         overflow: "hidden",
       }}>
 
@@ -293,7 +295,7 @@ export default function ArtGallery() {
         ref={wrapperRef}
         style={{
           position: "fixed",
-          left: d.sidebarW,
+          left: 0,
           top: 0,
           right: 0,
           bottom: 0,
@@ -305,14 +307,14 @@ export default function ArtGallery() {
           style={{
             display: "flex",
             height: "100%",
-            width: `calc((100vw - ${d.sidebarW}px) * ${EXHIBITS.length})`,
+            width: `calc(100vw * ${EXHIBITS.length})`,
           }}
         >
           {EXHIBITS.map((exhibit) => (
             <div
               key={exhibit.id}
               style={{
-                width: `calc(100vw - ${d.sidebarW}px)`,
+                width: "100vw",
                 height: "100%",
                 flexShrink: 0,
                 position: "relative",
