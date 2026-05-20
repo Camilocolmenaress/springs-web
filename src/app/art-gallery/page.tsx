@@ -179,9 +179,7 @@ export default function ArtGallery() {
         position: "fixed", top: 0, left: 0, right: 0, height: d.navH, zIndex: 200,
         display: "flex", alignItems: "center", justifyContent: "space-between",
         padding: "0 28px",
-        background: "rgba(10,8,6,0.96)",
-        backdropFilter: "blur(10px)",
-        borderBottom: `1px solid ${C.fainter}`,
+        background: "transparent",
       }}>
         <Link href="/" style={{ ...F.display, fontSize: "1.3rem", letterSpacing: "0.05em", color: C.cream, textDecoration: "none" }}>
           SPRINGS
@@ -440,9 +438,7 @@ export default function ArtGallery() {
         position: "fixed", bottom: 0, left: 0, right: 0, height: d.footerH, zIndex: 100,
         display: "flex", alignItems: "center", justifyContent: "space-between",
         padding: "0 28px",
-        background: "rgba(10,8,6,0.96)",
-        backdropFilter: "blur(10px)",
-        borderTop: `1px solid ${C.fainter}`,
+        background: "transparent",
       }}>
         <div style={{ display: "flex", gap: 18 }}>
           {["INSTAGRAM", "TIKTOK", "SPOTIFY"].map(s => (
