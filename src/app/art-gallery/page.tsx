@@ -315,13 +315,11 @@ export default function ArtGallery() {
                 width: `calc(100vw - ${d.sidebarW}px)`,
                 height: "100%",
                 flexShrink: 0,
-                display: "grid",
-                gridTemplateColumns: `1fr ${d.infoPanelW}px`,
-                borderRight: `1px solid ${C.fainter}`,
+                position: "relative",
               }}
             >
-              {/* ── Foto ── */}
-              <div style={{ position: "relative", overflow: "hidden" }}>
+              {/* ── Foto — ocupa todo el panel ── */}
+              <div style={{ position: "absolute", inset: 0, overflow: "hidden" }}>
                 <img
                   src={exhibit.img}
                   alt={exhibit.name}
@@ -354,9 +352,10 @@ export default function ArtGallery() {
                 </div>
               </div>
 
-              {/* ── Info panel ── */}
+              {/* ── Info panel — flota sobre la foto ── */}
               <div style={{
-                borderLeft: `1px solid ${C.faint}`,
+                position: "absolute", right: 0, top: 0, bottom: 0,
+                width: `${d.infoPanelW}px`,
                 padding: `${d.infoPadT}px ${d.infoPadH}px 24px`,
                 overflowY: "auto",
                 display: "flex", flexDirection: "column",
