@@ -117,17 +117,21 @@ export default function ExtrasModal({ product, onClose, onConfirm }: Props) {
   );
 }
 
-// ─── Genie pill ───────────────────────────────────────────────────────────────
-// Arranca como un rectángulo del tamaño del modal, se aplana (squish),
-// y vuela como un óvalo hacia VER PEDIDO. Sin contenido = forma limpia.
+// ─── Shooting pill ────────────────────────────────────────────────────────────
+// Fase 1 (0 → 0.35s): el rectángulo se colapsa hacia su propio centro → punto.
+// Fase 2 (0.35 → 0.9s): el punto sale disparado en arco hacia VER PEDIDO.
 function GeniePill({ launch, onComplete }: { launch: LaunchState; onComplete: () => void }) {
-  // Dimensiones iniciales del modal (mismo min() que el modal)
   const W = Math.min(880, window.innerWidth  * 0.96);
   const H = Math.min(580, window.innerHeight * 0.92);
-  const ARC = -Math.max(80, Math.abs(launch.dx) * 0.08); // altura del arco
+
+  // t1 = fracción del total que ocupa la fase 1
+  const TOTAL = 0.88;
+  const T1    = 0.35 / TOTAL; // ≈ 0.40
+
+  // arco suave: el punto sube un poco antes de caer al carrito
+  const ARC_Y = -60;
 
   return (
-    // Contenedor posicionado en el centro exacto del modal
     <div style={{
       position: "fixed",
       left: launch.cx - W / 2,
@@ -137,33 +141,38 @@ function GeniePill({ launch, onComplete }: { launch: LaunchState; onComplete: ()
       pointerEvents: "none",
       zIndex: 200,
     }}>
-      {/* Capa horizontal: mueve en X con ease linear */}
+      {/* Capa X — quieta en fase 1, dispara en fase 2 */}
       <motion.div
         style={{ width: "100%", height: "100%" }}
         initial={{ x: 0 }}
-        animate={{ x: launch.dx }}
-        transition={{ duration: 0.7, ease: "linear" }}
+        animate={{ x: [0, 0, launch.dx] }}
+        transition={{ duration: TOTAL, times: [0, T1, 1], ease: ["linear", "easeOut"] }}
       >
-        {/* Capa vertical: parábola — sube luego cae */}
+        {/* Capa Y — quieta en fase 1, arco en fase 2 */}
         <motion.div
           style={{ width: "100%", height: "100%" }}
           initial={{ y: 0 }}
-          animate={{ y: [0, ARC, launch.dy] }}
-          transition={{ duration: 0.7, times: [0, 0.35, 1], ease: ["easeOut", "easeIn"] }}
+          animate={{ y: [0, 0, ARC_Y, launch.dy] }}
+          transition={{
+            duration: TOTAL,
+            times: [0, T1, T1 + (1 - T1) * 0.25, 1],
+            ease: ["linear", "easeOut", "easeIn"],
+          }}
           onAnimationComplete={onComplete}
         >
-          {/* La forma visual: empieza como rectángulo, se aplana y encoge */}
+          {/* Visual: colapsa en fase 1, viaja como punto en fase 2, desaparece al final */}
           <motion.div
             initial={{ scaleX: 1, scaleY: 1, borderRadius: "0%", opacity: 1 }}
             animate={{
-              scaleX: [1, 1.08, 0.6,  0.15, 0.04],
-              scaleY: [1, 0.65, 0.35, 0.12, 0.03],
-              borderRadius: ["0%", "4%", "50%", "50%", "50%"],
-              opacity: [1, 1, 1, 0.7, 0],
+              scaleX:       [1,    0.05, 0.05, 0.03],
+              scaleY:       [1,    0.05, 0.05, 0.02],
+              borderRadius: ["0%", "50%","50%","50%"],
+              opacity:      [1,    1,    1,    0   ],
             }}
             transition={{
-              duration: 0.7,
-              times: [0, 0.12, 0.30, 0.70, 1],
+              duration: TOTAL,
+              times:    [0, T1, T1 + (1 - T1) * 0.7, 1],
+              ease:     ["easeInOut", "linear", "easeIn"],
             }}
             style={{
               width: "100%",
