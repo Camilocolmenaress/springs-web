@@ -57,6 +57,7 @@ export default function Home() {
   const [miercolesDadosHovered, setMiercolesDadosHovered] = useState(false);
   const miercolesDadosDragged = useRef(false);
   const [ourCultureHovered, setOurCultureHovered] = useState(false);
+  const [receiptVisible, setReceiptVisible] = useState(false);
   const router = useRouter();
 
   // ─── Scroll-driven packaging ───
@@ -320,6 +321,9 @@ export default function Home() {
 
     lenis.on("scroll", () => {
       scrollXMV.set(lenis.scroll);
+      if (lenis.scroll > window.innerWidth * 1.45) {
+        setReceiptVisible(true);
+      }
     });
 
     let raf: number;
@@ -1124,9 +1128,11 @@ export default function Home() {
             onDragEnd={resumeScroll}
             whileDrag={{ scale: 1.06 }}
             initial={{ scale: 3.2, y: -120, rotate: d.cultureReceiptRotation + 8, opacity: 0 }}
-            whileInView={{ scale: 1, y: 0, rotate: d.cultureReceiptRotation, opacity: 1 }}
-            viewport={{ once: true, amount: 0.05 }}
-            transition={{ type: "spring", stiffness: 140, damping: 20, mass: 1.2, delay: 0.35 }}
+            animate={receiptVisible
+              ? { scale: 1, y: 0, rotate: d.cultureReceiptRotation, opacity: 1 }
+              : { scale: 3.2, y: -120, rotate: d.cultureReceiptRotation + 8, opacity: 0 }
+            }
+            transition={{ type: "spring", stiffness: 140, damping: 20, mass: 1.2, delay: 0.2 }}
             style={{
               position: "absolute",
               left: `${d.cultureReceiptLeft}vw`,
