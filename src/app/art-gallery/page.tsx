@@ -196,7 +196,7 @@ export default function ArtGallery() {
       {/* ── SIDEBAR FIJO ─────────────────────────────────── */}
       <aside style={{
         position: "fixed",
-        left: 0, top: d.navH, bottom: d.footerH, width: d.sidebarW,
+        left: 0, top: 0, bottom: 0, width: d.sidebarW,
         zIndex: 100,
         borderRight: `1px solid ${C.faint}`,
         padding: `${d.sidebarPadT}px ${d.sidebarPadH}px 24px`,
@@ -294,9 +294,9 @@ export default function ArtGallery() {
         style={{
           position: "fixed",
           left: d.sidebarW,
-          top: d.navH,
+          top: 0,
           right: 0,
-          bottom: d.footerH,
+          bottom: 0,
           overflow: "hidden",
         }}
       >
