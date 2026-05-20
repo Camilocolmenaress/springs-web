@@ -18,26 +18,16 @@ interface Props {
   onConfirm: (product: Producto, extras: CartExtra[]) => void;
 }
 
-type Phase = "idle" | "genie";
-interface GenieTarget { dx: number; dy: number }
-
-// Clip-path keyframes — embudo se cierra de abajo hacia arriba como Genie de macOS
-const CP = [
-  "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",          // full
-  "polygon(0% 0%, 100% 0%, 92%  100%, 8%   100%)",          // bottom empieza a cerrarse
-  "polygon(2%  0%, 98%  0%, 80%  100%, 20%  100%)",          // top sigue
-  "polygon(10% 0%, 90%  0%, 65%  100%, 35%  100%)",          // embudo marcado
-  "polygon(30% 0%, 70%  0%, 55%  100%, 45%  100%)",          // tira estrecha
-  "polygon(45% 0%, 55%  0%, 51%  100%, 49%  100%)",          // casi línea
-  "polygon(50% 0%, 50%  0%, 50%  100%, 50%  100%)",          // línea → nada
-];
-
-const GENIE_DURATION = 0.72;
+interface LaunchState {
+  // posición fija del centro del modal
+  cx: number; cy: number;
+  // delta al centro del botón VER PEDIDO
+  dx: number; dy: number;
+}
 
 export default function ExtrasModal({ product, onClose, onConfirm }: Props) {
   const [qty, setQty] = useState<Record<string, number>>({});
-  const [phase, setPhase] = useState<Phase>("idle");
-  const [genieTarget, setGenieTarget] = useState<GenieTarget>({ dx: 0, dy: 0 });
+  const [launch, setLaunch] = useState<LaunchState | null>(null);
   const modalRef = useRef<HTMLDivElement | null>(null);
   const pendingExtras = useRef<CartExtra[]>([]);
 
@@ -61,11 +51,13 @@ export default function ExtrasModal({ product, onClose, onConfirm }: Props) {
 
     const cartCx = window.innerWidth  - 24 - 80;
     const cartCy = window.innerHeight - 24 - 24;
-    const modalCx = rect.left + rect.width  / 2;
-    const modalCy = rect.top  + rect.height / 2;
 
-    setGenieTarget({ dx: cartCx - modalCx, dy: cartCy - modalCy });
-    setPhase("genie");
+    setLaunch({
+      cx: rect.left + rect.width  / 2,
+      cy: rect.top  + rect.height / 2,
+      dx: cartCx - (rect.left + rect.width  / 2),
+      dy: cartCy - (rect.top  + rect.height / 2),
+    });
   };
 
   return (
@@ -73,21 +65,26 @@ export default function ExtrasModal({ product, onClose, onConfirm }: Props) {
 
       {/* Overlay */}
       <motion.div
-        onClick={phase === "idle" ? onClose : undefined}
+        onClick={!launch ? onClose : undefined}
         initial={{ opacity: 0 }}
-        animate={{ opacity: phase === "genie" ? 0 : 1 }}
-        transition={{ duration: phase === "genie" ? 0.4 : 0.2 }}
+        animate={{ opacity: launch ? 0 : 1 }}
+        transition={{ duration: 0.25 }}
         style={{ position: "absolute", inset: 0, background: "rgba(26,10,12,0.7)" }}
       />
 
+      {/* Modal — sale con squeeze + fade cuando launch */}
       <AnimatePresence>
-        {phase === "idle" && (
+        {!launch && (
           <motion.div
-            key="modal-idle"
+            key="modal"
             ref={modalRef}
             initial={{ opacity: 0, scale: 0.94, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, transition: { duration: 0 } }}
+            animate={{ opacity: 1,  scale: 1,    y: 0  }}
+            exit={{
+              scale: 0.88,
+              opacity: 0,
+              transition: { duration: 0.22, ease: "easeIn" },
+            }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             style={{
               position: "relative",
@@ -104,48 +101,84 @@ export default function ExtrasModal({ product, onClose, onConfirm }: Props) {
             />
           </motion.div>
         )}
-
-        {phase === "genie" && (
-          <motion.div
-            key="modal-genie"
-            initial={{ clipPath: CP[0], x: 0, y: 0, scaleY: 1, opacity: 1 }}
-            animate={{
-              clipPath: CP,
-              x: [0, genieTarget.dx*0.04, genieTarget.dx*0.12, genieTarget.dx*0.28, genieTarget.dx*0.52, genieTarget.dx*0.80, genieTarget.dx],
-              y: [0, genieTarget.dy*0.08, genieTarget.dy*0.20, genieTarget.dy*0.38, genieTarget.dy*0.60, genieTarget.dy*0.85, genieTarget.dy],
-              scaleY: [1, 0.92, 0.78, 0.58, 0.34, 0.15, 0.03],
-              opacity: [1, 1, 1, 1, 0.9, 0.6, 0],
-            }}
-            transition={{
-              duration: GENIE_DURATION,
-              times: [0, 0.08, 0.20, 0.38, 0.60, 0.82, 1],
-              ease: "easeIn",
-            }}
-            onAnimationComplete={() => {
-              onConfirm(product, pendingExtras.current);
-              onClose();
-            }}
-            style={{
-              position: "relative",
-              width: "min(880px, 96vw)",
-              height: "min(580px, 92vh)",
-              background: C.cream,
-              display: "flex",
-              overflow: "hidden",
-              transformOrigin: "bottom right",
-            }}
-          >
-            <ModalContent
-              product={product} extrasTotal={extrasTotal} qty={qty}
-              add={add} remove={remove} onClose={onClose} onConfirm={() => {}}
-            />
-          </motion.div>
-        )}
       </AnimatePresence>
+
+      {/* Genie pill — aparece en el centro del modal y vuela al carrito */}
+      {launch && (
+        <GeniePill
+          launch={launch}
+          onComplete={() => {
+            onConfirm(product, pendingExtras.current);
+            onClose();
+          }}
+        />
+      )}
     </div>
   );
 }
 
+// ─── Genie pill ───────────────────────────────────────────────────────────────
+// Arranca como un rectángulo del tamaño del modal, se aplana (squish),
+// y vuela como un óvalo hacia VER PEDIDO. Sin contenido = forma limpia.
+function GeniePill({ launch, onComplete }: { launch: LaunchState; onComplete: () => void }) {
+  // Dimensiones iniciales del modal (mismo min() que el modal)
+  const W = Math.min(880, window.innerWidth  * 0.96);
+  const H = Math.min(580, window.innerHeight * 0.92);
+  const ARC = -Math.max(80, Math.abs(launch.dx) * 0.08); // altura del arco
+
+  return (
+    // Contenedor posicionado en el centro exacto del modal
+    <div style={{
+      position: "fixed",
+      left: launch.cx - W / 2,
+      top:  launch.cy - H / 2,
+      width: W,
+      height: H,
+      pointerEvents: "none",
+      zIndex: 200,
+    }}>
+      {/* Capa horizontal: mueve en X con ease linear */}
+      <motion.div
+        style={{ width: "100%", height: "100%" }}
+        initial={{ x: 0 }}
+        animate={{ x: launch.dx }}
+        transition={{ duration: 0.7, ease: "linear" }}
+      >
+        {/* Capa vertical: parábola — sube luego cae */}
+        <motion.div
+          style={{ width: "100%", height: "100%" }}
+          initial={{ y: 0 }}
+          animate={{ y: [0, ARC, launch.dy] }}
+          transition={{ duration: 0.7, times: [0, 0.35, 1], ease: ["easeOut", "easeIn"] }}
+          onAnimationComplete={onComplete}
+        >
+          {/* La forma visual: empieza como rectángulo, se aplana y encoge */}
+          <motion.div
+            initial={{ scaleX: 1, scaleY: 1, borderRadius: "0%", opacity: 1 }}
+            animate={{
+              scaleX: [1, 1.08, 0.6,  0.15, 0.04],
+              scaleY: [1, 0.65, 0.35, 0.12, 0.03],
+              borderRadius: ["0%", "4%", "50%", "50%", "50%"],
+              opacity: [1, 1, 1, 0.7, 0],
+            }}
+            transition={{
+              duration: 0.7,
+              times: [0, 0.12, 0.30, 0.70, 1],
+            }}
+            style={{
+              width: "100%",
+              height: "100%",
+              background: C.cream,
+              transformOrigin: "center center",
+            }}
+          />
+        </motion.div>
+      </motion.div>
+    </div>
+  );
+}
+
+// ─── Modal content ────────────────────────────────────────────────────────────
 function ModalContent({ product, extrasTotal, qty, add, remove, onClose, onConfirm }: {
   product: Producto; extrasTotal: number; qty: Record<string, number>;
   add: (id: string) => void; remove: (id: string) => void;
