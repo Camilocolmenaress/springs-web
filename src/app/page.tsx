@@ -919,35 +919,10 @@ export default function Home() {
                 display: "flex", alignItems: "center", justifyContent: "center",
               }}
             >
-              <svg viewBox="0 0 110 110" width="100%" height="100%">
-                {(() => {
-                  const gr = d.globeRadius;
-                  return (
-                    <>
-                      <circle cx="55" cy="55" r={gr} fill="none" stroke={C.tinta} strokeWidth="1.2" opacity={0.8}/>
-                      <ellipse cx="55" cy="55" rx={+(gr*0.36).toFixed(1)} ry={gr} fill="none" stroke={C.tinta} strokeWidth="0.9" opacity={0.6}/>
-                      <ellipse cx="55" cy="55" rx={+(gr*0.77).toFixed(1)} ry={gr} fill="none" stroke={C.tinta} strokeWidth="0.9" opacity={0.5}/>
-                      <ellipse cx="55" cy="55" rx={gr} ry={+(gr*0.41).toFixed(1)} fill="none" stroke={C.tinta} strokeWidth="0.9" opacity={0.6}/>
-                      <ellipse cx="55" cy="55" rx={gr} ry={+(gr*0.77).toFixed(1)} fill="none" stroke={C.tinta} strokeWidth="0.8" opacity={0.45}/>
-                      <line x1={55-gr} y1="55" x2={55+gr} y2="55" stroke={C.tinta} strokeWidth="0.8" opacity={0.45}/>
-                      <line x1="55" y1={55-gr} x2="55" y2={55+gr} stroke={C.tinta} strokeWidth="0.8" opacity={0.45}/>
-                    </>
-                  );
-                })()}
-                {(() => {
-                  const r = d.globeTextRadius;
-                  const sx = +(55 - r * 0.5).toFixed(1);
-                  const sy = +(55 + r * 0.866).toFixed(1);
-                  const dy = +(r * 1.732).toFixed(1);
-                  return (
-                    <>
-                      <path id="hot-circle" fill="none" d={`M${sx},${sy} a${r},${r} 0 0,1 ${r},${-dy} a${r},${r} 0 0,1 ${-r},${dy}`}/>
-                      <text fontFamily="JetBrains Mono, monospace" fontSize={d.globeFontSize} letterSpacing="1.0" fill={C.tinta} fillOpacity={0.8}>
-                        <textPath href="#hot-circle" startOffset={`${d.globeTextOffset}%`}>FOR THE MOST CHIMBA PEOPLE ✦ </textPath>
-                      </text>
-                    </>
-                  );
-                })()}
+              <svg viewBox="0 0 24 24" fill="none" stroke={C.tinta} strokeWidth="1.2" width="55%" height="55%">
+                <circle cx="12" cy="12" r="10" />
+                <ellipse cx="12" cy="12" rx="4" ry="10" />
+                <line x1="2" y1="12" x2="22" y2="12" />
               </svg>
             </DragSticker>
           </motion.div>
