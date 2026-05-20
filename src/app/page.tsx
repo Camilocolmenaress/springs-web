@@ -58,6 +58,7 @@ export default function Home() {
   const miercolesDadosDragged = useRef(false);
   const [ourCultureHovered, setOurCultureHovered] = useState(false);
   const [receiptVisible, setReceiptVisible] = useState(false);
+  const [scrollVw, setScrollVw] = useState(0);
   const router = useRouter();
 
   // ─── Scroll-driven packaging ───
@@ -342,6 +343,7 @@ export default function Home() {
 
     lenis.on("scroll", () => {
       scrollXMV.set(lenis.scroll);
+      setScrollVw(Math.round((lenis.scroll / window.innerWidth + 1) * 100) / 100);
       if (lenis.scroll > window.innerWidth * 1.05) {
         setReceiptVisible(true);
       }
@@ -1341,6 +1343,33 @@ export default function Home() {
 
         </div>
       </div>
+
+      {/* ── SCROLL RULER — solo en edit mode ── */}
+      {editMode && (
+        <div style={{
+          position: "fixed", bottom: 60, left: "50%", transform: "translateX(-50%)",
+          zIndex: 9999, display: "flex", alignItems: "center", gap: 10,
+          background: "#1A0A0C", border: "1px solid rgba(197,135,31,0.5)",
+          padding: "8px 16px",
+        }}>
+          <span style={{ fontFamily: "JetBrains Mono, monospace", fontSize: "0.6rem", letterSpacing: "0.15em", color: "#C5871F" }}>
+            SCROLL → {scrollVw.toFixed(1)}vw
+          </span>
+          <button
+            onClick={() => {
+              const vw = Math.ceil(scrollVw) + 5;
+              updateProp("layout", "canvas", "width", vw);
+            }}
+            style={{
+              fontFamily: "JetBrains Mono, monospace", fontSize: "0.55rem", letterSpacing: "0.14em",
+              background: "#6B1419", color: "#F2E8D5", border: "none",
+              padding: "5px 12px", cursor: "pointer",
+            }}
+          >
+            FIJAR AQUÍ
+          </button>
+        </div>
+      )}
 
       {/* ── DEV PANEL — solo visible en ?edit=1 ── */}
       {editMode && (
