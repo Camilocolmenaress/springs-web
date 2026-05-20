@@ -63,47 +63,41 @@ export default function ExtrasModal({ product, onClose, onConfirm }: Props) {
   return (
     <div style={{ position: "fixed", inset: 0, zIndex: 80, display: "flex", alignItems: "center", justifyContent: "center" }}>
 
-      {/* Overlay */}
-      <motion.div
-        onClick={!launch ? onClose : undefined}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: launch ? 0 : 1 }}
-        transition={{ duration: 0.25 }}
-        style={{ position: "absolute", inset: 0, background: "rgba(26,10,12,0.7)" }}
-      />
+      {/* Overlay — desaparece instantáneo al lanzar */}
+      {!launch && (
+        <motion.div
+          onClick={onClose}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.25 }}
+          style={{ position: "absolute", inset: 0, background: "rgba(26,10,12,0.7)" }}
+        />
+      )}
 
-      {/* Modal — sale con squeeze + fade cuando launch */}
-      <AnimatePresence>
-        {!launch && (
-          <motion.div
-            key="modal"
-            ref={modalRef}
-            initial={{ opacity: 0, scale: 0.94, y: 20 }}
-            animate={{ opacity: 1,  scale: 1,    y: 0  }}
-            exit={{
-              scale: 0.88,
-              opacity: 0,
-              transition: { duration: 0.22, ease: "easeIn" },
-            }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            style={{
-              position: "relative",
-              width: "min(880px, 96vw)",
-              height: "min(580px, 92vh)",
-              background: C.cream,
-              display: "flex",
-              overflow: "hidden",
-            }}
-          >
-            <ModalContent
-              product={product} extrasTotal={extrasTotal} qty={qty}
-              add={add} remove={remove} onClose={onClose} onConfirm={handleConfirm}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Modal — visible hasta que se lanza; se oculta instantáneo */}
+      {!launch && (
+        <motion.div
+          ref={modalRef}
+          initial={{ opacity: 0, scale: 0.94, y: 20 }}
+          animate={{ opacity: 1,  scale: 1,    y: 0  }}
+          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          style={{
+            position: "relative",
+            width: "min(880px, 96vw)",
+            height: "min(580px, 92vh)",
+            background: C.cream,
+            display: "flex",
+            overflow: "hidden",
+          }}
+        >
+          <ModalContent
+            product={product} extrasTotal={extrasTotal} qty={qty}
+            add={add} remove={remove} onClose={onClose} onConfirm={handleConfirm}
+          />
+        </motion.div>
+      )}
 
-      {/* Genie pill — aparece en el centro del modal y vuela al carrito */}
+      {/* Pill — aparece de inmediato en la posición exacta del modal y vuela */}
       {launch && (
         <GeniePill
           launch={launch}
@@ -150,12 +144,12 @@ function GeniePill({ launch, onComplete }: { launch: LaunchState; onComplete: ()
           <motion.div
             initial={{ scaleX: 1, scaleY: 1, borderRadius: "0%", opacity: 1 }}
             animate={{
-              scaleX:       [1, 0.4, 0.08, 0.03],
-              scaleY:       [1, 0.3, 0.06, 0.02],
-              borderRadius: ["0%", "30%", "50%", "50%"],
-              opacity:      [1,  1,    1,   0],
+              scaleX:       [1,   1,   0.12, 0.03],
+              scaleY:       [1,   1,   0.08, 0.02],
+              borderRadius: ["0%","0%","50%","50%"],
+              opacity:      [1,   1,   1,    0   ],
             }}
-            transition={{ duration: 0.65, times: [0, 0.25, 0.75, 1] }}
+            transition={{ duration: 0.65, times: [0, 0.65, 0.88, 1] }}
             style={{
               width: "100%", height: "100%",
               background: C.cream,
