@@ -417,9 +417,7 @@ export default function Home() {
           display: "flex", gap: d.footerMenuItemGap,
           position: "fixed", bottom: d.footerMenuBottom, right: d.footerMenuRight,
           zIndex: 101,
-          background: C.cream,
-          borderRadius: "999px",
-          padding: "7px 20px",
+          mixBlendMode: "difference",
         }}>
           {([
             { label: "CARTA",       href: "/menu"                },
@@ -436,7 +434,7 @@ export default function Home() {
               style={{ ...F.mono, fontSize: `${d.footerMenuSize}rem`, letterSpacing: `${d.footerMenuLetterSpacing}em`, wordSpacing: `${d.footerMenuWordSpacing}px`, textDecoration: "none", fontWeight: 600, position: "relative", display: "inline-block" }}
             >
               <motion.span
-                variants={{ rest: { color: C.tinta }, hover: { color: C.burgundy } }}
+                variants={{ rest: { color: "#ffffff" }, hover: { color: "#ffffff" } }}
                 transition={{ duration: 0.2 }}
                 style={{ display: "block" }}
               >
