@@ -343,7 +343,7 @@ export default function Home() {
 
     lenis.on("scroll", () => {
       scrollXMV.set(lenis.scroll);
-      setScrollVw(Math.round((lenis.scroll / window.innerWidth + 1) * 100) / 100);
+      setScrollVw(Math.round((lenis.scroll / window.innerWidth + 1) * 100));
       if (lenis.scroll > window.innerWidth * 1.05) {
         setReceiptVisible(true);
       }
@@ -1353,12 +1353,11 @@ export default function Home() {
           padding: "8px 16px",
         }}>
           <span style={{ fontFamily: "JetBrains Mono, monospace", fontSize: "0.6rem", letterSpacing: "0.15em", color: "#C5871F" }}>
-            SCROLL → {scrollVw.toFixed(1)}vw
+            SCROLL → {scrollVw}vw
           </span>
           <button
             onClick={() => {
-              const vw = Math.ceil(scrollVw) + 5;
-              updateProp("layout", "canvas", "width", vw);
+              updateProp("layout", "canvas", "width", scrollVw);
             }}
             style={{
               fontFamily: "JetBrains Mono, monospace", fontSize: "0.55rem", letterSpacing: "0.14em",
