@@ -321,7 +321,7 @@ export default function Home() {
 
     lenis.on("scroll", () => {
       scrollXMV.set(lenis.scroll);
-      if (lenis.scroll > window.innerWidth * 1.2) {
+      if (lenis.scroll > window.innerWidth * 1.05) {
         setReceiptVisible(true);
       }
     });
