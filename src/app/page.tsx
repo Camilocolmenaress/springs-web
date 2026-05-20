@@ -1123,10 +1123,10 @@ export default function Home() {
             onDragStart={pauseScroll}
             onDragEnd={resumeScroll}
             whileDrag={{ scale: 1.06 }}
-            initial={{ x: 380, y: 60, rotate: d.cultureReceiptRotation + 220, opacity: 0 }}
-            whileInView={{ x: 0, y: 0, rotate: d.cultureReceiptRotation, opacity: 1 }}
+            initial={{ scale: 3.2, y: -120, rotate: d.cultureReceiptRotation + 8, opacity: 0 }}
+            whileInView={{ scale: 1, y: 0, rotate: d.cultureReceiptRotation, opacity: 1 }}
             viewport={{ once: true, amount: 0.05 }}
-            transition={{ type: "spring", stiffness: 100, damping: 18, mass: 1.4, delay: 1.1 }}
+            transition={{ type: "spring", stiffness: 140, damping: 20, mass: 1.2, delay: 0.35 }}
             style={{
               position: "absolute",
               left: `${d.cultureReceiptLeft}vw`,
