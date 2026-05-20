@@ -1328,19 +1328,27 @@ export default function Home() {
           </Reveal>
 
           {/* Info derecha */}
-          <Reveal delay={0.3} style={{ position: "absolute", left: `${d.pedirInfoLeft}vw`, bottom: `${d.pedirInfoBottom}vh`, zIndex: 5, width: `${d.pedirInfoWidth}vw`, transform: `scale(${d.pedirInfoScale / 100})`, transformOrigin: "bottom left", ...(d.pedirInfoHeight > 0 ? { height: `${d.pedirInfoHeight}vh`, overflow: "hidden" } : {}) }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
-              {[
-                { label: "Horario", val: "12PM — 9PM", sub: "Lunes a domingo" },
-                { label: "Zona", val: "BUCARAMANGA", sub: "Cabecera · Cañaveral · Sotomayor" },
-                { label: "Síguenos", val: "@SPRINGS.COL", sub: "Instagram · TikTok" },
-              ].map((i) => (
-                <div key={i.label} style={{ background: "rgba(242,232,213,0.06)", padding: "16px 22px", borderBottom: `1px solid rgba(242,232,213,0.06)` }}>
-                  <div style={{ ...F.mono, fontSize: "0.55rem", letterSpacing: "0.22em", color: C.mostaza, textTransform: "uppercase", marginBottom: "4px" }}>{i.label}</div>
-                  <div style={{ ...F.display, fontSize: "1.3rem", letterSpacing: "0.05em", color: C.cream }}>{i.val}</div>
-                  <div style={{ ...F.sans, fontSize: "0.7rem", color: C.cream, opacity: 0.4, marginTop: "2px" }}>{i.sub}</div>
-                </div>
-              ))}
+          <Reveal delay={0.3} style={{ position: "absolute", left: `${d.pedirInfoLeft}vw`, bottom: `${d.pedirInfoBottom}vh`, zIndex: 5 }}>
+            {/* div nativo — no motion — para que scale no sea sobreescrito por Framer Motion */}
+            <div style={{
+              width: `${d.pedirInfoWidth}vw`,
+              transform: `scale(${d.pedirInfoScale / 100})`,
+              transformOrigin: "bottom left",
+              ...(d.pedirInfoHeight > 0 ? { height: `${d.pedirInfoHeight}vh`, overflow: "hidden" } : {}),
+            }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
+                {[
+                  { label: "Horario", val: "12PM — 9PM", sub: "Lunes a domingo" },
+                  { label: "Zona", val: "BUCARAMANGA", sub: "Cabecera · Cañaveral · Sotomayor" },
+                  { label: "Síguenos", val: "@SPRINGS.COL", sub: "Instagram · TikTok" },
+                ].map((i) => (
+                  <div key={i.label} style={{ background: "rgba(242,232,213,0.06)", padding: "16px 22px", borderBottom: `1px solid rgba(242,232,213,0.06)` }}>
+                    <div style={{ ...F.mono, fontSize: "0.55rem", letterSpacing: "0.22em", color: C.mostaza, textTransform: "uppercase", marginBottom: "4px" }}>{i.label}</div>
+                    <div style={{ ...F.display, fontSize: "1.3rem", letterSpacing: "0.05em", color: C.cream }}>{i.val}</div>
+                    <div style={{ ...F.sans, fontSize: "0.7rem", color: C.cream, opacity: 0.4, marginTop: "2px" }}>{i.sub}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </Reveal>
 
