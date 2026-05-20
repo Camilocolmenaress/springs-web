@@ -16,14 +16,14 @@
               "step": 0.5
             },
             "left": {
-              "value": 40,
+              "value": 40.0,
               "unit": "vw",
               "min": 10,
               "max": 70,
               "step": 1
             },
             "top": {
-              "value": 8,
+              "value": 8.0,
               "unit": "vh",
               "min": 0,
               "max": 50,
@@ -60,7 +60,7 @@
               "step": 0.1
             },
             "left": {
-              "value": 59,
+              "value": 59.0,
               "unit": "vw",
               "min": 0,
               "max": 80,
@@ -90,21 +90,21 @@
               "folder": "/images"
             },
             "width": {
-              "value": 47,
+              "value": 47.0,
               "unit": "vw",
               "min": 20,
               "max": 90,
               "step": 1
             },
             "left": {
-              "value": -4,
+              "value": -4.0,
               "unit": "vw",
               "min": -20,
               "max": 50,
               "step": 1
             },
             "bottom": {
-              "value": 205,
+              "value": 205.0,
               "unit": "px",
               "min": -100,
               "max": 400,
@@ -123,42 +123,42 @@
               "step": 0.5
             },
             "top": {
-              "value": 10,
+              "value": 10.0,
               "unit": "vh",
               "min": 0,
               "max": 90,
               "step": 0.5
             },
             "width": {
-              "value": 8,
+              "value": 8.0,
               "unit": "vw",
               "min": 4,
               "max": 20,
               "step": 0.5
             },
             "textOffset": {
-              "value": 16,
+              "value": 16.0,
               "unit": "%",
               "min": 0,
               "max": 100,
               "step": 1
             },
             "textRadius": {
-              "value": 46,
+              "value": 46.0,
               "unit": "px",
               "min": 25,
               "max": 52,
               "step": 1
             },
             "fontSize": {
-              "value": 8,
+              "value": 8.0,
               "unit": "px",
               "min": 4,
               "max": 14,
               "step": 0.5
             },
             "globeRadius": {
-              "value": 33,
+              "value": 33.0,
               "unit": "px",
               "min": 8,
               "max": 40,
@@ -170,7 +170,7 @@
           "type": "text",
           "props": {
             "left": {
-              "value": 34,
+              "value": 34.0,
               "unit": "vw",
               "min": 0,
               "max": 90,
@@ -198,14 +198,14 @@
               "step": 0.1
             },
             "gap": {
-              "value": 7,
+              "value": 7.0,
               "unit": "px",
               "min": 0,
               "max": 40,
               "step": 1
             },
             "globeOffsetY": {
-              "value": 1,
+              "value": 1.0,
               "unit": "px",
               "min": -10,
               "max": 20,
@@ -261,21 +261,21 @@
               "folder": "/images"
             },
             "width": {
-              "value": 15,
+              "value": 15.0,
               "unit": "vw",
               "min": 5,
               "max": 30,
               "step": 0.5
             },
             "left": {
-              "value": 43,
+              "value": 43.0,
               "unit": "vw",
               "min": -10,
               "max": 80,
               "step": 0.5
             },
             "top": {
-              "value": 46,
+              "value": 46.0,
               "unit": "vh",
               "min": 0,
               "max": 90,
@@ -305,14 +305,14 @@
               "step": 0.5
             },
             "bottom": {
-              "value": 46,
+              "value": 46.0,
               "unit": "vh",
               "min": 0,
               "max": 80,
               "step": 0.5
             },
             "rotation": {
-              "value": 1,
+              "value": 1.0,
               "unit": "deg",
               "min": -30,
               "max": 30,
@@ -324,14 +324,14 @@
           "type": "text",
           "props": {
             "left": {
-              "value": 35,
+              "value": 35.0,
               "unit": "vw",
               "min": 20,
               "max": 80,
               "step": 1
             },
             "bottom": {
-              "value": 25,
+              "value": 25.0,
               "unit": "vh",
               "min": 0,
               "max": 50,
@@ -364,7 +364,7 @@
               "step": 0.5
             },
             "left": {
-              "value": 37,
+              "value": 37.0,
               "unit": "vw",
               "min": 0,
               "max": 200,
@@ -383,14 +383,14 @@
               "step": 0.02
             },
             "bottom": {
-              "value": 16,
+              "value": 16.0,
               "unit": "px",
               "min": 0,
               "max": 60,
               "step": 1
             },
             "right": {
-              "value": 28,
+              "value": 28.0,
               "unit": "px",
               "min": 0,
               "max": 200,
@@ -404,14 +404,14 @@
               "step": 0.01
             },
             "itemGap": {
-              "value": 40,
+              "value": 40.0,
               "unit": "px",
               "min": 4,
               "max": 100,
               "step": 2
             },
             "wordSpacing": {
-              "value": -6,
+              "value": -6.0,
               "unit": "px",
               "min": -20,
               "max": 20,
@@ -427,14 +427,14 @@
               "folder": "/images"
             },
             "height": {
-              "value": 36,
+              "value": 36.0,
               "unit": "px",
               "min": 16,
               "max": 80,
               "step": 2
             },
             "width": {
-              "value": 212,
+              "value": 212.0,
               "unit": "px",
               "min": 60,
               "max": 400,
@@ -448,7 +448,7 @@
               "step": 0.5
             },
             "opacity": {
-              "value": 100,
+              "value": 100.0,
               "unit": "%",
               "min": 10,
               "max": 100,
@@ -478,7 +478,7 @@
               "step": 0.5
             },
             "bottom": {
-              "value": 0,
+              "value": 0.0,
               "unit": "vh",
               "min": 0,
               "max": 80,
@@ -501,21 +501,21 @@
               "folder": "/images"
             },
             "width": {
-              "value": 38,
+              "value": 38.0,
               "unit": "vw",
               "min": 20,
               "max": 90,
               "step": 1
             },
             "left": {
-              "value": 86,
+              "value": 86.0,
               "unit": "vw",
               "min": -20,
               "max": 95,
               "step": 0.5
             },
             "bottom": {
-              "value": 15,
+              "value": 15.0,
               "unit": "vh",
               "min": -20,
               "max": 80,
@@ -531,7 +531,7 @@
               "folder": "/images"
             },
             "left": {
-              "value": 61,
+              "value": 61.0,
               "unit": "vw",
               "min": 0,
               "max": 90,
@@ -545,14 +545,14 @@
               "step": 0.5
             },
             "size": {
-              "value": 18,
+              "value": 18.0,
               "unit": "vw",
               "min": 10,
               "max": 70,
               "step": 0.5
             },
             "rotation": {
-              "value": 0,
+              "value": 0.0,
               "unit": "deg",
               "min": -30,
               "max": 30,
@@ -566,7 +566,7 @@
               "step": 0.05
             },
             "opacity": {
-              "value": 50,
+              "value": 50.0,
               "unit": "%",
               "min": 0,
               "max": 100,
@@ -797,7 +797,7 @@
           "props": {
             "content": "#SPRINGSCLUB",
             "left": {
-              "value": 179,
+              "value": 179.0,
               "unit": "vw",
               "min": 100,
               "max": 500,
@@ -895,7 +895,7 @@
               "step": 0.5
             },
             "top": {
-              "value": 30,
+              "value": 30.0,
               "unit": "vh",
               "min": -30,
               "max": 100,
@@ -991,14 +991,14 @@
               "step": 0.5
             },
             "left": {
-              "value": 258,
+              "value": 224.0,
               "unit": "vw",
               "min": 200,
               "max": 320,
               "step": 1
             },
             "top": {
-              "value": 20,
+              "value": 16.0,
               "unit": "vh",
               "min": 0,
               "max": 80,
@@ -1018,7 +1018,7 @@
               "step": 0.05
             },
             "left": {
-              "value": 258,
+              "value": 224.0,
               "unit": "vw",
               "min": 200,
               "max": 320,
@@ -1037,14 +1037,14 @@
           "type": "block",
           "props": {
             "left": {
-              "value": 260,
+              "value": 224.0,
               "unit": "vw",
               "min": 200,
               "max": 350,
               "step": 1
             },
             "bottom": {
-              "value": 16,
+              "value": 22.0,
               "unit": "vh",
               "min": 0,
               "max": 60,
@@ -1063,28 +1063,28 @@
           "type": "block",
           "props": {
             "left": {
-              "value": 294,
+              "value": 251.0,
               "unit": "vw",
               "min": 230,
               "max": 380,
               "step": 1
             },
             "bottom": {
-              "value": 16,
+              "value": 19.0,
               "unit": "vh",
               "min": 0,
               "max": 60,
               "step": 1
             },
             "width": {
-              "value": 30,
+              "value": 29.0,
               "unit": "vw",
               "min": 10,
               "max": 60,
               "step": 0.5
             },
             "height": {
-              "value": 0,
+              "value": 45.0,
               "unit": "vh",
               "min": 0,
               "max": 80,
