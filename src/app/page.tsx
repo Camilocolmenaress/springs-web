@@ -913,16 +913,21 @@ export default function Home() {
               onDragStart={pauseScroll} onDragEnd={resumeScroll}
               style={{
                 width: `${d.globeStickerSize}vw`, height: `${d.globeStickerSize}vw`,
-                background: C.cream,
-                boxShadow: `0 0 0 5px ${C.cream}, 0 0 0 7px ${C.tinta}`,
-                clipPath: "circle(50%)",
+                background: "rgba(26,10,12,0.88)",
+                border: "1px solid rgba(242,232,213,0.15)",
                 display: "flex", alignItems: "center", justifyContent: "center",
               }}
             >
-              <svg viewBox="0 0 24 24" fill="none" stroke={C.tinta} strokeWidth="1.2" width="55%" height="55%">
+              <svg viewBox="0 0 24 24" fill="none" stroke="rgba(242,232,213,0.45)" strokeWidth="1.2" width="55%" height="55%">
                 <circle cx="12" cy="12" r="10" />
-                <ellipse cx="12" cy="12" rx="4" ry="10" />
-                <line x1="2" y1="12" x2="22" y2="12" />
+                <motion.g
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+                  style={{ transformBox: "fill-box", transformOrigin: "center" }}
+                >
+                  <ellipse cx="12" cy="12" rx="4" ry="10" />
+                  <line x1="2" y1="12" x2="22" y2="12" />
+                </motion.g>
               </svg>
             </DragSticker>
           </motion.div>

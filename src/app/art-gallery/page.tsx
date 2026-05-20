@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 import Lenis from "lenis";
 import Link from "next/link";
 
@@ -165,8 +166,14 @@ export default function ArtGallery() {
         }}>
           <svg viewBox="0 0 24 24" fill="none" stroke={C.dim} strokeWidth="1.2" style={{ width: 24, height: 24 }}>
             <circle cx="12" cy="12" r="10" />
-            <ellipse cx="12" cy="12" rx="4" ry="10" />
-            <line x1="2" y1="12" x2="22" y2="12" />
+            <motion.g
+              animate={{ rotate: 360 }}
+              transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+              style={{ transformBox: "fill-box", transformOrigin: "center" }}
+            >
+              <ellipse cx="12" cy="12" rx="4" ry="10" />
+              <line x1="2" y1="12" x2="22" y2="12" />
+            </motion.g>
           </svg>
         </div>
 
