@@ -1233,9 +1233,9 @@ export default function Home() {
 
           {/* Fondo burgundy panel pedir — con degradado tinta→burgundy al inicio */}
           <div style={{
-            position: "absolute", left: "228vw", top: 0,
-            width: "192vw", height: "100vh",
-            background: `linear-gradient(90deg, ${C.tinta} 0%, ${C.burgundy} 12%, ${C.burgundy} 100%)`,
+            position: "absolute", left: "210vw", top: 0,
+            width: "210vw", height: "100vh",
+            background: `linear-gradient(90deg, ${C.tinta} 0%, ${C.burgundy} 6%, ${C.burgundy} 100%)`,
             zIndex: 1,
           }} />
 
