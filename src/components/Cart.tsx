@@ -141,8 +141,8 @@ export default function Cart({ items, onAdd, onRemove, onDelete }: CartProps) {
           zIndex: 70,
           display: "flex",
           flexDirection: "column",
-          transform: open ? "translateX(0)" : "translateX(100%)",
-          transition: "transform 0.3s cubic-bezier(0.22, 1, 0.36, 1)",
+          transform: open ? "translateY(0)" : "translateY(100%)",
+          transition: "transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)",
           paddingBottom: "env(safe-area-inset-bottom, 0px)",
         }}
       >
