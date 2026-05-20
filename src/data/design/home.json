@@ -1082,6 +1082,13 @@
               "min": 10,
               "max": 60,
               "step": 0.5
+            },
+            "height": {
+              "value": 0,
+              "unit": "vh",
+              "min": 0,
+              "max": 80,
+              "step": 1
             }
           }
         },

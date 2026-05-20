@@ -309,6 +309,7 @@ export default function Home() {
     pedirInfoLeft:     (pedir?.info?.props?.left as { value: number })?.value ?? 294,
     pedirInfoBottom:   (pedir?.info?.props?.bottom as { value: number })?.value ?? 16,
     pedirInfoWidth:    (pedir?.info?.props?.width as { value: number })?.value ?? 30,
+    pedirInfoHeight:   (pedir?.info?.props?.height as { value: number })?.value ?? 0,
     pedirGhostSize:    (pedir?.ghostText?.props?.fontSize as { value: number })?.value ?? 5,
     pedirGhostLeft:    (pedir?.ghostText?.props?.left as { value: number })?.value ?? 390,
     pedirGhostOpacity: (pedir?.ghostText?.props?.opacity as { value: number })?.value ?? 7,
@@ -1326,13 +1327,12 @@ export default function Home() {
           </Reveal>
 
           {/* Info derecha */}
-          <Reveal delay={0.3} style={{ position: "absolute", left: `${d.pedirInfoLeft}vw`, bottom: `${d.pedirInfoBottom}vh`, zIndex: 5, width: `${d.pedirInfoWidth}vw` }}>
+          <Reveal delay={0.3} style={{ position: "absolute", left: `${d.pedirInfoLeft}vw`, bottom: `${d.pedirInfoBottom}vh`, zIndex: 5, width: `${d.pedirInfoWidth}vw`, ...(d.pedirInfoHeight > 0 ? { height: `${d.pedirInfoHeight}vh`, overflow: "hidden" } : {}) }}>
             <div style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
               {[
                 { label: "Horario", val: "12PM — 9PM", sub: "Lunes a domingo" },
                 { label: "Zona", val: "BUCARAMANGA", sub: "Cabecera · Cañaveral · Sotomayor" },
                 { label: "Síguenos", val: "@SPRINGS.COL", sub: "Instagram · TikTok" },
-                { label: "Combo recomendado", val: "PARA DOS · 69,900", sub: "2 Jackets + 2 Bebidas · Ahorra 9,900" },
               ].map((i) => (
                 <div key={i.label} style={{ background: "rgba(242,232,213,0.06)", padding: "16px 22px", borderBottom: `1px solid rgba(242,232,213,0.06)` }}>
                   <div style={{ ...F.mono, fontSize: "0.55rem", letterSpacing: "0.22em", color: C.mostaza, textTransform: "uppercase", marginBottom: "4px" }}>{i.label}</div>
