@@ -1132,7 +1132,7 @@ export default function Home() {
               ? { scale: 1, y: 0, rotate: d.cultureReceiptRotation, opacity: 1 }
               : { scale: 3.2, y: -120, rotate: d.cultureReceiptRotation + 8, opacity: 0 }
             }
-            transition={{ type: "spring", stiffness: 55, damping: 18, mass: 2.2, delay: 0.2 }}
+            transition={{ type: "spring", stiffness: 90, damping: 19, mass: 1.6, delay: 0.2 }}
             style={{
               position: "absolute",
               left: `${d.cultureReceiptLeft}vw`,
