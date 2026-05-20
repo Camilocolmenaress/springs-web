@@ -1253,16 +1253,6 @@ export default function Home() {
             </motion.div>
           </div>
 
-          {/* Description — estático */}
-          <div style={{
-            position: "absolute", left: `${d.cultureDescLeft}vw`, top: `${d.cultureDescTop}vh`,
-            ...F.mono, fontSize: `${d.cultureDescSize}vw`,
-            letterSpacing: "0.14em", color: C.cream, opacity: 0.75,
-            lineHeight: 1.7, textTransform: "uppercase", zIndex: 5,
-            whiteSpace: "pre-line",
-          }}>
-            {d.cultureDesc}
-          </div>
 
           {/* ═══════════════════════════════════════
               ZONA 2 — PEDIR YA (250 → 420vw)
