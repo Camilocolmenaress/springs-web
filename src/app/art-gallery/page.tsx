@@ -106,9 +106,9 @@ export default function ArtGallery() {
     exhibitListFs: sv(z, "sidebar_contenido", "exhibitList",  "fontSize",   0.39),
     exhibitListGap:sv(z, "sidebar_contenido", "exhibitList",  "gap",        8),
     // foto
-    imageTop:      sv(z, "foto",              "imagen",       "top",        39),
-    imageLeft:     sv(z, "foto",              "imagen",       "left",       50),
-    imageScale:    sv(z, "foto",              "imagen",       "scale",      1.0),
+    imageH:        sv(z, "foto",              "imagen",       "height",     90),
+    imageOffsetY:  sv(z, "foto",              "imagen",       "top",        0),
+    imageOffsetX:  sv(z, "foto",              "imagen",       "left",       0),
     vignetteH:     sv(z, "foto",              "viñeta",       "height",     35),
     placaBottom:   sv(z, "foto",              "placa",        "bottom",     52),
     placaFs:       sv(z, "foto",              "placa",        "fontSize",   1),
@@ -323,11 +323,18 @@ export default function ArtGallery() {
               }}
             >
               {/* ── Foto — ocupa todo el panel ── */}
-              <div style={{ position: "absolute", inset: 0, overflow: "hidden" }}>
+              <div style={{ position: "absolute", inset: 0, overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <img
                   src={exhibit.img}
                   alt={exhibit.name}
-                  style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: `${d.imageLeft}% ${d.imageTop}%`, transform: `scale(${d.imageScale})`, transformOrigin: "center center", display: "block" }}
+                  style={{
+                    height: `${d.imageH}%`,
+                    width: "auto",
+                    objectFit: "contain",
+                    transform: `translate(${d.imageOffsetX}px, ${d.imageOffsetY}px)`,
+                    display: "block",
+                    flexShrink: 0,
+                  }}
                 />
 
                 <div style={{
