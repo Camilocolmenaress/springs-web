@@ -117,7 +117,7 @@ export default function ExtrasModal({ product, onClose, onConfirm }: Props) {
 // Píldora pequeña que nace en el centro del modal y vuela al carrito.
 // El modal se desvanece por separado con opacidad.
 function GeniePill({ launch, onComplete }: { launch: LaunchState; onComplete: () => void }) {
-  const PW = 80; const PH = 20; // tamaño de la píldora
+  const PW = 280; const PH = 70; // empieza grande para que el encogimiento sea visible
   const D  = 0.5;
   const ARC = -50;
 
@@ -144,8 +144,8 @@ function GeniePill({ launch, onComplete }: { launch: LaunchState; onComplete: ()
         >
           <motion.div
             initial={{ scale: 1, opacity: 1 }}
-            animate={{ scale: [1, 0.6, 0.1], opacity: [1, 0.8, 0] }}
-            transition={{ duration: D, times: [0, 0.5, 1], ease: "easeIn" }}
+            animate={{ scale: [1, 0.35, 0.04], opacity: [1, 1, 0] }}
+            transition={{ duration: D, times: [0, 0.55, 1], ease: "easeIn" }}
             style={{
               width: "100%", height: "100%",
               background: C.cream,
