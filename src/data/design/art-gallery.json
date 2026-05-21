@@ -5,22 +5,22 @@
       "elements": {
         "sidebar": {
           "props": {
-            "width": { "value": 159, "unit": "px", "min": 100, "max": 320, "step": 1 }
+            "width": { "value": 152, "unit": "px", "min": 100, "max": 320, "step": 1 }
           }
         },
         "nav": {
           "props": {
-            "height": { "value": 39, "unit": "px", "min": 32, "max": 100, "step": 1 }
+            "height": { "value": 55, "unit": "px", "min": 32, "max": 100, "step": 1 }
           }
         },
         "footer": {
           "props": {
-            "height": { "value": 57, "unit": "px", "min": 28, "max": 80, "step": 1 }
+            "height": { "value": 54, "unit": "px", "min": 28, "max": 80, "step": 1 }
           }
         },
         "infoPanel": {
           "props": {
-            "width": { "value": 600, "unit": "px", "min": 200, "max": 700, "step": 4 }
+            "width": { "value": 692, "unit": "px", "min": 200, "max": 800, "step": 4 }
           }
         }
       }
@@ -31,26 +31,26 @@
       "elements": {
         "globe": {
           "props": {
-            "size":        { "value": 110, "unit": "px", "min": 60,  "max": 200,  "step": 2 },
-            "globeRadius": { "value": 22,  "unit": "px", "min": 10,  "max": 45,   "step": 0.5 },
-            "textRadius":  { "value": 46,  "unit": "px", "min": 25,  "max": 55,   "step": 0.5 }
+            "size":        { "value": 144, "unit": "px",  "min": 60,  "max": 200,  "step": 2 },
+            "globeRadius": { "value": 23,  "unit": "px",  "min": 10,  "max": 45,   "step": 0.5 },
+            "textRadius":  { "value": 39,  "unit": "px",  "min": 25,  "max": 55,   "step": 0.5 }
           }
         },
         "paddingSidebar": {
           "props": {
-            "top":        { "value": 37, "unit": "px", "min": 8,  "max": 80, "step": 1 },
-            "horizontal": { "value": 18, "unit": "px", "min": 8,  "max": 40, "step": 1 }
+            "top":        { "value": 57, "unit": "px", "min": 8,  "max": 80, "step": 1 },
+            "horizontal": { "value": 15, "unit": "px", "min": 8,  "max": 40, "step": 1 }
           }
         },
         "exhibitNum": {
           "props": {
-            "fontSize": { "value": 3.1, "unit": "rem", "min": 1, "max": 8, "step": 0.1 }
+            "fontSize": { "value": 4.4, "unit": "rem", "min": 1, "max": 8, "step": 0.1 }
           }
         },
         "exhibitList": {
           "props": {
-            "fontSize": { "value": 0.39, "unit": "rem", "min": 0.2,  "max": 0.9, "step": 0.01 },
-            "gap":      { "value": 8,    "unit": "px",  "min": 2,    "max": 24,  "step": 1 }
+            "fontSize": { "value": 0.66, "unit": "rem", "min": 0.2,  "max": 0.9, "step": 0.01 },
+            "gap":      { "value": 6,    "unit": "px",  "min": 2,    "max": 24,  "step": 1 }
           }
         }
       }
@@ -61,9 +61,9 @@
       "elements": {
         "imagen": {
           "props": {
-            "height": { "value": 90,  "unit": "%",  "min": 20,   "max": 130, "step": 1 },
-            "top":    { "value": 0,   "unit": "px",  "min": -500, "max": 500, "step": 4 },
-            "left":   { "value": 0,   "unit": "px",  "min": -500, "max": 500, "step": 4 }
+            "height": { "value": 109,  "unit": "%",  "min": 20,   "max": 130,  "step": 1 },
+            "top":    { "value": 4,    "unit": "px",  "min": -500, "max": 500,  "step": 4 },
+            "left":   { "value": -220, "unit": "px",  "min": -500, "max": 500,  "step": 4 }
           }
         },
         "viñeta": {
@@ -73,9 +73,9 @@
         },
         "placa": {
           "props": {
-            "bottom":   { "value": 66,   "unit": "px",  "min": 0,   "max": 200, "step": 1 },
-            "fontSize": { "value": 1.05, "unit": "rem", "min": 0.5, "max": 2.5, "step": 0.05 },
-            "paddingH": { "value": 24,   "unit": "px",  "min": 8,   "max": 80,  "step": 1 },
+            "bottom":   { "value": 136,  "unit": "px",  "min": 0,   "max": 300, "step": 1 },
+            "fontSize": { "value": 1.25, "unit": "rem", "min": 0.5, "max": 2.5, "step": 0.05 },
+            "paddingH": { "value": 25,   "unit": "px",  "min": 8,   "max": 80,  "step": 1 },
             "paddingV": { "value": 10,   "unit": "px",  "min": 4,   "max": 40,  "step": 1 }
           }
         }
@@ -87,18 +87,18 @@
       "elements": {
         "paddingInfo": {
           "props": {
-            "top":        { "value": 46, "unit": "px", "min": 8,  "max": 80, "step": 1 },
-            "horizontal": { "value": 24, "unit": "px", "min": 8,  "max": 60, "step": 1 }
+            "top":        { "value": 80, "unit": "px", "min": 8,  "max": 120, "step": 1 },
+            "horizontal": { "value": 27, "unit": "px", "min": 8,  "max": 60,  "step": 1 }
           }
         },
         "titulo": {
           "props": {
-            "fontSize": { "value": 4.2, "unit": "rem", "min": 1.5, "max": 7,   "step": 0.1 }
+            "fontSize": { "value": 4.5, "unit": "rem", "min": 1.5, "max": 7,   "step": 0.1 }
           }
         },
         "subtitulo": {
           "props": {
-            "fontSize": { "value": 0.48, "unit": "rem", "min": 0.25, "max": 1.2, "step": 0.01 }
+            "fontSize": { "value": 0.69, "unit": "rem", "min": 0.25, "max": 1.2, "step": 0.01 }
           }
         },
         "ingredientes": {
@@ -109,17 +109,17 @@
         },
         "descripcion": {
           "props": {
-            "fontSize": { "value": 0.55, "unit": "rem", "min": 0.25, "max": 1.2, "step": 0.01 }
+            "fontSize": { "value": 0.65, "unit": "rem", "min": 0.25, "max": 1.2, "step": 0.01 }
           }
         },
         "tagline": {
           "props": {
-            "fontSize": { "value": 0.64, "unit": "rem", "min": 0.25, "max": 1.2, "step": 0.01 }
+            "fontSize": { "value": 0.77, "unit": "rem", "min": 0.25, "max": 1.2, "step": 0.01 }
           }
         },
         "quote": {
           "props": {
-            "fontSize": { "value": 0.69, "unit": "rem", "min": 0.3, "max": 1.5, "step": 0.01 }
+            "fontSize": { "value": 0.71, "unit": "rem", "min": 0.3, "max": 1.5, "step": 0.01 }
           }
         },
         "specs": {
