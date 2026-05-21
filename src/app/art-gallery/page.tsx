@@ -97,9 +97,11 @@ export default function ArtGallery() {
     footerH:       sv(z, "layout",            "footer",       "height",     46),
     infoPanelW:    sv(z, "layout",            "infoPanel",    "width",      380),
     // sidebar
-    globeSize:     sv(z, "sidebar_contenido", "globe",        "size",       108),
-    globeRadius:   sv(z, "sidebar_contenido", "globe",        "globeRadius",22),
-    textRadius:    sv(z, "sidebar_contenido", "globe",        "textRadius", 46),
+    globeSize:     sv(z, "sidebar_contenido", "globe",        "size",        144),
+    globeRadius:   sv(z, "sidebar_contenido", "globe",        "globeRadius", 33),
+    textRadius:    sv(z, "sidebar_contenido", "globe",        "textRadius",  46),
+    globeFontSize: sv(z, "sidebar_contenido", "globe",        "fontSize",    8),
+    globeTextOff:  sv(z, "sidebar_contenido", "globe",        "textOffset",  16),
     sidebarPadT:   sv(z, "sidebar_contenido", "paddingSidebar","top",       32),
     sidebarPadH:   sv(z, "sidebar_contenido", "paddingSidebar","horizontal",18),
     exhibitNumFs:  sv(z, "sidebar_contenido", "exhibitNum",   "fontSize",   3.8),
@@ -226,8 +228,8 @@ export default function ArtGallery() {
               <line x1="55" y1={55-gr} x2="55" y2={55+gr} stroke={C.dim} strokeWidth="0.8" opacity={0.45}/>
             </motion.g>
             <path id="gallery-chimba-circle" fill="none" d={`M${gsx},${gsy} a${tr},${tr} 0 0,1 ${tr},${-gdy} a${tr},${tr} 0 0,1 ${-tr},${gdy}`}/>
-            <text fontFamily="JetBrains Mono, monospace" fontSize="7.5" letterSpacing="1.0" fill={C.dim} fillOpacity={0.9}>
-              <textPath href="#gallery-chimba-circle" startOffset="0%">FOR THE MOST CHIMBA PEOPLE ✦ </textPath>
+            <text fontFamily="JetBrains Mono, monospace" fontSize={d.globeFontSize} letterSpacing="1.0" fill={C.dim} fillOpacity={0.9}>
+              <textPath href="#gallery-chimba-circle" startOffset={`${d.globeTextOff}%`}>FOR THE MOST CHIMBA PEOPLE ✦ </textPath>
             </text>
           </svg>
         </div>
