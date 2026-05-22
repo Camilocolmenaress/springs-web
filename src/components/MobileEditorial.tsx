@@ -42,15 +42,17 @@ export default function MobileEditorial() {
         }}
       >
 
-        {/* La Fija — top-anchored right side, potato in front of title */}
+        {/* La Fija — potato */}
         <div
           style={{
             position: "absolute",
-            top: 0,
-            right: "-4vw",
+            left: "31.5vw",
+            top: "4.3svh",
             width: "82vw",
             height: "58svh",
             zIndex: 4,
+            transform: "scale(0.72) rotate(-0.9deg)",
+            transformOrigin: "left top",
           }}
         >
           <Image
@@ -63,13 +65,15 @@ export default function MobileEditorial() {
           />
         </div>
 
-        {/* SPRINGS title — behind potato */}
+        {/* SPRINGS title */}
         <div
           style={{
             position: "absolute",
-            top: "calc(env(safe-area-inset-top, 0px) + 68px)",
-            left: "5vw",
+            left: "10.4vw",
+            top: "2.6svh",
             zIndex: 3,
+            transform: "scale(1.37) rotate(0.1deg)",
+            transformOrigin: "left top",
             animation: "heroReveal 0.55s ease both",
           }}
         >
@@ -93,8 +97,8 @@ export default function MobileEditorial() {
         <div
           style={{
             position: "absolute",
-            left: "5vw",
-            top: "calc(env(safe-area-inset-top, 0px) + 68px + 88px)",
+            left: "3.2vw",
+            top: "13.3svh",
             zIndex: 5,
             display: "flex",
             alignItems: "flex-start",
@@ -122,8 +126,8 @@ export default function MobileEditorial() {
         <div
           style={{
             position: "absolute",
-            left: "5vw",
-            top: "calc(env(safe-area-inset-top, 0px) + 68px + 142px)",
+            left: "11.2vw",
+            top: "35.7svh",
             zIndex: 10,
             width: "14vw",
             height: "14vw",
@@ -157,37 +161,36 @@ export default function MobileEditorial() {
           </svg>
         </div>
 
-        {/* Jacket Club sticker — DragSticker, clickable link */}
+        {/* Dados sticker — DragSticker, editor position */}
         <DragSticker
-          rotate={-8}
+          rotate={-3}
           idleRotateRange={4}
           style={{
             position: "absolute",
-            top: "calc(env(safe-area-inset-top, 0px) + 62px)",
-            right: "2vw",
-            width: "28vw",
-            zIndex: 21,
+            left: "4.0vw",
+            top: "20.2svh",
+            width: "60vw",
+            zIndex: 22,
           }}
         >
-          <Link href="/springs-jacket-club" style={{ display: "block" }}>
+          <Link href="/prueba-tu-suerte" style={{ display: "block" }}>
             <Image
-              src="/images/jacket-club-sticker.png"
-              alt="SPRINGS Jacket Club"
+              src="/images/miercoles-dados-sticker.png"
+              alt="Miércoles de Dados"
               width={300}
               height={300}
-              priority
               style={{ width: "100%", height: "auto", objectFit: "contain" }}
-              sizes="28vw"
+              sizes="60vw"
             />
           </Link>
         </DragSticker>
 
-        {/* Label — ↗ Jacket / La Fija, points toward potato */}
+        {/* Label — ↗ Jacket / La Fija */}
         <div
           style={{
             position: "absolute",
-            left: "5vw",
-            top: "calc(44svh)",
+            left: "22.1vw",
+            top: "52.8svh",
             zIndex: 5,
             animation: "heroReveal 0.55s ease 0.22s both",
           }}
@@ -202,7 +205,6 @@ export default function MobileEditorial() {
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "0.3em" }}>
-              {/* Arrow pointing up-right toward potato */}
               <svg width="0.72em" height="0.72em" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
                 <line x1="3" y1="21" x2="21" y2="3" stroke={C.tinta} strokeWidth="4.5" strokeLinecap="round" />
                 <polyline points="13,3 21,3 21,11" fill="none" stroke={C.tinta} strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -213,15 +215,40 @@ export default function MobileEditorial() {
           </div>
         </div>
 
-        {/* Subtitle — JACKETS DIFFERENT BY DEFAULT — BELOW potato */}
+        {/* Jacket Club sticker — DragSticker, editor position */}
+        <DragSticker
+          rotate={-6}
+          idleRotateRange={4}
+          style={{
+            position: "absolute",
+            left: "12.3vw",
+            top: "60.2svh",
+            width: "39vw",
+            zIndex: 21,
+          }}
+        >
+          <Link href="/springs-jacket-club" style={{ display: "block" }}>
+            <Image
+              src="/images/jacket-club-sticker.png"
+              alt="SPRINGS Jacket Club"
+              width={300}
+              height={300}
+              priority
+              style={{ width: "100%", height: "auto", objectFit: "contain" }}
+              sizes="39vw"
+            />
+          </Link>
+        </DragSticker>
+
+        {/* Subtitle — JACKETS DIFFERENT BY DEFAULT */}
         <div
           style={{
             position: "absolute",
-            left: "5vw",
-            top: "calc(58svh + 10px)",
+            left: "39.2vw",
+            top: "55.4svh",
             zIndex: 5,
-            transform: "rotate(-2deg)",
-            transformOrigin: "left center",
+            transform: "scale(1.14) rotate(-10.5deg)",
+            transformOrigin: "left top",
             animation: "heroReveal 0.55s ease 0.28s both",
           }}
         >
@@ -244,12 +271,12 @@ export default function MobileEditorial() {
         <div
           style={{
             position: "absolute",
-            left: "5vw",
-            top: "calc(58svh + 44px)",
+            left: "64.8vw",
+            top: "58.5svh",
             width: "50vw",
             zIndex: 5,
-            transform: "rotate(-2.5deg)",
-            transformOrigin: "left center",
+            transform: "scale(1.27) rotate(1.4deg)",
+            transformOrigin: "left top",
           }}
         >
           <div style={{ position: "relative", width: "100%", height: 11 }}>
@@ -267,50 +294,30 @@ export default function MobileEditorial() {
         <div
           style={{
             position: "absolute",
-            left: "5vw",
-            top: "calc(58svh + 68px)",
+            left: "46.9vw",
+            top: "62.7svh",
             width: "46vw",
             aspectRatio: "1402 / 1122",
             zIndex: 8,
+            transform: "scale(0.71) rotate(-0.9deg)",
+            transformOrigin: "left top",
             animation: "heroReveal 0.55s ease 0.4s both",
           }}
         >
           <SensitiveImage src="/images/sensitive-hero.png" fontSize={3.2} opacity={65} />
         </div>
 
-        {/* Dados sticker — DragSticker, right side, overlaps potato bottom */}
-        <DragSticker
-          rotate={12}
-          idleRotateRange={4}
-          style={{
-            position: "absolute",
-            right: "2vw",
-            top: "calc(52svh + 12px)",
-            width: "26vw",
-            zIndex: 22,
-          }}
-        >
-          <Link href="/prueba-tu-suerte" style={{ display: "block" }}>
-            <Image
-              src="/images/miercoles-dados-sticker.png"
-              alt="Miércoles de Dados"
-              width={300}
-              height={300}
-              style={{ width: "100%", height: "auto", objectFit: "contain" }}
-              sizes="26vw"
-            />
-          </Link>
-        </DragSticker>
-
-        {/* Marquee tape — SPRINGS < SPRINGS < */}
+        {/* Marquee tape */}
         <div
           style={{
             position: "absolute",
-            left: 0,
+            left: "1.1vw",
+            top: "79.2svh",
             right: 0,
-            bottom: 52,
             overflow: "hidden",
             zIndex: 6,
+            transform: "scale(1.15) rotate(0.1deg)",
+            transformOrigin: "left top",
             borderTop: `1.5px solid ${C.tinta}`,
             borderBottom: `1.5px solid ${C.tinta}`,
             padding: "5px 0",
@@ -344,13 +351,13 @@ export default function MobileEditorial() {
         <div
           style={{
             position: "absolute",
-            left: "5vw",
-            right: "5vw",
-            bottom: 10,
+            left: "55.5vw",
+            top: "88.4svh",
             zIndex: 5,
+            transform: "scale(2.20) rotate(-0.5deg)",
+            transformOrigin: "left top",
             display: "flex",
             alignItems: "flex-end",
-            justifyContent: "space-between",
             gap: "3vw",
           }}
         >
