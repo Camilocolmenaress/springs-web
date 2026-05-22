@@ -182,6 +182,52 @@ export default function MobileEditorPage() {
       overflowY: "auto",
     }}>
 
+      {/* ── Floating copy button — always visible ── */}
+      <div style={{
+        position: "fixed",
+        bottom: 24,
+        left: "50%",
+        transform: "translateX(-50%)",
+        zIndex: 9999,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 8,
+      }}>
+        {showCode && (
+          <textarea
+            readOnly
+            value={generateCode()}
+            onClick={e => (e.target as HTMLTextAreaElement).select()}
+            style={{
+              width: 340, height: 160,
+              background: "rgba(10,10,10,0.97)", color: C.mostaza,
+              fontFamily: "JetBrains Mono, monospace", fontSize: "0.42rem",
+              border: `1px solid ${C.mostaza}`, padding: 10, resize: "none",
+              boxSizing: "border-box",
+            }}
+          />
+        )}
+        <button
+          onClick={copyPositions}
+          style={{
+            padding: "14px 32px",
+            background: copied ? C.burgundy : C.mostaza,
+            color: C.tinta,
+            fontFamily: "Anton, sans-serif",
+            fontSize: "1rem",
+            letterSpacing: "0.12em",
+            border: "none",
+            cursor: "pointer",
+            textTransform: "uppercase",
+            boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {copied ? "¡COPIADO! ✓" : "COPIAR POSICIONES"}
+        </button>
+      </div>
+
       {/* ── Header ── */}
       <div style={{
         width: "100%",
@@ -398,39 +444,7 @@ export default function MobileEditorPage() {
           })}
         </div>
 
-        <button
-          onClick={copyPositions}
-          style={{
-            marginTop: 20,
-            width: "100%",
-            padding: "18px",
-            background: copied ? C.burgundy : C.mostaza,
-            color: C.tinta,
-            fontFamily: "Anton, sans-serif",
-            fontSize: "1rem",
-            letterSpacing: "0.1em",
-            border: "none",
-            cursor: "pointer",
-            textTransform: "uppercase",
-            transition: "background 0.2s",
-          }}
-        >
-          {copied ? "¡COPIADO! ✓" : "COPIAR POSICIONES"}
-        </button>
-
-        {showCode && (
-          <textarea
-            readOnly
-            value={generateCode()}
-            style={{
-              marginTop: 12, width: "100%", height: 220,
-              background: "#0a0a0a", color: C.mostaza,
-              fontFamily: "JetBrains Mono, monospace", fontSize: "0.45rem",
-              border: "1px solid #333", padding: 10, resize: "none",
-              boxSizing: "border-box",
-            }}
-          />
-        )}
+        <div style={{ height: 80 }} />{/* spacer so content doesn't hide behind floating button */}
       </div>
 
     </div>
