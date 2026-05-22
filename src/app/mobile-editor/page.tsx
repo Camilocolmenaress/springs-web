@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef, useState, useCallback, useEffect } from "react";
-import { motion, useMotionValue } from "framer-motion";
+import { useRef, useState, useCallback } from "react";
+import { useGesture } from "@use-gesture/react";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 import Image from "next/image";
 
 const C = {
@@ -11,49 +12,85 @@ const C = {
   mostaza:  "#C5871F",
 };
 
-// ─── Draggable element wrapper ───────────────────────────────────────────────
+// ─── Sticker element: drag + pinch-to-scale + rotate ─────────────────────────
 
-interface DragItemProps {
+interface StickerState { x: number; y: number; scale: number; rotate: number }
+
+interface StickerProps {
   id: string;
   label: string;
   color: string;
-  initialX: number;
-  initialY: number;
+  init: StickerState;
   containerRef: React.RefObject<HTMLDivElement | null>;
-  onPos: (id: string, x: number, y: number) => void;
+  onUpdate: (id: string, s: StickerState) => void;
   children: React.ReactNode;
   zIndex?: number;
 }
 
-function DragItem({ id, label, color, initialX, initialY, containerRef, onPos, children, zIndex = 10 }: DragItemProps) {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+function Sticker({ id, label, color, init, containerRef, onUpdate, children, zIndex = 10 }: StickerProps) {
+  const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const off1 = x.on("change", (v: number) => onPos(id, initialX + v, initialY + y.get()));
-    const off2 = y.on("change", (v: number) => onPos(id, initialX + x.get(), initialY + v));
-    return () => { off1(); off2(); };
-  }, [id, initialX, initialY, onPos, x, y]);
+  // Motion values — start at 0 offset, scale=1, rotate=0
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const ms = useMotionValue(1);
+  const mr = useMotionValue(0);
+
+  const notify = useCallback(() => {
+    onUpdate(id, {
+      x:      init.x + mx.get(),
+      y:      init.y + my.get(),
+      scale:  ms.get(),
+      rotate: mr.get(),
+    });
+  }, [id, init.x, init.y, mx, my, ms, mr, onUpdate]);
+
+  useGesture(
+    {
+      onDrag: ({ offset: [dx, dy] }) => {
+        mx.set(dx);
+        my.set(dy);
+        notify();
+      },
+      onPinch: ({ offset: [scale, angle] }) => {
+        ms.set(Math.max(0.2, Math.min(5, scale)));
+        mr.set(angle);
+        notify();
+      },
+    },
+    {
+      target: ref,
+      drag: {
+        from: () => [mx.get(), my.get()],
+      },
+      pinch: {
+        scaleBounds: { min: 0.2, max: 5 },
+        from: () => [ms.get(), mr.get()],
+      },
+      eventOptions: { passive: false },
+    }
+  );
 
   return (
     <motion.div
-      drag
-      dragConstraints={containerRef}
-      dragElastic={0.05}
-      dragMomentum={false}
+      ref={ref}
       style={{
         position: "absolute",
-        left: initialX,
-        top: initialY,
-        x,
-        y,
+        left: init.x,
+        top:  init.y,
+        x: mx,
+        y: my,
+        scale: ms,
+        rotate: mr,
         zIndex,
-        cursor: "grab",
         touchAction: "none",
+        userSelect: "none",
+        WebkitUserSelect: "none",
+        transformOrigin: "center center",
+        cursor: "grab",
       }}
-      whileDrag={{ zIndex: 99, cursor: "grabbing" }}
     >
-      {/* Drag handle label */}
+      {/* Label badge */}
       <div style={{
         position: "absolute",
         top: -18,
@@ -61,16 +98,16 @@ function DragItem({ id, label, color, initialX, initialY, containerRef, onPos, c
         background: color,
         color: "#fff",
         fontFamily: "JetBrains Mono, monospace",
-        fontSize: "0.45rem",
+        fontSize: "0.42rem",
         letterSpacing: "0.1em",
         padding: "2px 5px",
         whiteSpace: "nowrap",
         pointerEvents: "none",
-        zIndex: 100,
+        zIndex: 1000,
       }}>
         {label}
       </div>
-      {/* Colored drag border */}
+      {/* Colored outline */}
       <div style={{ outline: `1.5px dashed ${color}`, outlineOffset: 2 }}>
         {children}
       </div>
@@ -78,50 +115,51 @@ function DragItem({ id, label, color, initialX, initialY, containerRef, onPos, c
   );
 }
 
-// ─── Main editor ─────────────────────────────────────────────────────────────
+// ─── Constants ────────────────────────────────────────────────────────────────
 
 const SECTION_W = 375;
 const SECTION_H = 812;
-
-// Initial positions (px) matching current MobileEditorial.tsx
-// computed for a 375×812 screen with safeAreaTop ≈ 44px
 const SAFE = 44;
-const INIT: Record<string, { initialX: number; initialY: number; label: string; color: string; z: number }> = {
-  potato:    { initialX: 68,  initialY: 0,                      label: "🥔 La Fija (papa)",     color: "#8B5E3C",  z: 4  },
-  springs:   { initialX: 19,  initialY: SAFE + 68,              label: "SPRINGS",               color: C.burgundy, z: 3  },
-  location:  { initialX: 19,  initialY: SAFE + 68 + 88,         label: "⊕ Ubicación",           color: C.mostaza,  z: 5  },
-  globe:     { initialX: 19,  initialY: SAFE + 68 + 142,        label: "Globo SVG",             color: C.tinta,    z: 10 },
-  jcSticker: { initialX: 240, initialY: SAFE + 62,              label: "Jacket Club sticker",   color: C.burgundy, z: 21 },
-  label:     { initialX: 19,  initialY: Math.round(SECTION_H * 0.44), label: "↗ Jacket / La Fija",   color: C.tinta,    z: 5  },
-  subtitle:  { initialX: 19,  initialY: Math.round(SECTION_H * 0.58) + 10, label: "JACKETS DIFFERENT…",color: C.burgundy, z: 5  },
-  underline: { initialX: 19,  initialY: Math.round(SECTION_H * 0.58) + 44, label: "Subrayado",         color: C.burgundy, z: 5  },
-  sensitive: { initialX: 19,  initialY: Math.round(SECTION_H * 0.58) + 68, label: "Sensitive Content",  color: "#666",     z: 8  },
-  dados:     { initialX: 263, initialY: Math.round(SECTION_H * 0.52) + 12, label: "Dados sticker",      color: C.mostaza,  z: 22 },
-  marquee:   { initialX: 0,   initialY: SECTION_H - 82,         label: "Marquee tape",          color: "#555",     z: 6  },
-  strip:     { initialX: 19,  initialY: SECTION_H - 30,         label: "ART GALLERY strip",     color: "#555",     z: 5  },
+
+const INIT: Record<string, { init: StickerState; label: string; color: string; z: number }> = {
+  potato:    { init: { x: 68,  y: 0,                              scale: 1, rotate: 0  }, label: "La Fija (papa)",       color: "#8B5E3C",  z: 4  },
+  springs:   { init: { x: 19,  y: SAFE + 68,                      scale: 1, rotate: 0  }, label: "SPRINGS",              color: C.burgundy, z: 3  },
+  location:  { init: { x: 19,  y: SAFE + 68 + 88,                 scale: 1, rotate: 0  }, label: "⊕ Ubicación",          color: C.mostaza,  z: 5  },
+  globe:     { init: { x: 19,  y: SAFE + 68 + 142,                scale: 1, rotate: 0  }, label: "Globo",                color: C.tinta,    z: 10 },
+  jcSticker: { init: { x: 240, y: SAFE + 62,                      scale: 1, rotate: -8 }, label: "Jacket Club sticker",  color: C.burgundy, z: 21 },
+  label:     { init: { x: 19,  y: Math.round(SECTION_H * 0.44),   scale: 1, rotate: 0  }, label: "↗ Jacket / La Fija",  color: C.tinta,    z: 5  },
+  subtitle:  { init: { x: 19,  y: Math.round(SECTION_H * 0.58)+10,scale: 1, rotate: -2 }, label: "JACKETS DIFFERENT…",  color: C.burgundy, z: 5  },
+  underline: { init: { x: 19,  y: Math.round(SECTION_H * 0.58)+44,scale: 1, rotate:-2.5}, label: "Subrayado",            color: C.burgundy, z: 5  },
+  sensitive: { init: { x: 19,  y: Math.round(SECTION_H * 0.58)+68,scale: 1, rotate: 0  }, label: "Sensitive Content",   color: "#666",     z: 8  },
+  dados:     { init: { x: 263, y: Math.round(SECTION_H * 0.52)+12,scale: 1, rotate: 12 }, label: "Dados sticker",       color: C.mostaza,  z: 22 },
+  marquee:   { init: { x: 0,   y: SECTION_H - 82,                 scale: 1, rotate: 0  }, label: "Marquee tape",        color: "#555",     z: 6  },
+  strip:     { init: { x: 19,  y: SECTION_H - 30,                 scale: 1, rotate: 0  }, label: "ART GALLERY strip",   color: "#555",     z: 5  },
 };
+
+// ─── Main editor ─────────────────────────────────────────────────────────────
 
 export default function MobileEditorPage() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [positions, setPositions] = useState<Record<string, { x: number; y: number }>>(() =>
-    Object.fromEntries(Object.entries(INIT).map(([id, v]) => [id, { x: v.initialX, y: v.initialY }]))
+
+  const [states, setStates] = useState<Record<string, StickerState>>(() =>
+    Object.fromEntries(Object.entries(INIT).map(([id, v]) => [id, { ...v.init }]))
   );
   const [copied, setCopied] = useState(false);
   const [showCode, setShowCode] = useState(false);
 
-  const handlePos = useCallback((id: string, px: number, py: number) => {
-    setPositions(prev => ({ ...prev, [id]: { x: Math.round(px), y: Math.round(py) } }));
+  const handleUpdate = useCallback((id: string, s: StickerState) => {
+    setStates(prev => ({ ...prev, [id]: s }));
   }, []);
 
   const generateCode = useCallback(() => {
-    const lines = Object.entries(positions).map(([id, { x, y }]) => {
+    const lines = Object.entries(states).map(([id, { x, y, scale, rotate }]) => {
       const leftVw  = ((x / SECTION_W) * 100).toFixed(1);
       const topSvh  = ((y / SECTION_H) * 100).toFixed(1);
       const label   = INIT[id]?.label ?? id;
-      return `// ${label}\nleft: "${leftVw}vw",  top: "${topSvh}svh"`;
+      return `// ${label}\nleft:"${leftVw}vw" top:"${topSvh}svh" scale:${scale.toFixed(2)} rotate:${rotate.toFixed(1)}deg`;
     });
     return lines.join("\n\n");
-  }, [positions]);
+  }, [states]);
 
   const copyPositions = async () => {
     const code = generateCode();
@@ -150,13 +188,17 @@ export default function MobileEditorPage() {
         maxWidth: SECTION_W,
         padding: "12px 16px 10px",
         fontFamily: "JetBrains Mono, monospace",
-        fontSize: "0.52rem",
-        letterSpacing: "0.14em",
+        fontSize: "0.48rem",
+        letterSpacing: "0.12em",
         color: C.mostaza,
         textTransform: "uppercase",
         borderBottom: `1px solid rgba(242,232,213,0.1)`,
+        lineHeight: 1.6,
       }}>
-        SPRINGS / MOBILE HERO EDITOR — arrastra los elementos
+        SPRINGS HERO EDITOR<br />
+        <span style={{ color: "rgba(242,232,213,0.4)", fontSize: "0.42rem" }}>
+          1 dedo = mover · 2 dedos = escalar / rotar
+        </span>
       </div>
 
       {/* ── Hero canvas ── */}
@@ -167,75 +209,47 @@ export default function MobileEditorPage() {
           width: SECTION_W,
           height: SECTION_H,
           background: C.cream,
-          overflow: "hidden",
           flexShrink: 0,
+          overflow: "visible",   // allow scaled elements to bleed out temporarily
         }}
       >
+        {/* Clip frame */}
+        <div style={{
+          position: "absolute", inset: 0,
+          outline: `2px solid ${C.mostaza}`,
+          pointerEvents: "none", zIndex: 999,
+        }} />
 
-        {/* ── Draggable: potato ── */}
-        <DragItem id="potato" {...INIT.potato} containerRef={containerRef} onPos={handlePos} zIndex={INIT.potato.z}>
+        {/* La Fija (papa) */}
+        <Sticker id="potato" {...INIT.potato} containerRef={containerRef} onUpdate={handleUpdate}>
           <div style={{ width: 307, height: Math.round(SECTION_H * 0.58), position: "relative" }}>
             <Image src="/images/la-fija.png" alt="La Fija" fill priority
               style={{ objectFit: "cover", objectPosition: "center top" }} sizes="82vw" />
           </div>
-        </DragItem>
-
-        {/* ── Draggable: marquee ── */}
-        <DragItem id="marquee" {...INIT.marquee} containerRef={containerRef} onPos={handlePos} zIndex={INIT.marquee.z}>
-          <div style={{
-            width: SECTION_W,
-            borderTop: `1.5px solid ${C.tinta}`, borderBottom: `1.5px solid ${C.tinta}`,
-            padding: "5px 0", background: C.cream, overflow: "hidden",
-          }}>
-            <div style={{ display: "flex", whiteSpace: "nowrap", animation: "marquee 18s linear infinite" }}>
-              {[0, 1].map(c => (
-                <span key={c}>
-                  {Array.from({ length: 10 }).map((_, i) => (
-                    <span key={i}>
-                      <span style={{ fontFamily: "Anton, sans-serif", fontSize: 13, color: C.burgundy, margin: "0 4px" }}>SPRINGS</span>
-                      <span style={{ fontFamily: "Anton, sans-serif", fontSize: 11, color: C.burgundy, margin: "0 4px" }}>{"<"}</span>
-                    </span>
-                  ))}
-                </span>
-              ))}
-            </div>
-          </div>
-        </DragItem>
-
-        {/* ── Draggable: bottom strip ── */}
-        <DragItem id="strip" {...INIT.strip} containerRef={containerRef} onPos={handlePos} zIndex={INIT.strip.z}>
-          <div style={{ width: SECTION_W - 38, display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
-            <span style={{ fontFamily: "Anton, sans-serif", fontSize: 12, color: C.tinta }}>ART GALLERY</span>
-            <span style={{ fontFamily: "JetBrains Mono, monospace", fontSize: "0.32rem", color: C.tinta, opacity: 0.6, textAlign: "right" }}>
-              LA FIJA / LA PESADA<br />LA BRAVA / LA SIMPLE
-            </span>
-          </div>
-        </DragItem>
-
-        {/* ── Draggable elements ── */}
+        </Sticker>
 
         {/* SPRINGS title */}
-        <DragItem id="springs" {...INIT.springs} containerRef={containerRef} onPos={handlePos}>
+        <Sticker id="springs" {...INIT.springs} containerRef={containerRef} onUpdate={handleUpdate}>
           <h1 style={{
             fontFamily: "Anton, sans-serif", fontSize: 75, color: C.tinta,
             lineHeight: 0.88, margin: 0, textTransform: "uppercase", whiteSpace: "nowrap",
           }}>
             SPRINGS
           </h1>
-        </DragItem>
+        </Sticker>
 
         {/* Location */}
-        <DragItem id="location" {...INIT.location} containerRef={containerRef} onPos={handlePos}>
+        <Sticker id="location" {...INIT.location} containerRef={containerRef} onUpdate={handleUpdate}>
           <div style={{ display: "flex", alignItems: "flex-start", gap: 5 }}>
             <span style={{ fontFamily: "JetBrains Mono, monospace", fontSize: "0.78rem", color: C.tinta, opacity: 0.5 }}>⊕</span>
             <div style={{ fontFamily: "JetBrains Mono, monospace", fontSize: "0.46rem", letterSpacing: "0.18em", color: C.tinta, lineHeight: 1.6, textTransform: "uppercase", opacity: 0.65 }}>
               Barbosa STDR – COLOMBIA<br />EST. 2025
             </div>
           </div>
-        </DragItem>
+        </Sticker>
 
         {/* Globe */}
-        <DragItem id="globe" {...INIT.globe} containerRef={containerRef} onPos={handlePos}>
+        <Sticker id="globe" {...INIT.globe} containerRef={containerRef} onUpdate={handleUpdate}>
           <div style={{
             width: 52, height: 52,
             background: "rgba(26,10,12,0.88)", border: "1px solid rgba(242,232,213,0.15)",
@@ -249,17 +263,17 @@ export default function MobileEditorPage() {
               </g>
             </svg>
           </div>
-        </DragItem>
+        </Sticker>
 
         {/* Jacket Club sticker */}
-        <DragItem id="jcSticker" {...INIT.jcSticker} containerRef={containerRef} onPos={handlePos} zIndex={21}>
+        <Sticker id="jcSticker" {...INIT.jcSticker} containerRef={containerRef} onUpdate={handleUpdate} zIndex={21}>
           <div style={{ width: 105, height: 105, position: "relative" }}>
             <Image src="/images/jacket-club-sticker.png" alt="Jacket Club" fill style={{ objectFit: "contain" }} sizes="28vw" />
           </div>
-        </DragItem>
+        </Sticker>
 
         {/* Label ↗ Jacket / La Fija */}
-        <DragItem id="label" {...INIT.label} containerRef={containerRef} onPos={handlePos}>
+        <Sticker id="label" {...INIT.label} containerRef={containerRef} onUpdate={handleUpdate}>
           <div style={{ fontFamily: "Anton, sans-serif", fontSize: 17, color: C.tinta, lineHeight: 1.15 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
@@ -270,30 +284,28 @@ export default function MobileEditorPage() {
             </div>
             <div style={{ paddingLeft: 16 }}>La Fija</div>
           </div>
-        </DragItem>
+        </Sticker>
 
         {/* Subtitle */}
-        <DragItem id="subtitle" {...INIT.subtitle} containerRef={containerRef} onPos={handlePos}>
+        <Sticker id="subtitle" {...INIT.subtitle} containerRef={containerRef} onUpdate={handleUpdate}>
           <div style={{
             fontFamily: "var(--font-marker), cursive",
             fontSize: 17, color: C.burgundy, lineHeight: 1,
             letterSpacing: "0.02em", textTransform: "uppercase", whiteSpace: "nowrap",
-            transform: "rotate(-2deg)", transformOrigin: "left center",
           }}>
             JACKETS DIFFERENT BY DEFAULT
           </div>
-        </DragItem>
+        </Sticker>
 
         {/* Underline stroke */}
-        <DragItem id="underline" {...INIT.underline} containerRef={containerRef} onPos={handlePos}>
-          <div style={{ position: "relative", width: 187, height: 11, transform: "rotate(-2.5deg)" }}>
-            <Image src="/images/underline-stroke.png" alt="" fill
-              style={{ objectFit: "contain", objectPosition: "left center" }} sizes="50vw" />
+        <Sticker id="underline" {...INIT.underline} containerRef={containerRef} onUpdate={handleUpdate}>
+          <div style={{ position: "relative", width: 187, height: 11 }}>
+            <Image src="/images/underline-stroke.png" alt="" fill style={{ objectFit: "contain", objectPosition: "left center" }} sizes="50vw" />
           </div>
-        </DragItem>
+        </Sticker>
 
         {/* Sensitive Content */}
-        <DragItem id="sensitive" {...INIT.sensitive} containerRef={containerRef} onPos={handlePos} zIndex={8}>
+        <Sticker id="sensitive" {...INIT.sensitive} containerRef={containerRef} onUpdate={handleUpdate} zIndex={8}>
           <div style={{
             width: 172, height: 138,
             background: "rgba(26,10,12,0.82)",
@@ -314,14 +326,46 @@ export default function MobileEditorPage() {
               VER DE TODAS FORMAS
             </div>
           </div>
-        </DragItem>
+        </Sticker>
 
         {/* Dados sticker */}
-        <DragItem id="dados" {...INIT.dados} containerRef={containerRef} onPos={handlePos} zIndex={22}>
+        <Sticker id="dados" {...INIT.dados} containerRef={containerRef} onUpdate={handleUpdate} zIndex={22}>
           <div style={{ width: 97, height: 97, position: "relative" }}>
             <Image src="/images/miercoles-dados-sticker.png" alt="Dados" fill style={{ objectFit: "contain" }} sizes="26vw" />
           </div>
-        </DragItem>
+        </Sticker>
+
+        {/* Marquee */}
+        <Sticker id="marquee" {...INIT.marquee} containerRef={containerRef} onUpdate={handleUpdate} zIndex={6}>
+          <div style={{
+            width: SECTION_W,
+            borderTop: `1.5px solid ${C.tinta}`, borderBottom: `1.5px solid ${C.tinta}`,
+            padding: "5px 0", background: C.cream, overflow: "hidden",
+          }}>
+            <div style={{ display: "flex", whiteSpace: "nowrap", animation: "marquee 18s linear infinite" }}>
+              {[0, 1].map(c => (
+                <span key={c}>
+                  {Array.from({ length: 10 }).map((_, i) => (
+                    <span key={i}>
+                      <span style={{ fontFamily: "Anton, sans-serif", fontSize: 13, color: C.burgundy, margin: "0 4px" }}>SPRINGS</span>
+                      <span style={{ fontFamily: "Anton, sans-serif", fontSize: 11, color: C.burgundy, margin: "0 4px" }}>{"<"}</span>
+                    </span>
+                  ))}
+                </span>
+              ))}
+            </div>
+          </div>
+        </Sticker>
+
+        {/* ART GALLERY strip */}
+        <Sticker id="strip" {...INIT.strip} containerRef={containerRef} onUpdate={handleUpdate} zIndex={5}>
+          <div style={{ width: SECTION_W - 38, display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
+            <span style={{ fontFamily: "Anton, sans-serif", fontSize: 12, color: C.tinta }}>ART GALLERY</span>
+            <span style={{ fontFamily: "JetBrains Mono, monospace", fontSize: "0.32rem", color: C.tinta, opacity: 0.6, textAlign: "right" }}>
+              LA FIJA / LA PESADA<br />LA BRAVA / LA SIMPLE
+            </span>
+          </div>
+        </Sticker>
 
       </div>
 
@@ -332,21 +376,23 @@ export default function MobileEditorPage() {
         background: "#111",
         padding: "16px",
         fontFamily: "JetBrains Mono, monospace",
-        fontSize: "0.5rem",
+        fontSize: "0.45rem",
         letterSpacing: "0.08em",
         color: "#aaa",
       }}>
-        <div style={{ color: C.mostaza, marginBottom: 12, fontSize: "0.55rem", letterSpacing: "0.14em" }}>
+        <div style={{ color: C.mostaza, marginBottom: 12, fontSize: "0.52rem", letterSpacing: "0.14em" }}>
           POSICIONES ACTUALES
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-          {Object.entries(positions).map(([id, { x, y }]) => {
-            const leftVw  = ((x / SECTION_W) * 100).toFixed(1);
-            const topSvh  = ((y / SECTION_H) * 100).toFixed(1);
+          {Object.entries(states).map(([id, { x, y, scale, rotate }]) => {
+            const leftVw = ((x / SECTION_W) * 100).toFixed(1);
+            const topSvh = ((y / SECTION_H) * 100).toFixed(1);
             return (
-              <div key={id} style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #222", paddingBottom: 4 }}>
-                <span style={{ color: INIT[id]?.color ?? "#fff" }}>{INIT[id]?.label ?? id}</span>
-                <span style={{ color: "#fff" }}>left:{leftVw}vw  top:{topSvh}svh</span>
+              <div key={id} style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 2, borderBottom: "1px solid #222", paddingBottom: 4 }}>
+                <span style={{ color: INIT[id]?.color ?? "#fff", minWidth: 120 }}>{INIT[id]?.label ?? id}</span>
+                <span style={{ color: "#fff" }}>
+                  {leftVw}vw · {topSvh}svh · ×{scale.toFixed(1)} · {rotate.toFixed(0)}°
+                </span>
               </div>
             );
           })}
@@ -357,7 +403,7 @@ export default function MobileEditorPage() {
           style={{
             marginTop: 20,
             width: "100%",
-            padding: "16px",
+            padding: "18px",
             background: copied ? C.burgundy : C.mostaza,
             color: C.tinta,
             fontFamily: "Anton, sans-serif",
@@ -381,6 +427,7 @@ export default function MobileEditorPage() {
               background: "#0a0a0a", color: C.mostaza,
               fontFamily: "JetBrains Mono, monospace", fontSize: "0.45rem",
               border: "1px solid #333", padding: 10, resize: "none",
+              boxSizing: "border-box",
             }}
           />
         )}
