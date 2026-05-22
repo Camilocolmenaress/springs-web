@@ -39,7 +39,7 @@ export default function MobileEditorial() {
       }}>
 
         {/* SPRINGS wordmark + tagline */}
-        <div style={{ position: "absolute", top: "6vh", left: "5vw", zIndex: 3 }}>
+        <div style={{ position: "absolute", top: "max(6vh, env(safe-area-inset-top, 24px))", left: "5vw", zIndex: 3 }}>
           <h1 style={{
             ...F.display,
             fontSize: "clamp(52px, 16vw, 80px)",
@@ -170,7 +170,6 @@ export default function MobileEditorial() {
           overflowX: "auto",
           scrollSnapType: "x mandatory",
           scrollbarWidth: "none",
-          WebkitOverflowScrolling: "touch",
           paddingLeft: "5vw",
           paddingRight: "5vw",
         }}>
@@ -190,7 +189,7 @@ export default function MobileEditorial() {
               </div>
               <div style={{ marginTop: 12, display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                 <div style={{ ...F.display, fontSize: "1.05rem", letterSpacing: "0.06em", color: C.tinta }}>{p.name}</div>
-                <div style={{ ...F.mono, fontSize: "0.9rem", color: C.mostaza }}>{p.price}</div>
+                <div style={{ ...F.mono, fontSize: "0.9rem", color: C.tinta }}>{p.price}</div>
               </div>
             </div>
           ))}
@@ -322,7 +321,7 @@ export default function MobileEditorial() {
               textTransform: "uppercase",
             }}
           >
-            UBER EATS <span>→</span>
+            DIDI FOOD <span>→</span>
           </a>
           <Link
             href="/menu"
