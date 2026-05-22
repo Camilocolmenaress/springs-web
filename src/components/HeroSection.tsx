@@ -75,7 +75,7 @@ export default function HeroSection() {
           top: "8vh",
           zIndex: 3,
           ...F.display,
-          fontSize: "11vh",
+          fontSize: "min(11vh, 16vw)",
           color: "white",
           mixBlendMode: "difference",
           lineHeight: 0.88,
@@ -95,7 +95,7 @@ export default function HeroSection() {
           position: "absolute",
           right: "-2vh",
           top: 0,
-          width: "45vh",
+          width: "min(45vh, 68vw)",
           height: "55vh",
           zIndex: 4,
         }}
@@ -180,7 +180,7 @@ export default function HeroSection() {
         style={{
           position: "absolute",
           left: "2vh",
-          top: "52vh",
+          top: "56vh",
           zIndex: 5,
         }}
       >
@@ -209,8 +209,8 @@ export default function HeroSection() {
         className="hero-subtitle"
         style={{
           position: "absolute",
-          left: "20vh",
-          top: "55vh",
+          left: "28vw",
+          top: "63vh",
           zIndex: 5,
           transform: "rotate(-8deg)",
           transformOrigin: "left center",
@@ -236,9 +236,9 @@ export default function HeroSection() {
         className="hero-underline"
         style={{
           position: "absolute",
-          left: "30vh",
-          top: "62vh",
-          width: "25vh",
+          left: "40vw",
+          top: "70vh",
+          width: "min(25vh, 38vw)",
           zIndex: 5,
           transform: "rotate(-2deg)",
           transformOrigin: "left center",
@@ -260,9 +260,9 @@ export default function HeroSection() {
         className="hero-sensitive"
         style={{
           position: "absolute",
-          left: "25vh",
-          top: "64vh",
-          width: "22vh",
+          left: "38vw",
+          top: "66vh",
+          width: "min(22vh, 36vw)",
           aspectRatio: "1402 / 1122",
           zIndex: 8,
         }}
@@ -367,7 +367,7 @@ export default function HeroSection() {
             position: "absolute",
             left: "1vh",
             top: "35vh",
-            width: "18vh",
+            width: "min(18vh, 28vw)",
             pointerEvents: "auto",
             cursor: "grab",
             touchAction: "none",
@@ -391,8 +391,8 @@ export default function HeroSection() {
           style={{
             position: "absolute",
             left: "2vh",
-            top: "60vh",
-            width: "16vh",
+            top: "64vh",
+            width: "min(16vh, 26vw)",
             pointerEvents: "auto",
             cursor: "grab",
             touchAction: "none",
