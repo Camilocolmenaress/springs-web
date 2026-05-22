@@ -1,8 +1,7 @@
 "use client";
 
 import { useRef, useState, useCallback } from "react";
-import { useGesture } from "@use-gesture/react";
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import { motion, useMotionValue } from "framer-motion";
 import Image from "next/image";
 
 const C = {
@@ -28,60 +27,29 @@ interface StickerProps {
 }
 
 function Sticker({ id, label, color, init, containerRef, onUpdate, children, zIndex = 10 }: StickerProps) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  // Motion values — start at 0 offset, scale=1, rotate=0
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
-  const ms = useMotionValue(1);
-  const mr = useMotionValue(0);
 
   const notify = useCallback(() => {
     onUpdate(id, {
       x:      init.x + mx.get(),
       y:      init.y + my.get(),
-      scale:  ms.get(),
-      rotate: mr.get(),
+      scale:  1,
+      rotate: 0,
     });
-  }, [id, init.x, init.y, mx, my, ms, mr, onUpdate]);
-
-  useGesture(
-    {
-      onDrag: ({ offset: [dx, dy] }) => {
-        mx.set(dx);
-        my.set(dy);
-        notify();
-      },
-      onPinch: ({ offset: [scale, angle] }) => {
-        ms.set(Math.max(0.2, Math.min(5, scale)));
-        mr.set(angle);
-        notify();
-      },
-    },
-    {
-      target: ref,
-      drag: {
-        from: () => [mx.get(), my.get()],
-      },
-      pinch: {
-        scaleBounds: { min: 0.2, max: 5 },
-        from: () => [ms.get(), mr.get()],
-      },
-      eventOptions: { passive: false },
-    }
-  );
+  }, [id, init.x, init.y, mx, my, onUpdate]);
 
   return (
     <motion.div
-      ref={ref}
+      drag
+      dragMomentum={false}
+      dragConstraints={containerRef}
       style={{
         position: "absolute",
         left: init.x,
         top:  init.y,
         x: mx,
         y: my,
-        scale: ms,
-        rotate: mr,
         zIndex,
         touchAction: "none",
         userSelect: "none",
@@ -89,6 +57,7 @@ function Sticker({ id, label, color, init, containerRef, onUpdate, children, zIn
         transformOrigin: "center center",
         cursor: "grab",
       }}
+      onDrag={() => notify()}
     >
       {/* Label badge */}
       <div style={{
