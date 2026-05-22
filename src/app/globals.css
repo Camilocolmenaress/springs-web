@@ -36,6 +36,10 @@ html, body {
   background: var(--cream);
   color: var(--tinta);
   font-family: var(--font-sans), system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: rgba(0,0,0,.01) 0 0 1px;
 }
 
 /* Esconde scrollbar en el canvas mobile */
