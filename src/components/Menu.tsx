@@ -354,7 +354,6 @@ export default function Menu({ onAgregar, config }: Props) {
                     </div>
                   ) : p.categoria === "bebida" ? (
                     <BebidaImg p={p} isCenter={isCenter} sideRatio={sideRatio} getBebidaConfig={getBebidaConfig} imgSrc={imgSrc} />
-                  )
                   ) : (
                     <img
                       src={imgSrc(p)}

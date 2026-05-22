@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
 
 const C = {
   burgundy: "#6B1419",
@@ -16,98 +16,79 @@ const F = {
   mono:    { fontFamily: "JetBrains Mono, monospace" },
 };
 
-function Reveal({
-  children,
-  delay = 0,
-  style,
-}: {
-  children: React.ReactNode;
-  delay?: number;
-  style?: React.CSSProperties;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.25 });
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 16 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
-      style={style}
-    >
-      {children}
-    </motion.div>
-  );
-}
+const JACKETS = [
+  { name: "LA FIJA",    price: "32,900", image: "/images/la-fija.png" },
+  { name: "LA PESADA",  price: "35,900", image: "/images/la-pesada.png" },
+  { name: "LA BRAVA",   price: "34,900", image: "/images/la-brava.png" },
+  { name: "LA SIMPLE",  price: "28,900", image: "/images/la-simple.png" },
+  { name: "LA HONESTA", price: "28,900", image: "/images/la-honesta.png" },
+];
+
+const MARQUEE = "FAST, GOOD & LOUD · ESTO ES SPRINGS · ";
 
 export default function MobileEditorial() {
   return (
-    <div style={{ display: "flex", height: "100vh", width: "300vw", flexShrink: 0 }}>
+    <div>
 
-      {/* ══════════════════════════════════════════
-          ZONA 1 — HERO
-      ══════════════════════════════════════════ */}
+      {/* ══ SECTION 1 — HERO ══ */}
       <section style={{
         position: "relative",
-        width: "100vw",
-        height: "100vh",
-        flexShrink: 0,
+        height: "100svh",
         background: C.cream,
         overflow: "hidden",
-        scrollSnapAlign: "start",
       }}>
 
-        {/* Papa hero */}
-        <div style={{
-          position: "absolute",
-          bottom: 0,
-          left: "-6vw",
-          width: "82vw",
-          height: "70vh",
-          backgroundImage: "url('/images/la-fija.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center top",
-          zIndex: 2,
-        }} />
-
-        {/* SPRINGS */}
-        <Reveal style={{ position: "absolute", left: "30vw", top: "26vh", zIndex: 3, whiteSpace: "nowrap" }}>
+        {/* SPRINGS wordmark + tagline */}
+        <div style={{ position: "absolute", top: "6vh", left: "5vw", zIndex: 3 }}>
           <h1 style={{
             ...F.display,
-            fontSize: "clamp(60px, 19vw, 96px)",
+            fontSize: "clamp(52px, 16vw, 80px)",
             color: C.tinta,
-            lineHeight: 0.85,
+            lineHeight: 0.88,
             letterSpacing: "-0.005em",
             margin: 0,
             textTransform: "uppercase",
           }}>
             SPRINGS
           </h1>
-        </Reveal>
-
-        {/* JACKETS DIFFERENT BY DEFAULT */}
-        <Reveal delay={0.1} style={{ position: "absolute", left: "30vw", top: "42vh", zIndex: 3 }}>
           <div style={{
             ...F.sans,
-            fontSize: "clamp(11px, 3.2vw, 16px)",
+            fontSize: "clamp(10px, 3vw, 14px)",
             color: C.tinta,
             fontStyle: "italic",
-            letterSpacing: "0.01em",
             opacity: 0.72,
-            maxWidth: "60vw",
-            lineHeight: 1.3,
+            marginTop: 6,
+            letterSpacing: "0.01em",
           }}>
             Jackets different by default.
           </div>
-        </Reveal>
+        </div>
+
+        {/* La Fija hero image */}
+        <div style={{
+          position: "absolute",
+          bottom: 0,
+          right: "-6vw",
+          width: "74vw",
+          height: "68vh",
+        }}>
+          <Image
+            src="/images/la-fija.png"
+            alt="La Fija"
+            fill
+            priority
+            style={{ objectFit: "cover", objectPosition: "center top" }}
+            sizes="74vw"
+          />
+        </div>
 
         {/* Label La Fija */}
-        <div style={{ position: "absolute", left: "5vw", bottom: "29vh", zIndex: 6 }}>
+        <div style={{ position: "absolute", left: "5vw", bottom: "28vh", zIndex: 6 }}>
           <div style={{ ...F.sans, fontSize: "0.7rem", color: C.tinta, fontStyle: "italic" }}>La Fija ↗</div>
           <div style={{ ...F.mono, fontSize: "0.52rem", letterSpacing: "0.15em", color: C.tinta, opacity: 0.5, marginTop: 3 }}>W25 [BGA]</div>
         </div>
 
-        {/* Sticker SPRINGS JACKET CLUB — estático */}
+        {/* Sticker Jacket Club */}
         <div style={{
           position: "absolute", right: "4vw", top: "8vh", zIndex: 20,
           background: C.burgundy, color: C.cream,
@@ -130,7 +111,7 @@ export default function MobileEditorial() {
           </div>
         </div>
 
-        {/* Sticker RÓBALA — estático */}
+        {/* Sticker Róbala */}
         <div style={{
           position: "absolute", right: "4vw", bottom: "30vh", zIndex: 22,
           background: C.mostaza, color: C.tinta,
@@ -152,214 +133,228 @@ export default function MobileEditorial() {
           </div>
         </div>
 
-        {/* Menú corrido */}
-        <div style={{ position: "absolute", left: "5vw", right: "5vw", bottom: "9vh", zIndex: 6 }}>
+        {/* Menu strip */}
+        <div style={{ position: "absolute", left: "5vw", right: "5vw", bottom: "8vh", zIndex: 6 }}>
           <div style={{
-            ...F.mono, fontSize: "0.48rem", letterSpacing: "0.08em",
+            ...F.mono, fontSize: "0.44rem", letterSpacing: "0.08em",
             color: C.tinta, opacity: 0.5, lineHeight: 1.7, textTransform: "uppercase",
           }}>
             LA FIJA / LA PESADA / LA BRAVA / LA SIMPLE / LA HONESTA /<br />
-            LOADED POLLO / LOADED MOLIDA / LOADED DESMECHADA / LOADED CHORIZO /
+            LOADED POLLO / LOADED MOLIDA / LOADED DESMECHADA / LOADED CHORIZO
           </div>
         </div>
+
       </section>
 
 
-      {/* ══════════════════════════════════════════
-          ZONA 2 — JACKETS
-      ══════════════════════════════════════════ */}
-      <section style={{
-        position: "relative",
-        width: "100vw",
-        height: "100vh",
-        flexShrink: 0,
-        background: C.cream,
-        overflow: "hidden",
-        scrollSnapAlign: "start",
-      }}>
+      {/* ══ SECTION 2 — PRODUCTOS ══ */}
+      <section style={{ background: C.cream, padding: "48px 0 40px" }}>
 
-        {/* Foto LA FIJA — columna izquierda */}
-        <Reveal style={{ position: "absolute", left: "4vw", top: "12vh", zIndex: 4 }}>
-          <div style={{
-            width: "43vw",
-            height: "54vh",
-            backgroundImage: "url('/images/la-fija.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            display: "flex", alignItems: "flex-end", padding: "10px",
-          }}>
-            <div>
-              <div style={{ ...F.display, fontSize: "0.85rem", color: C.cream, letterSpacing: "0.08em" }}>LA FIJA</div>
-              <div style={{ ...F.mono, fontSize: "0.65rem", color: C.mostaza }}>32,900</div>
-            </div>
-          </div>
-        </Reveal>
-
-        {/* Foto LA PESADA — columna derecha */}
-        <Reveal delay={0.1} style={{ position: "absolute", right: "4vw", top: "8vh", zIndex: 4 }}>
-          <div style={{
-            width: "39vw",
-            height: "50vh",
-            backgroundImage: "url('/images/la-pesada.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            border: `2px solid ${C.tinta}`,
-            display: "flex", flexDirection: "column",
-            alignItems: "center", justifyContent: "center",
-            padding: "10px", position: "relative",
-          }}>
-            <div style={{
-              ...F.display, fontSize: "clamp(20px, 7vw, 36px)",
-              color: C.cream, textAlign: "center", lineHeight: 0.95,
-              textShadow: "0 1px 6px rgba(0,0,0,0.5)",
-            }}>
-              ESTO<br />ES<br />SPRINGS
-            </div>
-            <div style={{ position: "absolute", bottom: 10, left: 10, ...F.mono, fontSize: "0.48rem", letterSpacing: "0.15em", color: C.mostaza }}>LA PESADA</div>
-            <div style={{ position: "absolute", bottom: 10, right: 10, ...F.mono, fontSize: "0.52rem", color: C.mostaza }}>35,900</div>
-          </div>
-        </Reveal>
-
-        {/* Sticker SOLO 20 — estático */}
-        <div style={{
-          position: "absolute", right: "4vw", bottom: "26vh", zIndex: 25,
-          background: C.tinta, color: C.mostaza,
-          padding: "8px 14px",
-          border: `2px solid ${C.mostaza}`,
-          textAlign: "center",
-          transform: "rotate(9deg)",
-        }}>
-          <div style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.22em", opacity: 0.7, marginBottom: 2 }}>W25 · DROP</div>
-          <div style={{ ...F.display, fontSize: "1.3rem", letterSpacing: "0.04em", color: C.cream, lineHeight: 1 }}>SOLO 20</div>
-          <div style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.14em", marginTop: 3 }}>POR NOCHE</div>
-        </div>
-
-        {/* TE DAMOS LO TUYO */}
-        <Reveal delay={0.1} style={{ position: "absolute", left: "4vw", bottom: "26vh", zIndex: 5 }}>
-          <div style={{ ...F.sans, fontSize: "0.7rem", color: C.tinta, fontStyle: "italic" }}>TE DAMOS LO TUYO</div>
-          <div style={{ ...F.mono, fontSize: "0.52rem", letterSpacing: "0.1em", color: C.tinta, opacity: 0.5, marginTop: 2 }}>@SPRINGS.COL</div>
-        </Reveal>
-
-        {/* Lista de Jackets */}
-        <Reveal delay={0.2} style={{ position: "absolute", left: "4vw", right: "4vw", bottom: "8vh", zIndex: 6 }}>
-          <div style={{
-            ...F.mono, fontSize: "0.48rem", letterSpacing: "0.08em",
-            color: C.tinta, opacity: 0.5, lineHeight: 1.7, textTransform: "uppercase",
-          }}>
-            LA FIJA · 32,900 / LA PESADA · 35,900 / LA BRAVA · 34,900 /<br />
-            LA SIMPLE · 28,900 / LA HONESTA · 28,900 /
-          </div>
-        </Reveal>
-      </section>
-
-
-      {/* ══════════════════════════════════════════
-          ZONA 3 — ABOUT
-      ══════════════════════════════════════════ */}
-      <section style={{
-        position: "relative",
-        width: "100vw",
-        height: "100vh",
-        flexShrink: 0,
-        background: C.cream,
-        overflow: "hidden",
-        scrollSnapAlign: "start",
-      }}>
-
-        {/* Bloque SPRINGS — color sólido, sin gradiente */}
-        <motion.div
-          initial={{ scale: 0.88, opacity: 0 }}
-          whileInView={{ scale: 1, opacity: 1 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8 }}
-          style={{
-            position: "absolute", left: "4vw", top: "14vh", zIndex: 4,
-            width: "54vw", height: "34vh",
-            background: C.burgundy,
-            display: "flex", alignItems: "center", justifyContent: "center",
-          }}
-        >
-          <div style={{
-            ...F.display, fontSize: "clamp(40px, 13vw, 72px)",
-            color: C.cream, letterSpacing: "0.02em",
-            fontStyle: "italic",
-          }}>
-            Springs
-          </div>
-        </motion.div>
-
-        {/* SOLO DELIVERY — columna derecha */}
-        <Reveal delay={0.1} style={{ position: "absolute", right: "4vw", top: "14vh", zIndex: 5, maxWidth: "36vw" }}>
-          <div style={{ ...F.mono, fontSize: "0.55rem", letterSpacing: "0.15em", color: C.tinta, textTransform: "uppercase" }}>BUCARAMANGA · BGA</div>
-          <div style={{
-            ...F.display, fontSize: "clamp(28px, 9vw, 52px)",
-            color: C.tinta, marginTop: 8, lineHeight: 0.9, textTransform: "uppercase",
-          }}>
-            SOLO<br />DELIVERY.
-          </div>
-          <div style={{
-            ...F.sans, fontSize: "0.68rem", fontStyle: "italic",
-            color: C.tinta, opacity: 0.5, marginTop: 8,
-          }}>
-            Dark kitchen.<br />Sin local físico.<br />La papa va a vos.
-          </div>
-        </Reveal>
-
-        {/* Bloque packaging — rayas diagonales */}
-        <Reveal delay={0.2} style={{ position: "absolute", right: "4vw", top: "50vh", zIndex: 4 }}>
-          <div style={{
-            width: "36vw", height: "27vh",
-            background: `repeating-linear-gradient(45deg, ${C.burgundy} 0, ${C.burgundy} 14px, ${C.tinta} 14px, ${C.tinta} 28px)`,
-            display: "flex", alignItems: "center", justifyContent: "center",
-          }}>
-            <div style={{ ...F.display, fontSize: "clamp(14px, 5vw, 26px)", color: C.cream, letterSpacing: "0.04em" }}>SPRINGS</div>
-          </div>
-        </Reveal>
-
-        {/* ABOUT US */}
-        <Reveal delay={0.2} style={{ position: "absolute", left: "4vw", bottom: "26vh", zIndex: 3 }}>
+        <div style={{ padding: "0 5vw", marginBottom: 24 }}>
           <h2 style={{
             ...F.display,
-            fontSize: "clamp(48px, 16vw, 88px)",
-            color: C.tinta, lineHeight: 0.85,
-            letterSpacing: "-0.005em", margin: 0,
+            fontSize: "clamp(40px, 13vw, 64px)",
+            color: C.tinta,
+            margin: 0,
+            letterSpacing: "-0.005em",
             textTransform: "uppercase",
           }}>
-            ABOUT US
+            LA CARTA
           </h2>
-        </Reveal>
+        </div>
 
-        {/* Banner JACKET CLUB */}
-        <Reveal delay={0.3} style={{ position: "absolute", left: 0, right: 0, bottom: "13vh", zIndex: 4 }}>
-          <div style={{
-            display: "flex", alignItems: "stretch",
-            border: `2px solid ${C.tinta}`,
-            margin: "0 4vw",
-          }}>
-            <div style={{ background: C.burgundy, padding: "8px 12px", display: "flex", alignItems: "center", flexShrink: 0 }}>
-              <span style={{ ...F.display, fontSize: "0.75rem", color: C.cream, letterSpacing: "0.08em" }}>SPRINGS™</span>
+        {/* Carousel */}
+        <div style={{
+          display: "flex",
+          gap: "4vw",
+          overflowX: "auto",
+          scrollSnapType: "x mandatory",
+          scrollbarWidth: "none",
+          WebkitOverflowScrolling: "touch",
+          paddingLeft: "5vw",
+          paddingRight: "5vw",
+        }}>
+          {JACKETS.map((p) => (
+            <div
+              key={p.name}
+              style={{ flexShrink: 0, width: "72vw", scrollSnapAlign: "start" }}
+            >
+              <div style={{ position: "relative", width: "100%", paddingBottom: "75%", overflow: "hidden" }}>
+                <Image
+                  src={p.image}
+                  alt={p.name}
+                  fill
+                  style={{ objectFit: "cover", objectPosition: "center" }}
+                  sizes="72vw"
+                />
+              </div>
+              <div style={{ marginTop: 12, display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                <div style={{ ...F.display, fontSize: "1.05rem", letterSpacing: "0.06em", color: C.tinta }}>{p.name}</div>
+                <div style={{ ...F.mono, fontSize: "0.9rem", color: C.mostaza }}>{p.price}</div>
+              </div>
             </div>
-            <div style={{ padding: "8px 12px", display: "flex", alignItems: "center", flex: 1, background: C.cream }}>
-              <span style={{
-                ...F.mono, fontSize: "0.42rem", letterSpacing: "0.1em",
-                color: C.tinta, textTransform: "uppercase",
-              }}>
-                NO BULLSHIT JACKETS. JUST INGREDIENTES SANTANDEREANOS Y MÁS CALITÉ.
-              </span>
+          ))}
+        </div>
+
+        <div style={{ padding: "28px 5vw 0" }}>
+          <Link
+            href="/menu"
+            style={{
+              display: "block",
+              textAlign: "center",
+              ...F.display,
+              fontSize: "1rem",
+              letterSpacing: "0.1em",
+              color: C.cream,
+              background: C.burgundy,
+              padding: "18px 24px",
+              textDecoration: "none",
+              textTransform: "uppercase",
+            }}
+          >
+            VER MENÚ COMPLETO →
+          </Link>
+        </div>
+
+      </section>
+
+
+      {/* ══ SECTION 3 — CULTURA ══ */}
+      <section style={{ background: C.burgundy, padding: "48px 0 0", overflow: "hidden" }}>
+
+        <div style={{ padding: "0 5vw", display: "flex", gap: "6vw", alignItems: "flex-start" }}>
+          <div>
+            <div style={{
+              ...F.display,
+              fontSize: "clamp(48px, 16vw, 80px)",
+              color: C.cream,
+              lineHeight: 0.88,
+              letterSpacing: "-0.005em",
+              textTransform: "uppercase",
+            }}>
+              THIS<br />IS<br />SPRINGS.
             </div>
           </div>
-        </Reveal>
-
-        {/* FAST GOOD LOUD */}
-        <div style={{ position: "absolute", left: "4vw", bottom: "7vh", zIndex: 5 }}>
-          <div style={{
-            ...F.mono, fontSize: "0.6rem", letterSpacing: "0.15em",
-            color: C.tinta, textTransform: "uppercase", lineHeight: 1.5,
-          }}>
-            FAST, GOOD &amp; LOUD<br />ESTO ES SPRINGS.
+          <div style={{ paddingTop: 8 }}>
+            <div style={{ ...F.mono, fontSize: "0.55rem", letterSpacing: "0.15em", color: C.mostaza, textTransform: "uppercase", marginBottom: 10 }}>
+              BUCARAMANGA · BGA
+            </div>
+            <div style={{ ...F.sans, fontSize: "0.72rem", fontStyle: "italic", color: C.cream, opacity: 0.72, lineHeight: 1.5 }}>
+              Dark kitchen.<br />Sin local físico.<br />La papa va a usted.
+            </div>
           </div>
         </div>
+
+        {/* Marquee — CSS animation only, no JS */}
+        <div style={{ marginTop: 40, overflow: "hidden", borderTop: `1px solid rgba(242,232,213,0.15)`, paddingTop: 14 }}>
+          <div style={{
+            display: "flex",
+            width: "max-content",
+            animation: "marquee 14s linear infinite",
+          }}>
+            <span style={{
+              ...F.mono, fontSize: "0.6rem", letterSpacing: "0.15em",
+              color: C.cream, opacity: 0.6, textTransform: "uppercase",
+              whiteSpace: "nowrap", paddingRight: "8vw",
+            }}>
+              {MARQUEE}{MARQUEE}
+            </span>
+            <span style={{
+              ...F.mono, fontSize: "0.6rem", letterSpacing: "0.15em",
+              color: C.cream, opacity: 0.6, textTransform: "uppercase",
+              whiteSpace: "nowrap", paddingRight: "8vw",
+            }}>
+              {MARQUEE}{MARQUEE}
+            </span>
+          </div>
+        </div>
+
       </section>
+
+
+      {/* ══ SECTION 4 — PEDIR YA ══ */}
+      <section style={{
+        background: C.tinta,
+        padding: "48px 5vw",
+        paddingBottom: "max(48px, env(safe-area-inset-bottom, 48px))",
+        minHeight: "70vh",
+        display: "flex",
+        flexDirection: "column",
+      }}>
+
+        <div style={{ ...F.mono, fontSize: "0.62rem", letterSpacing: "0.22em", color: C.mostaza, textTransform: "uppercase", marginBottom: 8 }}>
+          ↗ SIN EXCUSAS · ESTO ES SPRINGS
+        </div>
+
+        <h2 style={{
+          ...F.display,
+          fontSize: "clamp(60px, 22vw, 110px)",
+          lineHeight: 0.88,
+          margin: "0 0 32px",
+          letterSpacing: "-0.005em",
+          textTransform: "uppercase",
+          color: C.cream,
+        }}>
+          PEDIR<br />YA.
+        </h2>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <a
+            href="#"
+            style={{
+              ...F.display, fontSize: "1.1rem", letterSpacing: "0.12em",
+              color: C.tinta, background: C.cream,
+              padding: "18px 22px", textDecoration: "none",
+              display: "flex", justifyContent: "space-between", alignItems: "center",
+              textTransform: "uppercase",
+            }}
+          >
+            RAPPI <span>→</span>
+          </a>
+          <a
+            href="#"
+            style={{
+              ...F.display, fontSize: "1.1rem", letterSpacing: "0.12em",
+              color: C.cream, background: "transparent",
+              border: `1px solid ${C.cream}`,
+              padding: "18px 22px", textDecoration: "none",
+              display: "flex", justifyContent: "space-between", alignItems: "center",
+              textTransform: "uppercase",
+            }}
+          >
+            UBER EATS <span>→</span>
+          </a>
+          <Link
+            href="/menu"
+            style={{
+              ...F.display, fontSize: "1.1rem", letterSpacing: "0.12em",
+              color: C.mostaza, background: "transparent",
+              border: `1px solid ${C.mostaza}`,
+              padding: "18px 22px", textDecoration: "none",
+              display: "flex", justifyContent: "space-between", alignItems: "center",
+              textTransform: "uppercase",
+            }}
+          >
+            PEDIDO DIRECTO <span>→</span>
+          </Link>
+        </div>
+
+        <div style={{ marginTop: "auto", paddingTop: 40, display: "flex", flexDirection: "column", gap: 12 }}>
+          {([
+            { label: "Horario",           val: "12PM — 9PM",       sub: "Lunes a domingo" },
+            { label: "Zona",              val: "BUCARAMANGA",       sub: "Cabecera · Cañaveral · Sotomayor" },
+            { label: "Combo recomendado", val: "PARA DOS · 69,900", sub: "2 Jackets + 2 Bebidas · ahorra 9,900" },
+          ] as const).map((item) => (
+            <div key={item.label} style={{ borderTop: `1px solid rgba(242,232,213,0.12)`, paddingTop: 12 }}>
+              <div style={{ ...F.mono, fontSize: "0.5rem", letterSpacing: "0.22em", color: C.mostaza, textTransform: "uppercase", marginBottom: 2 }}>{item.label}</div>
+              <div style={{ ...F.display, fontSize: "1.05rem", letterSpacing: "0.05em", color: C.cream }}>{item.val}</div>
+              <div style={{ ...F.sans, fontSize: "0.7rem", color: C.cream, opacity: 0.55, marginTop: 2 }}>{item.sub}</div>
+            </div>
+          ))}
+        </div>
+
+      </section>
+
     </div>
   );
 }

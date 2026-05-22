@@ -7,12 +7,11 @@ import Cart, { type CartItem, type CartExtra } from "@/components/Cart";
 import ExtrasModal from "@/components/ExtrasModal";
 import DevPanel from "@/components/DevPanel";
 import { useDesignConfig } from "@/hooks/useDesignConfig";
-import { type Producto, type Categoria } from "@/data/productos";
+import { type Producto } from "@/data/productos";
 
 export default function MenuPage() {
   const { config, editMode, saved, updateProp, save, reset, exportValues } = useDesignConfig("menu");
 
-  const [categoria, setCategoria] = useState<Categoria>("jacket");
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [pendingProduct, setPendingProduct] = useState<Producto | null>(null);
   const [cartBump, setCartBump] = useState(0);
@@ -82,7 +81,7 @@ export default function MenuPage() {
         <span aria-hidden>←</span> VOLVER
       </Link>
 
-      <Menu onAgregar={handleAgregar} config={config} categoria={categoria} onCategoriaChange={setCategoria} />
+      <Menu onAgregar={handleAgregar} config={config} />
 
       <Cart
         items={cartItems}
@@ -108,7 +107,6 @@ export default function MenuPage() {
           onSave={save}
           onExport={exportValues}
           onReset={reset}
-          categoria={categoria}
         />
       )}
     </main>
