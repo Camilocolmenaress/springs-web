@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import DragSticker from "@/components/DragSticker";
+import SensitiveImage from "@/components/SensitiveImage";
 
 const C = {
   burgundy: "#6B1419",
@@ -40,15 +42,15 @@ export default function MobileEditorial() {
         }}
       >
 
-        {/* La Fija — covers right side, bottom-anchored */}
+        {/* La Fija — top-anchored right side, potato in front of title */}
         <div
           style={{
             position: "absolute",
-            bottom: 0,
+            top: 0,
             right: "-4vw",
-            width: "76vw",
-            height: "72vh",
-            zIndex: 2,
+            width: "82vw",
+            height: "58svh",
+            zIndex: 4,
           }}
         >
           <Image
@@ -57,22 +59,23 @@ export default function MobileEditorial() {
             fill
             priority
             style={{ objectFit: "cover", objectPosition: "center top" }}
-            sizes="76vw"
+            sizes="82vw"
           />
         </div>
 
-        {/* SPRINGS title */}
+        {/* SPRINGS title — behind potato */}
         <div
           style={{
             position: "absolute",
-            top: "max(18vh, calc(env(safe-area-inset-top, 0px) + 64px))",
+            top: "calc(env(safe-area-inset-top, 0px) + 68px)",
             left: "5vw",
             zIndex: 3,
+            animation: "heroReveal 0.55s ease both",
           }}
         >
           <h1
             style={{
-              fontFamily: "Anton, sans-serif",
+              ...F.display,
               fontSize: "clamp(52px, 20vw, 88px)",
               color: C.tinta,
               lineHeight: 0.88,
@@ -91,53 +94,45 @@ export default function MobileEditorial() {
           style={{
             position: "absolute",
             left: "5vw",
-            top: "36vh",
+            top: "calc(env(safe-area-inset-top, 0px) + 68px + 88px)",
             zIndex: 5,
             display: "flex",
             alignItems: "flex-start",
-            gap: 8,
+            gap: 6,
+            animation: "heroReveal 0.55s ease 0.12s both",
           }}
         >
-          <span
-            style={{
-              fontFamily: "JetBrains Mono, monospace",
-              fontSize: "0.85rem",
-              color: C.tinta,
-              opacity: 0.55,
-              lineHeight: 1,
-            }}
-          >
-            ⊕
-          </span>
+          <span style={{ ...F.mono, fontSize: "0.78rem", color: C.tinta, opacity: 0.5, lineHeight: 1 }}>⊕</span>
           <div
             style={{
-              fontFamily: "JetBrains Mono, monospace",
-              fontSize: "0.5rem",
+              ...F.mono,
+              fontSize: "0.46rem",
               letterSpacing: "0.18em",
               color: C.tinta,
               lineHeight: 1.6,
               textTransform: "uppercase",
-              opacity: 0.7,
+              opacity: 0.65,
             }}
           >
             Barbosa STDR – COLOMBIA<br />EST. 2025
           </div>
         </div>
 
-        {/* Globe sticker — wireframe SVG, CSS spin */}
+        {/* Globe sticker */}
         <div
           style={{
             position: "absolute",
             left: "5vw",
-            top: "46vh",
+            top: "calc(env(safe-area-inset-top, 0px) + 68px + 142px)",
             zIndex: 10,
-            width: "16vw",
-            height: "16vw",
+            width: "14vw",
+            height: "14vw",
             background: "rgba(26,10,12,0.88)",
             border: "1px solid rgba(242,232,213,0.15)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            animation: "heroReveal 0.55s ease 0.18s both",
           }}
         >
           <svg
@@ -162,42 +157,78 @@ export default function MobileEditorial() {
           </svg>
         </div>
 
-        {/* Jacket Club sticker — PNG image, top-right */}
-        <div
+        {/* Jacket Club sticker — DragSticker, clickable link */}
+        <DragSticker
+          rotate={-8}
+          idleRotateRange={4}
           style={{
             position: "absolute",
-            top: "max(64px, calc(env(safe-area-inset-top, 0px) + 62px))",
+            top: "calc(env(safe-area-inset-top, 0px) + 62px)",
             right: "2vw",
-            width: "30vw",
-            aspectRatio: "1 / 1",
+            width: "28vw",
             zIndex: 21,
           }}
         >
-          <Image
-            src="/images/jacket-club-sticker.png"
-            alt="SPRINGS Jacket Club"
-            fill
-            priority
-            style={{ objectFit: "contain" }}
-            sizes="30vw"
-          />
-        </div>
+          <Link href="/springs-jacket-club" style={{ display: "block" }}>
+            <Image
+              src="/images/jacket-club-sticker.png"
+              alt="SPRINGS Jacket Club"
+              width={300}
+              height={300}
+              priority
+              style={{ width: "100%", height: "auto", objectFit: "contain" }}
+              sizes="28vw"
+            />
+          </Link>
+        </DragSticker>
 
-        {/* Subtitle — Caveat Brush, burgundy, rotated */}
+        {/* Label — ↗ Jacket / La Fija, points toward potato */}
         <div
           style={{
             position: "absolute",
             left: "5vw",
-            bottom: "34vh",
+            top: "calc(44svh)",
+            zIndex: 5,
+            animation: "heroReveal 0.55s ease 0.22s both",
+          }}
+        >
+          <div
+            style={{
+              ...F.display,
+              fontSize: "clamp(15px, 4.5vw, 21px)",
+              color: C.tinta,
+              letterSpacing: "-0.01em",
+              lineHeight: 1.15,
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "0.3em" }}>
+              {/* Arrow pointing up-right toward potato */}
+              <svg width="0.72em" height="0.72em" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
+                <line x1="3" y1="21" x2="21" y2="3" stroke={C.tinta} strokeWidth="4.5" strokeLinecap="round" />
+                <polyline points="13,3 21,3 21,11" fill="none" stroke={C.tinta} strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              Jacket
+            </div>
+            <div style={{ paddingLeft: "calc(0.72em + 0.3em)" }}>La Fija</div>
+          </div>
+        </div>
+
+        {/* Subtitle — JACKETS DIFFERENT BY DEFAULT — BELOW potato */}
+        <div
+          style={{
+            position: "absolute",
+            left: "5vw",
+            top: "calc(58svh + 10px)",
             zIndex: 5,
             transform: "rotate(-2deg)",
             transformOrigin: "left center",
+            animation: "heroReveal 0.55s ease 0.28s both",
           }}
         >
           <div
             style={{
               fontFamily: "var(--font-marker), cursive",
-              fontSize: "clamp(18px, 5vw, 26px)",
+              fontSize: "clamp(15px, 4.4vw, 22px)",
               color: C.burgundy,
               lineHeight: 1,
               letterSpacing: "0.02em",
@@ -214,82 +245,62 @@ export default function MobileEditorial() {
           style={{
             position: "absolute",
             left: "5vw",
-            bottom: "28vh",
-            width: "44vw",
+            top: "calc(58svh + 44px)",
+            width: "50vw",
             zIndex: 5,
             transform: "rotate(-2.5deg)",
             transformOrigin: "left center",
           }}
         >
-          <div style={{ position: "relative", width: "100%", height: 14 }}>
+          <div style={{ position: "relative", width: "100%", height: 11 }}>
             <Image
               src="/images/underline-stroke.png"
               alt=""
               fill
               style={{ objectFit: "contain", objectPosition: "left center" }}
-              sizes="44vw"
+              sizes="50vw"
             />
           </div>
         </div>
 
-        {/* Body copy — ↗ Jacket / La Fija */}
+        {/* SensitiveImage */}
         <div
           style={{
             position: "absolute",
             left: "5vw",
-            bottom: "20vh",
-            zIndex: 5,
+            top: "calc(58svh + 68px)",
+            width: "46vw",
+            aspectRatio: "1402 / 1122",
+            zIndex: 8,
+            animation: "heroReveal 0.55s ease 0.4s both",
           }}
         >
-          <div
-            style={{
-              fontFamily: "Anton, sans-serif",
-              fontSize: "clamp(18px, 5.5vw, 26px)",
-              color: C.tinta,
-              letterSpacing: "-0.01em",
-              lineHeight: 1.1,
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: "0.3em" }}>
-              <svg
-                width="0.7em"
-                height="0.7em"
-                viewBox="0 0 24 24"
-                fill="none"
-                style={{ flexShrink: 0, marginBottom: "0.1em" }}
-              >
-                <line x1="21" y1="21" x2="3" y2="3" stroke={C.tinta} strokeWidth="4.5" strokeLinecap="round" />
-                <polyline points="3,11 3,3 11,3" fill="none" stroke={C.tinta} strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              Jacket
-            </div>
-            <div style={{ paddingLeft: "calc(0.7em + 0.3em)" }}>La Fija</div>
-          </div>
+          <SensitiveImage src="/images/sensitive-hero.png" fontSize={3.2} opacity={65} />
         </div>
 
-        {/* Miércoles Dados sticker — PNG image, bottom-right */}
-        <div
+        {/* Dados sticker — DragSticker, right side, overlaps potato bottom */}
+        <DragSticker
+          rotate={12}
+          idleRotateRange={4}
           style={{
             position: "absolute",
-            right: 0,
-            bottom: "16vh",
-            width: "32vw",
-            aspectRatio: "1 / 1",
+            right: "2vw",
+            top: "calc(52svh + 12px)",
+            width: "26vw",
             zIndex: 22,
-            clipPath: "inset(12% 22%)",
-            transform: "rotate(-12deg)",
           }}
         >
-          <div style={{ position: "relative", width: "100%", height: "100%" }}>
+          <Link href="/prueba-tu-suerte" style={{ display: "block" }}>
             <Image
               src="/images/miercoles-dados-sticker.png"
               alt="Miércoles de Dados"
-              fill
-              style={{ objectFit: "contain" }}
-              sizes="32vw"
+              width={300}
+              height={300}
+              style={{ width: "100%", height: "auto", objectFit: "contain" }}
+              sizes="26vw"
             />
-          </div>
-        </div>
+          </Link>
+        </DragSticker>
 
         {/* Marquee tape — SPRINGS < SPRINGS < */}
         <div
@@ -297,7 +308,7 @@ export default function MobileEditorial() {
             position: "absolute",
             left: 0,
             right: 0,
-            bottom: "10vh",
+            bottom: 52,
             overflow: "hidden",
             zIndex: 6,
             borderTop: `1.5px solid ${C.tinta}`,
@@ -318,10 +329,10 @@ export default function MobileEditorial() {
               <span key={copy} style={{ display: "inline-flex", alignItems: "center" }}>
                 {Array.from({ length: 12 }).map((_, i) => (
                   <span key={i} style={{ display: "inline-flex", alignItems: "center" }}>
-                    <span style={{ fontFamily: "Anton, sans-serif", fontSize: "clamp(14px, 4.5vw, 22px)", color: C.burgundy, letterSpacing: "0.04em", lineHeight: 1 }}>SPRINGS</span>
-                    <span style={{ fontFamily: "Anton, sans-serif", fontSize: "clamp(12px, 3.8vw, 18px)", color: C.burgundy, margin: "0 0.6em", lineHeight: 1 }}>{"<"}</span>
-                    <span style={{ fontFamily: "Anton, sans-serif", fontSize: "clamp(14px, 4.5vw, 22px)", color: "transparent", WebkitTextStroke: `1.5px ${C.burgundy}`, letterSpacing: "0.04em", lineHeight: 1 }}>SPRINGS</span>
-                    <span style={{ fontFamily: "Anton, sans-serif", fontSize: "clamp(12px, 3.8vw, 18px)", color: C.burgundy, margin: "0 0.6em", lineHeight: 1 }}>{"<"}</span>
+                    <span style={{ ...F.display, fontSize: "clamp(13px, 4vw, 20px)", color: C.burgundy, letterSpacing: "0.04em", lineHeight: 1 }}>SPRINGS</span>
+                    <span style={{ ...F.display, fontSize: "clamp(11px, 3.5vw, 17px)", color: C.burgundy, margin: "0 0.5em", lineHeight: 1 }}>{"<"}</span>
+                    <span style={{ ...F.display, fontSize: "clamp(13px, 4vw, 20px)", color: "transparent", WebkitTextStroke: `1.5px ${C.burgundy}`, letterSpacing: "0.04em", lineHeight: 1 }}>SPRINGS</span>
+                    <span style={{ ...F.display, fontSize: "clamp(11px, 3.5vw, 17px)", color: C.burgundy, margin: "0 0.5em", lineHeight: 1 }}>{"<"}</span>
                   </span>
                 ))}
               </span>
@@ -329,13 +340,13 @@ export default function MobileEditorial() {
           </div>
         </div>
 
-        {/* ART GALLERY link + Menu list — bottom strip */}
+        {/* ART GALLERY + products strip */}
         <div
           style={{
             position: "absolute",
             left: "5vw",
             right: "5vw",
-            bottom: "3vh",
+            bottom: 10,
             zIndex: 5,
             display: "flex",
             alignItems: "flex-end",
@@ -346,8 +357,8 @@ export default function MobileEditorial() {
           <a
             href="/art-gallery"
             style={{
-              fontFamily: "Anton, sans-serif",
-              fontSize: "clamp(13px, 3.8vw, 18px)",
+              ...F.display,
+              fontSize: "clamp(12px, 3.6vw, 17px)",
               color: C.tinta,
               letterSpacing: "-0.025em",
               textDecoration: "none",
@@ -360,8 +371,8 @@ export default function MobileEditorial() {
           </a>
           <p
             style={{
-              fontFamily: "JetBrains Mono, monospace",
-              fontSize: "0.4rem",
+              ...F.mono,
+              fontSize: "0.38rem",
               color: C.tinta,
               letterSpacing: "-0.01em",
               lineHeight: 1.3,
@@ -379,20 +390,37 @@ export default function MobileEditorial() {
       </section>
 
 
-      {/* ══ SECTION 2 — PRODUCTOS ══ */}
+      {/* ══ SECTION 2 — ART GALLERY (productos) ══ */}
       <section style={{ background: C.cream, padding: "48px 0 40px" }}>
 
         <div style={{ padding: "0 5vw", marginBottom: 24 }}>
-          <h2 style={{
-            ...F.display,
-            fontSize: "clamp(40px, 13vw, 64px)",
-            color: C.tinta,
-            margin: 0,
-            letterSpacing: "-0.005em",
-            textTransform: "uppercase",
-          }}>
-            LA CARTA
-          </h2>
+          <Link
+            href="/art-gallery"
+            style={{ textDecoration: "none" }}
+          >
+            <h2
+              style={{
+                ...F.display,
+                fontSize: "clamp(40px, 13vw, 64px)",
+                color: C.tinta,
+                margin: 0,
+                letterSpacing: "-0.005em",
+                textTransform: "uppercase",
+              }}
+            >
+              ART GALLERY
+              <span
+                style={{
+                  display: "inline-block",
+                  marginLeft: "0.2em",
+                  color: C.burgundy,
+                  animation: "cursorBlink 1s step-start infinite",
+                }}
+              >
+                |
+              </span>
+            </h2>
+          </Link>
         </div>
 
         {/* Carousel */}
