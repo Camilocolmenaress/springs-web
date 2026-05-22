@@ -87,6 +87,7 @@ const SECTION_H = 812;
 // computed for a 375×812 screen with safeAreaTop ≈ 44px
 const SAFE = 44;
 const INIT: Record<string, { initialX: number; initialY: number; label: string; color: string; z: number }> = {
+  potato:    { initialX: 68,  initialY: 0,                      label: "🥔 La Fija (papa)",     color: "#8B5E3C",  z: 4  },
   springs:   { initialX: 19,  initialY: SAFE + 68,              label: "SPRINGS",               color: C.burgundy, z: 3  },
   location:  { initialX: 19,  initialY: SAFE + 68 + 88,         label: "⊕ Ubicación",           color: C.mostaza,  z: 5  },
   globe:     { initialX: 19,  initialY: SAFE + 68 + 142,        label: "Globo SVG",             color: C.tinta,    z: 10 },
@@ -96,6 +97,8 @@ const INIT: Record<string, { initialX: number; initialY: number; label: string; 
   underline: { initialX: 19,  initialY: Math.round(SECTION_H * 0.58) + 44, label: "Subrayado",         color: C.burgundy, z: 5  },
   sensitive: { initialX: 19,  initialY: Math.round(SECTION_H * 0.58) + 68, label: "Sensitive Content",  color: "#666",     z: 8  },
   dados:     { initialX: 263, initialY: Math.round(SECTION_H * 0.52) + 12, label: "Dados sticker",      color: C.mostaza,  z: 22 },
+  marquee:   { initialX: 0,   initialY: SECTION_H - 82,         label: "Marquee tape",          color: "#555",     z: 6  },
+  strip:     { initialX: 19,  initialY: SECTION_H - 30,         label: "ART GALLERY strip",     color: "#555",     z: 5  },
 };
 
 export default function MobileEditorPage() {
@@ -169,50 +172,45 @@ export default function MobileEditorPage() {
         }}
       >
 
-        {/* ── Static: potato (full width, not draggable) ── */}
-        <div style={{ position: "absolute", top: 0, right: -15, width: 307, height: Math.round(SECTION_H * 0.58), zIndex: 4 }}>
-          <Image src="/images/la-fija.png" alt="La Fija" fill priority
-            style={{ objectFit: "cover", objectPosition: "center top" }} sizes="82vw" />
+        {/* ── Draggable: potato ── */}
+        <DragItem id="potato" {...INIT.potato} containerRef={containerRef} onPos={handlePos} zIndex={INIT.potato.z}>
+          <div style={{ width: 307, height: Math.round(SECTION_H * 0.58), position: "relative" }}>
+            <Image src="/images/la-fija.png" alt="La Fija" fill priority
+              style={{ objectFit: "cover", objectPosition: "center top" }} sizes="82vw" />
+          </div>
+        </DragItem>
+
+        {/* ── Draggable: marquee ── */}
+        <DragItem id="marquee" {...INIT.marquee} containerRef={containerRef} onPos={handlePos} zIndex={INIT.marquee.z}>
           <div style={{
-            position: "absolute", bottom: 4, right: 4,
-            background: "rgba(26,10,12,0.7)",
-            color: C.cream, fontFamily: "JetBrains Mono, monospace",
-            fontSize: "0.38rem", padding: "2px 5px", pointerEvents: "none",
+            width: SECTION_W,
+            borderTop: `1.5px solid ${C.tinta}`, borderBottom: `1.5px solid ${C.tinta}`,
+            padding: "5px 0", background: C.cream, overflow: "hidden",
           }}>
-            PAPA — estática
+            <div style={{ display: "flex", whiteSpace: "nowrap", animation: "marquee 18s linear infinite" }}>
+              {[0, 1].map(c => (
+                <span key={c}>
+                  {Array.from({ length: 10 }).map((_, i) => (
+                    <span key={i}>
+                      <span style={{ fontFamily: "Anton, sans-serif", fontSize: 13, color: C.burgundy, margin: "0 4px" }}>SPRINGS</span>
+                      <span style={{ fontFamily: "Anton, sans-serif", fontSize: 11, color: C.burgundy, margin: "0 4px" }}>{"<"}</span>
+                    </span>
+                  ))}
+                </span>
+              ))}
+            </div>
           </div>
-        </div>
+        </DragItem>
 
-        {/* ── Static: marquee ── */}
-        <div style={{
-          position: "absolute", left: 0, right: 0, bottom: 52, zIndex: 6,
-          borderTop: `1.5px solid ${C.tinta}`, borderBottom: `1.5px solid ${C.tinta}`,
-          padding: "5px 0", background: C.cream, overflow: "hidden",
-        }}>
-          <div style={{ display: "flex", whiteSpace: "nowrap", animation: "marquee 18s linear infinite" }}>
-            {[0, 1].map(c => (
-              <span key={c}>
-                {Array.from({ length: 10 }).map((_, i) => (
-                  <span key={i}>
-                    <span style={{ fontFamily: "Anton, sans-serif", fontSize: 13, color: C.burgundy, margin: "0 4px" }}>SPRINGS</span>
-                    <span style={{ fontFamily: "Anton, sans-serif", fontSize: 11, color: C.burgundy, margin: "0 4px" }}>{"<"}</span>
-                  </span>
-                ))}
-              </span>
-            ))}
+        {/* ── Draggable: bottom strip ── */}
+        <DragItem id="strip" {...INIT.strip} containerRef={containerRef} onPos={handlePos} zIndex={INIT.strip.z}>
+          <div style={{ width: SECTION_W - 38, display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
+            <span style={{ fontFamily: "Anton, sans-serif", fontSize: 12, color: C.tinta }}>ART GALLERY</span>
+            <span style={{ fontFamily: "JetBrains Mono, monospace", fontSize: "0.32rem", color: C.tinta, opacity: 0.6, textAlign: "right" }}>
+              LA FIJA / LA PESADA<br />LA BRAVA / LA SIMPLE
+            </span>
           </div>
-        </div>
-
-        {/* ── Static: bottom strip ── */}
-        <div style={{
-          position: "absolute", left: 19, right: 19, bottom: 10, zIndex: 5,
-          display: "flex", justifyContent: "space-between", alignItems: "flex-end",
-        }}>
-          <span style={{ fontFamily: "Anton, sans-serif", fontSize: 12, color: C.tinta }}>ART GALLERY</span>
-          <span style={{ fontFamily: "JetBrains Mono, monospace", fontSize: "0.32rem", color: C.tinta, opacity: 0.6, textAlign: "right" }}>
-            LA FIJA / LA PESADA<br />LA BRAVA / LA SIMPLE
-          </span>
-        </div>
+        </DragItem>
 
         {/* ── Draggable elements ── */}
 
