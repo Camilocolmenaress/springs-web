@@ -7,16 +7,9 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import StickerLayer from "@/components/StickerLayer";
 
-const C = {
-  burgundy: "#6B1419",
-  cream:    "#F2E8D5",
-  tinta:    "#1A0A0C",
-  mostaza:  "#C5871F",
-};
-
+const C = { burgundy: "#6B1419", cream: "#F2E8D5", tinta: "#1A0A0C" };
 const F = {
   display: { fontFamily: "Anton, sans-serif" } as const,
-  sans:    { fontFamily: "Inter, sans-serif" } as const,
   mono:    { fontFamily: "JetBrains Mono, monospace" } as const,
 };
 
@@ -25,19 +18,15 @@ export default function HeroSection() {
 
   useGSAP(() => {
     if (!sectionRef.current) return;
-
-    const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
-
-    tl.from(".hero-wordmark",    { opacity: 0, y: 30,  duration: 0.6, ease: "back.out(1.7)" })
-      .from(".hero-potato",      { opacity: 0, scale: 0.95, duration: 0.5 }, "-=0.3")
-      .from(".hero-location",    { opacity: 0, y: 15,  duration: 0.4 }, "-=0.2")
-      .from(".hero-label",       { opacity: 0, x: -20, duration: 0.4 }, "-=0.2")
-      .from(".hero-subtitle",    { opacity: 0, y: 15, rotation: -12, duration: 0.5, ease: "back.out(1.4)" }, "-=0.1")
-      .from(".hero-underline",   { opacity: 0, scaleX: 0, duration: 0.3 }, "-=0.1")
-      .from(".hero-marquee",     { opacity: 0, y: 10,  duration: 0.3 }, "-=0.05")
-      .from(".hero-gallery-strip",{ opacity: 0, y: 10, duration: 0.3 }, "-=0.05")
-      .from(".sticker-dados",    { opacity: 0, scale: 0.5, rotation:  15, duration: 0.5, ease: "back.out(2)" }, "-=0.2")
-      .from(".sticker-jc",       { opacity: 0, scale: 0.5, rotation: -10, duration: 0.5, ease: "back.out(2)" }, "-=0.3");
+    gsap.timeline({ defaults: { ease: "expo.out" } })
+      .from(".hero-wordmark",      { opacity: 0, y: -16, duration: 0.6 })
+      .from(".hero-potato",        { opacity: 0, scale: 1.04, duration: 0.6 }, "-=0.3")
+      .from(".hero-location",      { opacity: 0, y: 10,  duration: 0.4 }, "-=0.2")
+      .from(".hero-editorial",     { opacity: 0, y: 16,  duration: 0.5 }, "-=0.2")
+      .from(".hero-marquee",       { opacity: 0, duration: 0.3 }, "-=0.1")
+      .from(".hero-gallery-strip", { opacity: 0, duration: 0.3 }, "-=0.05")
+      .from(".sticker-dados",      { opacity: 0, scale: 0.5, rotation:  15, duration: 0.5, ease: "back.out(2)" }, "-=0.4")
+      .from(".sticker-jc",         { opacity: 0, scale: 0.5, rotation: -10, duration: 0.5, ease: "back.out(2)" }, "-=0.3");
   }, { scope: sectionRef });
 
   return (
@@ -50,48 +39,32 @@ export default function HeroSection() {
         background: C.cream,
         overflow: "hidden",
         isolation: "isolate",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
 
-      {/* ── ZONA 1: Imagen + wordmark (0–58vh) ─────────────────────── */}
-
-      {/* Papa — ancho en vw para no depender del alto del dispositivo */}
-      <div
-        className="hero-potato"
-        style={{
-          position: "absolute",
-          right: "-2vw",
-          top: "2vh",
-          width: "60vw",
-          height: "58vh",
-          zIndex: 4,
-        }}
-      >
-        <Image
-          src="/images/la-fija.png"
-          alt="La Fija — Springs Jacket"
-          fill
-          priority
-          style={{ objectFit: "cover", objectPosition: "center top" }}
-          sizes="60vw"
-        />
-      </div>
-
-      {/* SPRINGS wordmark — z:6 encima de papa (z:4) para que mix-blend-mode funcione */}
+      {/* ═══════════════════════════════════════════════════════════
+          WORDMARK — z:6 sobre la papa, mix-blend-mode:difference
+          El wordmark está encima de todo y se "mezcla" con lo que
+          hay debajo: aparece oscuro sobre cream, se invierte sobre
+          la imagen de la papa (efecto editorial).
+      ═══════════════════════════════════════════════════════════ */}
       <h1
         className="hero-wordmark"
         style={{
           position: "absolute",
-          left: "3vw",
-          top: "5vh",
+          top: 0,
+          left: 0,
           zIndex: 6,
+          margin: 0,
+          padding: "3.5vh 4vw 0",
           ...F.display,
-          fontSize: "clamp(36px, 15vw, 72px)",
+          fontSize: "clamp(44px, 18vw, 88px)",
           color: "white",
           mixBlendMode: "difference",
           lineHeight: 0.88,
-          letterSpacing: "-0.01em",
-          margin: 0,
+          letterSpacing: "-0.02em",
           textTransform: "uppercase",
           whiteSpace: "nowrap",
           pointerEvents: "none",
@@ -100,142 +73,144 @@ export default function HeroSection() {
         SPRINGS
       </h1>
 
-      {/* ── ZONA 2: Metadata izquierda (20–50vh) ────────────────────── */}
+      {/* ═══════════════════════════════════════════════════════════
+          BLOQUE IMAGEN — flex row, 54vh de alto
+          Columna izquierda (38%): metadata
+          Columna derecha (62%): papa, ocupa todo el bloque
+      ═══════════════════════════════════════════════════════════ */}
+      <div style={{ display: "flex", height: "54vh", flexShrink: 0 }}>
 
-      {/* Ubicación */}
-      <div
-        className="hero-location"
-        style={{
-          position: "absolute",
-          left: "3vw",
-          top: "20vh",
-          zIndex: 5,
-        }}
-      >
-        <div style={{
-          ...F.mono,
-          fontSize: "2.8vw",
-          letterSpacing: "0.14em",
-          color: C.tinta,
-          lineHeight: 1.7,
-          textTransform: "uppercase",
-          opacity: 0.65,
-        }}>
-          ⊕ Barbosa STDR – Colombia<br />EST. 2025
-        </div>
-      </div>
-
-      {/* ── ZONA 3: Label + stickers + subtítulo (58–80vh) ──────────── */}
-
-      {/* Label producto */}
-      <div
-        className="hero-label"
-        style={{
-          position: "absolute",
-          left: "3vw",
-          top: "60vh",
-          zIndex: 5,
-        }}
-      >
-        <div style={{
-          ...F.display,
-          fontSize: "4.5vw",
-          color: C.tinta,
-          letterSpacing: "-0.01em",
-          lineHeight: 1.25,
-        }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.3em" }}>
-            <svg width="0.8em" height="0.8em" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
-              <line x1="3" y1="21" x2="21" y2="3" stroke={C.tinta} strokeWidth="4.5" strokeLinecap="round" />
-              <polyline points="13,3 21,3 21,11" fill="none" stroke={C.tinta} strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            Jacket
+        {/* Columna metadata — alineada al fondo */}
+        <div
+          style={{
+            flex: "0 0 38%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-end",
+            padding: "0 0 3vh 4vw",
+          }}
+        >
+          <div
+            className="hero-location"
+            style={{
+              ...F.mono,
+              fontSize: "clamp(9px, 2.8vw, 12px)",
+              letterSpacing: "0.14em",
+              color: C.tinta,
+              lineHeight: 1.8,
+              textTransform: "uppercase",
+              opacity: 0.6,
+            }}
+          >
+            ⊕ Barbosa<br />STDR · CO<br />EST. 2025
           </div>
-          <div style={{ paddingLeft: "calc(0.8em + 0.3em)" }}>La Fija</div>
         </div>
-      </div>
 
-      {/* Subtítulo manuscrito — lado derecho */}
-      <div
-        className="hero-subtitle"
-        style={{
-          position: "absolute",
-          left: "26vw",
-          top: "64vh",
-          width: "65vw",
-          zIndex: 5,
-          transform: "rotate(-8deg)",
-          transformOrigin: "left center",
-        }}
-      >
-        <div style={{
-          fontFamily: "var(--font-marker), cursive",
-          fontSize: "4.8vw",
-          color: C.burgundy,
-          lineHeight: 1.25,
-          letterSpacing: "0.02em",
-          textTransform: "uppercase",
-        }}>
-          JACKETS DIFFERENT BY DEFAULT
-        </div>
-      </div>
-
-      {/* Trazo underline */}
-      <div
-        className="hero-underline"
-        style={{
-          position: "absolute",
-          left: "36vw",
-          top: "73vh",
-          width: "40vw",
-          zIndex: 5,
-          transform: "rotate(-2deg)",
-          transformOrigin: "left center",
-        }}
-      >
-        <div style={{ position: "relative", width: "100%", height: "2vw" }}>
+        {/* Papa — fill de su columna */}
+        <div
+          className="hero-potato"
+          style={{ flex: "0 0 62%", position: "relative", overflow: "hidden" }}
+        >
           <Image
-            src="/images/underline-stroke.png"
-            alt=""
+            src="/images/la-fija.png"
+            alt="La Fija — Springs Jacket"
             fill
-            style={{ objectFit: "contain", objectPosition: "left center" }}
-            sizes="40vw"
+            priority
+            style={{ objectFit: "cover", objectPosition: "50% 25%" }}
+            sizes="62vw"
           />
         </div>
+
       </div>
 
-      {/* ── ZONA 4: Marquee + footer (80–100vh) ─────────────────────── */}
+      {/* ═══════════════════════════════════════════════════════════
+          BLOQUE EDITORIAL — ocupa el espacio restante
+          Label producto | línea | subtítulo manuscrito
+      ═══════════════════════════════════════════════════════════ */}
+      <div
+        className="hero-editorial"
+        style={{
+          flex: 1,
+          display: "flex",
+          alignItems: "center",
+          padding: "0 4vw",
+          gap: "3vw",
+          borderTop: `1px solid rgba(26,10,12,0.12)`,
+          overflow: "hidden",
+        }}
+      >
+        {/* Label */}
+        <div style={{
+          flexShrink: 0,
+          ...F.display,
+          fontSize: "clamp(14px, 5vw, 22px)",
+          color: C.tinta,
+          lineHeight: 1.2,
+          letterSpacing: "-0.01em",
+        }}>
+          ↗ Jacket<br />
+          <span style={{ paddingLeft: "1.05em" }}>La Fija</span>
+        </div>
 
-      {/* Marquee tape */}
+        {/* Separador */}
+        <div style={{
+          width: 1,
+          height: "38%",
+          background: `rgba(26,10,12,0.18)`,
+          flexShrink: 0,
+        }} />
+
+        {/* Subtítulo manuscrito */}
+        <div style={{
+          flex: 1,
+          fontFamily: "var(--font-marker), cursive",
+          fontSize: "clamp(13px, 4.5vw, 20px)",
+          color: C.burgundy,
+          lineHeight: 1.3,
+          letterSpacing: "0.02em",
+          textTransform: "uppercase",
+          transform: "rotate(-5deg)",
+          transformOrigin: "left center",
+        }}>
+          JACKETS<br />DIFFERENT<br />BY DEFAULT
+        </div>
+      </div>
+
+      {/* ═══════════════════════════════════════════════════════════
+          MARQUEE — borde superior e inferior tipo cinta
+      ═══════════════════════════════════════════════════════════ */}
       <div
         className="hero-marquee"
         style={{
-          position: "absolute",
-          left: 0,
-          right: 0,
-          top: "82vh",
+          flexShrink: 0,
           overflow: "hidden",
-          zIndex: 6,
           borderTop:    `1.5px solid ${C.tinta}`,
           borderBottom: `1.5px solid ${C.tinta}`,
-          padding: "5px 0",
+          padding: "6px 0",
           background: C.cream,
         }}
       >
         <div style={{
           display: "flex",
-          alignItems: "center",
           whiteSpace: "nowrap",
           animation: "marquee 18s linear infinite",
         }}>
           {[0, 1].map((copy) => (
             <span key={copy} style={{ display: "inline-flex", alignItems: "center" }}>
-              {Array.from({ length: 12 }).map((_, i) => (
+              {Array.from({ length: 8 }).map((_, i) => (
                 <span key={i} style={{ display: "inline-flex", alignItems: "center" }}>
-                  <span style={{ ...F.display, fontSize: "4vw", color: C.burgundy, letterSpacing: "0.04em", lineHeight: 1 }}>SPRINGS</span>
-                  <span style={{ ...F.display, fontSize: "3.2vw", color: C.burgundy, margin: "0 0.5em", lineHeight: 1 }}>{"<"}</span>
-                  <span style={{ ...F.display, fontSize: "4vw", color: "transparent", WebkitTextStroke: `1.5px ${C.burgundy}`, letterSpacing: "0.04em", lineHeight: 1 }}>SPRINGS</span>
-                  <span style={{ ...F.display, fontSize: "3.2vw", color: C.burgundy, margin: "0 0.5em", lineHeight: 1 }}>{"<"}</span>
+                  <span style={{ ...F.display, fontSize: "clamp(11px, 4vw, 16px)", color: C.burgundy, letterSpacing: "0.06em", lineHeight: 1 }}>
+                    SPRINGS
+                  </span>
+                  <span style={{ fontSize: "clamp(9px, 3vw, 13px)", color: C.burgundy, margin: "0 0.6em", lineHeight: 1 }}>
+                    &lt;
+                  </span>
+                  <span style={{ ...F.display, fontSize: "clamp(11px, 4vw, 16px)", color: "transparent", WebkitTextStroke: `1px ${C.burgundy}`, letterSpacing: "0.06em", lineHeight: 1 }}>
+                    SPRINGS
+                  </span>
+                  <span style={{ fontSize: "clamp(9px, 3vw, 13px)", color: C.burgundy, margin: "0 0.6em", lineHeight: 1 }}>
+                    &lt;
+                  </span>
                 </span>
               ))}
             </span>
@@ -243,67 +218,64 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* ART GALLERY strip */}
+      {/* ═══════════════════════════════════════════════════════════
+          ART GALLERY — fila inferior, touch target 44px
+      ═══════════════════════════════════════════════════════════ */}
       <div
         className="hero-gallery-strip"
         style={{
-          position: "absolute",
-          left: "3vw",
-          right: "3vw",
-          top: "90vh",
-          zIndex: 5,
+          flexShrink: 0,
           display: "flex",
-          alignItems: "flex-end",
+          alignItems: "center",
           justifyContent: "space-between",
-          gap: "2vw",
+          padding: "0 4vw",
+          minHeight: 44,
         }}
       >
         <Link
           href="/art-gallery"
           style={{
             ...F.display,
-            fontSize: "4vw",
+            fontSize: "clamp(12px, 4vw, 18px)",
             color: C.tinta,
-            letterSpacing: "-0.025em",
+            letterSpacing: "-0.02em",
             textDecoration: "none",
             textTransform: "uppercase",
-            whiteSpace: "nowrap",
-            flexShrink: 0,
-            padding: "12px 0",
-            minHeight: 44,
             display: "flex",
             alignItems: "center",
+            minHeight: 44,
           }}
         >
           ART GALLERY
         </Link>
         <p style={{
           ...F.mono,
-          fontSize: "2vw",
+          fontSize: "clamp(7px, 2vw, 10px)",
           color: C.tinta,
-          letterSpacing: "-0.01em",
-          lineHeight: 1.3,
+          lineHeight: 1.4,
           textTransform: "uppercase",
           margin: 0,
-          opacity: 0.65,
+          opacity: 0.55,
           textAlign: "right",
         }}>
-          LA FIJA / LA PESADA / LA BRAVA /<br />
-          LA SIMPLE / LA HONESTA
+          LA FIJA / LA PESADA /<br />LA BRAVA / LA SIMPLE
         </p>
       </div>
 
-      {/* ── STICKER LAYER (z-500, sobre todo) ───────────────────────── */}
+      {/* ═══════════════════════════════════════════════════════════
+          STICKER LAYER — z:500, arrastrables
+          Dados: columna izquierda, zona media de la imagen
+          JC: columna derecha, zona inferior de la imagen
+      ═══════════════════════════════════════════════════════════ */}
       <StickerLayer boundsRef={sectionRef}>
 
-        {/* Dados — zona media izquierda, sobre la papa */}
         <div
           className="draggable-sticker sticker-dados"
           style={{
             position: "absolute",
             left: "3vw",
-            top: "32vh",
-            width: "26vw",
+            top: "28vh",
+            width: "clamp(60px, 22vw, 90px)",
             pointerEvents: "auto",
             cursor: "grab",
             touchAction: "none",
@@ -313,22 +285,20 @@ export default function HeroSection() {
             <Image
               src="/images/miercoles-dados-sticker.png"
               alt="Miércoles de Dados"
-              width={300}
-              height={300}
+              width={300} height={300}
               style={{ width: "100%", height: "auto", objectFit: "contain" }}
-              sizes="26vw"
+              sizes="22vw"
             />
           </Link>
         </div>
 
-        {/* JC — zona baja izquierda, junto al label */}
         <div
           className="draggable-sticker sticker-jc"
           style={{
             position: "absolute",
-            left: "3vw",
-            top: "68vh",
-            width: "22vw",
+            right: "4vw",
+            top: "38vh",
+            width: "clamp(55px, 20vw, 82px)",
             pointerEvents: "auto",
             cursor: "grab",
             touchAction: "none",
@@ -338,10 +308,9 @@ export default function HeroSection() {
             <Image
               src="/images/jacket-club-sticker.png"
               alt="SPRINGS Jacket Club"
-              width={300}
-              height={300}
+              width={300} height={300}
               style={{ width: "100%", height: "auto", objectFit: "contain" }}
-              sizes="22vw"
+              sizes="20vw"
             />
           </Link>
         </div>
