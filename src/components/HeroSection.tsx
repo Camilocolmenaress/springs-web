@@ -77,16 +77,16 @@ export default function HeroSection() {
         />
       </div>
 
-      {/* SPRINGS wordmark — mix-blend-mode cruza la papa */}
+      {/* SPRINGS wordmark — z:6 encima de papa (z:4) para que mix-blend-mode funcione */}
       <h1
         className="hero-wordmark"
         style={{
           position: "absolute",
           left: "3vw",
           top: "5vh",
-          zIndex: 3,
+          zIndex: 6,
           ...F.display,
-          fontSize: "16vw",
+          fontSize: "clamp(36px, 15vw, 72px)",
           color: "white",
           mixBlendMode: "difference",
           lineHeight: 0.88,
@@ -94,6 +94,7 @@ export default function HeroSection() {
           margin: 0,
           textTransform: "uppercase",
           whiteSpace: "nowrap",
+          pointerEvents: "none",
         }}
       >
         SPRINGS
@@ -268,6 +269,10 @@ export default function HeroSection() {
             textTransform: "uppercase",
             whiteSpace: "nowrap",
             flexShrink: 0,
+            padding: "12px 0",
+            minHeight: 44,
+            display: "flex",
+            alignItems: "center",
           }}
         >
           ART GALLERY

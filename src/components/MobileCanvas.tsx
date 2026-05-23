@@ -18,9 +18,10 @@ export default function MobileCanvas() {
         left: 0,
         width: "100%",
         height: "100%",
-        overflowY: "auto",
+        overflowY: "scroll",
         overflowX: "hidden",
         scrollbarWidth: "none",
+        overscrollBehavior: "auto" as const,
         background: C.cream,
       }}
     >
@@ -78,9 +79,12 @@ export default function MobileCanvas() {
             letterSpacing: "0.12em",
             background: C.burgundy,
             color: C.cream,
-            padding: "10px 16px",
+            padding: "14px 16px",
             textDecoration: "none",
             pointerEvents: "auto",
+            minHeight: 44,
+            display: "flex",
+            alignItems: "center",
           }}
         >
           PEDIR AHORA ↗
