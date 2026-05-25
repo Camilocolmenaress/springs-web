@@ -12,6 +12,7 @@ const C = {
 export default function MobileCanvas() {
   return (
     <div
+      className="mobile-canvas"
       style={{
         position: "fixed",
         top: 0,
