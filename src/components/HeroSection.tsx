@@ -131,6 +131,52 @@ export default function HeroSection() {
             ⊕ Barbosa STDR · Colombia<br />EST. 2025
           </div>
         </div>
+
+        {/* ── Sticker circular de marca — rota lentamente, NO arrastrable ── */}
+        <div
+          style={{
+            position: "absolute",
+            left: "3vw",
+            bottom: "2vh",
+            width: "clamp(68px, 21vw, 92px)",
+            zIndex: 4,
+            animation: "stickerSpin 24s linear infinite",
+            transformOrigin: "center center",
+            pointerEvents: "none",
+          }}
+        >
+          <svg
+            viewBox="0 0 200 200"
+            xmlns="http://www.w3.org/2000/svg"
+            style={{ width: "100%", height: "100%", display: "block" }}
+          >
+            <circle cx="100" cy="100" r="97" fill="#6B1419" />
+            <defs>
+              <path
+                id="arc-springs"
+                d="M 100,100 m -71,0 a 71,71 0 1,1 142,0 a 71,71 0 1,1 -142,0"
+                fill="none"
+              />
+            </defs>
+            <text
+              fill="#F2E8D5"
+              style={{ fontFamily: "Anton, sans-serif", fontSize: "12px", letterSpacing: "5px" }}
+            >
+              <textPath href="#arc-springs">
+                SPRINGS · BARBOSA · EST 2025 · JACKET ·
+              </textPath>
+            </text>
+            <text
+              x="100"
+              y="112"
+              fill="#F2E8D5"
+              textAnchor="middle"
+              style={{ fontFamily: "Anton, sans-serif", fontSize: "26px" }}
+            >
+              SPRINGS
+            </text>
+          </svg>
+        </div>
       </div>
 
       {/* ── STRIP: label + subtítulo manuscrito ── 52px ─────────── */}
