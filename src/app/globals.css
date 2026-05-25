@@ -99,7 +99,7 @@ html, body {
   mix-blend-mode: multiply;
   opacity: 0.055;
   pointer-events: none;
-  z-index: 10;
+  z-index: 1;
 }
 
 /* ── Rotating circular sticker ── */

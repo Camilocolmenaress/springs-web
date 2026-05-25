@@ -168,12 +168,12 @@ export default function HeroSection() {
             </text>
             <text
               x="100"
-              y="112"
+              y="108"
               fill="#F2E8D5"
               textAnchor="middle"
-              style={{ fontFamily: "Anton, sans-serif", fontSize: "26px" }}
+              style={{ fontFamily: "Anton, sans-serif", fontSize: "16px", letterSpacing: "2px" }}
             >
-              SPRINGS
+              EST 2025
             </text>
           </svg>
         </div>
