@@ -95,8 +95,11 @@ export default function MobileEditorial() {
       });
     });
 
-    return () => ScrollTrigger.getAll().forEach((t) => t.kill());
-  });
+    return () => {
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+      ScrollTrigger.defaults({ scroller: typeof window !== "undefined" ? window : undefined });
+    };
+  }, []);
 
   return (
     <div>
