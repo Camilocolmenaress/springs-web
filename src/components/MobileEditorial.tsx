@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import HeroSection from "@/components/HeroSection";
 
@@ -12,247 +11,522 @@ const C = {
 };
 
 const F = {
-  display: { fontFamily: "Anton, sans-serif" },
-  sans:    { fontFamily: "Inter, sans-serif" },
-  mono:    { fontFamily: "JetBrains Mono, monospace" },
+  display: { fontFamily: "Anton, sans-serif" } as const,
+  sans:    { fontFamily: "Inter, sans-serif" } as const,
+  mono:    { fontFamily: "JetBrains Mono, monospace" } as const,
 };
 
+// Constante de espaciado — se usa en TODAS las secciones
+const PAD = 20;
+
 const JACKETS = [
-  { name: "LA FIJA",    price: "32,900", image: "/images/la-fija.png" },
-  { name: "LA PESADA",  price: "35,900", image: "/images/la-pesada.png" },
-  { name: "LA BRAVA",   price: "34,900", image: "/images/la-brava.png" },
-  { name: "LA SIMPLE",  price: "28,900", image: "/images/la-simple.png" },
-  { name: "LA HONESTA", price: "28,900", image: "/images/la-honesta.png" },
+  { name: "LA FIJA",    price: "32,900", sub: "Pollo desmechado",      featured: true  },
+  { name: "LA PESADA",  price: "35,900", sub: "Carne desmechada",      featured: false },
+  { name: "LA BRAVA",   price: "34,900", sub: "Chorizo santandereano", featured: false },
+  { name: "LA SIMPLE",  price: "28,900", sub: "Carne molida",          featured: false },
+  { name: "LA HONESTA", price: "28,900", sub: "Sin carne",             featured: false },
 ];
 
-const MARQUEE = "FAST, GOOD & LOUD · ESTO ES SPRINGS · ";
+const MARQUEE_PRODUCTOS =
+  "LA FIJA · 32,900 · LA PESADA · 35,900 · LA BRAVA · 34,900 · LA SIMPLE · 28,900 · LA HONESTA · 28,900 · ";
+
+// Placeholder genérico: reemplazar con <Image> cuando haya foto
+function FotoPlaceholder({ label, aspectRatio = "3/4", bg = "rgba(26,10,12,0.05)", border = "rgba(26,10,12,0.1)" }: {
+  label: string;
+  aspectRatio?: string;
+  bg?: string;
+  border?: string;
+}) {
+  return (
+    <div style={{
+      width: "100%",
+      aspectRatio,
+      background: bg,
+      border: `1px solid ${border}`,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      position: "relative",
+      overflow: "hidden",
+    }}>
+      <span style={{
+        ...F.mono,
+        fontSize: "clamp(7px, 2vw, 10px)",
+        color: border,
+        letterSpacing: "0.15em",
+        textTransform: "uppercase",
+        filter: "opacity(0.6)",
+      }}>
+        {label}
+      </span>
+    </div>
+  );
+}
 
 export default function MobileEditorial() {
   return (
     <div>
 
-      {/* ══ SECTION 1 — HERO ══ */}
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 1 — HERO
+      ══════════════════════════════════════════════════════════════ */}
       <HeroSection />
 
 
-      {/* ══ SECTION 2 — ART GALLERY (productos) ══ */}
-      <section style={{ background: C.cream, padding: "48px 0 40px" }}>
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 2 — ART GALLERY
+          Arquitectura: header tipográfico + carrusel horizontal + CTA
+          Fondo cream — contraste con sección 1 (también cream) via borde
+      ══════════════════════════════════════════════════════════════ */}
+      <section style={{ background: C.cream, borderTop: `2px solid ${C.tinta}`, padding: `48px 0 40px` }}>
 
-        <div style={{ padding: "0 5vw", marginBottom: 24 }}>
-          <Link
-            href="/art-gallery"
-            style={{ textDecoration: "none" }}
-          >
-            <h2
-              style={{
-                ...F.display,
-                fontSize: "clamp(40px, 13vw, 64px)",
-                color: C.tinta,
-                margin: 0,
-                letterSpacing: "-0.005em",
-                textTransform: "uppercase",
-              }}
-            >
+        {/* Header */}
+        <div style={{ padding: `0 ${PAD}px`, marginBottom: 24 }}>
+          <Link href="/art-gallery" style={{ textDecoration: "none" }}>
+            <h2 style={{
+              ...F.display,
+              fontSize: "clamp(40px, 13vw, 64px)",
+              color: C.tinta,
+              margin: 0,
+              letterSpacing: "-0.015em",
+              textTransform: "uppercase",
+              lineHeight: 0.92,
+            }}>
               ART GALLERY
-              <span
-                style={{
-                  display: "inline-block",
-                  marginLeft: "0.2em",
-                  color: C.burgundy,
-                  animation: "cursorBlink 1s step-start infinite",
-                }}
-              >
-                |
-              </span>
+              <span style={{
+                display: "inline-block",
+                marginLeft: "0.2em",
+                color: C.burgundy,
+                animation: "cursorBlink 1s step-start infinite",
+              }}>|</span>
             </h2>
           </Link>
+          <div style={{
+            ...F.mono,
+            fontSize: "clamp(8px, 2.4vw, 11px)",
+            color: C.tinta,
+            opacity: 0.4,
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            marginTop: 10,
+          }}>
+            5 JACKETS · DESDE 28,900
+          </div>
         </div>
 
-        {/* Carousel */}
+        {/* Carrusel */}
         <div style={{
           display: "flex",
           gap: "4vw",
           overflowX: "auto",
           scrollSnapType: "x mandatory",
           scrollbarWidth: "none",
-          paddingLeft: "5vw",
-          paddingRight: "5vw",
+          paddingLeft: PAD,
+          paddingRight: PAD,
         }}>
           {JACKETS.map((p) => (
             <div
               key={p.name}
-              style={{ flexShrink: 0, width: "72vw", scrollSnapAlign: "start" }}
+              style={{ flexShrink: 0, width: "68vw", scrollSnapAlign: "start" }}
             >
-              <div style={{ position: "relative", width: "100%", paddingBottom: "75%", overflow: "hidden" }}>
-                <Image
-                  src={p.image}
-                  alt={p.name}
-                  fill
-                  style={{ objectFit: "cover", objectPosition: "center" }}
-                  sizes="72vw"
-                />
+              {/* Foto placeholder — proporción 3:4 */}
+              <div style={{ position: "relative", width: "100%", aspectRatio: "3/4", overflow: "hidden" }}>
+                <FotoPlaceholder label={`FOTO · ${p.name}`} aspectRatio="3/4" />
+                {p.featured && (
+                  <div style={{
+                    position: "absolute",
+                    top: 12,
+                    left: 0,
+                    background: C.mostaza,
+                    padding: "5px 10px",
+                    zIndex: 2,
+                  }}>
+                    <span style={{
+                      ...F.mono,
+                      fontSize: "clamp(7px, 2vw, 9px)",
+                      letterSpacing: "0.2em",
+                      color: C.tinta,
+                      textTransform: "uppercase",
+                    }}>
+                      EMPIECE POR ESTA
+                    </span>
+                  </div>
+                )}
               </div>
-              <div style={{ marginTop: 12, display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                <div style={{ ...F.display, fontSize: "1.05rem", letterSpacing: "0.06em", color: C.tinta }}>{p.name}</div>
-                <div style={{ ...F.mono, fontSize: "0.9rem", color: C.tinta }}>{p.price}</div>
+
+              {/* Info producto */}
+              <div style={{ marginTop: 12, display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
+                <div>
+                  <div style={{
+                    ...F.display,
+                    fontSize: "clamp(14px, 5vw, 20px)",
+                    letterSpacing: "0.04em",
+                    color: C.tinta,
+                    textTransform: "uppercase",
+                    lineHeight: 1,
+                  }}>
+                    {p.name}
+                  </div>
+                  <div style={{
+                    ...F.sans,
+                    fontSize: "clamp(10px, 3vw, 13px)",
+                    color: C.tinta,
+                    opacity: 0.45,
+                    marginTop: 4,
+                  }}>
+                    {p.sub}
+                  </div>
+                </div>
+                <div style={{
+                  ...F.mono,
+                  fontSize: "clamp(12px, 4vw, 17px)",
+                  color: C.tinta,
+                  flexShrink: 0,
+                }}>
+                  {p.price}
+                </div>
               </div>
             </div>
           ))}
         </div>
 
-        <div style={{ padding: "28px 5vw 0" }}>
-          <Link
-            href="/menu"
-            style={{
-              display: "block",
-              textAlign: "center",
-              ...F.display,
-              fontSize: "1rem",
-              letterSpacing: "0.1em",
-              color: C.cream,
-              background: C.burgundy,
-              padding: "18px 24px",
-              textDecoration: "none",
-              textTransform: "uppercase",
-            }}
-          >
-            VER MENÚ COMPLETO →
+        {/* CTA */}
+        <div style={{ padding: `28px ${PAD}px 0` }}>
+          <Link href="/menu" style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            ...F.display,
+            fontSize: "clamp(13px, 4.5vw, 18px)",
+            letterSpacing: "0.08em",
+            color: C.cream,
+            background: C.burgundy,
+            padding: `0 ${PAD}px`,
+            textDecoration: "none",
+            textTransform: "uppercase",
+            minHeight: 56,
+          }}>
+            VER MENÚ COMPLETO
+            <span style={{ ...F.mono, fontSize: "clamp(10px, 3vw, 14px)" }}>→</span>
           </Link>
         </div>
 
       </section>
 
 
-      {/* ══ SECTION 3 — CULTURA ══ */}
-      <section style={{ background: C.burgundy, padding: "48px 0 0", overflow: "hidden" }}>
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 3 — CULTURA
+          Arquitectura: eyebrow + título grande + foto full-bleed
+                        + strip precio/descripción + marquee productos
+          Fondo burgundy — rompe con cream de sección 2
+      ══════════════════════════════════════════════════════════════ */}
+      <section style={{ background: C.burgundy, overflow: "hidden" }}>
 
-        <div style={{ padding: "0 5vw", display: "flex", gap: "6vw", alignItems: "flex-start" }}>
+        {/* Eyebrow + título */}
+        <div style={{ padding: `48px ${PAD}px 28px` }}>
+          <div style={{
+            ...F.mono,
+            fontSize: "clamp(9px, 2.8vw, 12px)",
+            letterSpacing: "0.22em",
+            color: C.mostaza,
+            textTransform: "uppercase",
+            marginBottom: 20,
+          }}>
+            BUCARAMANGA · BGA
+          </div>
+          <div style={{
+            ...F.display,
+            fontSize: "clamp(52px, 17vw, 88px)",
+            color: C.cream,
+            lineHeight: 0.88,
+            letterSpacing: "-0.02em",
+            textTransform: "uppercase",
+          }}>
+            THIS<br />IS<br />SPRINGS.
+          </div>
+        </div>
+
+        {/* Foto placeholder — full-bleed sin márgenes laterales */}
+        <div style={{
+          height: "54vw",
+          background: "rgba(242,232,213,0.05)",
+          borderTop: "1px solid rgba(242,232,213,0.12)",
+          borderBottom: "1px solid rgba(242,232,213,0.12)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}>
+          <span style={{
+            ...F.mono,
+            fontSize: "clamp(7px, 2vw, 10px)",
+            color: "rgba(242,232,213,0.25)",
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
+          }}>
+            FOTO · PRODUCTO EN CONTEXTO
+          </span>
+        </div>
+
+        {/* Strip: precio ancla + descripción */}
+        <div style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-end",
+          padding: `24px ${PAD}px`,
+          gap: 16,
+        }}>
           <div>
             <div style={{
-              ...F.display,
-              fontSize: "clamp(48px, 16vw, 80px)",
-              color: C.cream,
-              lineHeight: 0.88,
-              letterSpacing: "-0.005em",
+              ...F.mono,
+              fontSize: "clamp(8px, 2.4vw, 11px)",
+              letterSpacing: "0.2em",
+              color: C.mostaza,
               textTransform: "uppercase",
+              marginBottom: 6,
             }}>
-              THIS<br />IS<br />SPRINGS.
+              DESDE
+            </div>
+            <div style={{
+              ...F.display,
+              fontSize: "clamp(32px, 11vw, 52px)",
+              color: C.cream,
+              lineHeight: 0.9,
+              letterSpacing: "-0.02em",
+            }}>
+              28,900
             </div>
           </div>
-          <div style={{ paddingTop: 8 }}>
-            <div style={{ ...F.mono, fontSize: "0.55rem", letterSpacing: "0.15em", color: C.mostaza, textTransform: "uppercase", marginBottom: 10 }}>
-              BUCARAMANGA · BGA
-            </div>
-            <div style={{ ...F.sans, fontSize: "0.72rem", fontStyle: "italic", color: C.cream, opacity: 0.72, lineHeight: 1.5 }}>
+          <div style={{ textAlign: "right", maxWidth: "50%" }}>
+            <div style={{
+              ...F.sans,
+              fontSize: "clamp(10px, 3vw, 13px)",
+              color: C.cream,
+              opacity: 0.65,
+              lineHeight: 1.65,
+              fontStyle: "italic",
+            }}>
               Dark kitchen.<br />Sin local físico.<br />La papa va a usted.
             </div>
           </div>
         </div>
 
-        {/* Marquee — CSS animation only, no JS */}
-        <div style={{ marginTop: 40, overflow: "hidden", borderTop: `1px solid rgba(242,232,213,0.15)`, paddingTop: 14 }}>
+        {/* Marquee — productos y precios reales */}
+        <div style={{
+          overflow: "hidden",
+          borderTop: "1px solid rgba(242,232,213,0.12)",
+          padding: "10px 0",
+        }}>
           <div style={{
             display: "flex",
             width: "max-content",
-            animation: "marquee 14s linear infinite",
+            animation: "marquee 22s linear infinite",
           }}>
-            <span style={{
-              ...F.mono, fontSize: "0.6rem", letterSpacing: "0.15em",
-              color: C.cream, opacity: 0.6, textTransform: "uppercase",
-              whiteSpace: "nowrap", paddingRight: "8vw",
-            }}>
-              {MARQUEE}{MARQUEE}
-            </span>
-            <span style={{
-              ...F.mono, fontSize: "0.6rem", letterSpacing: "0.15em",
-              color: C.cream, opacity: 0.6, textTransform: "uppercase",
-              whiteSpace: "nowrap", paddingRight: "8vw",
-            }}>
-              {MARQUEE}{MARQUEE}
-            </span>
+            {[0, 1].map((copy) => (
+              <span key={copy} style={{
+                ...F.mono,
+                fontSize: "clamp(9px, 2.8vw, 12px)",
+                letterSpacing: "0.2em",
+                color: C.cream,
+                opacity: 0.5,
+                textTransform: "uppercase",
+                whiteSpace: "nowrap",
+                paddingRight: "6vw",
+              }}>
+                {MARQUEE_PRODUCTOS}
+              </span>
+            ))}
           </div>
         </div>
 
       </section>
 
 
-      {/* ══ SECTION 4 — PEDIR YA ══ */}
-      <section style={{
-        background: C.tinta,
-        padding: "48px 5vw",
-        paddingBottom: "max(48px, env(safe-area-inset-bottom, 48px))",
-        minHeight: "70vh",
-        display: "flex",
-        flexDirection: "column",
-      }}>
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 4 — PEDIR YA
+          Arquitectura: foto combo con precio superpuesto
+                        + eyebrow + título + CTAs jerarquizados
+                        + info strip
+          Fondo tinta — contrasta con burgundy de sección 3
+      ══════════════════════════════════════════════════════════════ */}
+      <section style={{ background: C.tinta }}>
 
-        <div style={{ ...F.mono, fontSize: "0.62rem", letterSpacing: "0.22em", color: C.mostaza, textTransform: "uppercase", marginBottom: 8 }}>
-          ↗ SIN EXCUSAS · ESTO ES SPRINGS
+        {/* Foto combo + precio superpuesto */}
+        <div style={{
+          position: "relative",
+          height: "44vw",
+          background: "rgba(242,232,213,0.04)",
+          borderBottom: "1px solid rgba(242,232,213,0.08)",
+          overflow: "hidden",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}>
+          <span style={{
+            ...F.mono,
+            fontSize: "clamp(7px, 2vw, 10px)",
+            color: "rgba(242,232,213,0.18)",
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
+          }}>
+            FOTO · COMBO PARA DOS
+          </span>
+
+          {/* Precio superpuesto — esquina derecha */}
+          <div style={{
+            position: "absolute",
+            top: "50%",
+            right: PAD,
+            transform: "translateY(-50%)",
+            textAlign: "right",
+          }}>
+            <div style={{
+              ...F.mono,
+              fontSize: "clamp(8px, 2.4vw, 11px)",
+              letterSpacing: "0.2em",
+              color: C.mostaza,
+              textTransform: "uppercase",
+              marginBottom: 4,
+            }}>
+              PARA DOS · AHORRA 9,900
+            </div>
+            <div style={{
+              ...F.display,
+              fontSize: "clamp(36px, 12vw, 56px)",
+              color: C.cream,
+              lineHeight: 0.88,
+              letterSpacing: "-0.025em",
+            }}>
+              69,900
+            </div>
+          </div>
         </div>
 
-        <h2 style={{
-          ...F.display,
-          fontSize: "clamp(60px, 22vw, 110px)",
-          lineHeight: 0.88,
-          margin: "0 0 32px",
-          letterSpacing: "-0.005em",
-          textTransform: "uppercase",
-          color: C.cream,
-        }}>
-          PEDIR<br />YA.
-        </h2>
+        {/* Eyebrow + título */}
+        <div style={{ padding: `32px ${PAD}px 0` }}>
+          <div style={{
+            ...F.mono,
+            fontSize: "clamp(9px, 2.8vw, 11px)",
+            letterSpacing: "0.22em",
+            color: C.mostaza,
+            textTransform: "uppercase",
+            marginBottom: 12,
+          }}>
+            ↗ SIN EXCUSAS · ESTO ES SPRINGS
+          </div>
+          <h2 style={{
+            ...F.display,
+            fontSize: "clamp(56px, 22vw, 110px)",
+            lineHeight: 0.88,
+            margin: "0 0 32px",
+            letterSpacing: "-0.025em",
+            textTransform: "uppercase",
+            color: C.cream,
+          }}>
+            PEDIR<br />YA.
+          </h2>
+        </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          <a
-            href="#"
-            style={{
-              ...F.display, fontSize: "1.1rem", letterSpacing: "0.12em",
-              color: C.tinta, background: C.cream,
-              padding: "18px 22px", textDecoration: "none",
-              display: "flex", justifyContent: "space-between", alignItems: "center",
-              textTransform: "uppercase",
-            }}
-          >
+        {/* CTAs — PEDIDO DIRECTO primero, cero border-radius */}
+        <div style={{ padding: `0 ${PAD}px`, display: "flex", flexDirection: "column", gap: 8 }}>
+
+          {/* Primario — e-commerce propio */}
+          <Link href="/menu" style={{
+            ...F.display,
+            fontSize: "clamp(13px, 4.8vw, 19px)",
+            letterSpacing: "0.06em",
+            color: C.tinta,
+            background: C.cream,
+            padding: `0 ${PAD}px`,
+            textDecoration: "none",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            textTransform: "uppercase",
+            minHeight: 56,
+          }}>
+            PEDIDO DIRECTO
+            <span style={{ ...F.mono, fontSize: "clamp(8px, 2.4vw, 11px)", opacity: 0.55 }}>SIN INTERMEDIARIOS →</span>
+          </Link>
+
+          {/* Secundario — Rappi */}
+          <a href="#" style={{
+            ...F.display,
+            fontSize: "clamp(13px, 4.8vw, 19px)",
+            letterSpacing: "0.06em",
+            color: C.cream,
+            background: "transparent",
+            border: "1px solid rgba(242,232,213,0.18)",
+            padding: `0 ${PAD}px`,
+            textDecoration: "none",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            textTransform: "uppercase",
+            minHeight: 52,
+          }}>
             RAPPI <span>→</span>
           </a>
-          <a
-            href="#"
-            style={{
-              ...F.display, fontSize: "1.1rem", letterSpacing: "0.12em",
-              color: C.cream, background: "transparent",
-              border: `1px solid ${C.cream}`,
-              padding: "18px 22px", textDecoration: "none",
-              display: "flex", justifyContent: "space-between", alignItems: "center",
-              textTransform: "uppercase",
-            }}
-          >
+
+          {/* Secundario — DiDi Food */}
+          <a href="#" style={{
+            ...F.display,
+            fontSize: "clamp(13px, 4.8vw, 19px)",
+            letterSpacing: "0.06em",
+            color: C.cream,
+            background: "transparent",
+            border: "1px solid rgba(242,232,213,0.18)",
+            padding: `0 ${PAD}px`,
+            textDecoration: "none",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            textTransform: "uppercase",
+            minHeight: 52,
+          }}>
             DIDI FOOD <span>→</span>
           </a>
-          <Link
-            href="/menu"
-            style={{
-              ...F.display, fontSize: "1.1rem", letterSpacing: "0.12em",
-              color: C.mostaza, background: "transparent",
-              border: `1px solid ${C.mostaza}`,
-              padding: "18px 22px", textDecoration: "none",
-              display: "flex", justifyContent: "space-between", alignItems: "center",
-              textTransform: "uppercase",
-            }}
-          >
-            PEDIDO DIRECTO <span>→</span>
-          </Link>
         </div>
 
-        <div style={{ marginTop: "auto", paddingTop: 40, display: "flex", flexDirection: "column", gap: 12 }}>
+        {/* Info strip */}
+        <div style={{
+          padding: `40px ${PAD}px`,
+          paddingBottom: "max(40px, env(safe-area-inset-bottom, 40px))",
+          display: "flex",
+          flexDirection: "column",
+        }}>
           {([
-            { label: "Horario",           val: "12PM — 9PM",       sub: "Lunes a domingo" },
-            { label: "Zona",              val: "BUCARAMANGA",       sub: "Cabecera · Cañaveral · Sotomayor" },
-            { label: "Combo recomendado", val: "PARA DOS · 69,900", sub: "2 Jackets + 2 Bebidas · ahorra 9,900" },
+            { label: "Horario",           val: "12PM — 9PM",       sub: "Lunes a domingo"                        },
+            { label: "Zona",              val: "BUCARAMANGA",       sub: "Cabecera · Cañaveral · Sotomayor"       },
+            { label: "Combo recomendado", val: "PARA DOS · 69,900", sub: "2 Jackets + 2 Bebidas · ahorra 9,900"  },
           ] as const).map((item) => (
-            <div key={item.label} style={{ borderTop: `1px solid rgba(242,232,213,0.12)`, paddingTop: 12 }}>
-              <div style={{ ...F.mono, fontSize: "0.5rem", letterSpacing: "0.22em", color: C.mostaza, textTransform: "uppercase", marginBottom: 2 }}>{item.label}</div>
-              <div style={{ ...F.display, fontSize: "1.05rem", letterSpacing: "0.05em", color: C.cream }}>{item.val}</div>
-              <div style={{ ...F.sans, fontSize: "0.7rem", color: C.cream, opacity: 0.55, marginTop: 2 }}>{item.sub}</div>
+            <div key={item.label} style={{ borderTop: "1px solid rgba(242,232,213,0.08)", padding: "14px 0" }}>
+              <div style={{
+                ...F.mono,
+                fontSize: "clamp(7px, 2vw, 10px)",
+                letterSpacing: "0.22em",
+                color: C.mostaza,
+                textTransform: "uppercase",
+                marginBottom: 4,
+              }}>
+                {item.label}
+              </div>
+              <div style={{
+                ...F.display,
+                fontSize: "clamp(14px, 5vw, 20px)",
+                letterSpacing: "0.04em",
+                color: C.cream,
+              }}>
+                {item.val}
+              </div>
+              <div style={{
+                ...F.sans,
+                fontSize: "clamp(10px, 3vw, 13px)",
+                color: C.cream,
+                opacity: 0.4,
+                marginTop: 2,
+              }}>
+                {item.sub}
+              </div>
             </div>
           ))}
         </div>
