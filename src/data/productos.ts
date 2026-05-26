@@ -208,7 +208,7 @@ export const productos: Producto[] = [
     precio: 5500,
     categoria: "bebida",
     disponible: true,
-    imagen_url: null,
+    imagen_url: "/images/bebida-limonada-panela.png",
     orden: 41,
   },
   {
@@ -218,7 +218,7 @@ export const productos: Producto[] = [
     precio: 3000,
     categoria: "bebida",
     disponible: true,
-    imagen_url: null,
+    imagen_url: "/images/bebida-agua.png",
     orden: 42,
   },
   {
@@ -228,7 +228,7 @@ export const productos: Producto[] = [
     precio: 4000,
     categoria: "bebida",
     disponible: true,
-    imagen_url: null,
+    imagen_url: "/images/bebida-gaseosa.png",
     orden: 43,
   },
 ];

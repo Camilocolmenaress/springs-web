@@ -41,9 +41,10 @@ interface Props {
   onSave: () => void;
   onExport: () => void;
   onReset: () => void;
+  categoria?: string;
 }
 
-export default function DevPanel({ config, saved, onUpdate, onSave, onExport, onReset }: Props) {
+export default function DevPanel({ config, saved, onUpdate, onSave, onExport, onReset, categoria }: Props) {
   const [collapsed, setCollapsed] = useState(false);
   const [openZones, setOpenZones] = useState<Record<string, boolean>>({});
   const [copied, setCopied] = useState(false);
@@ -99,7 +100,11 @@ export default function DevPanel({ config, saved, onUpdate, onSave, onExport, on
         <>
           {/* Zones */}
           <div style={{ overflowY: "auto", flex: 1, padding: "6px 0" }}>
-            {Object.entries(config.zones).map(([zoneKey, zone]) => (
+            {Object.entries(config.zones).filter(([zoneKey]) =>
+              zoneKey === "arrows" ||
+              !categoria ||
+              zoneKey.startsWith(`${categoria}_`)
+            ).map(([zoneKey, zone]) => (
               <div key={zoneKey}>
                 {/* Zone header */}
                 <div
