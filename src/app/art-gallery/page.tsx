@@ -139,6 +139,10 @@ export default function ArtGallery() {
     galeriaGridY:  sv(z, "galeria",           "grid",         "top",        0),
     fotoGrandeFlex:sv(z, "galeria",           "fotoGrande",   "flex",       3),
     fotosSmallFlex:sv(z, "galeria",           "fotosPequenas","flex",       2),
+    springsCrewFs:   sv(z, "galeria",         "springsCrew",  "fontSize",   1.2),
+    springsCrewRot:  sv(z, "galeria",         "springsCrew",  "rotation",   -6),
+    springsCrewLeft: sv(z, "galeria",         "springsCrew",  "left",       0),
+    springsCrewTop:  sv(z, "galeria",         "springsCrew",  "top",        0),
     barcodeSize:     sv(z, "galeria",         "barcode",      "size",       60),
     barcodeLeft:     sv(z, "galeria",         "barcode",      "left",       0),
     barcodeTop:      sv(z, "galeria",         "barcode",      "top",        0),
@@ -551,10 +555,23 @@ export default function ArtGallery() {
                   {/* Quote — independiente */}
                   <div style={{ transform: `translate(${d.quoteLeft}px, ${d.quoteTop}px)` }}>
                     <span style={{ ...F.sans, fontSize: "1.2rem", color: C.cream, lineHeight: 0.8, display: "block", marginBottom: 2 }}>"</span>
-                    <p style={{ ...F.sans, fontSize: `${d.quoteFs}rem`, fontWeight: 500, color: C.cream, lineHeight: 1.5, margin: "0 0 4px", whiteSpace: "pre-line" }}>
+                    <p style={{ ...F.sans, fontSize: `${d.quoteFs}rem`, fontWeight: 500, color: C.cream, lineHeight: 1.5, margin: 0, whiteSpace: "pre-line" }}>
                       {exhibit.quote}
                     </p>
-                    <div style={{ ...F.sans, fontSize: "0.5rem", fontStyle: "italic", color: C.dim }}>Springs Crew.</div>
+                  </div>
+
+                  {/* Springs Crew — absolutamente independiente */}
+                  <div style={{
+                    position: "absolute",
+                    bottom: 80, left: 0,
+                    transform: `translate(${d.springsCrewLeft}px, ${d.springsCrewTop}px) rotate(${d.springsCrewRot}deg)`,
+                    fontFamily: "var(--font-marker)",
+                    fontSize: `${d.springsCrewFs}rem`,
+                    color: "#6B1419",
+                    whiteSpace: "nowrap",
+                    pointerEvents: "none",
+                  }}>
+                    Springs Crew.
                   </div>
 
                   {/* Barcode — position absolute, no afecta el flujo */}
