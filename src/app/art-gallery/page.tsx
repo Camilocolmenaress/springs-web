@@ -443,7 +443,7 @@ export default function ArtGallery() {
                     </div>
                   </div>
 
-                  <div style={{ height: "1px", background: C.faint, marginBottom: 14, width: "80%" }} />
+                  <div style={{ height: "1px", background: "rgba(242,232,213,0.25)", marginBottom: 14 }} />
 
                   <div style={{ transform: `translate(${d.ingredientesLeft}px, ${d.ingredientesTop}px)`, marginBottom: 12 }}>
                     <div style={{ display: "flex", flexDirection: "column", gap: d.ingredientesGap }}>
@@ -495,11 +495,11 @@ export default function ArtGallery() {
 
                 {/* COLUMNA FOTOS */}
                 <div style={{
-                  width: 370,
+                  width: 460,
                   paddingTop: d.navH,
                   paddingRight: 14,
                   paddingBottom: 24,
-                  paddingLeft: 0,
+                  paddingLeft: 8,
                   display: "flex", flexDirection: "column",
                   flexShrink: 0,
                 }}>
