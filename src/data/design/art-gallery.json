@@ -145,8 +145,7 @@
         },
         "barcode": {
           "props": {
-            "height":   { "value": 20,   "unit": "px",  "min": 10,   "max": 120, "step": 2 },
-            "width":    { "value": 72,   "unit": "px",  "min": 20,   "max": 200, "step": 2 },
+            "size":     { "value": 60,   "unit": "px",  "min": 20,   "max": 200, "step": 2 },
             "left":     { "value": 0,    "unit": "px",  "min": -200, "max": 200, "step": 2 },
             "top":      { "value": -94,  "unit": "px",  "min": -200, "max": 200, "step": 2 },
             "fontSize": { "value": 0.36, "unit": "rem", "min": 0.2,  "max": 0.8, "step": 0.02 }

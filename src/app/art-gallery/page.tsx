@@ -139,8 +139,7 @@ export default function ArtGallery() {
     galeriaGridY:  sv(z, "galeria",           "grid",         "top",        0),
     fotoGrandeFlex:sv(z, "galeria",           "fotoGrande",   "flex",       3),
     fotosSmallFlex:sv(z, "galeria",           "fotosPequenas","flex",       2),
-    barcodeH:      sv(z, "galeria",           "barcode",      "height",     44),
-    barcodeW:      sv(z, "galeria",           "barcode",      "width",      52),
+    barcodeSize:   sv(z, "galeria",           "barcode",      "size",       60),
     barcodeLeft:   sv(z, "galeria",           "barcode",      "left",       0),
     barcodeTop:    sv(z, "galeria",           "barcode",      "top",        0),
     barcodeLabelFs:sv(z, "galeria",           "barcode",      "fontSize",   0.36),
@@ -557,18 +556,18 @@ export default function ArtGallery() {
 
                   {/* Barcode — independiente, vertical */}
                   <div style={{ transform: `translate(${d.barcodeLeft}px, ${d.barcodeTop}px)`, display: "flex", gap: 6, alignItems: "flex-start", flexShrink: 0 }}>
-                    <div style={{ width: d.barcodeH, height: d.barcodeW, position: "relative", flexShrink: 0 }}>
-                      <img
-                        src="/images/barcode-springs.png" alt=""
-                        style={{
-                          position: "absolute",
-                          top: "50%", left: "50%",
-                          width: d.barcodeW, height: d.barcodeH,
-                          objectFit: "cover", opacity: 0.75,
-                          transform: "translate(-50%, -50%) rotate(90deg)",
-                        }}
-                      />
-                    </div>
+                    <img
+                      src="/images/barcode-springs.png" alt=""
+                      style={{
+                        height: d.barcodeSize,
+                        width: "auto",
+                        opacity: 0.75,
+                        display: "block",
+                        transform: "rotate(90deg)",
+                        transformOrigin: "center center",
+                        flexShrink: 0,
+                      }}
+                    />
                     <div style={{ ...F.mono, lineHeight: 1.6 }}>
                       <div style={{ fontSize: `${d.barcodeLabelFs * 1.2}rem`, color: C.cream, marginBottom: 1 }}>❝❞</div>
                       <div style={{ fontSize: `${d.barcodeLabelFs}rem`, letterSpacing: "0.1em", color: C.cream }}>SPRINGS</div>
