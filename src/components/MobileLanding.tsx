@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -46,6 +46,11 @@ function SlideText({
 }
 
 export default function MobileLanding() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
+
   return (
     <div
       className="fixed inset-0 overflow-y-auto overflow-x-hidden bg-tinta font-sans text-cream"
