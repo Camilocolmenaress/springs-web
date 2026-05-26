@@ -65,7 +65,7 @@ export default function MobileLanding() {
 
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
-            src="/images/la-fija.png"
+            src="/images/hero-jacket.png"
             alt="La Fija — Jacket de autor"
             className="w-full h-full object-cover opacity-90"
           />
