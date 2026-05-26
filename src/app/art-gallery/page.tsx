@@ -134,6 +134,7 @@ export default function ArtGallery() {
     galeriaGap:    sv(z, "galeria",           "columna",      "gap",        6),
     galeriaLeft:   sv(z, "galeria",           "columna",      "left",       8),
     galeriaRight:  sv(z, "galeria",           "columna",      "right",      14),
+    galeriaScale:  sv(z, "galeria",           "columna",      "scale",      1),
     fotoGrandeFlex:sv(z, "galeria",           "fotoGrande",   "flex",       3),
     fotosSmallFlex:sv(z, "galeria",           "fotosPequenas","flex",       2),
     barcodeH:      sv(z, "galeria",           "barcode",      "height",     44),
@@ -515,19 +516,26 @@ export default function ArtGallery() {
                   display: "flex", flexDirection: "column",
                   flexShrink: 0,
                 }}>
-                  {/* Grid de 3 fotos */}
-                  <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: d.galeriaGap, marginBottom: 14, minHeight: 0 }}>
-                    {/* Foto grande arriba */}
-                    <div style={{ flex: d.fotoGrandeFlex, overflow: "hidden", minHeight: 0 }}>
-                      <img src={exhibit.gallery[0]} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-                    </div>
-                    {/* Dos fotos abajo */}
-                    <div style={{ flex: d.fotosSmallFlex, display: "flex", gap: d.galeriaGap, minHeight: 0 }}>
-                      <div style={{ flex: 1, overflow: "hidden" }}>
-                        <img src={exhibit.gallery[1]} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                  {/* Grid de 3 fotos — scale conjunto */}
+                  <div style={{ flex: 1, minHeight: 0, marginBottom: 14, overflow: "hidden" }}>
+                    <div style={{
+                      width: "100%", height: "100%",
+                      transform: `scale(${d.galeriaScale})`,
+                      transformOrigin: "top left",
+                      display: "flex", flexDirection: "column", gap: d.galeriaGap,
+                    }}>
+                      {/* Foto grande arriba */}
+                      <div style={{ flex: d.fotoGrandeFlex, overflow: "hidden", minHeight: 0 }}>
+                        <img src={exhibit.gallery[0]} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                       </div>
-                      <div style={{ flex: 1, overflow: "hidden" }}>
-                        <img src={exhibit.gallery[2]} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                      {/* Dos fotos abajo */}
+                      <div style={{ flex: d.fotosSmallFlex, display: "flex", gap: d.galeriaGap, minHeight: 0 }}>
+                        <div style={{ flex: 1, overflow: "hidden" }}>
+                          <img src={exhibit.gallery[1]} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                        </div>
+                        <div style={{ flex: 1, overflow: "hidden" }}>
+                          <img src={exhibit.gallery[2]} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                        </div>
                       </div>
                     </div>
                   </div>
