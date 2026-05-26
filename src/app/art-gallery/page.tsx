@@ -143,6 +143,7 @@ export default function ArtGallery() {
     barcodeW:      sv(z, "galeria",           "barcode",      "width",      52),
     barcodeLeft:   sv(z, "galeria",           "barcode",      "left",       0),
     barcodeTop:    sv(z, "galeria",           "barcode",      "top",        0),
+    barcodeLabelFs:sv(z, "galeria",           "barcode",      "fontSize",   0.36),
     // foto
     imageH:        sv(z, "foto",              "imagen",       "height",     90),
     imageOffsetY:  sv(z, "foto",              "imagen",       "top",        0),
@@ -545,24 +546,33 @@ export default function ArtGallery() {
                     </div>
                   </div>
 
-                  {/* Quote + barcode */}
-                  <div style={{ transform: `translate(${d.quoteLeft}px, ${d.quoteTop}px)`, display: "flex", gap: 10, alignItems: "flex-end" }}>
-                    <div style={{ flex: 1 }}>
-                      <span style={{ ...F.sans, fontSize: "1.2rem", color: C.cream, lineHeight: 0.8, display: "block", marginBottom: 2 }}>"</span>
-                      <p style={{ ...F.sans, fontSize: `${d.quoteFs}rem`, fontWeight: 500, color: C.cream, lineHeight: 1.5, margin: "0 0 4px", whiteSpace: "pre-line" }}>
-                        {exhibit.quote}
-                      </p>
-                      <div style={{ ...F.sans, fontSize: "0.5rem", fontStyle: "italic", color: C.dim }}>Springs Crew.</div>
+                  {/* Quote — independiente */}
+                  <div style={{ transform: `translate(${d.quoteLeft}px, ${d.quoteTop}px)` }}>
+                    <span style={{ ...F.sans, fontSize: "1.2rem", color: C.cream, lineHeight: 0.8, display: "block", marginBottom: 2 }}>"</span>
+                    <p style={{ ...F.sans, fontSize: `${d.quoteFs}rem`, fontWeight: 500, color: C.cream, lineHeight: 1.5, margin: "0 0 4px", whiteSpace: "pre-line" }}>
+                      {exhibit.quote}
+                    </p>
+                    <div style={{ ...F.sans, fontSize: "0.5rem", fontStyle: "italic", color: C.dim }}>Springs Crew.</div>
+                  </div>
+
+                  {/* Barcode — independiente, vertical */}
+                  <div style={{ transform: `translate(${d.barcodeLeft}px, ${d.barcodeTop}px)`, display: "flex", gap: 6, alignItems: "flex-start", flexShrink: 0 }}>
+                    <div style={{ width: d.barcodeW, height: d.barcodeH, overflow: "hidden", flexShrink: 0 }}>
+                      <img
+                        src="/images/barcode-springs.png" alt=""
+                        style={{
+                          width: d.barcodeH, height: d.barcodeW,
+                          objectFit: "cover", opacity: 0.75,
+                          transform: "rotate(90deg)",
+                          transformOrigin: `${d.barcodeH / 2}px ${d.barcodeH / 2}px`,
+                        }}
+                      />
                     </div>
-                    {/* Barcode */}
-                    <div style={{ transform: `translate(${d.barcodeLeft}px, ${d.barcodeTop}px)`, display: "flex", gap: 5, alignItems: "flex-start", flexShrink: 0 }}>
-                      <img src="/images/barcode-springs.png" alt="" style={{ height: d.barcodeH, width: d.barcodeW, opacity: 0.75, objectFit: "cover" }} />
-                      <div style={{ ...F.mono, lineHeight: 1.6 }}>
-                        <div style={{ fontSize: "0.46rem", color: C.cream, marginBottom: 1 }}>❝❞</div>
-                        <div style={{ fontSize: "0.36rem", letterSpacing: "0.1em", color: C.cream }}>SPRINGS</div>
-                        <div style={{ fontSize: "0.36rem", letterSpacing: "0.1em", color: C.cream }}>ART GALLERY</div>
-                        <div style={{ fontSize: "0.36rem", letterSpacing: "0.1em", color: C.dim }}>{exhibit.id}</div>
-                      </div>
+                    <div style={{ ...F.mono, lineHeight: 1.6 }}>
+                      <div style={{ fontSize: `${d.barcodeLabelFs * 1.2}rem`, color: C.cream, marginBottom: 1 }}>❝❞</div>
+                      <div style={{ fontSize: `${d.barcodeLabelFs}rem`, letterSpacing: "0.1em", color: C.cream }}>SPRINGS</div>
+                      <div style={{ fontSize: `${d.barcodeLabelFs}rem`, letterSpacing: "0.1em", color: C.cream }}>ART GALLERY</div>
+                      <div style={{ fontSize: `${d.barcodeLabelFs}rem`, letterSpacing: "0.1em", color: C.dim }}>{exhibit.id}</div>
                     </div>
                   </div>
                 </div>
