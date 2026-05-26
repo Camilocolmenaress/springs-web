@@ -10,7 +10,7 @@
         },
         "nav": {
           "props": {
-            "height":   { "value": 60,  "unit": "px",  "min": 32,  "max": 100, "step": 1 },
+            "height":   { "value": 79,  "unit": "px",  "min": 32,  "max": 100, "step": 1 },
             "fontSize": { "value": 1.85, "unit": "rem", "min": 0.6, "max": 4,   "step": 0.05 }
           }
         },
@@ -36,7 +36,7 @@
             "globeRadius": { "value": 33,  "unit": "px",  "min": 8,   "max": 45,   "step": 0.5 },
             "textRadius":  { "value": 46,  "unit": "px",  "min": 25,  "max": 55,   "step": 0.5 },
             "fontSize":    { "value": 8,   "unit": "px",  "min": 4,   "max": 14,   "step": 0.5 },
-            "textOffset":  { "value": 16,  "unit": "%",   "min": 0,   "max": 100,  "step": 1 },
+            "textOffset":  { "value": 14,  "unit": "%",   "min": 0,   "max": 100,  "step": 1 },
             "left":        { "value": 10,  "unit": "px",  "min": -200, "max": 200, "step": 2 },
             "top":         { "value": 18,  "unit": "px",  "min": -200, "max": 200, "step": 2 }
           }
@@ -70,7 +70,7 @@
         },
         "location": {
           "props": {
-            "fontSize": { "value": 0.44, "unit": "rem", "min": 0.2,  "max": 1,    "step": 0.01 },
+            "fontSize": { "value": 0.66, "unit": "rem", "min": 0.2,  "max": 1,    "step": 0.01 },
             "left":     { "value": 0,    "unit": "px",  "min": -100, "max": 100,  "step": 1 },
             "top":      { "value": 0,    "unit": "px",  "min": -100, "max": 100,  "step": 1 }
           }
@@ -103,10 +103,10 @@
         },
         "placa": {
           "props": {
-            "bottom":   { "value": 136,  "unit": "px",  "min": 0,   "max": 300, "step": 1 },
-            "fontSize": { "value": 1.25, "unit": "rem", "min": 0.5, "max": 2.5, "step": 0.05 },
-            "paddingH": { "value": 25,   "unit": "px",  "min": 8,   "max": 80,  "step": 1 },
-            "paddingV": { "value": 10,   "unit": "px",  "min": 4,   "max": 40,  "step": 1 }
+            "bottom":   { "value": 123,  "unit": "px",  "min": 0,   "max": 300, "step": 1 },
+            "fontSize": { "value": 1.3,  "unit": "rem", "min": 0.5, "max": 2.5, "step": 0.05 },
+            "paddingH": { "value": 22,   "unit": "px",  "min": 8,   "max": 80,  "step": 1 },
+            "paddingV": { "value": 9,    "unit": "px",  "min": 4,   "max": 40,  "step": 1 }
           }
         }
       }
@@ -117,29 +117,29 @@
       "elements": {
         "paddingInfo": {
           "props": {
-            "top":        { "value": 80, "unit": "px", "min": 8,  "max": 120, "step": 1 },
-            "horizontal": { "value": 27, "unit": "px", "min": 8,  "max": 60,  "step": 1 }
+            "top":        { "value": 120, "unit": "px", "min": 8,  "max": 200, "step": 1 },
+            "horizontal": { "value": 32,  "unit": "px", "min": 8,  "max": 60,  "step": 1 }
           }
         },
         "titulo": {
           "props": {
-            "fontSize": { "value": 4.5, "unit": "rem", "min": 1.5, "max": 7,   "step": 0.1 }
+            "fontSize": { "value": 4.6, "unit": "rem", "min": 1.5, "max": 7,   "step": 0.1 }
           }
         },
         "subtitulo": {
           "props": {
-            "fontSize": { "value": 0.69, "unit": "rem", "min": 0.25, "max": 1.2, "step": 0.01 }
+            "fontSize": { "value": 0.74, "unit": "rem", "min": 0.25, "max": 1.2, "step": 0.01 }
           }
         },
         "ingredientes": {
           "props": {
-            "fontSize": { "value": 0.83, "unit": "rem", "min": 0.25, "max": 1.2, "step": 0.01 },
+            "fontSize": { "value": 0.81, "unit": "rem", "min": 0.25, "max": 1.2, "step": 0.01 },
             "gap":      { "value": 3,    "unit": "px",  "min": 1,    "max": 20,  "step": 1 }
           }
         },
         "descripcion": {
           "props": {
-            "fontSize": { "value": 0.65, "unit": "rem", "min": 0.25, "max": 1.2, "step": 0.01 }
+            "fontSize": { "value": 0.66, "unit": "rem", "min": 0.25, "max": 1.2, "step": 0.01 }
           }
         },
         "tagline": {
@@ -154,7 +154,7 @@
         },
         "specs": {
           "props": {
-            "fontSize": { "value": 0.7, "unit": "rem", "min": 0.25, "max": 1.2, "step": 0.01 }
+            "fontSize": { "value": 0.71, "unit": "rem", "min": 0.25, "max": 1.2, "step": 0.01 }
           }
         }
       }
