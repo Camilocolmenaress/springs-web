@@ -262,7 +262,7 @@ export default function ArtGallery() {
           </div>
         </div>
 
-        <div style={{ width: 32, height: "1px", background: "rgba(242,232,213,0.35)", marginBottom: 14 }} />
+        <div style={{ width: 48, height: "1px", background: "rgba(242,232,213,0.35)", marginBottom: 14 }} />
 
         {/* Jacket series */}
         <div style={{ transform: `translate(${d.jacketSeriesX}px, ${d.jacketSeriesY}px)`, marginBottom: 4 }}>
@@ -270,7 +270,7 @@ export default function ArtGallery() {
           <div style={{ ...F.mono, fontSize: `${d.jacketSeriesFs}rem`, letterSpacing: "0.14em", color: C.dim }}>{ex.year}</div>
         </div>
 
-        <div style={{ width: 32, height: "1px", background: "rgba(242,232,213,0.35)", margin: "14px 0" }} />
+        <div style={{ width: 48, height: "1px", background: "rgba(242,232,213,0.35)", margin: "14px 0" }} />
 
         {/* Location */}
         <div style={{ transform: `translate(${d.locationX}px, ${d.locationY}px)`, marginBottom: 22 }}>
@@ -278,7 +278,7 @@ export default function ArtGallery() {
             <div style={{ ...F.mono, fontSize: `${d.locationFs}rem`, letterSpacing: "0.1em", color: C.cream }}>BUCARAMANGA</div>
             <div style={{ ...F.mono, fontSize: `${d.locationFs}rem`, letterSpacing: "0.1em", color: C.dim }}>COLOMBIA</div>
           </div>
-          <div style={{ width: 32, height: "1px", background: "rgba(242,232,213,0.35)", marginBottom: 8 }} />
+          <div style={{ width: 48, height: "1px", background: "rgba(242,232,213,0.35)", marginBottom: 8 }} />
           <div style={{ ...F.mono, fontSize: `${d.locationFs}rem`, color: C.cream }}>7.1254° N</div>
           <div style={{ ...F.mono, fontSize: `${d.locationFs}rem`, color: C.cream }}>73.1198° W</div>
         </div>
