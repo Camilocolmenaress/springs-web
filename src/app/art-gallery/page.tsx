@@ -102,6 +102,8 @@ export default function ArtGallery() {
     textRadius:    sv(z, "sidebar_contenido", "globe",        "textRadius",  46),
     globeFontSize: sv(z, "sidebar_contenido", "globe",        "fontSize",    8),
     globeTextOff:  sv(z, "sidebar_contenido", "globe",        "textOffset",  16),
+    globeOffsetX:  sv(z, "sidebar_contenido", "globe",        "left",        0),
+    globeOffsetY:  sv(z, "sidebar_contenido", "globe",        "top",         0),
     sidebarPadT:   sv(z, "sidebar_contenido", "paddingSidebar","top",       32),
     sidebarPadH:   sv(z, "sidebar_contenido", "paddingSidebar","horizontal",18),
     exhibitNumFs:  sv(z, "sidebar_contenido", "exhibitNum",   "fontSize",   3.8),
@@ -212,7 +214,7 @@ export default function ArtGallery() {
       }}>
 
         {/* Globe con texto circular */}
-        <div style={{ width: d.globeSize, height: d.globeSize, flexShrink: 0, marginBottom: 18 }}>
+        <div style={{ width: d.globeSize, height: d.globeSize, flexShrink: 0, marginBottom: 18, transform: `translate(${d.globeOffsetX}px, ${d.globeOffsetY}px)` }}>
           <svg viewBox="0 0 110 110" width="100%" height="100%">
             <circle cx="55" cy="55" r={gr} fill="none" stroke={C.dim} strokeWidth="1.2" opacity={0.8}/>
             <motion.g
