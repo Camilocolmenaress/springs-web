@@ -105,11 +105,24 @@ export default function ArtGallery() {
     globeTextOff:  sv(z, "sidebar_contenido", "globe",        "textOffset",  16),
     globeOffsetX:  sv(z, "sidebar_contenido", "globe",        "left",        0),
     globeOffsetY:  sv(z, "sidebar_contenido", "globe",        "top",         0),
-    sidebarPadT:   sv(z, "sidebar_contenido", "paddingSidebar","top",       32),
-    sidebarPadH:   sv(z, "sidebar_contenido", "paddingSidebar","horizontal",18),
+    sidebarPadT:   sv(z, "sidebar_contenido", "paddingSidebar","top",        32),
+    sidebarPadH:   sv(z, "sidebar_contenido", "paddingSidebar","horizontal", 18),
+    exhibitLabelFs:sv(z, "sidebar_contenido", "exhibitLabel", "fontSize",   0.44),
+    exhibitLabelX: sv(z, "sidebar_contenido", "exhibitLabel", "left",       0),
+    exhibitLabelY: sv(z, "sidebar_contenido", "exhibitLabel", "top",        0),
     exhibitNumFs:  sv(z, "sidebar_contenido", "exhibitNum",   "fontSize",   3.8),
+    exhibitNumX:   sv(z, "sidebar_contenido", "exhibitNum",   "left",       0),
+    exhibitNumY:   sv(z, "sidebar_contenido", "exhibitNum",   "top",        0),
+    jacketSeriesFs:sv(z, "sidebar_contenido", "jacketSeries", "fontSize",   0.44),
+    jacketSeriesX: sv(z, "sidebar_contenido", "jacketSeries", "left",       0),
+    jacketSeriesY: sv(z, "sidebar_contenido", "jacketSeries", "top",        0),
+    locationFs:    sv(z, "sidebar_contenido", "location",     "fontSize",   0.44),
+    locationX:     sv(z, "sidebar_contenido", "location",     "left",       0),
+    locationY:     sv(z, "sidebar_contenido", "location",     "top",        0),
     exhibitListFs: sv(z, "sidebar_contenido", "exhibitList",  "fontSize",   0.39),
     exhibitListGap:sv(z, "sidebar_contenido", "exhibitList",  "gap",        8),
+    exhibitListX:  sv(z, "sidebar_contenido", "exhibitList",  "left",       0),
+    exhibitListY:  sv(z, "sidebar_contenido", "exhibitList",  "top",        0),
     // foto
     imageH:        sv(z, "foto",              "imagen",       "height",     90),
     imageOffsetY:  sv(z, "foto",              "imagen",       "top",        0),
@@ -237,34 +250,42 @@ export default function ArtGallery() {
           </svg>
         </div>
 
+        {/* Exhibit label */}
+        <div style={{ transform: `translate(${d.exhibitLabelX}px, ${d.exhibitLabelY}px)`, marginBottom: 2 }}>
+          <div style={{ ...F.mono, fontSize: `${d.exhibitLabelFs}rem`, letterSpacing: "0.2em", color: C.dim }}>EXHIBIT</div>
+        </div>
+
         {/* Exhibit number */}
-        <div style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.2em", color: C.dim, marginBottom: 2 }}>EXHIBIT</div>
-        <div style={{ ...F.display, fontSize: `${d.exhibitNumFs}rem`, color: C.burgundy, lineHeight: 1, marginBottom: 14 }}>
-          {ex.id}
+        <div style={{ transform: `translate(${d.exhibitNumX}px, ${d.exhibitNumY}px)`, marginBottom: 14 }}>
+          <div style={{ ...F.display, fontSize: `${d.exhibitNumFs}rem`, color: C.burgundy, lineHeight: 1 }}>
+            {ex.id}
+          </div>
         </div>
 
         <div style={{ width: 24, height: "1px", background: C.faint, marginBottom: 14 }} />
 
-        <div style={{ marginBottom: 4 }}>
-          <div style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.14em", color: C.cream }}>JACKET SERIES</div>
-          <div style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.14em", color: C.dim }}>{ex.year}</div>
+        {/* Jacket series */}
+        <div style={{ transform: `translate(${d.jacketSeriesX}px, ${d.jacketSeriesY}px)`, marginBottom: 4 }}>
+          <div style={{ ...F.mono, fontSize: `${d.jacketSeriesFs}rem`, letterSpacing: "0.14em", color: C.cream }}>JACKET SERIES</div>
+          <div style={{ ...F.mono, fontSize: `${d.jacketSeriesFs}rem`, letterSpacing: "0.14em", color: C.dim }}>{ex.year}</div>
         </div>
 
         <div style={{ width: 24, height: "1px", background: C.fainter, margin: "14px 0" }} />
 
-        <div style={{ marginBottom: 4 }}>
-          <div style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.1em", color: C.cream }}>BARBOSA</div>
-          <div style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.1em", color: C.dim }}>COLOMBIA</div>
-        </div>
-        <div style={{ marginBottom: 22 }}>
-          <div style={{ ...F.mono, fontSize: "0.39rem", color: C.cream }}>7.0631° N</div>
-          <div style={{ ...F.mono, fontSize: "0.39rem", color: C.cream }}>73.0859° W</div>
+        {/* Location */}
+        <div style={{ transform: `translate(${d.locationX}px, ${d.locationY}px)`, marginBottom: 22 }}>
+          <div style={{ marginBottom: 4 }}>
+            <div style={{ ...F.mono, fontSize: `${d.locationFs}rem`, letterSpacing: "0.1em", color: C.cream }}>BARBOSA</div>
+            <div style={{ ...F.mono, fontSize: `${d.locationFs}rem`, letterSpacing: "0.1em", color: C.dim }}>COLOMBIA</div>
+          </div>
+          <div style={{ ...F.mono, fontSize: `${d.locationFs}rem`, color: C.cream }}>7.0631° N</div>
+          <div style={{ ...F.mono, fontSize: `${d.locationFs}rem`, color: C.cream }}>73.0859° W</div>
         </div>
 
         <div style={{ width: 7, height: 7, borderRadius: "50%", background: C.burgundy, marginBottom: 16 }} />
 
         {/* Exhibit list */}
-        <div style={{ display: "flex", flexDirection: "column", gap: d.exhibitListGap }}>
+        <div style={{ transform: `translate(${d.exhibitListX}px, ${d.exhibitListY}px)`, display: "flex", flexDirection: "column", gap: d.exhibitListGap }}>
           {EXHIBITS.map((e, i) => (
             <button key={e.id} onClick={() => goTo(i)} style={{
               background: "none", border: "none", cursor: "pointer",

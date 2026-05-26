@@ -47,15 +47,40 @@
             "horizontal": { "value": 15, "unit": "px", "min": 8,  "max": 40, "step": 1 }
           }
         },
+        "exhibitLabel": {
+          "props": {
+            "fontSize": { "value": 0.44, "unit": "rem", "min": 0.2,  "max": 1,    "step": 0.01 },
+            "left":     { "value": 0,    "unit": "px",  "min": -100, "max": 100,  "step": 1 },
+            "top":      { "value": 0,    "unit": "px",  "min": -100, "max": 100,  "step": 1 }
+          }
+        },
         "exhibitNum": {
           "props": {
-            "fontSize": { "value": 4.4, "unit": "rem", "min": 1, "max": 8, "step": 0.1 }
+            "fontSize": { "value": 4.4,  "unit": "rem", "min": 1,    "max": 8,    "step": 0.1 },
+            "left":     { "value": 0,    "unit": "px",  "min": -100, "max": 100,  "step": 1 },
+            "top":      { "value": 0,    "unit": "px",  "min": -100, "max": 100,  "step": 1 }
+          }
+        },
+        "jacketSeries": {
+          "props": {
+            "fontSize": { "value": 0.44, "unit": "rem", "min": 0.2,  "max": 1,    "step": 0.01 },
+            "left":     { "value": 0,    "unit": "px",  "min": -100, "max": 100,  "step": 1 },
+            "top":      { "value": 0,    "unit": "px",  "min": -100, "max": 100,  "step": 1 }
+          }
+        },
+        "location": {
+          "props": {
+            "fontSize": { "value": 0.44, "unit": "rem", "min": 0.2,  "max": 1,    "step": 0.01 },
+            "left":     { "value": 0,    "unit": "px",  "min": -100, "max": 100,  "step": 1 },
+            "top":      { "value": 0,    "unit": "px",  "min": -100, "max": 100,  "step": 1 }
           }
         },
         "exhibitList": {
           "props": {
-            "fontSize": { "value": 0.66, "unit": "rem", "min": 0.2,  "max": 0.9, "step": 0.01 },
-            "gap":      { "value": 6,    "unit": "px",  "min": 2,    "max": 24,  "step": 1 }
+            "fontSize": { "value": 0.66, "unit": "rem", "min": 0.2,  "max": 0.9,  "step": 0.01 },
+            "gap":      { "value": 6,    "unit": "px",  "min": 2,    "max": 24,   "step": 1 },
+            "left":     { "value": 0,    "unit": "px",  "min": -100, "max": 100,  "step": 1 },
+            "top":      { "value": 0,    "unit": "px",  "min": -100, "max": 100,  "step": 1 }
           }
         }
       }
