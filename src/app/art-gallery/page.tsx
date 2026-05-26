@@ -135,6 +135,8 @@ export default function ArtGallery() {
     galeriaLeft:   sv(z, "galeria",           "columna",      "left",       8),
     galeriaRight:  sv(z, "galeria",           "columna",      "right",      14),
     galeriaScale:  sv(z, "galeria",           "columna",      "scale",      1),
+    galeriaGridX:  sv(z, "galeria",           "grid",         "left",       0),
+    galeriaGridY:  sv(z, "galeria",           "grid",         "top",        0),
     fotoGrandeFlex:sv(z, "galeria",           "fotoGrande",   "flex",       3),
     fotosSmallFlex:sv(z, "galeria",           "fotosPequenas","flex",       2),
     barcodeH:      sv(z, "galeria",           "barcode",      "height",     44),
@@ -520,7 +522,7 @@ export default function ArtGallery() {
                   <div style={{ flex: 1, minHeight: 0, marginBottom: 14, overflow: "hidden" }}>
                     <div style={{
                       width: "100%", height: "100%",
-                      transform: `scale(${d.galeriaScale})`,
+                      transform: `translate(${d.galeriaGridX}px, ${d.galeriaGridY}px) scale(${d.galeriaScale})`,
                       transformOrigin: "top left",
                       display: "flex", flexDirection: "column", gap: d.galeriaGap,
                     }}>
