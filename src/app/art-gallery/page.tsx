@@ -94,6 +94,7 @@ export default function ArtGallery() {
     // layout
     sidebarW:      sv(z, "layout",            "sidebar",      "width",      168),
     navH:          sv(z, "layout",            "nav",          "height",     52),
+    navLogoFs:     sv(z, "layout",            "nav",          "fontSize",   1.3),
     footerH:       sv(z, "layout",            "footer",       "height",     46),
     infoPanelW:    sv(z, "layout",            "infoPanel",    "width",      380),
     // sidebar
@@ -187,7 +188,7 @@ export default function ArtGallery() {
         padding: "0 28px",
         background: "transparent",
       }}>
-        <Link href="/" style={{ ...F.display, fontSize: "1.3rem", letterSpacing: "0.05em", color: C.cream, textDecoration: "none" }}>
+        <Link href="/" style={{ ...F.display, fontSize: `${d.navLogoFs}rem`, letterSpacing: "0.05em", color: C.cream, textDecoration: "none" }}>
           SPRINGS
         </Link>
         <Link href="/menu" style={{
