@@ -8,12 +8,12 @@ import DevPanel from "@/components/DevPanel";
 import { useDesignConfig } from "@/hooks/useDesignConfig";
 import type { SliderProp } from "@/types/design";
 
-const BG = "#0A0806";
+const BG = "#1A0A0C";
 const C = {
-  cream:   "#F2E8D5",
+  cream:   "rgba(242,232,213,0.88)",
   burgundy:"#6B1419",
   mostaza: "#C5871F",
-  dim:     "#F2E8D5",
+  dim:     "rgba(242,232,213,0.72)",
   faint:   "rgba(242,232,213,0.1)",
   fainter: "rgba(242,232,213,0.06)",
 };
