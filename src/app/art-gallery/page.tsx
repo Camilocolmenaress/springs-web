@@ -495,19 +495,22 @@ export default function ArtGallery() {
 
                 {/* COLUMNA FOTOS */}
                 <div style={{
-                  width: 310,
-                  padding: `${d.infoPadT}px 20px 24px 0`,
+                  width: 370,
+                  paddingTop: d.navH,
+                  paddingRight: 14,
+                  paddingBottom: 24,
+                  paddingLeft: 0,
                   display: "flex", flexDirection: "column",
                   flexShrink: 0,
                 }}>
                   {/* Grid de 3 fotos */}
-                  <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 5, marginBottom: 16, minHeight: 0 }}>
-                    {/* Foto grande arriba */}
-                    <div style={{ flex: 2, overflow: "hidden", minHeight: 0 }}>
+                  <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 6, marginBottom: 14, minHeight: 0 }}>
+                    {/* Foto grande arriba — más rectangular */}
+                    <div style={{ flex: 3, overflow: "hidden", minHeight: 0 }}>
                       <img src={exhibit.gallery[0]} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                     </div>
-                    {/* Dos fotos abajo */}
-                    <div style={{ flex: 1, display: "flex", gap: 5, minHeight: 0 }}>
+                    {/* Dos fotos abajo — cuadradas */}
+                    <div style={{ flex: 2, display: "flex", gap: 6, minHeight: 0 }}>
                       <div style={{ flex: 1, overflow: "hidden" }}>
                         <img src={exhibit.gallery[1]} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                       </div>
@@ -518,22 +521,22 @@ export default function ArtGallery() {
                   </div>
 
                   {/* Quote + barcode */}
-                  <div style={{ transform: `translate(${d.quoteLeft}px, ${d.quoteTop}px)`, display: "flex", gap: 14, alignItems: "flex-end" }}>
+                  <div style={{ transform: `translate(${d.quoteLeft}px, ${d.quoteTop}px)`, display: "flex", gap: 10, alignItems: "flex-end" }}>
                     <div style={{ flex: 1 }}>
-                      <span style={{ ...F.sans, fontSize: "1.4rem", color: C.cream, lineHeight: 0.8, display: "block", marginBottom: 3 }}>"</span>
-                      <p style={{ ...F.sans, fontSize: `${d.quoteFs}rem`, fontWeight: 500, color: C.cream, lineHeight: 1.5, margin: "0 0 5px", whiteSpace: "pre-line" }}>
+                      <span style={{ ...F.sans, fontSize: "1.2rem", color: C.cream, lineHeight: 0.8, display: "block", marginBottom: 2 }}>"</span>
+                      <p style={{ ...F.sans, fontSize: `${d.quoteFs}rem`, fontWeight: 500, color: C.cream, lineHeight: 1.5, margin: "0 0 4px", whiteSpace: "pre-line" }}>
                         {exhibit.quote}
                       </p>
                       <div style={{ ...F.sans, fontSize: "0.5rem", fontStyle: "italic", color: C.dim }}>Springs Crew.</div>
                     </div>
                     {/* Barcode */}
-                    <div style={{ display: "flex", gap: 6, alignItems: "flex-start", flexShrink: 0 }}>
-                      <img src="/images/barcode-springs.png" alt="" style={{ height: 48, width: "auto", opacity: 0.7, objectFit: "contain" }} />
-                      <div style={{ ...F.mono, lineHeight: 1.55, textAlign: "left" }}>
-                        <div style={{ fontSize: "0.5rem", color: C.cream, marginBottom: 1 }}>{"❝❞"}</div>
-                        <div style={{ fontSize: "0.38rem", letterSpacing: "0.1em", color: C.cream }}>SPRINGS</div>
-                        <div style={{ fontSize: "0.38rem", letterSpacing: "0.1em", color: C.cream }}>ART GALLERY</div>
-                        <div style={{ fontSize: "0.38rem", letterSpacing: "0.1em", color: C.dim }}>{exhibit.id}</div>
+                    <div style={{ display: "flex", gap: 5, alignItems: "flex-start", flexShrink: 0 }}>
+                      <img src="/images/barcode-springs.png" alt="" style={{ height: 44, width: 52, opacity: 0.75, objectFit: "cover" }} />
+                      <div style={{ ...F.mono, lineHeight: 1.6 }}>
+                        <div style={{ fontSize: "0.46rem", color: C.cream, marginBottom: 1 }}>❝❞</div>
+                        <div style={{ fontSize: "0.36rem", letterSpacing: "0.1em", color: C.cream }}>SPRINGS</div>
+                        <div style={{ fontSize: "0.36rem", letterSpacing: "0.1em", color: C.cream }}>ART GALLERY</div>
+                        <div style={{ fontSize: "0.36rem", letterSpacing: "0.1em", color: C.dim }}>{exhibit.id}</div>
                       </div>
                     </div>
                   </div>
