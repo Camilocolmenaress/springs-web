@@ -28,6 +28,7 @@ const PROP_LABELS: Record<string, string> = {
   height: "Alto",
   opacity: "Opacidad",
   dropStart: "Offset caída (vw antes)",
+  scale: "Escala",
   right: "Derecha",
   letterSpacing: "Esp. letras",
   itemGap: "Esp. entre ítems",

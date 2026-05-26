@@ -129,20 +129,37 @@ export default function ArtGallery() {
     imageOffsetX:  sv(z, "foto",              "imagen",       "left",       0),
     vignetteH:     sv(z, "foto",              "viñeta",       "height",     35),
     placaBottom:   sv(z, "foto",              "placa",        "bottom",     52),
+    placaLeft:     sv(z, "foto",              "placa",        "left",       0),
+    placaScale:    sv(z, "foto",              "placa",        "scale",      1),
     placaFs:       sv(z, "foto",              "placa",        "fontSize",   1),
     placaPadH:     sv(z, "foto",              "placa",        "paddingH",   28),
     placaPadV:     sv(z, "foto",              "placa",        "paddingV",   12),
     // info panel
-    infoPadT:      sv(z, "infoPanel_contenido","paddingInfo", "top",        32),
-    infoPadH:      sv(z, "infoPanel_contenido","paddingInfo", "horizontal", 22),
-    tituloFs:      sv(z, "infoPanel_contenido","titulo",      "fontSize",   3.8),
-    subtituloFs:   sv(z, "infoPanel_contenido","subtitulo",   "fontSize",   0.48),
-    ingredientesFs:sv(z, "infoPanel_contenido","ingredientes","fontSize",   0.44),
-    ingredientesGap:sv(z,"infoPanel_contenido","ingredientes","gap",        4),
-    descripcionFs: sv(z, "infoPanel_contenido","descripcion", "fontSize",   0.44),
-    taglineFs:     sv(z, "infoPanel_contenido","tagline",     "fontSize",   0.46),
-    quoteFs:       sv(z, "infoPanel_contenido","quote",       "fontSize",   0.58),
-    specsFs:       sv(z, "infoPanel_contenido","specs",       "fontSize",   0.43),
+    infoPadT:       sv(z, "infoPanel_contenido","paddingInfo",  "top",        32),
+    infoPadH:       sv(z, "infoPanel_contenido","paddingInfo",  "horizontal", 22),
+    tituloFs:       sv(z, "infoPanel_contenido","titulo",       "fontSize",   3.8),
+    tituloLeft:     sv(z, "infoPanel_contenido","titulo",       "left",       0),
+    tituloTop:      sv(z, "infoPanel_contenido","titulo",       "top",        0),
+    subtituloFs:    sv(z, "infoPanel_contenido","subtitulo",    "fontSize",   0.48),
+    subtituloLeft:  sv(z, "infoPanel_contenido","subtitulo",    "left",       0),
+    subtituloTop:   sv(z, "infoPanel_contenido","subtitulo",    "top",        0),
+    ingredientesFs: sv(z, "infoPanel_contenido","ingredientes", "fontSize",   0.44),
+    ingredientesGap:sv(z, "infoPanel_contenido","ingredientes", "gap",        4),
+    ingredientesLeft:sv(z,"infoPanel_contenido","ingredientes", "left",       0),
+    ingredientesTop: sv(z,"infoPanel_contenido","ingredientes", "top",        0),
+    descripcionFs:  sv(z, "infoPanel_contenido","descripcion",  "fontSize",   0.44),
+    descripcionLeft:sv(z, "infoPanel_contenido","descripcion",  "left",       0),
+    descripcionTop: sv(z, "infoPanel_contenido","descripcion",  "top",        0),
+    taglineFs:      sv(z, "infoPanel_contenido","tagline",      "fontSize",   0.46),
+    taglineLeft:    sv(z, "infoPanel_contenido","tagline",      "left",       0),
+    taglineTop:     sv(z, "infoPanel_contenido","tagline",      "top",        0),
+    quoteFs:        sv(z, "infoPanel_contenido","quote",        "fontSize",   0.58),
+    quoteLeft:      sv(z, "infoPanel_contenido","quote",        "left",       0),
+    quoteTop:       sv(z, "infoPanel_contenido","quote",        "top",        0),
+    specsFs:        sv(z, "infoPanel_contenido","specs",        "fontSize",   0.43),
+    specsWidth:     sv(z, "infoPanel_contenido","specs",        "width",      440),
+    specsLeft:      sv(z, "infoPanel_contenido","specs",        "left",       0),
+    specsTop:       sv(z, "infoPanel_contenido","specs",        "top",        0),
   };
 
   // Globe text path — recalculated from textRadius
@@ -372,7 +389,8 @@ export default function ArtGallery() {
 
                 {/* Placa museo */}
                 <div style={{
-                  position: "absolute", bottom: d.placaBottom, left: "50%", transform: "translateX(-50%)",
+                  position: "absolute", bottom: d.placaBottom, left: "50%",
+                  transform: `translateX(calc(-50% + ${d.placaLeft}px)) scale(${d.placaScale})`,
                   border: "1px solid rgba(242,232,213,0.25)",
                   padding: `${d.placaPadV}px ${d.placaPadH}px`, textAlign: "center",
                   background: "rgba(10,8,6,0.7)", backdropFilter: "blur(6px)",
@@ -402,57 +420,69 @@ export default function ArtGallery() {
                   SPRINGS ART GALLERY
                 </div>
 
-                <h2 style={{ ...F.display, fontSize: `${d.tituloFs}rem`, color: C.cream, lineHeight: 0.95, letterSpacing: "-0.01em", margin: "0 0 10px" }}>
-                  {exhibit.name}
-                </h2>
+                <div style={{ transform: `translate(${d.tituloLeft}px, ${d.tituloTop}px)`, marginBottom: 10 }}>
+                  <h2 style={{ ...F.display, fontSize: `${d.tituloFs}rem`, color: C.cream, lineHeight: 0.95, letterSpacing: "-0.01em", margin: 0 }}>
+                    {exhibit.name}
+                  </h2>
+                </div>
 
-                <div style={{ ...F.mono, fontSize: `${d.subtituloFs}rem`, letterSpacing: "0.18em", color: C.mostaza, marginBottom: 14 }}>
-                  {exhibit.subtitle} +
+                <div style={{ transform: `translate(${d.subtituloLeft}px, ${d.subtituloTop}px)`, marginBottom: 14 }}>
+                  <div style={{ ...F.mono, fontSize: `${d.subtituloFs}rem`, letterSpacing: "0.18em", color: C.mostaza }}>
+                    {exhibit.subtitle} +
+                  </div>
                 </div>
 
                 <div style={{ height: "1px", background: C.faint, marginBottom: 14, width: "80%" }} />
 
-                <div style={{ display: "flex", flexDirection: "column", gap: d.ingredientesGap, marginBottom: 12 }}>
-                  {exhibit.ingredients.map(ing => (
-                    <div key={ing} style={{ ...F.mono, fontSize: `${d.ingredientesFs}rem`, letterSpacing: "0.09em", color: C.cream }}>
-                      {ing}
-                    </div>
-                  ))}
+                <div style={{ transform: `translate(${d.ingredientesLeft}px, ${d.ingredientesTop}px)`, marginBottom: 12 }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: d.ingredientesGap }}>
+                    {exhibit.ingredients.map(ing => (
+                      <div key={ing} style={{ ...F.mono, fontSize: `${d.ingredientesFs}rem`, letterSpacing: "0.09em", color: C.cream }}>
+                        {ing}
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
-                <p style={{ ...F.mono, fontSize: `${d.descripcionFs}rem`, letterSpacing: "0.06em", color: C.dim, lineHeight: 1.7, margin: "0 0 10px", whiteSpace: "pre-line" }}>
-                  {exhibit.description}
-                </p>
+                <div style={{ transform: `translate(${d.descripcionLeft}px, ${d.descripcionTop}px)`, marginBottom: 10 }}>
+                  <p style={{ ...F.mono, fontSize: `${d.descripcionFs}rem`, letterSpacing: "0.06em", color: C.dim, lineHeight: 1.7, margin: 0, whiteSpace: "pre-line" }}>
+                    {exhibit.description}
+                  </p>
+                </div>
 
-                <div style={{ ...F.mono, fontSize: `${d.taglineFs}rem`, letterSpacing: "0.1em", color: C.burgundy, marginBottom: 16 }}>
-                  {exhibit.tagline}
+                <div style={{ transform: `translate(${d.taglineLeft}px, ${d.taglineTop}px)`, marginBottom: 16 }}>
+                  <div style={{ ...F.mono, fontSize: `${d.taglineFs}rem`, letterSpacing: "0.1em", color: C.burgundy }}>
+                    {exhibit.tagline}
+                  </div>
                 </div>
 
                 {/* Specs */}
-                <div style={{
-                  border: `1px solid ${C.faint}`, padding: "12px 14px",
-                  display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px 6px",
-                  marginBottom: 16,
-                }}>
-                  {[
-                    { label: "ORIGIN",      val: exhibit.origin   },
-                    { label: "CREATED",     val: exhibit.created  },
-                    { label: "CATEGORY",    val: exhibit.category },
-                    { label: "TEMPERATURE", val: exhibit.temp     },
-                  ].map(item => (
-                    <div key={item.label}>
-                      <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.14em", color: C.cream, marginBottom: 2 }}>
-                        {item.label}
+                <div style={{ transform: `translate(${d.specsLeft}px, ${d.specsTop}px)`, marginBottom: 16 }}>
+                  <div style={{
+                    border: `1px solid ${C.faint}`, padding: "12px 14px",
+                    display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px 6px",
+                    width: d.specsWidth,
+                  }}>
+                    {[
+                      { label: "ORIGIN",      val: exhibit.origin   },
+                      { label: "CREATED",     val: exhibit.created  },
+                      { label: "CATEGORY",    val: exhibit.category },
+                      { label: "TEMPERATURE", val: exhibit.temp     },
+                    ].map(item => (
+                      <div key={item.label}>
+                        <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.14em", color: C.cream, marginBottom: 2 }}>
+                          {item.label}
+                        </div>
+                        <div style={{ ...F.mono, fontSize: `${d.specsFs}rem`, letterSpacing: "0.07em", color: C.cream }}>
+                          {item.val}
+                        </div>
                       </div>
-                      <div style={{ ...F.mono, fontSize: `${d.specsFs}rem`, letterSpacing: "0.07em", color: C.cream }}>
-                        {item.val}
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
 
                 {/* Quote */}
-                <div style={{ display: "flex", gap: 10, alignItems: "flex-start", marginTop: "auto" }}>
+                <div style={{ transform: `translate(${d.quoteLeft}px, ${d.quoteTop}px)`, display: "flex", gap: 10, alignItems: "flex-start", marginTop: "auto" }}>
                   <div style={{ flex: 1 }}>
                     <span style={{ ...F.sans, fontSize: "1.4rem", color: C.cream, lineHeight: 0.8, display: "block", marginBottom: 3 }}>"</span>
                     <p style={{ ...F.sans, fontSize: `${d.quoteFs}rem`, fontWeight: 500, color: C.cream, lineHeight: 1.5, margin: "0 0 5px", whiteSpace: "pre-line" }}>
