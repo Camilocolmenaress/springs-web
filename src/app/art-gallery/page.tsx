@@ -522,6 +522,7 @@ export default function ArtGallery() {
                   paddingLeft: d.galeriaLeft,
                   display: "flex", flexDirection: "column",
                   flexShrink: 0,
+                  position: "relative",
                 }}>
                   {/* Grid de 3 fotos — scale conjunto */}
                   <div style={{ flex: 1, minHeight: 0, marginBottom: 14, overflow: "hidden" }}>
@@ -556,8 +557,8 @@ export default function ArtGallery() {
                     <div style={{ ...F.sans, fontSize: "0.5rem", fontStyle: "italic", color: C.dim }}>Springs Crew.</div>
                   </div>
 
-                  {/* Barcode — independiente, vertical */}
-                  <div style={{ transform: `translate(${d.barcodeLeft}px, ${d.barcodeTop}px)`, display: "flex", gap: 6, alignItems: "flex-start", flexShrink: 0 }}>
+                  {/* Barcode — position absolute, no afecta el flujo */}
+                  <div style={{ position: "absolute", bottom: 24, right: 0, transform: `translate(${d.barcodeLeft}px, ${d.barcodeTop}px)`, display: "flex", gap: 6, alignItems: "flex-start" }}>
                     <img
                       src="/images/barcode-springs.png" alt=""
                       style={{
