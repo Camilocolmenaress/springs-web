@@ -27,50 +27,55 @@ const EXHIBITS = [
   {
     id: "001", name: "LA FIJA",    subtitle: "LOADED JACKET", year: "2025",
     img: "/images/la-fija-exhibit.png",
+    gallery: ["/images/gallery-001-macro.png", "/images/gallery-001-crew.png", "/images/gallery-001-side.png"],
     ingredients: ["POLLO DESMECHADO.", "HOGAO ARTESANAL.", "QUESO COSTEÑO FUNDIDO.", "PAPAS GAJO CRUJIENTES.", "FUSE SAUCE."],
     description: "UNA COMBINACIÓN TAN SIMPLE COMO PODEROSA,\nTAN DIRECTA COMO INOLVIDABLE.",
     tagline: "THE ORIGINAL. THE REASON.",
-    origin: "BARBOSA, COLOMBIA", created: "SPRINGS CREW", category: "COMFORT FOOD", temp: "68°C",
+    origin: "BUCARAMANGA, COLOMBIA", created: "SPRINGS CREW", category: "COMFORT FOOD", temp: "68°C",
     quote: "NO ES SOLO COMIDA.\nES UN PLAN.",
     price: "32,900",
   },
   {
     id: "002", name: "LA PESADA",  subtitle: "LOADED JACKET", year: "2025",
     img: "/images/la-fija-exhibit.png",
+    gallery: ["/images/gallery-001-macro.png", "/images/gallery-001-crew.png", "/images/gallery-001-side.png"],
     ingredients: ["CARNE DESMECHADA.", "HOGAO ARTESANAL.", "QUESO COSTEÑO FUNDIDO.", "PAPAS GAJO CRUJIENTES.", "FUSE SAUCE."],
     description: "PARA LOS QUE NO SE QUEDAN CON HAMBRE.\nLA VERSIÓN SIN CONCESIONES.",
     tagline: "HEAVY. INTENTIONAL.",
-    origin: "BARBOSA, COLOMBIA", created: "SPRINGS CREW", category: "COMFORT FOOD", temp: "68°C",
+    origin: "BUCARAMANGA, COLOMBIA", created: "SPRINGS CREW", category: "COMFORT FOOD", temp: "68°C",
     quote: "NADA SOBRA.\nNADA FALTA.",
     price: "35,900",
   },
   {
     id: "003", name: "LA BRAVA",   subtitle: "LOADED JACKET", year: "2025",
     img: "/images/la-fija-exhibit.png",
+    gallery: ["/images/gallery-001-macro.png", "/images/gallery-001-crew.png", "/images/gallery-001-side.png"],
     ingredients: ["CHORIZO SANTANDEREANO.", "HOGAO ARTESANAL.", "QUESO COSTEÑO FUNDIDO.", "PAPAS GAJO CRUJIENTES.", "FUSE SAUCE."],
     description: "EL SABOR QUE AQUÍ NUNCA SE NEGOCIA.\nEL CHORIZO QUE MANDA.",
     tagline: "BORN IN SANTANDER.",
-    origin: "BARBOSA, COLOMBIA", created: "SPRINGS CREW", category: "COMFORT FOOD", temp: "70°C",
+    origin: "BUCARAMANGA, COLOMBIA", created: "SPRINGS CREW", category: "COMFORT FOOD", temp: "70°C",
     quote: "CARÁCTER SIN\nPEDIR PERMISO.",
     price: "34,900",
   },
   {
     id: "004", name: "LA SIMPLE",  subtitle: "LOADED JACKET", year: "2025",
     img: "/images/la-fija-exhibit.png",
+    gallery: ["/images/gallery-001-macro.png", "/images/gallery-001-crew.png", "/images/gallery-001-side.png"],
     ingredients: ["CARNE MOLIDA SAZONADA.", "HOGAO ARTESANAL.", "QUESO COSTEÑO FUNDIDO.", "PAPAS GAJO CRUJIENTES.", "FUSE SAUCE."],
     description: "SIN RODEOS, SIN EXCESOS.\nLO ESENCIAL EJECUTADO PERFECTO.",
     tagline: "SIMPLE IS THE STATEMENT.",
-    origin: "BARBOSA, COLOMBIA", created: "SPRINGS CREW", category: "COMFORT FOOD", temp: "68°C",
+    origin: "BUCARAMANGA, COLOMBIA", created: "SPRINGS CREW", category: "COMFORT FOOD", temp: "68°C",
     quote: "LO SIMPLE\nES LO HONESTO.",
     price: "28,900",
   },
   {
     id: "005", name: "LA HONESTA", subtitle: "LOADED JACKET", year: "2025",
     img: "/images/la-fija-exhibit.png",
+    gallery: ["/images/gallery-001-macro.png", "/images/gallery-001-crew.png", "/images/gallery-001-side.png"],
     ingredients: ["QUESO COSTEÑO DOBLE.", "HOGAO DOBLE.", "AGUACATE.", "PAPAS GAJO CRUJIENTES.", "FUSE SAUCE."],
     description: "SIN CARNE, CON TODO.\nLA QUE DEMUESTRA QUE NO NECESITAS MÁS.",
     tagline: "HONEST BY DESIGN.",
-    origin: "BARBOSA, COLOMBIA", created: "SPRINGS CREW", category: "COMFORT FOOD", temp: "66°C",
+    origin: "BUCARAMANGA, COLOMBIA", created: "SPRINGS CREW", category: "COMFORT FOOD", temp: "66°C",
     quote: "SIN MENTIRAS.\nSIN CARNE.",
     price: "28,900",
   },
@@ -408,92 +413,132 @@ export default function ArtGallery() {
                 </div>
               </div>
 
-              {/* ── Info panel — flota sobre la foto ── */}
+              {/* ── Info panel — dos columnas: texto | fotos ── */}
               <div style={{
                 position: "absolute", right: 0, top: 0, bottom: 0,
                 width: `${d.infoPanelW}px`,
-                padding: `${d.infoPadT}px ${d.infoPadH}px 24px`,
-                overflowY: "auto",
-                display: "flex", flexDirection: "column",
+                display: "flex",
               }}>
-                <div style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.22em", color: C.mostaza, marginBottom: 6 }}>
-                  SPRINGS ART GALLERY
-                </div>
 
-                <div style={{ transform: `translate(${d.tituloLeft}px, ${d.tituloTop}px)`, marginBottom: 10 }}>
-                  <h2 style={{ ...F.display, fontSize: `${d.tituloFs}rem`, color: C.cream, lineHeight: 0.95, letterSpacing: "-0.01em", margin: 0 }}>
-                    {exhibit.name}
-                  </h2>
-                </div>
-
-                <div style={{ transform: `translate(${d.subtituloLeft}px, ${d.subtituloTop}px)`, marginBottom: 14 }}>
-                  <div style={{ ...F.mono, fontSize: `${d.subtituloFs}rem`, letterSpacing: "0.18em", color: C.mostaza }}>
-                    {exhibit.subtitle} +
+                {/* COLUMNA TEXTO */}
+                <div style={{
+                  flex: 1,
+                  padding: `${d.infoPadT}px ${d.infoPadH}px 24px`,
+                  overflowY: "auto",
+                  display: "flex", flexDirection: "column",
+                }}>
+                  <div style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.22em", color: C.mostaza, marginBottom: 6 }}>
+                    SPRINGS ART GALLERY
                   </div>
-                </div>
 
-                <div style={{ height: "1px", background: C.faint, marginBottom: 14, width: "80%" }} />
-
-                <div style={{ transform: `translate(${d.ingredientesLeft}px, ${d.ingredientesTop}px)`, marginBottom: 12 }}>
-                  <div style={{ display: "flex", flexDirection: "column", gap: d.ingredientesGap }}>
-                    {exhibit.ingredients.map(ing => (
-                      <div key={ing} style={{ ...F.mono, fontSize: `${d.ingredientesFs}rem`, letterSpacing: "0.09em", color: C.cream }}>
-                        {ing}
-                      </div>
-                    ))}
+                  <div style={{ transform: `translate(${d.tituloLeft}px, ${d.tituloTop}px)`, marginBottom: 10 }}>
+                    <h2 style={{ ...F.display, fontSize: `${d.tituloFs}rem`, color: C.cream, lineHeight: 0.95, letterSpacing: "-0.01em", margin: 0 }}>
+                      {exhibit.name}
+                    </h2>
                   </div>
-                </div>
 
-                <div style={{ transform: `translate(${d.descripcionLeft}px, ${d.descripcionTop}px)`, marginBottom: 10 }}>
-                  <p style={{ ...F.mono, fontSize: `${d.descripcionFs}rem`, letterSpacing: "0.06em", color: C.dim, lineHeight: 1.7, margin: 0, whiteSpace: "pre-line" }}>
-                    {exhibit.description}
-                  </p>
-                </div>
-
-                <div style={{ transform: `translate(${d.taglineLeft}px, ${d.taglineTop}px)`, marginBottom: 16 }}>
-                  <div style={{ ...F.mono, fontSize: `${d.taglineFs}rem`, letterSpacing: "0.1em", color: C.burgundy }}>
-                    {exhibit.tagline}
+                  <div style={{ transform: `translate(${d.subtituloLeft}px, ${d.subtituloTop}px)`, marginBottom: 14 }}>
+                    <div style={{ ...F.mono, fontSize: `${d.subtituloFs}rem`, letterSpacing: "0.18em", color: C.mostaza }}>
+                      {exhibit.subtitle} +
+                    </div>
                   </div>
-                </div>
 
-                {/* Specs */}
-                <div style={{ transform: `translate(${d.specsLeft}px, ${d.specsTop}px)`, marginBottom: 16 }}>
-                  <div style={{
-                    border: `1px solid ${C.faint}`, padding: "12px 14px",
-                    display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px 6px",
-                    width: d.specsWidth,
-                  }}>
-                    {[
-                      { label: "ORIGIN",      val: exhibit.origin   },
-                      { label: "CREATED",     val: exhibit.created  },
-                      { label: "CATEGORY",    val: exhibit.category },
-                      { label: "TEMPERATURE", val: exhibit.temp     },
-                    ].map(item => (
-                      <div key={item.label}>
-                        <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.14em", color: C.cream, marginBottom: 2 }}>
-                          {item.label}
+                  <div style={{ height: "1px", background: C.faint, marginBottom: 14, width: "80%" }} />
+
+                  <div style={{ transform: `translate(${d.ingredientesLeft}px, ${d.ingredientesTop}px)`, marginBottom: 12 }}>
+                    <div style={{ display: "flex", flexDirection: "column", gap: d.ingredientesGap }}>
+                      {exhibit.ingredients.map(ing => (
+                        <div key={ing} style={{ ...F.mono, fontSize: `${d.ingredientesFs}rem`, letterSpacing: "0.09em", color: C.cream }}>
+                          {ing}
                         </div>
-                        <div style={{ ...F.mono, fontSize: `${d.specsFs}rem`, letterSpacing: "0.07em", color: C.cream }}>
-                          {item.val}
-                        </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
 
-                {/* Quote */}
-                <div style={{ transform: `translate(${d.quoteLeft}px, ${d.quoteTop}px)`, display: "flex", gap: 10, alignItems: "flex-start", marginTop: "auto" }}>
-                  <div style={{ flex: 1 }}>
-                    <span style={{ ...F.sans, fontSize: "1.4rem", color: C.cream, lineHeight: 0.8, display: "block", marginBottom: 3 }}>"</span>
-                    <p style={{ ...F.sans, fontSize: `${d.quoteFs}rem`, fontWeight: 500, color: C.cream, lineHeight: 1.5, margin: "0 0 5px", whiteSpace: "pre-line" }}>
-                      {exhibit.quote}
+                  <div style={{ transform: `translate(${d.descripcionLeft}px, ${d.descripcionTop}px)`, marginBottom: 10 }}>
+                    <p style={{ ...F.mono, fontSize: `${d.descripcionFs}rem`, letterSpacing: "0.06em", color: C.dim, lineHeight: 1.7, margin: 0, whiteSpace: "pre-line" }}>
+                      {exhibit.description}
                     </p>
-                    <div style={{ ...F.sans, fontSize: "0.5rem", fontStyle: "italic", color: C.dim }}>Springs Crew</div>
                   </div>
-                  <div style={{ ...F.mono, fontSize: "0.38rem", letterSpacing: "0.07em", color: C.cream, lineHeight: 1.7, textAlign: "right", flexShrink: 0 }}>
-                    SPRINGS<br />ART GALLERY<br />{exhibit.id}
+
+                  <div style={{ transform: `translate(${d.taglineLeft}px, ${d.taglineTop}px)`, marginBottom: 16 }}>
+                    <div style={{ ...F.mono, fontSize: `${d.taglineFs}rem`, letterSpacing: "0.1em", color: C.burgundy }}>
+                      {exhibit.tagline}
+                    </div>
+                  </div>
+
+                  {/* Specs */}
+                  <div style={{ transform: `translate(${d.specsLeft}px, ${d.specsTop}px)`, marginBottom: 16 }}>
+                    <div style={{
+                      border: `1px solid ${C.faint}`, padding: "12px 14px",
+                      display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px 6px",
+                      width: d.specsWidth,
+                    }}>
+                      {[
+                        { label: "ORIGIN",      val: exhibit.origin   },
+                        { label: "CREATED",     val: exhibit.created  },
+                        { label: "CATEGORY",    val: exhibit.category },
+                        { label: "TEMPERATURE", val: exhibit.temp     },
+                      ].map(item => (
+                        <div key={item.label}>
+                          <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.14em", color: C.cream, marginBottom: 2 }}>
+                            {item.label}
+                          </div>
+                          <div style={{ ...F.mono, fontSize: `${d.specsFs}rem`, letterSpacing: "0.07em", color: C.cream }}>
+                            {item.val}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
+
+                {/* COLUMNA FOTOS */}
+                <div style={{
+                  width: 310,
+                  padding: `${d.infoPadT}px 20px 24px 0`,
+                  display: "flex", flexDirection: "column",
+                  flexShrink: 0,
+                }}>
+                  {/* Grid de 3 fotos */}
+                  <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 5, marginBottom: 16, minHeight: 0 }}>
+                    {/* Foto grande arriba */}
+                    <div style={{ flex: 2, overflow: "hidden", minHeight: 0 }}>
+                      <img src={exhibit.gallery[0]} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                    </div>
+                    {/* Dos fotos abajo */}
+                    <div style={{ flex: 1, display: "flex", gap: 5, minHeight: 0 }}>
+                      <div style={{ flex: 1, overflow: "hidden" }}>
+                        <img src={exhibit.gallery[1]} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                      </div>
+                      <div style={{ flex: 1, overflow: "hidden" }}>
+                        <img src={exhibit.gallery[2]} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Quote + barcode */}
+                  <div style={{ transform: `translate(${d.quoteLeft}px, ${d.quoteTop}px)`, display: "flex", gap: 14, alignItems: "flex-end" }}>
+                    <div style={{ flex: 1 }}>
+                      <span style={{ ...F.sans, fontSize: "1.4rem", color: C.cream, lineHeight: 0.8, display: "block", marginBottom: 3 }}>"</span>
+                      <p style={{ ...F.sans, fontSize: `${d.quoteFs}rem`, fontWeight: 500, color: C.cream, lineHeight: 1.5, margin: "0 0 5px", whiteSpace: "pre-line" }}>
+                        {exhibit.quote}
+                      </p>
+                      <div style={{ ...F.sans, fontSize: "0.5rem", fontStyle: "italic", color: C.dim }}>Springs Crew.</div>
+                    </div>
+                    {/* Barcode */}
+                    <div style={{ display: "flex", gap: 6, alignItems: "flex-start", flexShrink: 0 }}>
+                      <img src="/images/barcode-springs.png" alt="" style={{ height: 48, width: "auto", opacity: 0.7, objectFit: "contain" }} />
+                      <div style={{ ...F.mono, lineHeight: 1.55, textAlign: "left" }}>
+                        <div style={{ fontSize: "0.5rem", color: C.cream, marginBottom: 1 }}>{"❝❞"}</div>
+                        <div style={{ fontSize: "0.38rem", letterSpacing: "0.1em", color: C.cream }}>SPRINGS</div>
+                        <div style={{ fontSize: "0.38rem", letterSpacing: "0.1em", color: C.cream }}>ART GALLERY</div>
+                        <div style={{ fontSize: "0.38rem", letterSpacing: "0.1em", color: C.dim }}>{exhibit.id}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
           ))}
