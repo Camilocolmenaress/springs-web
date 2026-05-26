@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Menu from "@/components/Menu";
 import Cart, { type CartItem, type CartExtra } from "@/components/Cart";
@@ -8,13 +9,17 @@ import ExtrasModal from "@/components/ExtrasModal";
 import DevPanel from "@/components/DevPanel";
 import { useDesignConfig } from "@/hooks/useDesignConfig";
 import { type Producto } from "@/data/productos";
+import { saveCart } from "@/lib/cart-store";
 
 export default function MenuPage() {
+  const router = useRouter();
   const { config, editMode, saved, updateProp, save, reset, exportValues } = useDesignConfig("menu");
 
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [pendingProduct, setPendingProduct] = useState<Producto | null>(null);
   const [cartBump, setCartBump] = useState(0);
+
+  useEffect(() => { saveCart(cartItems); }, [cartItems]);
 
   function handleAgregar(p: Producto) {
     if (p.categoria === "bebida") {
@@ -89,6 +94,7 @@ export default function MenuPage() {
         onRemove={handleRemove}
         onDelete={handleDelete}
         bumpSignal={cartBump}
+        onCheckout={() => router.push("/checkout")}
       />
 
       {pendingProduct && (

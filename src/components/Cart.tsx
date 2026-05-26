@@ -36,9 +36,10 @@ interface CartProps {
   onRemove: (cartId: string) => void;
   onDelete: (cartId: string) => void;
   bumpSignal?: number;
+  onCheckout?: () => void;
 }
 
-export default function Cart({ items, onAdd, onRemove, onDelete, bumpSignal = 0 }: CartProps) {
+export default function Cart({ items, onAdd, onRemove, onDelete, bumpSignal = 0, onCheckout }: CartProps) {
   const [open, setOpen] = useState(false);
   const btnAnim = useAnimation();
   const prevBump = useRef(0);
@@ -479,6 +480,7 @@ export default function Cart({ items, onAdd, onRemove, onDelete, bumpSignal = 0 
           {/* CTA */}
           <button
             disabled={items.length === 0}
+            onClick={() => { if (items.length > 0) onCheckout?.(); }}
             style={{
               width: "100%",
               height: 56,
