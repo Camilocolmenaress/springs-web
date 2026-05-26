@@ -128,6 +128,18 @@ export default function ArtGallery() {
     exhibitListGap:sv(z, "sidebar_contenido", "exhibitList",  "gap",        8),
     exhibitListX:  sv(z, "sidebar_contenido", "exhibitList",  "left",       0),
     exhibitListY:  sv(z, "sidebar_contenido", "exhibitList",  "top",        0),
+    // galería fotos
+    galeriaW:      sv(z, "galeria",           "columna",      "width",      460),
+    galeriaTop:    sv(z, "galeria",           "columna",      "top",        79),
+    galeriaGap:    sv(z, "galeria",           "columna",      "gap",        6),
+    galeriaLeft:   sv(z, "galeria",           "columna",      "left",       8),
+    galeriaRight:  sv(z, "galeria",           "columna",      "right",      14),
+    fotoGrandeFlex:sv(z, "galeria",           "fotoGrande",   "flex",       3),
+    fotosSmallFlex:sv(z, "galeria",           "fotosPequenas","flex",       2),
+    barcodeH:      sv(z, "galeria",           "barcode",      "height",     44),
+    barcodeW:      sv(z, "galeria",           "barcode",      "width",      52),
+    barcodeLeft:   sv(z, "galeria",           "barcode",      "left",       0),
+    barcodeTop:    sv(z, "galeria",           "barcode",      "top",        0),
     // foto
     imageH:        sv(z, "foto",              "imagen",       "height",     90),
     imageOffsetY:  sv(z, "foto",              "imagen",       "top",        0),
@@ -495,22 +507,22 @@ export default function ArtGallery() {
 
                 {/* COLUMNA FOTOS */}
                 <div style={{
-                  width: 460,
-                  paddingTop: d.navH,
-                  paddingRight: 14,
+                  width: d.galeriaW,
+                  paddingTop: d.galeriaTop,
+                  paddingRight: d.galeriaRight,
                   paddingBottom: 24,
-                  paddingLeft: 8,
+                  paddingLeft: d.galeriaLeft,
                   display: "flex", flexDirection: "column",
                   flexShrink: 0,
                 }}>
                   {/* Grid de 3 fotos */}
-                  <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 6, marginBottom: 14, minHeight: 0 }}>
-                    {/* Foto grande arriba — más rectangular */}
-                    <div style={{ flex: 3, overflow: "hidden", minHeight: 0 }}>
+                  <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: d.galeriaGap, marginBottom: 14, minHeight: 0 }}>
+                    {/* Foto grande arriba */}
+                    <div style={{ flex: d.fotoGrandeFlex, overflow: "hidden", minHeight: 0 }}>
                       <img src={exhibit.gallery[0]} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                     </div>
-                    {/* Dos fotos abajo — cuadradas */}
-                    <div style={{ flex: 2, display: "flex", gap: 6, minHeight: 0 }}>
+                    {/* Dos fotos abajo */}
+                    <div style={{ flex: d.fotosSmallFlex, display: "flex", gap: d.galeriaGap, minHeight: 0 }}>
                       <div style={{ flex: 1, overflow: "hidden" }}>
                         <img src={exhibit.gallery[1]} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                       </div>
@@ -530,8 +542,8 @@ export default function ArtGallery() {
                       <div style={{ ...F.sans, fontSize: "0.5rem", fontStyle: "italic", color: C.dim }}>Springs Crew.</div>
                     </div>
                     {/* Barcode */}
-                    <div style={{ display: "flex", gap: 5, alignItems: "flex-start", flexShrink: 0 }}>
-                      <img src="/images/barcode-springs.png" alt="" style={{ height: 44, width: 52, opacity: 0.75, objectFit: "cover" }} />
+                    <div style={{ transform: `translate(${d.barcodeLeft}px, ${d.barcodeTop}px)`, display: "flex", gap: 5, alignItems: "flex-start", flexShrink: 0 }}>
+                      <img src="/images/barcode-springs.png" alt="" style={{ height: d.barcodeH, width: d.barcodeW, opacity: 0.75, objectFit: "cover" }} />
                       <div style={{ ...F.mono, lineHeight: 1.6 }}>
                         <div style={{ fontSize: "0.46rem", color: C.cream, marginBottom: 1 }}>❝❞</div>
                         <div style={{ fontSize: "0.36rem", letterSpacing: "0.1em", color: C.cream }}>SPRINGS</div>
