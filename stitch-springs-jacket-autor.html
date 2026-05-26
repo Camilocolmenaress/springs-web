@@ -1,0 +1,343 @@
+<!DOCTYPE html><html class="dark" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>SPRINGS - Jacket de Autor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary": "#cfc6b3",
+                        "surface-bright": "#423636",
+                        "secondary-container": "#4c4638",
+                        "on-primary": "#630d14",
+                        "on-surface": "#f2dedd",
+                        "surface-tint": "#ffb3b0",
+                        "primary": "#ffb3b0",
+                        "on-secondary-fixed-variant": "#4c4638",
+                        "on-surface-variant": "#ddc0be",
+                        "primary-fixed-dim": "#ffb3b0",
+                        "surface-container-high": "#322727",
+                        "on-primary-fixed-variant": "#822528",
+                        "error-container": "#93000a",
+                        "on-background": "#f2dedd",
+                        "on-tertiary": "#452b00",
+                        "tinta-profunda": "#1A0A0C",
+                        "inverse-primary": "#a13d3d",
+                        "outline": "#a48b89",
+                        "burgundy-springs": "#6B1419",
+                        "tertiary-fixed-dim": "#ffb951",
+                        "primary-container": "#6b1419",
+                        "tertiary-fixed": "#ffddb3",
+                        "mostaza-brasa": "#C5871F",
+                        "surface": "#1a1110",
+                        "surface-container": "#281d1c",
+                        "background": "#1a1110",
+                        "on-tertiary-fixed-variant": "#633f00",
+                        "surface-variant": "#3e3231",
+                        "on-secondary-container": "#bdb4a3",
+                        "outline-variant": "#564241",
+                        "surface-container-low": "#231919",
+                        "surface-container-lowest": "#150c0b",
+                        "cream-springs": "#F2E8D5",
+                        "error": "#ffb4ab",
+                        "on-secondary": "#353023",
+                        "secondary-fixed": "#ebe1cf",
+                        "inverse-on-surface": "#392e2d",
+                        "tertiary-container": "#4c3000",
+                        "on-error": "#690005",
+                        "surface-dim": "#1a1110",
+                        "secondary-fixed-dim": "#cfc6b3",
+                        "on-primary-fixed": "#410006",
+                        "on-primary-container": "#f37b78",
+                        "inverse-surface": "#f2dedd",
+                        "primary-fixed": "#ffdad8",
+                        "surface-container-highest": "#3e3231",
+                        "on-secondary-fixed": "#1f1b10",
+                        "tertiary": "#ffb951",
+                        "on-tertiary-fixed": "#291800",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-container": "#d2922b"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "0px"
+                    },
+                    spacing: {
+                        "stack-dense": "0.25rem",
+                        "gutter": "1rem",
+                        "stack-tight": "0.5rem",
+                        "margin-desktop": "4rem",
+                        "margin-mobile": "1.5rem"
+                    },
+                    fontFamily: {
+                        "body-sm": ["Inter"],
+                        "button": ["Inter"],
+                        "wordmark": ["Anton"],
+                        "headline-lg": ["Anton"],
+                        "body-lg": ["Inter"],
+                        "tagline": ["Inter"],
+                        "headline-lg-mobile": ["Anton"],
+                        "data-label": ["JetBrains Mono"]
+                    },
+                    fontSize: {
+                        "body-sm": ["12px", { lineHeight: "1.5", fontWeight: "400" }],
+                        "button": ["14px", { lineHeight: "1.0", fontWeight: "500" }],
+                        "wordmark": ["48px", { lineHeight: "1.0", letterSpacing: "0.06em", fontWeight: "400" }],
+                        "headline-lg": ["40px", { lineHeight: "1.0", letterSpacing: "0.04em", fontWeight: "400" }],
+                        "body-lg": ["14px", { lineHeight: "1.5", fontWeight: "400" }],
+                        "tagline": ["16px", { lineHeight: "1.4", fontWeight: "500" }],
+                        "headline-lg-mobile": ["32px", { lineHeight: "1.0", letterSpacing: "0.04em", fontWeight: "400" }],
+                        "data-label": ["10px", { lineHeight: "1.0", letterSpacing: "0.18em", fontWeight: "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { margin: 0; padding: 0; background-color: #1A0A0C; overflow-x: hidden; }
+        .no-border-radius * { border-radius: 0 !important; }
+        .marquee-container { overflow: hidden; white-space: nowrap; width: 100%; }
+        .marquee-content { display: inline-block; animation: marquee 20s linear infinite; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .stamp-rotate { animation: spin 15s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Animations */
+        @media (prefers-reduced-motion: no-preference) {
+            .reveal-text {
+                opacity: 0;
+                transform: translateX(-40px);
+                transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .reveal-text.stagger-1 { transition-delay: 0.1s; }
+            .reveal-text.stagger-2 { transition-delay: 0.2s; }
+            .reveal-text.stagger-3 { transition-delay: 0.3s; }
+            
+            .in-view .reveal-text {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            .reveal-img {
+                transform: scale(1.05);
+                transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            
+            .in-view .reveal-img {
+                transform: scale(1);
+            }
+            
+            .reveal-section {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            }
+            
+            .reveal-section.in-view {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .btn-press {
+            transition: transform 0.15s ease-out, background-color 0.2s ease;
+        }
+        .btn-press:active {
+            transform: scale(0.96);
+        }
+    </style>
+</head>
+<body class="w-[390px] mx-auto overflow-x-hidden no-border-radius font-body-sm text-cream-springs bg-tinta-profunda selection:bg-mostaza-brasa selection:text-tinta-profunda">
+<!-- SECTION 1: HERO -->
+<section class="relative w-full h-[100svh] bg-burgundy-springs flex flex-col justify-between border-b border-mostaza-brasa reveal-section in-view" data-observer="true">
+<!-- Top Bar -->
+<div class="w-full flex justify-between items-center p-6 z-20 absolute top-0 left-0">
+<span class="font-wordmark text-[24px] leading-none text-cream-springs tracking-wider">SPRINGS</span>
+<button class="bg-mostaza-brasa text-tinta-profunda font-button px-4 py-2 uppercase tracking-wide btn-press">PEDIR AHORA</button>
+</div>
+<!-- Full-bleed Photo -->
+<div class="absolute inset-0 z-0 overflow-hidden">
+<img alt="" class="w-full h-full object-cover object-center opacity-90 reveal-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGvH1s30zBv1CujW8ea2rNlmck-oWwVy5rWDXIPP5FYMt3URh5YoNRZW0tYB21eFZNoQJ5gvn0gzMHZn0l9cECf8815SLjE_hxk-Jkh0ODHLbvjZgDoHNlPo1jwHGBf3ID8oG3mI3Y67Mgbdr5toEaAGYTsxC4pVRCUF5NJjK26Ag2vM7GcNzvgqLhtF8D6RO10bejjAYsGtmZnlNsEqdo5AV74OsDJq7B4jQPlxvz-595x-1NYTKvdo8H3rKBkBOwHRsp7pxY_235">
+<div class="absolute inset-0 bg-gradient-to-t from-burgundy-springs/80 via-transparent to-transparent"></div>
+</div>
+<!-- Content Overlay -->
+<div class="relative z-10 p-6 flex flex-col justify-end h-full pb-12">
+<!-- Typography -->
+<div class="flex flex-col mb-16 -ml-2">
+<span class="font-headline-lg-mobile text-[56px] leading-[0.8] text-cream-springs reveal-text">CARNE &amp;</span>
+<span class="font-headline-lg-mobile text-[64px] leading-[0.8] text-cream-springs -ml-4 whitespace-nowrap reveal-text stagger-1">QUESO</span>
+</div>
+<!-- Bottom Elements -->
+<div class="flex justify-between items-end w-full">
+<!-- Stamp -->
+<div class="w-24 h-24 bg-mostaza-brasa rounded-full flex items-center justify-center p-2 transform rotate-12 relative overflow-hidden">
+<svg class="w-full h-full stamp-rotate" viewBox="0 0 100 100">
+<path d="M 50, 50 m -40, 0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0" fill="transparent" id="curve"></path>
+<text class="font-data-label text-[9px] fill-tinta-profunda tracking-widest uppercase">
+<textPath href="#curve" startOffset="0%">SPRINGS · COLOMBIA · JACKET DE AUTOR ·</textPath>
+</text>
+</svg>
+</div>
+<!-- Data Label -->
+<div class="font-data-label text-cream-springs text-[10px] text-right uppercase">
+                    ↖ LA FIJA /<br>CARNE OREADA
+                </div>
+</div>
+</div>
+</section>
+<!-- SECTION 2: COLLECTION -->
+<section class="relative w-full py-20 bg-cream-springs border-b border-mostaza-brasa overflow-hidden pl-12 pr-6 reveal-section in-view" data-observer="true">
+<!-- Vertical Label -->
+<div class="absolute left-2 top-1/2 -translate-y-1/2 -rotate-90 origin-center font-data-label text-[10px] text-burgundy-springs tracking-widest whitespace-nowrap">
+            MENÚ · 2026
+        </div>
+<div class="flex flex-col gap-8 w-full">
+<h2 class="font-headline-lg-mobile text-[72px] leading-[0.8] text-burgundy-springs whitespace-nowrap -mr-12 reveal-text">COLLECTION</h2>
+<div class="w-full flex flex-col gap-2 border-t border-burgundy-springs pt-4">
+<div class="marquee-container w-full">
+<div class="marquee-content font-data-label text-[11px] text-burgundy-springs tracking-widest uppercase">
+                        QUESO COSTEÑO — HOGAO — CARNE OREADA — POLLO DESMECHADO — CHORIZO — QUESO COSTEÑO — HOGAO — CARNE OREADA — 
+                    </div>
+<div aria-hidden="true" class="marquee-content font-data-label text-[11px] text-burgundy-springs tracking-widest uppercase">
+                        QUESO COSTEÑO — HOGAO — CARNE OREADA — POLLO DESMECHADO — CHORIZO — QUESO COSTEÑO — HOGAO — CARNE OREADA — 
+                    </div>
+</div>
+<div class="font-data-label text-[11px] text-mostaza-brasa tracking-widest uppercase mt-4">
+                    AQUÍ ESTÁ NUESTRO MENÚ
+                </div>
+</div>
+</div>
+</section>
+<!-- SECTION 3: STATEMENT -->
+<section class="relative w-full h-[600px] bg-tinta-profunda border-b border-mostaza-brasa overflow-hidden reveal-section in-view" data-observer="true">
+<div class="absolute inset-0 z-0 transform -rotate-6 scale-110 overflow-hidden">
+<img alt="" class="w-full h-full object-cover opacity-60 mix-blend-luminosity reveal-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCl1MZIb4jNW5HDJrJl0Qe7dA21KtNKHd6CcqyidfPzhNGcszipU6ecXznvC7FcABhgS9t2Z_bRZn_Y97ICPPJ2KaOaVoGTqpEBewagS3kIlbtBQoWJsgULu7R4M-C6tayksyXsc6fgscHK6A-7HPwUrj_PU1zI921IRyJzecZTqTpS9pSTqz1gKtgmPb6kINglR18dGrpYrBGz4LjUfBHHpqtC6sZx2zszAxvRjHxLW-RwPl8GlDSr1nfBI5VP3kY8RBRhKNpdVrWk">
+</div>
+<div class="relative z-10 w-full h-full p-6 flex flex-col">
+<div class="flex flex-col -ml-4 mt-12">
+<span class="font-headline-lg-mobile text-[64px] leading-[0.85] text-cream-springs reveal-text">JACKET DE</span>
+<span class="font-headline-lg-mobile text-[64px] leading-[0.85] text-cream-springs reveal-text stagger-1">AUTOR.</span>
+</div>
+<div class="mt-auto mb-12 flex items-center gap-4">
+<span class="text-mostaza-brasa font-headline-lg text-4xl leading-none">+</span>
+<p class="font-body-sm italic text-[14px] text-cream-springs">Primera en Colombia.</p>
+</div>
+</div>
+</section>
+<!-- SECTION 4: INGREDIENTS -->
+<section class="w-full bg-cream-springs border-b border-mostaza-brasa flex reveal-section in-view group/section" data-observer="true">
+<div class="w-1/2 h-[400px] border-r border-mostaza-brasa overflow-hidden group">
+<img alt="" class="w-full h-full object-cover reveal-img transition-transform duration-300 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVDgzw0Ell036ESM7hKl-22wjxsEkfhFdUUY7z3eGqckLv7KjTnCoMHzS-JgeYiiuvlCf15nnMXTp-wxesfMjvtpj8W5pNi0slB2N8j2kfpbbvOuljc8gbutSkS8qNnCBggFXIZ1yfatozhqIDD5VexCFx715D7cSnpEPp2z7xl5RsftOXUcGv1K0VrHRb2bnMk2vNQkkGVgcj3XjhI3QNr5aw5Ms-UevbM2xLEKIYwvxWnFwgKUyKLYUXqRIUo7dMxad-mv-UAaN8">
+</div>
+<div class="w-1/2 p-6 flex flex-col justify-center h-[400px] group">
+<div class="flex flex-col gap-2 mb-6 border-l-2 border-mostaza-brasa pl-4"><div class="hover:bg-mostaza-brasa hover:text-tinta-profunda p-1 -ml-1 transition-none">
+    <span class="font-headline-lg-mobile text-[28px] leading-none text-burgundy-springs reveal-text block">CARNE<br>OREADA.</span>
+</div>
+<div class="hover:bg-mostaza-brasa hover:text-tinta-profunda p-1 -ml-1 transition-none">
+    <span class="font-headline-lg-mobile text-[28px] leading-none text-burgundy-springs reveal-text stagger-1 block">HOGAO.</span>
+</div>
+<div class="hover:bg-mostaza-brasa hover:text-tinta-profunda p-1 -ml-1 transition-none">
+    <span class="font-headline-lg-mobile text-[28px] leading-none text-burgundy-springs reveal-text stagger-2 block">QUESO<br>COSTEÑO.</span>
+</div></div>
+<p class="font-body-sm text-[12px] text-tinta-profunda mb-8">Tres ingredientes. Una Jacket.</p>
+<div class="mt-auto">
+<span class="font-data-label text-[10px] text-mostaza-brasa block mb-1">COP</span>
+<span class="font-data-label text-[24px] text-mostaza-brasa tracking-tighter">32,900</span>
+</div>
+</div>
+</section>
+<!-- SECTION 5: MANIFESTO -->
+<section class="relative w-full min-h-[500px] bg-cream-springs border-b border-mostaza-brasa overflow-hidden reveal-section in-view" data-observer="true">
+<div class="absolute inset-0 z-0 overflow-hidden">
+<img alt="" class="w-full h-full object-cover reveal-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDACXDosyxWbH0mXpSKIk_B4CDzFUotk63mRXPRHqbdA52llOaIdEuP-dGoQh0TFjv9eXJIXKQIa9nNhKCkoFda5_M29jDm9c1WwVONjmm5b4DYW4r1uUmO862PQiChw8ukY61p6wWAXZE3OiJB0sHpbA3m98CsjqIuW86jd0ySkbLfQWMutJs0a8BQJV6UThL_sqgaQFSGt-dZan7AqdMTdwVmGlZYbXX0LqicHaCNJaTZOGy6l7KdU0JNEHMTdKGYetsWdlry2d0B">
+<div class="absolute inset-0 bg-burgundy-springs/35"></div>
+</div>
+<div class="relative z-10 p-6 flex flex-col justify-between h-full min-h-[500px]">
+<div class="flex flex-col -ml-4">
+<span class="font-headline-lg-mobile text-[72px] leading-[0.8] text-cream-springs reveal-text">BIEN</span>
+<span class="font-headline-lg-mobile text-[72px] leading-[0.8] text-cream-springs ml-12 reveal-text stagger-1">HECHA.</span>
+</div>
+<div class="mt-20">
+<p class="font-body-sm text-[14px] text-cream-springs leading-[1.6] max-w-[85%] font-medium drop-shadow-md">
+                    Bucaramanga ya tenía suficientes hamburguesas iguales. Springs nace porque pedir comida también es respeto propio.
+                </p>
+</div>
+<div class="mt-12 inline-block border border-cream-springs px-3 py-2 bg-tinta-profunda/80 backdrop-blur-sm self-start">
+<span class="font-data-label text-[10px] text-cream-springs tracking-widest uppercase">EST. 2026 / BGA-COL / DARK KITCHEN</span>
+</div>
+</div>
+</section>
+<!-- SECTION 6: ORDER CTA -->
+<section class="w-full bg-burgundy-springs border-b border-mostaza-brasa flex flex-col reveal-section in-view" data-observer="true">
+<div class="w-full h-[300px] overflow-hidden">
+<img alt="" class="w-full h-full object-cover object-center reveal-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVCnpAFukEkqDniI8BFJm9zeRpbkSlskbJJzfQ27lcROI7naxUeXtG3eyQPhO6Q8u2peO81bEJ-lL1RqJRrYnZzDZ0X_rYlg8T1q0NZRwPcVgDI60wksk70Jojykbtm4rfc_ibT84DKPgREmp5b_HNrpCkJxoeaMSyDF9oVQjd6ryx7gmNjOIibbFCUO1GXBawzF8V0tpkLlMhBcdJyFu7Gzk2Wl631DMSvCHR9HCVp4eMzEvWl-h0PYEuRIUrvT7jFqZYrkyhKqMB">
+</div>
+<div class="p-6 flex flex-col gap-6 bg-burgundy-springs relative overflow-hidden">
+<div class="flex flex-col -ml-4 z-10">
+<span class="font-headline-lg-mobile text-[68px] leading-[0.8] text-cream-springs reveal-text">PEDÍ</span>
+<span class="font-headline-lg-mobile text-[68px] leading-[0.8] text-cream-springs reveal-text stagger-1">AHORA.</span>
+</div>
+<button class="w-full bg-mostaza-brasa text-tinta-profunda font-headline-lg-mobile text-[32px] h-[64px] flex items-center justify-center uppercase tracking-wider mt-4 z-10 transition-colors hover:bg-cream-springs btn-press">
+                IR A PEDIR
+            </button>
+<div class="w-full text-center mt-2 z-10 border-t border-mostaza-brasa/30 pt-4">
+<span class="font-data-label text-[10px] text-cream-springs tracking-widest uppercase">
+                    30–45 MIN · CABECERA · CAÑAVERAL · SOTOMAYOR
+                </span>
+</div>
+</div>
+</section>
+<!-- SECTION 7: FOOTER -->
+<footer class="w-full bg-tinta-profunda p-8 flex flex-col items-center justify-center gap-6 reveal-section in-view" data-observer="true">
+<div class="flex flex-col items-center gap-2">
+<span class="font-wordmark text-[48px] text-cream-springs tracking-[0.06em] leading-none">SPRINGS</span>
+<span class="font-body-sm italic text-[16px] text-cream-springs">Jacket de autor.</span>
+</div>
+<div class="w-full h-px bg-mostaza-brasa my-4"></div>
+<div class="flex flex-col items-center gap-4 w-full">
+<a class="font-data-label text-[12px] text-cream-springs uppercase tracking-widest hover:text-mostaza-brasa transition-colors duration-200" href="#">COLLECTIONS [VER]</a>
+<a class="font-data-label text-[12px] text-cream-springs uppercase tracking-widest hover:text-mostaza-brasa transition-colors duration-200" href="#">EDITORIAL [LEER]</a>
+<a class="font-data-label text-[12px] text-cream-springs uppercase tracking-widest hover:text-mostaza-brasa transition-colors duration-200" href="#">MANIFESTO [SABER]</a>
+</div>
+<div class="mt-12 w-full text-center">
+<span class="font-data-label text-[9px] text-cream-springs/50 uppercase tracking-widest">
+                © 2026 SPRINGS · SYS.VER 1.0 // BGA-COL
+            </span>
+</div>
+</footer>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    // Optional: Stop observing once revealed
+                    // observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('[data-observer="true"]').forEach(section => {
+            observer.observe(section);
+        });
+    });
+</script>
+
+
+</body></html>

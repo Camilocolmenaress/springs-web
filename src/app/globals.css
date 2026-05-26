@@ -107,3 +107,7 @@ html, body {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 }
+
+.stamp-rotate {
+  animation: stickerSpin 15s linear infinite;
+}

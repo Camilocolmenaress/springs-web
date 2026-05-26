@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SPRINGS - Jacket de Autor (Tablet)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Inter:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#f37b78",
+                        "secondary-container": "#4c4638",
+                        "outline-variant": "#564241",
+                        "surface": "#1a1110",
+                        "on-tertiary-container": "#d2922b",
+                        "surface-container-lowest": "#150c0b",
+                        "on-secondary-container": "#bdb4a3",
+                        "on-primary-fixed": "#410006",
+                        "on-error-container": "#ffdad6",
+                        "inverse-surface": "#f2dedd",
+                        "primary-fixed": "#ffdad8",
+                        "on-secondary-fixed-variant": "#4c4638",
+                        "cream-springs": "#F2E8D5",
+                        "surface-variant": "#3e3231",
+                        "on-background": "#f2dedd",
+                        "surface-container-highest": "#3e3231",
+                        "secondary-fixed": "#ebe1cf",
+                        "surface-dim": "#1a1110",
+                        "on-error": "#690005",
+                        "tinta-profunda": "#1A0A0C",
+                        "background": "#1a1110",
+                        "burgundy-springs": "#6B1419",
+                        "secondary-fixed-dim": "#cfc6b3",
+                        "primary-fixed-dim": "#ffb3b0",
+                        "error-container": "#93000a",
+                        "tertiary-fixed": "#ffddb3",
+                        "on-tertiary-fixed-variant": "#633f00",
+                        "outline": "#a48b89",
+                        "on-surface-variant": "#ddc0be",
+                        "on-tertiary": "#452b00",
+                        "surface-container-high": "#322727",
+                        "on-secondary": "#353023",
+                        "on-tertiary-fixed": "#291800",
+                        "on-secondary-fixed": "#1f1b10",
+                        "primary": "#ffb3b0",
+                        "error": "#ffb4ab",
+                        "secondary": "#cfc6b3",
+                        "on-primary-fixed-variant": "#822528",
+                        "tertiary-fixed-dim": "#ffb951",
+                        "primary-container": "#6b1419",
+                        "on-primary": "#630d14",
+                        "surface-container": "#281d1c",
+                        "inverse-primary": "#a13d3d",
+                        "surface-bright": "#423636",
+                        "mostaza-brasa": "#C5871F",
+                        "surface-tint": "#ffb3b0",
+                        "surface-container-low": "#231919",
+                        "inverse-on-surface": "#392e2d",
+                        "tertiary": "#ffb951",
+                        "on-surface": "#f2dedd",
+                        "tertiary-container": "#4c3000"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "0px"
+                    },
+                    "spacing": {
+                        "stack-tight": "0.5rem",
+                        "gutter": "1rem",
+                        "margin-desktop": "4rem",
+                        "margin-mobile": "1.5rem",
+                        "stack-dense": "0.25rem"
+                    },
+                    "fontFamily": {
+                        "wordmark": ["Anton"],
+                        "headline-lg-mobile": ["Anton"],
+                        "data-label": ["JetBrains Mono"],
+                        "headline-lg": ["Anton"],
+                        "button": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "tagline": ["Inter"]
+                    },
+                    "fontSize": {
+                        "wordmark": ["48px", { "lineHeight": "1.0", "letterSpacing": "0.06em", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "1.0", "letterSpacing": "0.04em", "fontWeight": "400" }],
+                        "data-label": ["10px", { "lineHeight": "1.0", "letterSpacing": "0.18em", "fontWeight": "400" }],
+                        "headline-lg": ["40px", { "lineHeight": "1.0", "letterSpacing": "0.04em", "fontWeight": "400" }],
+                        "button": ["14px", { "lineHeight": "1.0", "fontWeight": "500" }],
+                        "body-sm": ["12px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "body-lg": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "tagline": ["16px", { "lineHeight": "1.4", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #6B1419; } /* burgundy-springs fallback */
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Kinetic Typography for specific section */
+        .kinetic-text {
+            display: inline-block;
+            transform-origin: left bottom;
+            transition: transform 0.3s ease;
+        }
+        .kinetic-text:hover {
+            transform: skewX(-15deg);
+        }
+    </style>
+</head>
+<body class="bg-burgundy-springs text-cream-springs antialiased selection:bg-mostaza-brasa selection:text-tinta-profunda">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile h-16 bg-burgundy-springs dark:bg-tinta-profunda text-cream-springs dark:text-cream-springs font-headline-lg-mobile text-headline-lg-mobile border-b border-mostaza-brasa flat no shadows transition-colors duration-200">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-cream-springs hover:text-mostaza-brasa transition-colors" data-icon="menu">menu</span>
+</div>
+<div class="font-wordmark text-wordmark text-cream-springs uppercase tracking-widest hover:text-mostaza-brasa transition-colors cursor-pointer text-center">SPRINGS</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-cream-springs hover:text-mostaza-brasa transition-colors" data-icon="shopping_bag">shopping_bag</span>
+</div>
+</header>
+<!-- Main Content Container -->
+<main class="pt-16 max-w-[1200px] mx-auto w-full">
+<!-- Hero Section (Tablet Wide Layout) -->
+<section class="relative w-full h-[70vh] min-h-[600px] flex items-center justify-center overflow-hidden bg-tinta-profunda reveal-on-scroll border-b border-mostaza-brasa">
+<div class="absolute inset-0 z-0 opacity-40 mix-blend-luminosity">
+<img alt="Hero Jacket Potato" class="w-full h-full object-cover object-center" src="https://lh3.googleusercontent.com/aida/ADBb0ugfrzgaJ97r1WGYYCHkuLHHMKuoSOJuwgnjm1mHZ7WnpGekvzZH3adYvbgREjyUsv3TGuajruR20PQSurmj3C__lGKEyqIA4WH9v6QOKR9F2YAkqZnS9OOgheg330WcpDiWmMVMFX-eo6ZtnMb1k98d6_g79a5IxINDLMXI9eURhrj3KGqZuhFvZaSfzQAnr8AqKbvTqODS6cGBpMBUOupb1Kkk0DrlUsO_Ml_sHW85aCBcElwGG8qQnkda"/>
+</div>
+<div class="absolute inset-0 z-0 bg-gradient-to-t from-tinta-profunda to-transparent"></div>
+<div class="relative z-10 w-full px-margin-mobile flex flex-col md:flex-row items-center justify-between gap-8 h-full pb-12">
+<div class="w-full md:w-1/2 flex flex-col justify-end md:justify-center h-full">
+<h1 class="font-headline-lg text-[60px] md:text-[100px] leading-[0.85] text-cream-springs uppercase tracking-tighter mb-4 kinetic-text break-words">
+                         CARNE &amp;<br/>QUESO
+                     </h1>
+<p class="font-data-label text-data-label text-mostaza-brasa uppercase tracking-widest mt-2 max-w-sm">
+                         JACKET DE AUTOR. THE ANATOMY OF A PERFECT BITE. BOGOTA.
+                     </p>
+</div>
+<div class="w-full md:w-1/2 flex flex-col justify-end h-full items-end">
+<button class="bg-mostaza-brasa text-tinta-profunda font-button text-button px-8 py-4 uppercase tracking-widest hover:bg-cream-springs hover:text-tinta-profunda transition-colors border border-transparent hover:border-mostaza-brasa">
+                         IR A PEDIR
+                     </button>
+</div>
+</div>
+</section>
+<!-- Marquee Collection -->
+<section class="w-full bg-cream-springs py-4 border-b border-tinta-profunda">
+<div class="marquee-container">
+<div class="marquee-content font-wordmark text-wordmark text-tinta-profunda uppercase whitespace-nowrap opacity-20">
+                    SANTANDER - CHICHARRÓN - BOLOGNESA - CLÁSICA - SANTANDER - CHICHARRÓN - BOLOGNESA - CLÁSICA - SANTANDER - CHICHARRÓN - BOLOGNESA - CLÁSICA -
+                </div>
+</div>
+</section>
+<!-- Statement Section (16:9 Image Focus) -->
+<section class="relative w-full py-24 px-margin-mobile flex flex-col items-center justify-center reveal-on-scroll">
+<div class="relative w-full max-w-4xl mx-auto aspect-video">
+<img alt="Statement Jacket Potato Top-Down" class="w-full h-full object-cover border border-mostaza-brasa" src="https://lh3.googleusercontent.com/aida/ADBb0ujipBPl-9tQCtUZ_PO9oClT6k4JJ02-waA5H_HzQ9BZuGlHO2iy_gq1xZU8n8X2u0Bhay66EJHvD0Wlk9x97GnPSvdng3LzRzOh8sDEZnBm6z4naOuSwfYAG3tuNXK-MYDvF8ieRrQqrir1jO9OTQiNKuB251qWSCEYNW1VcWjidD2MTDtV4uldf806E7j6j0xnnlJ0nCdVBIYwGT6kNv7iwLTM4USlxJDYcR1iisNrVSjtczszKlpwqwwp"/>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<h2 class="font-headline-lg text-[40px] md:text-[80px] leading-[0.9] text-cream-springs text-center uppercase tracking-tighter mix-blend-difference">
+                         JACKET<br/>DE AUTOR
+                     </h2>
+</div>
+</div>
+<div class="mt-8 max-w-2xl mx-auto text-center">
+<p class="font-body-lg text-body-lg text-cream-springs opacity-80 leading-relaxed uppercase">
+                    NO COMPROMISE. PURE TEXTURE. THE RUSTIC ELEVATED. WE REDEFINE THE JACKET POTATO THROUGH A LENS OF EDITORIAL BRUTALISM.
+                </p>
+</div>
+</section>
+<!-- Ingredients Split Section -->
+<section class="w-full flex flex-col md:flex-row min-h-[500px] border-y border-mostaza-brasa reveal-on-scroll">
+<div class="w-full md:w-1/2 bg-cream-springs flex flex-col justify-center px-12 py-16">
+<h3 class="font-headline-lg text-headline-lg text-burgundy-springs uppercase mb-6 tracking-tight">LA OREADA</h3>
+<p class="font-data-label text-data-label text-tinta-profunda mb-8 uppercase tracking-widest">
+                    INGREDIENT PROTAGONIST // SANTANDER
+                </p>
+<div class="font-body-sm text-body-sm text-tinta-profunda space-y-4 max-w-sm">
+<p>CARNE OREADA. HOGAO. QUESO COSTEÑO. SUERO.</p>
+<p class="opacity-60">RAW TEXTURE. SMOKED DRY MEAT. A REGIONAL CLASSIC STRIPPED OF PRETENSION.</p>
+</div>
+<div class="mt-12">
+<span class="font-data-label text-data-label text-mostaza-brasa bg-tinta-profunda px-3 py-1 uppercase">EST. PREP TIME: 15 MIN</span>
+</div>
+</div>
+<div class="w-full md:w-1/2 h-[400px] md:h-auto">
+<img alt="Carne Oreada Close Up" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ADBb0uhb-MQKLuuPD1Ki7PnQ4Rto2Dbic4vSXqM3Ph25uEZExEk3nrCkAY1rAWyLq5ByN993e8FShHuHSCg71Mt0X54WWtiIGgNaJPTFpbbUvoLVP3Fxp-fnxFPMlLu74Ve3kAQUmE07ZjeJB_u8G6awGQGIz6O_YWJMQ8sX4BFMy4iEcrVGT8t5GP42rHJBVRBRmepgKOSHv11IBqoHQrl_DxkZSZw4sxSu0tKVRDZiJo9qDsEv8qWOKn7CPO0G"/>
+</div>
+</section>
+<!-- Manifesto Full Width Overlay -->
+<section class="relative w-full h-[60vh] min-h-[500px] flex items-center justify-center reveal-on-scroll border-b border-mostaza-brasa">
+<div class="absolute inset-0 z-0">
+<img alt="Chef Prep Manifesto" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ADBb0uhI4IS5rxttp-4yLHgbOO2TTmsq8Gb6tXstcDIx05c9lrBTAwinET1W1aQjLf8Cxwi-31eECpiw_k9yezLM3tWvWwx1GXeB2VafZ8cDQAP2vVs8eeo36-FeXUW-8M0NJPWaWR7-NvqGzRVoYKIbFqTwhTM_bwMJw5K1G9h7nDdeFuMC2LBud9t2_0IMoaDu7pnuHAnHRAt2U5gBcDmJLgH936urI1MtJJ5lXHXb46pjjamJtzl5_CxYyaI"/>
+</div>
+<div class="absolute inset-0 z-10 bg-burgundy-springs opacity-35"></div>
+<div class="relative z-20 w-full max-w-3xl px-margin-mobile text-center flex flex-col items-center">
+<h2 class="font-headline-lg text-[50px] md:text-[70px] leading-none text-cream-springs uppercase tracking-tighter mb-8 shadow-sm">
+                     NO FAST FOOD TROPES.
+                 </h2>
+<p class="font-tagline text-tagline text-mostaza-brasa uppercase tracking-widest max-w-lg bg-tinta-profunda/80 p-4 border border-mostaza-brasa backdrop-blur-sm">
+                     WE REJECT INDUSTRIAL MEDIOCRITY. WE EMBRACE THE RAW, THE CHARRED, THE INTENTIONAL.
+                 </p>
+</div>
+</section>
+</main>
+<!-- Footer Component -->
+<footer class="w-full flex flex-col items-center py-12 px-margin-mobile text-center gap-6 bg-burgundy-springs dark:bg-tinta-profunda text-cream-springs dark:text-cream-springs font-body-sm text-body-sm border-t-2 border-mostaza-brasa flat no shadows mt-12 relative z-10">
+<div class="w-full max-w-[1200px] flex flex-col md:flex-row justify-between items-center md:items-start gap-8">
+<div class="font-wordmark text-wordmark text-mostaza-brasa uppercase tracking-widest">
+                SPRINGS
+            </div>
+<nav class="flex flex-col md:flex-row gap-6 uppercase tracking-widest">
+<a class="text-cream-springs hover:text-mostaza-brasa transition-all" href="#">MENU</a>
+<a class="text-cream-springs hover:text-mostaza-brasa transition-all" href="#">MANIFIESTO</a>
+<a class="text-cream-springs hover:text-mostaza-brasa transition-all" href="#">COBERTURA</a>
+<a class="text-cream-springs hover:text-mostaza-brasa transition-all" href="#">CONTACTO</a>
+</nav>
+<div class="font-data-label text-data-label text-mostaza-brasa opacity-70 uppercase text-right md:w-[200px]">
+                ©2024 SPRINGS<br/>JACKET DE AUTOR
+            </div>
+</div>
+</footer>
+<script>
+        // Simple scroll reveal
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal-on-scroll').forEach((elem) => {
+                observer.observe(elem);
+            });
+        });
+    </script>
+</body></html>

@@ -7,23 +7,27 @@ import { motion, useInView, useMotionValue, useTransform, useSpring, animate as 
 import DragSticker from "@/components/DragSticker";
 import DevPanel from "@/components/DevPanel";
 import { useDesignConfig } from "@/hooks/useDesignConfig";
-import MobileCanvas from "@/components/MobileCanvas";
+import MobileLanding from "@/components/MobileLanding";
+import TabletLanding from "@/components/TabletLanding";
 import SensitiveImage from "@/components/SensitiveImage";
-
-const DESKTOP_BREAKPOINT = 1024;
 
 // Easing suave para slides
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-function useIsDesktop() {
-  const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
+type Layout = "mobile" | "tablet" | "desktop";
+
+function useLayout() {
+  const [layout, setLayout] = useState<Layout | null>(null);
   useEffect(() => {
-    const check = () => setIsDesktop(window.innerWidth >= DESKTOP_BREAKPOINT);
+    const check = () => {
+      const w = window.innerWidth;
+      setLayout(w >= 1024 ? "desktop" : w >= 768 ? "tablet" : "mobile");
+    };
     check();
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
   }, []);
-  return isDesktop;
+  return layout;
 }
 
 // Helper: elemento que aparece al entrar al viewport
@@ -45,7 +49,7 @@ function Reveal({ children, delay = 0, style }: { children: React.ReactNode; del
 
 
 export default function Home() {
-  const isDesktop = useIsDesktop();
+  const layout = useLayout();
   const { config, editMode, saved, updateProp, save, reset, exportValues } = useDesignConfig("home");
   const wrapperRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -169,7 +173,7 @@ export default function Home() {
   const pack   = config.zones.packaging?.elements;
   const cult   = config.zones.culture?.elements;
   const pedir  = (config.zones as Record<string, { elements: Record<string, { props: Record<string, unknown> }> }>).pedirYa?.elements;
-  const layout = (config.zones as Record<string, { elements: Record<string, { props: Record<string, unknown> }> }>).layout?.elements;
+  const layoutZone = (config.zones as Record<string, { elements: Record<string, { props: Record<string, unknown> }> }>).layout?.elements;
   const d = {
     titleSize:    (hero?.title?.props?.fontSize as { value: number })?.value ?? 19.5,
     titleLeft:    (hero?.title?.props?.left as { value: number })?.value ?? 42,
@@ -317,14 +321,14 @@ export default function Home() {
     pedirGhostLeft:    (pedir?.ghostText?.props?.left as { value: number })?.value ?? 390,
     pedirGhostTop:     (pedir?.ghostText?.props?.top as { value: number })?.value ?? 50,
     pedirGhostOpacity: (pedir?.ghostText?.props?.opacity as { value: number })?.value ?? 7,
-    canvasWidth:       (layout?.canvas?.props?.width as { value: number })?.value ?? 330,
+    canvasWidth:       (layoutZone?.canvas?.props?.width as { value: number })?.value ?? 330,
   };
 
   const pauseScroll = () => lenisRef.current?.stop();
   const resumeScroll = () => lenisRef.current?.start();
 
   useEffect(() => {
-    if (isDesktop !== true) return;
+    if (layout !== "desktop") return;
     const wrapper = wrapperRef.current;
     const content = contentRef.current;
     if (!wrapper || !content) return;
@@ -367,7 +371,7 @@ export default function Home() {
       lenis.destroy();
       lenisRef.current = null;
     };
-  }, [isDesktop]);
+  }, [layout]);
 
   useEffect(() => {
     const t = setTimeout(() => {
@@ -377,9 +381,8 @@ export default function Home() {
   }, [handArmEntrance]);
 
 
-  if (isDesktop !== true) {
-    return <MobileCanvas />;
-  }
+  if (layout === null || layout === "mobile") return <MobileLanding />;
+  if (layout === "tablet") return <TabletLanding />;
 
   const F = {
     display: { fontFamily: "Anton, sans-serif" },
