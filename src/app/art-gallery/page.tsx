@@ -157,6 +157,7 @@ export default function ArtGallery() {
     // info panel
     infoPadT:       sv(z, "infoPanel_contenido","paddingInfo",  "top",        32),
     infoPadH:       sv(z, "infoPanel_contenido","paddingInfo",  "horizontal", 22),
+    infoPadOffsetX: sv(z, "infoPanel_contenido","paddingInfo",  "offsetX",    0),
     tituloFs:       sv(z, "infoPanel_contenido","titulo",       "fontSize",   3.8),
     tituloLeft:     sv(z, "infoPanel_contenido","titulo",       "left",       0),
     tituloTop:      sv(z, "infoPanel_contenido","titulo",       "top",        0),
@@ -441,6 +442,8 @@ export default function ArtGallery() {
                   padding: `${d.infoPadT}px ${d.infoPadH}px 24px`,
                   overflowY: "auto",
                   display: "flex", flexDirection: "column",
+                  transform: `translateX(${d.infoPadOffsetX}px)`,
+                  position: "relative", zIndex: 2,
                 }}>
                   <div style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.22em", color: C.mostaza, marginBottom: 6 }}>
                     SPRINGS ART GALLERY

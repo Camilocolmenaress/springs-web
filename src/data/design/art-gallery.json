@@ -159,8 +159,9 @@
       "elements": {
         "paddingInfo": {
           "props": {
-            "top":        { "value": 120, "unit": "px", "min": 8,  "max": 200, "step": 1 },
-            "horizontal": { "value": 60,  "unit": "px", "min": 8,  "max": 120, "step": 1 }
+            "top":        { "value": 120, "unit": "px", "min": 8,    "max": 200,  "step": 1 },
+            "horizontal": { "value": 60,  "unit": "px", "min": 8,    "max": 120,  "step": 1 },
+            "offsetX":    { "value": 0,   "unit": "px", "min": -200, "max": 600,  "step": 2 }
           }
         },
         "titulo": {
