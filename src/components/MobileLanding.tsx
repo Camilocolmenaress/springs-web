@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -46,11 +46,6 @@ function SlideText({
 }
 
 export default function MobileLanding() {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-
-  if (!mounted) return null;
-
   return (
     <div
       className="fixed inset-0 overflow-y-auto overflow-x-hidden bg-tinta font-sans text-cream"
@@ -70,7 +65,7 @@ export default function MobileLanding() {
 
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
-            src="/images/hero-jacket.png"
+            src="/images/la-fija.png"
             alt="La Fija — Jacket de autor"
             className="w-full h-full object-cover opacity-90"
           />
