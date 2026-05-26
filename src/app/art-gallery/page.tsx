@@ -139,10 +139,12 @@ export default function ArtGallery() {
     galeriaGridY:  sv(z, "galeria",           "grid",         "top",        0),
     fotoGrandeFlex:sv(z, "galeria",           "fotoGrande",   "flex",       3),
     fotosSmallFlex:sv(z, "galeria",           "fotosPequenas","flex",       2),
-    barcodeSize:   sv(z, "galeria",           "barcode",      "size",       60),
-    barcodeLeft:   sv(z, "galeria",           "barcode",      "left",       0),
-    barcodeTop:    sv(z, "galeria",           "barcode",      "top",        0),
-    barcodeLabelFs:sv(z, "galeria",           "barcode",      "fontSize",   0.36),
+    barcodeSize:     sv(z, "galeria",         "barcode",      "size",       60),
+    barcodeLeft:     sv(z, "galeria",         "barcode",      "left",       0),
+    barcodeTop:      sv(z, "galeria",         "barcode",      "top",        0),
+    barcodeLabelFs:  sv(z, "galeria",         "barcode",      "fontSize",   0.36),
+    barcodeLabelLeft:sv(z, "galeria",         "barcode",      "labelLeft",  0),
+    barcodeLabelTop: sv(z, "galeria",         "barcode",      "labelTop",   0),
     // foto
     imageH:        sv(z, "foto",              "imagen",       "height",     90),
     imageOffsetY:  sv(z, "foto",              "imagen",       "top",        0),
@@ -568,7 +570,7 @@ export default function ArtGallery() {
                         flexShrink: 0,
                       }}
                     />
-                    <div style={{ ...F.mono, lineHeight: 1.6 }}>
+                    <div style={{ ...F.mono, lineHeight: 1.6, transform: `translate(${d.barcodeLabelLeft}px, ${d.barcodeLabelTop}px)` }}>
                       <div style={{ fontSize: `${d.barcodeLabelFs * 1.2}rem`, color: C.cream, marginBottom: 1 }}>❝❞</div>
                       <div style={{ fontSize: `${d.barcodeLabelFs}rem`, letterSpacing: "0.1em", color: C.cream }}>SPRINGS</div>
                       <div style={{ fontSize: `${d.barcodeLabelFs}rem`, letterSpacing: "0.1em", color: C.cream }}>ART GALLERY</div>
