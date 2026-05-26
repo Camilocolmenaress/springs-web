@@ -13,7 +13,7 @@ const C = {
   cream:   "#F2E8D5",
   burgundy:"#6B1419",
   mostaza: "#C5871F",
-  dim:     "rgba(242,232,213,0.4)",
+  dim:     "#F2E8D5",
   faint:   "rgba(242,232,213,0.1)",
   fainter: "rgba(242,232,213,0.06)",
 };
@@ -94,6 +94,7 @@ export default function ArtGallery() {
     // layout
     sidebarW:      sv(z, "layout",            "sidebar",      "width",      168),
     navH:          sv(z, "layout",            "nav",          "height",     52),
+    navLogoFs:     sv(z, "layout",            "nav",          "fontSize",   1.3),
     footerH:       sv(z, "layout",            "footer",       "height",     46),
     infoPanelW:    sv(z, "layout",            "infoPanel",    "width",      380),
     // sidebar
@@ -102,6 +103,8 @@ export default function ArtGallery() {
     textRadius:    sv(z, "sidebar_contenido", "globe",        "textRadius",  46),
     globeFontSize: sv(z, "sidebar_contenido", "globe",        "fontSize",    8),
     globeTextOff:  sv(z, "sidebar_contenido", "globe",        "textOffset",  16),
+    globeOffsetX:  sv(z, "sidebar_contenido", "globe",        "left",        0),
+    globeOffsetY:  sv(z, "sidebar_contenido", "globe",        "top",         0),
     sidebarPadT:   sv(z, "sidebar_contenido", "paddingSidebar","top",       32),
     sidebarPadH:   sv(z, "sidebar_contenido", "paddingSidebar","horizontal",18),
     exhibitNumFs:  sv(z, "sidebar_contenido", "exhibitNum",   "fontSize",   3.8),
@@ -185,7 +188,7 @@ export default function ArtGallery() {
         padding: "0 28px",
         background: "transparent",
       }}>
-        <Link href="/" style={{ ...F.display, fontSize: "1.3rem", letterSpacing: "0.05em", color: C.cream, textDecoration: "none" }}>
+        <Link href="/" style={{ ...F.display, fontSize: `${d.navLogoFs}rem`, letterSpacing: "0.05em", color: C.cream, textDecoration: "none" }}>
           SPRINGS
         </Link>
         <Link href="/menu" style={{
@@ -212,7 +215,7 @@ export default function ArtGallery() {
       }}>
 
         {/* Globe con texto circular */}
-        <div style={{ width: d.globeSize, height: d.globeSize, flexShrink: 0, marginBottom: 18 }}>
+        <div style={{ width: d.globeSize, height: d.globeSize, flexShrink: 0, marginBottom: 18, transform: `translate(${d.globeOffsetX}px, ${d.globeOffsetY}px)` }}>
           <svg viewBox="0 0 110 110" width="100%" height="100%">
             <circle cx="55" cy="55" r={gr} fill="none" stroke={C.dim} strokeWidth="1.2" opacity={0.8}/>
             <motion.g
@@ -254,8 +257,8 @@ export default function ArtGallery() {
           <div style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.1em", color: C.dim }}>COLOMBIA</div>
         </div>
         <div style={{ marginBottom: 22 }}>
-          <div style={{ ...F.mono, fontSize: "0.39rem", color: "rgba(242,232,213,0.25)" }}>7.0631° N</div>
-          <div style={{ ...F.mono, fontSize: "0.39rem", color: "rgba(242,232,213,0.25)" }}>73.0859° W</div>
+          <div style={{ ...F.mono, fontSize: "0.39rem", color: C.cream }}>7.0631° N</div>
+          <div style={{ ...F.mono, fontSize: "0.39rem", color: C.cream }}>73.0859° W</div>
         </div>
 
         <div style={{ width: 7, height: 7, borderRadius: "50%", background: C.burgundy, marginBottom: 16 }} />
@@ -267,10 +270,10 @@ export default function ArtGallery() {
               background: "none", border: "none", cursor: "pointer",
               display: "flex", alignItems: "center", gap: 7, padding: 0,
             }}>
-              <span style={{ ...F.mono, fontSize: `${d.exhibitListFs}rem`, color: i === idx ? C.burgundy : "rgba(242,232,213,0.22)" }}>
+              <span style={{ ...F.mono, fontSize: `${d.exhibitListFs}rem`, color: i === idx ? C.burgundy : C.cream }}>
                 {e.id}
               </span>
-              <span style={{ ...F.mono, fontSize: `${d.exhibitListFs}rem`, letterSpacing: "0.06em", color: i === idx ? C.cream : "rgba(242,232,213,0.25)" }}>
+              <span style={{ ...F.mono, fontSize: `${d.exhibitListFs}rem`, letterSpacing: "0.06em", color: C.cream }}>
                 {e.name}
               </span>
             </button>
@@ -288,7 +291,7 @@ export default function ArtGallery() {
               }} />
             ))}
           </div>
-          <div style={{ ...F.mono, fontSize: "0.38rem", color: "rgba(242,232,213,0.28)", marginTop: 4 }}>
+          <div style={{ ...F.mono, fontSize: "0.38rem", color: C.cream, marginTop: 4 }}>
             {idx + 1} / {EXHIBITS.length}
           </div>
         </div>
@@ -359,7 +362,7 @@ export default function ArtGallery() {
                   <div style={{ ...F.mono, fontSize: "0.42rem", letterSpacing: "0.2em", color: C.dim, marginTop: 3 }}>
                     {exhibit.subtitle}
                   </div>
-                  <div style={{ ...F.mono, fontSize: "0.38rem", letterSpacing: "0.14em", color: "rgba(242,232,213,0.28)", marginTop: 2 }}>
+                  <div style={{ ...F.mono, fontSize: "0.38rem", letterSpacing: "0.14em", color: C.cream, marginTop: 2 }}>
                     {exhibit.year}
                   </div>
                 </div>
@@ -416,7 +419,7 @@ export default function ArtGallery() {
                     { label: "TEMPERATURE", val: exhibit.temp     },
                   ].map(item => (
                     <div key={item.label}>
-                      <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.14em", color: "rgba(242,232,213,0.28)", marginBottom: 2 }}>
+                      <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.14em", color: C.cream, marginBottom: 2 }}>
                         {item.label}
                       </div>
                       <div style={{ ...F.mono, fontSize: `${d.specsFs}rem`, letterSpacing: "0.07em", color: C.cream }}>
@@ -435,7 +438,7 @@ export default function ArtGallery() {
                     </p>
                     <div style={{ ...F.sans, fontSize: "0.5rem", fontStyle: "italic", color: C.dim }}>Springs Crew</div>
                   </div>
-                  <div style={{ ...F.mono, fontSize: "0.38rem", letterSpacing: "0.07em", color: "rgba(242,232,213,0.22)", lineHeight: 1.7, textAlign: "right", flexShrink: 0 }}>
+                  <div style={{ ...F.mono, fontSize: "0.38rem", letterSpacing: "0.07em", color: C.cream, lineHeight: 1.7, textAlign: "right", flexShrink: 0 }}>
                     SPRINGS<br />ART GALLERY<br />{exhibit.id}
                   </div>
                 </div>
@@ -454,11 +457,11 @@ export default function ArtGallery() {
       }}>
         <div style={{ display: "flex", gap: 18 }}>
           {["INSTAGRAM", "TIKTOK", "SPOTIFY"].map(s => (
-            <span key={s} style={{ ...F.mono, fontSize: "0.41rem", letterSpacing: "0.1em", color: "rgba(242,232,213,0.26)", cursor: "pointer" }}>{s}</span>
+            <span key={s} style={{ ...F.mono, fontSize: "0.41rem", letterSpacing: "0.1em", color: C.cream, cursor: "pointer" }}>{s}</span>
           ))}
         </div>
 
-        <div style={{ ...F.mono, fontSize: "0.38rem", letterSpacing: "0.1em", color: "rgba(242,232,213,0.16)" }}>
+        <div style={{ ...F.mono, fontSize: "0.38rem", letterSpacing: "0.1em", color: C.cream }}>
           SPRINGS © 2025 ©
         </div>
 
@@ -472,7 +475,7 @@ export default function ArtGallery() {
           ].map(item => (
             <Link key={item.label} href={item.href} style={{
               ...F.mono, fontSize: "0.43rem", letterSpacing: "0.1em",
-              color: item.active ? C.cream : "rgba(242,232,213,0.3)",
+              color: C.cream,
               textDecoration: "none",
               borderBottom: item.active ? `1px solid ${C.cream}` : "none",
               paddingBottom: item.active ? 2 : 0,
@@ -484,7 +487,7 @@ export default function ArtGallery() {
 
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <div>
-            <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.1em", color: "rgba(242,232,213,0.32)" }}>SPRINGS RADIO</div>
+            <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.1em", color: C.cream }}>SPRINGS RADIO</div>
             <div style={{ ...F.mono, fontSize: "0.5rem", color: C.cream }}>103.7 FM</div>
           </div>
           <div style={{

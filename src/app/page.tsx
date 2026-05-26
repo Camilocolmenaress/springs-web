@@ -324,6 +324,13 @@ export default function Home() {
     canvasWidth:       (layoutZone?.canvas?.props?.width as { value: number })?.value ?? 330,
   };
 
+  // Globe text path
+  const _gr  = d.globeRadius;
+  const _tr  = d.globeTextRadius;
+  const _gsx = +( 55 - _tr * 0.5  ).toFixed(1);
+  const _gsy = +( 55 + _tr * 0.866).toFixed(1);
+  const _gdy = +( _tr * 1.732      ).toFixed(1);
+
   const pauseScroll = () => lenisRef.current?.stop();
   const resumeScroll = () => lenisRef.current?.start();
 
@@ -914,23 +921,26 @@ export default function Home() {
           >
             <DragSticker rotate={-5} idleRotateRange={3} idleDuration={8}
               onDragStart={pauseScroll} onDragEnd={resumeScroll}
-              style={{
-                width: `${d.globeStickerSize}vw`, height: `${d.globeStickerSize}vw`,
-                background: "rgba(26,10,12,0.88)",
-                border: "1px solid rgba(242,232,213,0.15)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-              }}
+              style={{ width: `${d.globeStickerSize}vw`, height: `${d.globeStickerSize}vw` }}
             >
-              <svg viewBox="0 0 24 24" fill="none" stroke="rgba(242,232,213,0.45)" strokeWidth="1.2" width="55%" height="55%">
-                <circle cx="12" cy="12" r="10" />
+              <svg viewBox="0 0 110 110" width="100%" height="100%">
+                <circle cx="55" cy="55" r={_gr} fill="none" stroke="rgba(26,10,12,0.45)" strokeWidth="1.2" opacity={0.8}/>
                 <motion.g
                   animate={{ rotate: 360 }}
                   transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
                   style={{ transformBox: "fill-box", transformOrigin: "center" }}
                 >
-                  <ellipse cx="12" cy="12" rx="4" ry="10" />
-                  <line x1="2" y1="12" x2="22" y2="12" />
+                  <ellipse cx="55" cy="55" rx={+(_gr*0.36).toFixed(1)} ry={_gr} fill="none" stroke="rgba(26,10,12,0.4)" strokeWidth="0.9" opacity={0.6}/>
+                  <ellipse cx="55" cy="55" rx={+(_gr*0.77).toFixed(1)} ry={_gr} fill="none" stroke="rgba(26,10,12,0.4)" strokeWidth="0.9" opacity={0.5}/>
+                  <ellipse cx="55" cy="55" rx={_gr} ry={+(_gr*0.41).toFixed(1)} fill="none" stroke="rgba(26,10,12,0.4)" strokeWidth="0.9" opacity={0.6}/>
+                  <ellipse cx="55" cy="55" rx={_gr} ry={+(_gr*0.77).toFixed(1)} fill="none" stroke="rgba(26,10,12,0.4)" strokeWidth="0.8" opacity={0.45}/>
+                  <line x1={55-_gr} y1="55" x2={55+_gr} y2="55" stroke="rgba(26,10,12,0.4)" strokeWidth="0.8" opacity={0.45}/>
+                  <line x1="55" y1={55-_gr} x2="55" y2={55+_gr} stroke="rgba(26,10,12,0.4)" strokeWidth="0.8" opacity={0.45}/>
                 </motion.g>
+                <path id="home-chimba-circle" fill="none" d={`M${_gsx},${_gsy} a${_tr},${_tr} 0 0,1 ${_tr},${-_gdy} a${_tr},${_tr} 0 0,1 ${-_tr},${_gdy}`}/>
+                <text fontFamily="JetBrains Mono, monospace" fontSize={d.globeFontSize} letterSpacing="1.0" fill="rgba(26,10,12,0.55)" fillOpacity={0.9}>
+                  <textPath href="#home-chimba-circle" startOffset={`${d.globeTextOffset}%`}>FOR THE MOST CHIMBA PEOPLE ✦ </textPath>
+                </text>
               </svg>
             </DragSticker>
           </motion.div>
