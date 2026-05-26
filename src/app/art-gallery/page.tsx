@@ -274,12 +274,13 @@ export default function ArtGallery() {
 
         {/* Location */}
         <div style={{ transform: `translate(${d.locationX}px, ${d.locationY}px)`, marginBottom: 22 }}>
-          <div style={{ marginBottom: 4 }}>
-            <div style={{ ...F.mono, fontSize: `${d.locationFs}rem`, letterSpacing: "0.1em", color: C.cream }}>BARBOSA</div>
+          <div style={{ marginBottom: 8 }}>
+            <div style={{ ...F.mono, fontSize: `${d.locationFs}rem`, letterSpacing: "0.1em", color: C.cream }}>BUCARAMANGA</div>
             <div style={{ ...F.mono, fontSize: `${d.locationFs}rem`, letterSpacing: "0.1em", color: C.dim }}>COLOMBIA</div>
           </div>
-          <div style={{ ...F.mono, fontSize: `${d.locationFs}rem`, color: C.cream }}>7.0631° N</div>
-          <div style={{ ...F.mono, fontSize: `${d.locationFs}rem`, color: C.cream }}>73.0859° W</div>
+          <div style={{ width: 32, height: "1px", background: "rgba(242,232,213,0.35)", marginBottom: 8 }} />
+          <div style={{ ...F.mono, fontSize: `${d.locationFs}rem`, color: C.cream }}>7.1254° N</div>
+          <div style={{ ...F.mono, fontSize: `${d.locationFs}rem`, color: C.cream }}>73.1198° W</div>
         </div>
 
         <div style={{ width: 7, height: 7, borderRadius: "50%", background: C.burgundy, marginBottom: 16 }} />
