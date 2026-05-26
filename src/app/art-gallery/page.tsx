@@ -557,14 +557,15 @@ export default function ArtGallery() {
 
                   {/* Barcode — independiente, vertical */}
                   <div style={{ transform: `translate(${d.barcodeLeft}px, ${d.barcodeTop}px)`, display: "flex", gap: 6, alignItems: "flex-start", flexShrink: 0 }}>
-                    <div style={{ width: d.barcodeW, height: d.barcodeH, overflow: "hidden", flexShrink: 0 }}>
+                    <div style={{ width: d.barcodeH, height: d.barcodeW, position: "relative", flexShrink: 0 }}>
                       <img
                         src="/images/barcode-springs.png" alt=""
                         style={{
-                          width: d.barcodeH, height: d.barcodeW,
+                          position: "absolute",
+                          top: "50%", left: "50%",
+                          width: d.barcodeW, height: d.barcodeH,
                           objectFit: "cover", opacity: 0.75,
-                          transform: "rotate(90deg)",
-                          transformOrigin: `${d.barcodeH / 2}px ${d.barcodeH / 2}px`,
+                          transform: "translate(-50%, -50%) rotate(90deg)",
                         }}
                       />
                     </div>
