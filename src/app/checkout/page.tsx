@@ -36,9 +36,11 @@ export default function CheckoutPage() {
   function handlePagar() {
     if (!valid) return;
     const order: OrderInfo = {
-      numero:    Math.floor(Math.random() * 900) + 100,
+      numero:          Math.floor(Math.random() * 900) + 100,
       items,
-      total:     subtotal,
+      subtotal,
+      domicilioGratis: domFree,
+      total,
       zona,
       direccion,
       notas,

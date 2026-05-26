@@ -71,11 +71,13 @@ export default function ConfirmacionPage() {
         <div className="pt-6 mt-2 border-t-2 border-tinta">
           <div className="flex justify-between items-center mb-3">
             <span className="font-mono text-[11px] text-tinta uppercase">SUBTOTAL</span>
-            <span className="font-mono text-[11px] text-tinta">{fmt(order.total)}</span>
+            <span className="font-mono text-[11px] text-tinta">{fmt(order.subtotal)}</span>
           </div>
           <div className="flex justify-between items-center mb-4">
             <span className="font-mono text-[11px] text-tinta uppercase">DOMICILIO</span>
-            <span className="font-mono text-[11px] text-mostaza uppercase font-bold">GRATIS</span>
+            <span className="font-mono text-[11px] text-mostaza uppercase font-bold">
+              {order.domicilioGratis ? "GRATIS" : fmt(order.total - order.subtotal)}
+            </span>
           </div>
           <div className="flex justify-between items-center mt-6 pt-6 border-t border-tinta/20">
             <span className="font-display text-[24px] text-tinta uppercase">TOTAL</span>

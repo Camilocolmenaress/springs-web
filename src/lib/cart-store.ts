@@ -5,6 +5,8 @@ export type { CartItem };
 export type OrderInfo = {
   numero: number;
   items: CartItem[];
+  subtotal: number;
+  domicilioGratis: boolean;
   total: number;
   zona: string;
   direccion: string;
