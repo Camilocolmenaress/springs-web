@@ -585,9 +585,7 @@ export default function ArtGallery() {
                 </motion.div>
 
                 {/* COLUMNA FOTOS */}
-                <motion.div
-                  initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                  transition={{ duration: 1.2, ease: EASE, delay: 0.15 }}
+                <div
                   style={{
                     width: d.galeriaW,
                     paddingTop: d.galeriaTop,
@@ -602,7 +600,7 @@ export default function ArtGallery() {
                   {/* Grid de 3 fotos */}
                   <motion.div
                     initial={{ opacity: 0, x: 22 }} animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 1.1, ease: EASE, delay: 0.2 }}
+                    transition={{ duration: 0.5, ease: EASE, delay: 0.1 }}
                     style={{ flex: 1, minHeight: 0, marginBottom: 14, overflow: "hidden" }}
                   >
                     <div style={{
@@ -670,7 +668,7 @@ export default function ArtGallery() {
                       <div style={{ fontSize: `${d.barcodeLabelFs}rem`, letterSpacing: "0.1em", color: C.dim }}>{exhibit.id}</div>
                     </div>
                   </div>
-                </motion.div>
+                </div>
 
               </div>
             </div>
