@@ -51,6 +51,20 @@ const CSS = `
     box-shadow: 0 12px 28px rgba(197,135,31,0.38);
   }
   .s-btn:active { transform: translateY(0); }
+
+  @keyframes scrollCue {
+    0%   { opacity: 0; transform: rotate(45deg) translateY(-4px); }
+    50%  { opacity: 1; transform: rotate(45deg) translateY(2px); }
+    100% { opacity: 0; transform: rotate(45deg) translateY(6px); }
+  }
+  .scroll-chevron {
+    width: 8px; height: 8px;
+    border-right: 1.5px solid rgba(242,232,213,0.4);
+    border-bottom: 1.5px solid rgba(242,232,213,0.4);
+    animation: scrollCue 1.8s ease-in-out infinite;
+  }
+  .scroll-chevron:nth-child(2) { animation-delay: 0.25s; }
+  .scroll-chevron:nth-child(3) { animation-delay: 0.5s; }
 `;
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -87,6 +101,8 @@ export default function MobileLanding() {
   const chapterLabelRef = useRef<HTMLSpanElement>(null);
   const chapterSubRef   = useRef<HTMLSpanElement>(null);
   const ctaRef          = useRef<HTMLDivElement>(null);
+  const scrollFillRef   = useRef<HTMLDivElement>(null);
+  const scrollHintRef   = useRef<HTMLDivElement>(null);
 
   // Frame buffer
   const imagesRef    = useRef<HTMLImageElement[]>([]);
@@ -210,6 +226,10 @@ export default function MobileLanding() {
           scrub:   0.8,
           onUpdate: (self) => {
             const p = self.progress;
+            // Progress track fill
+            if (scrollFillRef.current) {
+              scrollFillRef.current.style.transform = `scaleY(${p})`;
+            }
             // Frames se reproducen entre 22% y 82%
             if (p >= 0.22) {
               const fp  = gsap.utils.clamp(0, 1, (p - 0.22) / 0.60);
@@ -220,6 +240,9 @@ export default function MobileLanding() {
           },
         },
       });
+
+      // Hint desaparece al primer movimiento de scroll
+      tl.to(scrollHintRef.current, { autoAlpha: 0, duration: 0.04 }, 0);
 
       // 0–22%: humo ↔ canvas cross-dissolve lento
       // El canvas aparece con el tint burgundy (mismo color que el humo)
@@ -389,12 +412,41 @@ export default function MobileLanding() {
               </span>
             </div>
 
-            {/* Scroll hint (visible antes de hacer scroll) */}
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 pointer-events-none">
+            {/* Progress track — right side */}
+            <div
+              className="absolute right-4 top-0 bottom-0 z-50 pointer-events-none"
+              style={{ width: "2px", background: "rgba(242,232,213,0.07)" }}
+            >
+              <div
+                ref={scrollFillRef}
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  background: "#C5871F",
+                  transformOrigin: "top",
+                  transform: "scaleY(0)",
+                  willChange: "transform",
+                }}
+              />
+            </div>
+
+            {/* Scroll hint — desaparece al primer scroll */}
+            <div
+              ref={scrollHintRef}
+              className="absolute bottom-8 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center pointer-events-none"
+              style={{ gap: "6px" }}
+            >
               <span className="font-mono text-[8px] text-cream/30 uppercase tracking-[3px]">
                 SCROLL
               </span>
-              <div className="w-px h-8 bg-gradient-to-b from-cream/30 to-transparent" />
+              <div className="flex flex-col items-center" style={{ gap: "5px", marginTop: "4px" }}>
+                <div className="scroll-chevron" />
+                <div className="scroll-chevron" />
+                <div className="scroll-chevron" />
+              </div>
             </div>
 
           </div>
