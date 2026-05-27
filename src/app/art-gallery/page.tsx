@@ -277,8 +277,8 @@ export default function ArtGallery() {
 
       {/* ── SIDEBAR FIJO ─────────────────────────────────── */}
       <motion.aside
-        initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-        transition={{ duration: 1.4, ease: EASE, delay: 0.1 }}
+        initial={{ opacity: 0, x: -18 }} animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 1.3, ease: EASE, delay: 0.1 }}
         style={{
           position: "fixed",
           left: 0, top: 0, bottom: 0, width: d.sidebarW,
@@ -430,7 +430,7 @@ export default function ArtGallery() {
                   alt={exhibit.name}
                   initial={{ filter: "brightness(0.06) saturate(0.3)" }}
                   animate={{ filter: "brightness(1) saturate(1)" }}
-                  transition={{ duration: 2.5, delay: 1.3, ease: [0.4, 0, 0.2, 1] }}
+                  transition={{ duration: 2.5, delay: 0.9, ease: [0.4, 0, 0.2, 1] }}
                   style={{
                     height: `${d.imageH}%`,
                     width: "auto",
@@ -451,7 +451,7 @@ export default function ArtGallery() {
                 <motion.div
                   initial={{ opacity: 0.96 }}
                   animate={{ opacity: 0 }}
-                  transition={{ duration: 2.2, delay: 1.1, ease: [0.4, 0, 0.2, 1] }}
+                  transition={{ duration: 2.2, delay: 0.7, ease: [0.4, 0, 0.2, 1] }}
                   style={{
                     position: "absolute", inset: 0, zIndex: 2, pointerEvents: "none",
                     background: `linear-gradient(to bottom, ${BG} 0%, rgba(0,0,0,0.75) 60%, ${BG} 100%)`,
@@ -462,7 +462,7 @@ export default function ArtGallery() {
                 <motion.div
                   initial={{ opacity: 1 }}
                   animate={{ opacity: 0 }}
-                  transition={{ duration: 3.2, delay: 1.3, ease: [0.55, 0, 0.3, 1] }}
+                  transition={{ duration: 3.2, delay: 0.9, ease: [0.55, 0, 0.3, 1] }}
                   style={{
                     position: "absolute", inset: 0, zIndex: 3, pointerEvents: "none",
                     background: "linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.55) 45%, rgba(0,0,0,0) 72%)",
@@ -473,7 +473,7 @@ export default function ArtGallery() {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 1.1, delay: 3.2, ease: EASE }}
+                  transition={{ duration: 1.1, delay: 2.8, ease: EASE }}
                   style={{
                     position: "absolute", bottom: d.placaBottom, left: "50%", zIndex: 4,
                     transform: `translateX(calc(-50% + ${d.placaLeft}px)) scale(${d.placaScale})`,
@@ -504,8 +504,8 @@ export default function ArtGallery() {
 
                 {/* COLUMNA TEXTO */}
                 <motion.div
-                  initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                  transition={{ duration: 1.2, ease: EASE, delay: 0.1 }}
+                  initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1.2, ease: EASE, delay: 0.15 }}
                   style={{
                     flex: 1,
                     padding: `${d.infoPadT}px ${d.infoPadH}px 24px`,
@@ -586,8 +586,8 @@ export default function ArtGallery() {
 
                 {/* COLUMNA FOTOS */}
                 <motion.div
-                  initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                  transition={{ duration: 1.2, ease: EASE, delay: 0.15 }}
+                  initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 1.2, ease: EASE, delay: 0.2 }}
                   style={{
                     width: d.galeriaW,
                     paddingTop: d.galeriaTop,
