@@ -23,21 +23,21 @@
         "footerSocials": {
           "props": {
             "fontSize": { "value": 0.41, "unit": "rem", "min": 0.2,  "max": 1,   "step": 0.01 },
-            "offsetX":  { "value": 0,    "unit": "px",  "min": -200, "max": 200, "step": 1 },
+            "offsetX":  { "value": -13,  "unit": "px",  "min": -200, "max": 200, "step": 1 },
             "offsetY":  { "value": 0,    "unit": "px",  "min": -60,  "max": 60,  "step": 1 }
           }
         },
         "footerCopyright": {
           "props": {
-            "fontSize": { "value": 0.41, "unit": "rem", "min": 0.2,  "max": 1,   "step": 0.01 },
-            "offsetX":  { "value": 0,    "unit": "px",  "min": -200, "max": 200, "step": 1 },
+            "fontSize": { "value": 0.57, "unit": "rem", "min": 0.2,  "max": 1,   "step": 0.01 },
+            "offsetX":  { "value": -70,  "unit": "px",  "min": -200, "max": 200, "step": 1 },
             "offsetY":  { "value": 0,    "unit": "px",  "min": -60,  "max": 60,  "step": 1 }
           }
         },
         "footerNav": {
           "props": {
-            "fontSize": { "value": 0.41, "unit": "rem", "min": 0.2,  "max": 1,   "step": 0.01 },
-            "offsetX":  { "value": 0,    "unit": "px",  "min": -200, "max": 200, "step": 1 },
+            "fontSize": { "value": 0.92, "unit": "rem", "min": 0.2,  "max": 1.5, "step": 0.01 },
+            "offsetX":  { "value": -74,  "unit": "px",  "min": -200, "max": 200, "step": 1 },
             "offsetY":  { "value": 0,    "unit": "px",  "min": -60,  "max": 60,  "step": 1 }
           }
         },
@@ -107,7 +107,7 @@
         },
         "scrollIndicator": {
           "props": {
-            "bottom": { "value": 0, "unit": "px", "min": 0, "max": 200, "step": 2 }
+            "bottom": { "value": 44, "unit": "px", "min": 0, "max": 200, "step": 2 }
           }
         }
       }
