@@ -100,9 +100,17 @@ export default function ArtGallery() {
     sidebarW:      sv(z, "layout",            "sidebar",      "width",      168),
     navH:          sv(z, "layout",            "nav",          "height",     52),
     navLogoFs:     sv(z, "layout",            "nav",          "fontSize",   1.3),
-    footerH:       sv(z, "layout",            "footer",       "height",     46),
-    footerFs:      sv(z, "layout",            "footer",       "fontSize",   0.41),
-    footerPadH:    sv(z, "layout",            "footer",       "horizontal", 28),
+    footerH:          sv(z, "layout", "footer",          "height",     46),
+    footerPadH:       sv(z, "layout", "footer",          "horizontal", 28),
+    footerSocialsFs:  sv(z, "layout", "footerSocials",   "fontSize",   0.41),
+    footerSocialsX:   sv(z, "layout", "footerSocials",   "offsetX",    0),
+    footerSocialsY:   sv(z, "layout", "footerSocials",   "offsetY",    0),
+    footerCopyFs:     sv(z, "layout", "footerCopyright", "fontSize",   0.41),
+    footerCopyX:      sv(z, "layout", "footerCopyright", "offsetX",    0),
+    footerCopyY:      sv(z, "layout", "footerCopyright", "offsetY",    0),
+    footerNavFs:      sv(z, "layout", "footerNav",       "fontSize",   0.41),
+    footerNavX:       sv(z, "layout", "footerNav",       "offsetX",    0),
+    footerNavY:       sv(z, "layout", "footerNav",       "offsetY",    0),
     infoPanelW:    sv(z, "layout",            "infoPanel",    "width",      380),
     // sidebar
     globeSize:     sv(z, "sidebar_contenido", "globe",        "size",        144),
@@ -130,9 +138,7 @@ export default function ArtGallery() {
     exhibitListGap:sv(z, "sidebar_contenido", "exhibitList",  "gap",        8),
     exhibitListX:  sv(z, "sidebar_contenido", "exhibitList",  "left",       0),
     exhibitListY:  sv(z, "sidebar_contenido", "exhibitList",  "top",        0),
-    div1Top:       sv(z, "sidebar_contenido", "divider1",     "top",        0),
-    div2Top:       sv(z, "sidebar_contenido", "divider2",     "top",        0),
-    div3Top:       sv(z, "sidebar_contenido", "divider3",     "top",        0),
+    scrollIndicatorBottom: sv(z, "sidebar_contenido", "scrollIndicator", "bottom", 0),
     // galería fotos
     galeriaW:      sv(z, "galeria",           "columna",      "width",      460),
     galeriaTop:    sv(z, "galeria",           "columna",      "top",        79),
@@ -314,7 +320,7 @@ export default function ArtGallery() {
           </div>
         </div>
 
-        <div style={{ width: 48, height: 0, borderTop: "1px dashed rgba(242,232,213,0.35)", marginBottom: 14, transform: `translateY(${d.div1Top}px)` }} />
+        <div style={{ width: 48, height: "1px", background: "rgba(242,232,213,0.35)", marginBottom: 14 }} />
 
         {/* Jacket series */}
         <div style={{ transform: `translate(${d.jacketSeriesX}px, ${d.jacketSeriesY}px)`, marginBottom: 4 }}>
@@ -322,7 +328,7 @@ export default function ArtGallery() {
           <div style={{ ...F.mono, fontSize: `${d.jacketSeriesFs}rem`, letterSpacing: "0.14em", color: C.dim }}>{ex.year}</div>
         </div>
 
-        <div style={{ width: 48, height: 0, borderTop: "1px dashed rgba(242,232,213,0.35)", margin: "14px 0", transform: `translateY(${d.div2Top}px)` }} />
+        <div style={{ width: 48, height: "1px", background: "rgba(242,232,213,0.35)", margin: "14px 0" }} />
 
         {/* Location */}
         <div style={{ transform: `translate(${d.locationX}px, ${d.locationY}px)`, marginBottom: 22 }}>
@@ -330,7 +336,7 @@ export default function ArtGallery() {
             <div style={{ ...F.mono, fontSize: `${d.locationFs}rem`, letterSpacing: "0.1em", color: C.cream }}>BUCARAMANGA</div>
             <div style={{ ...F.mono, fontSize: `${d.locationFs}rem`, letterSpacing: "0.1em", color: C.dim }}>COLOMBIA</div>
           </div>
-          <div style={{ width: 48, height: 0, borderTop: "1px dashed rgba(242,232,213,0.35)", marginBottom: 8, transform: `translateY(${d.div3Top}px)` }} />
+          <div style={{ width: 48, height: "1px", background: "rgba(242,232,213,0.35)", marginBottom: 8 }} />
           <div style={{ ...F.mono, fontSize: `${d.locationFs}rem`, color: C.cream }}>7.1254° N</div>
           <div style={{ ...F.mono, fontSize: `${d.locationFs}rem`, color: C.cream }}>73.1198° W</div>
         </div>
@@ -355,7 +361,7 @@ export default function ArtGallery() {
         </div>
 
         {/* Scroll indicator */}
-        <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: 4 }}>
+        <div style={{ marginTop: "auto", marginBottom: d.scrollIndicatorBottom, display: "flex", flexDirection: "column", gap: 4 }}>
           <div style={{ display: "flex", gap: 4 }}>
             {EXHIBITS.map((_, i) => (
               <div key={i} style={{
@@ -621,17 +627,17 @@ export default function ArtGallery() {
         padding: `0 ${d.footerPadH}px`,
         background: "transparent",
       }}>
-        <div style={{ display: "flex", gap: 18 }}>
+        <div style={{ display: "flex", gap: 18, transform: `translate(${d.footerSocialsX}px, ${d.footerSocialsY}px)` }}>
           {["INSTAGRAM", "TIKTOK", "SPOTIFY"].map(s => (
-            <span key={s} style={{ ...F.mono, fontSize: `${d.footerFs}rem`, letterSpacing: "0.1em", color: C.cream, cursor: "pointer" }}>{s}</span>
+            <span key={s} style={{ ...F.mono, fontSize: `${d.footerSocialsFs}rem`, letterSpacing: "0.1em", color: C.cream, cursor: "pointer" }}>{s}</span>
           ))}
         </div>
 
-        <div style={{ ...F.mono, fontSize: `${d.footerFs}rem`, letterSpacing: "0.1em", color: C.cream }}>
+        <div style={{ ...F.mono, fontSize: `${d.footerCopyFs}rem`, letterSpacing: "0.1em", color: C.cream, transform: `translate(${d.footerCopyX}px, ${d.footerCopyY}px)` }}>
           SPRINGS © 2025 ©
         </div>
 
-        <div style={{ display: "flex", gap: 20 }}>
+        <div style={{ display: "flex", gap: 20, transform: `translate(${d.footerNavX}px, ${d.footerNavY}px)` }}>
           {[
             { label: "CARTA",       href: "/menu"         },
             { label: "ART GALLERY", href: "/art-gallery", active: true },
@@ -640,7 +646,7 @@ export default function ArtGallery() {
             { label: "FAQS",        href: "#"              },
           ].map(item => (
             <Link key={item.label} href={item.href} style={{
-              ...F.mono, fontSize: `${d.footerFs}rem`, letterSpacing: "0.1em",
+              ...F.mono, fontSize: `${d.footerNavFs}rem`, letterSpacing: "0.1em",
               color: C.cream,
               textDecoration: "none",
               borderBottom: item.active ? `1px solid ${C.burgundy}` : "none",

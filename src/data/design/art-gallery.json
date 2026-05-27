@@ -16,9 +16,29 @@
         },
         "footer": {
           "props": {
-            "height":     { "value": 54,   "unit": "px",  "min": 28,  "max": 80,  "step": 1 },
-            "fontSize":   { "value": 0.41, "unit": "rem", "min": 0.2, "max": 1,   "step": 0.01 },
-            "horizontal": { "value": 28,   "unit": "px",  "min": 0,   "max": 100, "step": 1 }
+            "height":     { "value": 54, "unit": "px", "min": 28, "max": 80,  "step": 1 },
+            "horizontal": { "value": 28, "unit": "px", "min": 0,  "max": 100, "step": 1 }
+          }
+        },
+        "footerSocials": {
+          "props": {
+            "fontSize": { "value": 0.41, "unit": "rem", "min": 0.2,  "max": 1,   "step": 0.01 },
+            "offsetX":  { "value": 0,    "unit": "px",  "min": -200, "max": 200, "step": 1 },
+            "offsetY":  { "value": 0,    "unit": "px",  "min": -60,  "max": 60,  "step": 1 }
+          }
+        },
+        "footerCopyright": {
+          "props": {
+            "fontSize": { "value": 0.41, "unit": "rem", "min": 0.2,  "max": 1,   "step": 0.01 },
+            "offsetX":  { "value": 0,    "unit": "px",  "min": -200, "max": 200, "step": 1 },
+            "offsetY":  { "value": 0,    "unit": "px",  "min": -60,  "max": 60,  "step": 1 }
+          }
+        },
+        "footerNav": {
+          "props": {
+            "fontSize": { "value": 0.41, "unit": "rem", "min": 0.2,  "max": 1,   "step": 0.01 },
+            "offsetX":  { "value": 0,    "unit": "px",  "min": -200, "max": 200, "step": 1 },
+            "offsetY":  { "value": 0,    "unit": "px",  "min": -60,  "max": 60,  "step": 1 }
           }
         },
         "infoPanel": {
@@ -85,19 +105,9 @@
             "top":      { "value": 0,    "unit": "px",  "min": -100, "max": 100, "step": 1 }
           }
         },
-        "divider1": {
+        "scrollIndicator": {
           "props": {
-            "top": { "value": 0, "unit": "px", "min": -100, "max": 100, "step": 1 }
-          }
-        },
-        "divider2": {
-          "props": {
-            "top": { "value": 0, "unit": "px", "min": -100, "max": 100, "step": 1 }
-          }
-        },
-        "divider3": {
-          "props": {
-            "top": { "value": 0, "unit": "px", "min": -100, "max": 100, "step": 1 }
+            "bottom": { "value": 0, "unit": "px", "min": 0, "max": 200, "step": 2 }
           }
         }
       }
