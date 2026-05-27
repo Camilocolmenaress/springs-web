@@ -80,27 +80,11 @@ export default function MobileLanding() {
             </SlideText>
           </div>
           <div className="flex justify-between items-end w-full">
-            <div className="w-24 h-24 bg-mostaza circle flex items-center justify-center p-2 rotate-12 overflow-hidden">
-              <svg className="w-full h-full stamp-rotate" viewBox="0 0 100 100">
-                <path
-                  d="M 50, 50 m -40, 0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0"
-                  fill="transparent"
-                  id="mobile-stamp-curve"
-                />
-                <text
-                  style={{
-                    fontFamily: "JetBrains Mono, monospace",
-                    fontSize: "9px",
-                    fill: "#1A0A0C",
-                    letterSpacing: "0.18em",
-                  }}
-                >
-                  <textPath href="#mobile-stamp-curve" startOffset="0%">
-                    SPRINGS · COLOMBIA · JACKET DE AUTOR ·
-                  </textPath>
-                </text>
-              </svg>
-            </div>
+            <img
+              src="/images/wax-seal.png"
+              alt="Springs — Jacket de Autor · Colombia"
+              className="w-24 h-24 circle object-cover rotate-12"
+            />
             <div className="font-mono text-cream text-[10px] text-right uppercase tracking-widest">
               ↖ LA FIJA /<br />
               CARNE OREADA
@@ -110,32 +94,15 @@ export default function MobileLanding() {
       </section>
 
       {/* 2. COLLECTION */}
-      <SectionReveal className="relative w-full py-20 bg-cream border-b border-mostaza overflow-hidden pl-12 pr-6">
-        <div className="absolute left-2 top-1/2 -translate-y-1/2 -rotate-90 font-mono text-[10px] text-burgundy tracking-widest whitespace-nowrap uppercase">
-          MENÚ · 2026
-        </div>
-        <div className="flex flex-col gap-8 w-full">
-          <h2 className="font-display text-[72px] leading-[0.8] text-burgundy whitespace-nowrap -mr-12">COLLECTION</h2>
-          <div className="w-full flex flex-col gap-2 border-t border-burgundy pt-4">
-            <div className="overflow-hidden whitespace-nowrap w-full">
-              <motion.div
-                className="flex whitespace-nowrap"
-                animate={{ x: ["0%", "-50%"] }}
-                transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
-              >
-                {[0, 1].map((i) => (
-                  <span key={i} className="font-mono text-[11px] text-burgundy tracking-widest uppercase inline-block pr-4">
-                    QUESO COSTEÑO — HOGAO — CARNE OREADA — POLLO DESMECHADO — CHORIZO — QUESO COSTEÑO — HOGAO — CARNE OREADA —
-                  </span>
-                ))}
-              </motion.div>
-            </div>
-            <div className="font-mono text-[11px] text-mostaza tracking-widest uppercase mt-4">
-              AQUÍ ESTÁ NUESTRO MENÚ
-            </div>
-          </div>
-        </div>
-      </SectionReveal>
+      <section className="relative w-full border-b border-mostaza overflow-hidden">
+        <a href="/menu" className="block relative">
+          <img
+            src="/images/collection-hero.jpg"
+            alt="Collection — Aquí está nuestro menú"
+            className="w-full h-auto object-cover"
+          />
+        </a>
+      </section>
 
       {/* 3. STATEMENT */}
       <SectionReveal className="relative w-full h-[600px] bg-tinta border-b border-mostaza overflow-hidden">
