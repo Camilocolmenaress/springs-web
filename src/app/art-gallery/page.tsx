@@ -256,7 +256,7 @@ export default function ArtGallery() {
       {/* ── NAV ─────────────────────────────────────────── */}
       <motion.div
         initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-        transition={{ duration: 0.9, ease: EASE, delay: 0.3 }}
+        transition={{ duration: 1.2, ease: EASE, delay: 0.1 }}
         style={{
           position: "fixed", top: 0, left: 0, right: 0, height: d.navH, zIndex: 200,
           display: "flex", alignItems: "center", justifyContent: "space-between",
@@ -276,25 +276,25 @@ export default function ArtGallery() {
       </motion.div>
 
       {/* ── SIDEBAR FIJO ─────────────────────────────────── */}
-      <aside style={{
-        position: "fixed",
-        left: 0, top: 0, bottom: 0, width: d.sidebarW,
-        zIndex: 100,
-        borderRight: `1px solid rgba(242,232,213,0.08)`,
-        padding: `${d.sidebarPadT}px ${d.sidebarPadH}px 24px`,
-        display: "flex", flexDirection: "column",
-        background: "rgba(10,8,6,0.55)",
-        backdropFilter: "blur(24px)",
-        WebkitBackdropFilter: "blur(24px)",
-        overflow: "hidden",
-      }}>
+      <motion.aside
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+        transition={{ duration: 1.4, ease: EASE, delay: 0.1 }}
+        style={{
+          position: "fixed",
+          left: 0, top: 0, bottom: 0, width: d.sidebarW,
+          zIndex: 100,
+          borderRight: `1px solid rgba(242,232,213,0.08)`,
+          padding: `${d.sidebarPadT}px ${d.sidebarPadH}px 24px`,
+          display: "flex", flexDirection: "column",
+          background: "rgba(10,8,6,0.55)",
+          backdropFilter: "blur(24px)",
+          WebkitBackdropFilter: "blur(24px)",
+          overflow: "hidden",
+        }}
+      >
 
         {/* Globe con texto circular */}
-        <motion.div
-          initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.1, ease: EASE, delay: 0.35 }}
-          style={{ width: d.globeSize, height: d.globeSize, flexShrink: 0, marginBottom: 18, transform: `translate(${d.globeOffsetX}px, ${d.globeOffsetY}px)` }}
-        >
+        <div style={{ width: d.globeSize, height: d.globeSize, flexShrink: 0, marginBottom: 18, transform: `translate(${d.globeOffsetX}px, ${d.globeOffsetY}px)` }}>
           <svg viewBox="0 0 110 110" width="100%" height="100%">
             <circle cx="55" cy="55" r={gr} fill="none" stroke={C.dim} strokeWidth="1.2" opacity={0.8}/>
             <motion.g
@@ -314,15 +314,15 @@ export default function ArtGallery() {
               <textPath href="#gallery-chimba-circle" startOffset={`${d.globeTextOff}%`}>FOR THE MOST CHIMBA PEOPLE ✦ </textPath>
             </text>
           </svg>
-        </motion.div>
+        </div>
 
-        {/* Exhibit label + number — re-anima al cambiar exhibit */}
+        {/* Exhibit label + number — re-anima al navegar */}
         <AnimatePresence mode="wait">
           <motion.div
             key={ex.id}
-            initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.55, ease: EASE }}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.45, ease: EASE }}
           >
             <div style={{ transform: `translate(${d.exhibitLabelX}px, ${d.exhibitLabelY}px)`, marginBottom: 2 }}>
               <div style={{ ...F.mono, fontSize: `${d.exhibitLabelFs}rem`, letterSpacing: "0.2em", color: C.dim }}>EXHIBIT</div>
@@ -335,34 +335,18 @@ export default function ArtGallery() {
           </motion.div>
         </AnimatePresence>
 
-        <motion.div
-          initial={{ opacity: 0, scaleX: 0 }} animate={{ opacity: 1, scaleX: 1 }}
-          transition={{ duration: 0.8, ease: EASE, delay: 0.6 }}
-          style={{ width: 48, height: "1px", background: "rgba(242,232,213,0.35)", marginBottom: 14, transformOrigin: "left" }}
-        />
+        <div style={{ width: 48, height: "1px", background: "rgba(242,232,213,0.35)", marginBottom: 14 }} />
 
         {/* Jacket series */}
-        <motion.div
-          initial={{ opacity: 0, x: -6 }} animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.85, ease: EASE, delay: 0.75 }}
-          style={{ transform: `translate(${d.jacketSeriesX}px, ${d.jacketSeriesY}px)`, marginBottom: 4 }}
-        >
+        <div style={{ transform: `translate(${d.jacketSeriesX}px, ${d.jacketSeriesY}px)`, marginBottom: 4 }}>
           <div style={{ ...F.mono, fontSize: `${d.jacketSeriesFs}rem`, letterSpacing: "0.14em", color: C.cream }}>JACKET SERIES</div>
           <div style={{ ...F.mono, fontSize: `${d.jacketSeriesFs}rem`, letterSpacing: "0.14em", color: C.dim }}>{ex.year}</div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, scaleX: 0 }} animate={{ opacity: 1, scaleX: 1 }}
-          transition={{ duration: 0.8, ease: EASE, delay: 0.88 }}
-          style={{ width: 48, height: "1px", background: "rgba(242,232,213,0.35)", margin: "14px 0", transformOrigin: "left" }}
-        />
+        <div style={{ width: 48, height: "1px", background: "rgba(242,232,213,0.35)", margin: "14px 0" }} />
 
         {/* Location */}
-        <motion.div
-          initial={{ opacity: 0, x: -6 }} animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.85, ease: EASE, delay: 1.02 }}
-          style={{ transform: `translate(${d.locationX}px, ${d.locationY}px)`, marginBottom: 22 }}
-        >
+        <div style={{ transform: `translate(${d.locationX}px, ${d.locationY}px)`, marginBottom: 22 }}>
           <div style={{ marginBottom: 8 }}>
             <div style={{ ...F.mono, fontSize: `${d.locationFs}rem`, letterSpacing: "0.1em", color: C.cream }}>BUCARAMANGA</div>
             <div style={{ ...F.mono, fontSize: `${d.locationFs}rem`, letterSpacing: "0.1em", color: C.dim }}>COLOMBIA</div>
@@ -370,20 +354,12 @@ export default function ArtGallery() {
           <div style={{ width: 48, height: "1px", background: "rgba(242,232,213,0.35)", marginBottom: 8 }} />
           <div style={{ ...F.mono, fontSize: `${d.locationFs}rem`, color: C.cream }}>7.1254° N</div>
           <div style={{ ...F.mono, fontSize: `${d.locationFs}rem`, color: C.cream }}>73.1198° W</div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, ease: EASE, delay: 1.16 }}
-          style={{ width: 7, height: 7, borderRadius: "50%", background: C.burgundy, marginBottom: 16 }}
-        />
+        <div style={{ width: 7, height: 7, borderRadius: "50%", background: C.burgundy, marginBottom: 16 }} />
 
         {/* Exhibit list */}
-        <motion.div
-          initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.85, ease: EASE, delay: 1.28 }}
-          style={{ transform: `translate(${d.exhibitListX}px, ${d.exhibitListY}px)`, display: "flex", flexDirection: "column", gap: d.exhibitListGap }}
-        >
+        <div style={{ transform: `translate(${d.exhibitListX}px, ${d.exhibitListY}px)`, display: "flex", flexDirection: "column", gap: d.exhibitListGap }}>
           {EXHIBITS.map((e, i) => (
             <button key={e.id} onClick={() => goTo(i)} style={{
               background: "none", border: "none", cursor: "pointer",
@@ -397,14 +373,10 @@ export default function ArtGallery() {
               </span>
             </button>
           ))}
-        </motion.div>
+        </div>
 
         {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, ease: EASE, delay: 1.42 }}
-          style={{ marginTop: "auto", marginBottom: d.scrollIndicatorBottom, display: "flex", flexDirection: "column", gap: 4 }}
-        >
+        <div style={{ marginTop: "auto", marginBottom: d.scrollIndicatorBottom, display: "flex", flexDirection: "column", gap: 4 }}>
           <div style={{ display: "flex", gap: 4 }}>
             {EXHIBITS.map((_, i) => (
               <div key={i} style={{
@@ -417,8 +389,8 @@ export default function ArtGallery() {
           <div style={{ ...F.mono, fontSize: "0.38rem", color: C.cream, marginTop: 4 }}>
             {idx + 1} / {EXHIBITS.length}
           </div>
-        </motion.div>
-      </aside>
+        </div>
+      </motion.aside>
 
       {/* ── LENIS WRAPPER ────────────────────────────────── */}
       <div
@@ -458,7 +430,7 @@ export default function ArtGallery() {
                   alt={exhibit.name}
                   initial={{ filter: "brightness(0.06) saturate(0.3)" }}
                   animate={{ filter: "brightness(1) saturate(1)" }}
-                  transition={{ duration: 2.2, delay: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                  transition={{ duration: 2.5, delay: 1.3, ease: [0.4, 0, 0.2, 1] }}
                   style={{
                     height: `${d.imageH}%`,
                     width: "auto",
@@ -479,7 +451,7 @@ export default function ArtGallery() {
                 <motion.div
                   initial={{ opacity: 0.96 }}
                   animate={{ opacity: 0 }}
-                  transition={{ duration: 2.0, delay: 0.3, ease: [0.4, 0, 0.2, 1] }}
+                  transition={{ duration: 2.2, delay: 1.1, ease: [0.4, 0, 0.2, 1] }}
                   style={{
                     position: "absolute", inset: 0, zIndex: 2, pointerEvents: "none",
                     background: `linear-gradient(to bottom, ${BG} 0%, rgba(0,0,0,0.75) 60%, ${BG} 100%)`,
@@ -490,7 +462,7 @@ export default function ArtGallery() {
                 <motion.div
                   initial={{ opacity: 1 }}
                   animate={{ opacity: 0 }}
-                  transition={{ duration: 2.8, delay: 0.6, ease: [0.55, 0, 0.3, 1] }}
+                  transition={{ duration: 3.2, delay: 1.3, ease: [0.55, 0, 0.3, 1] }}
                   style={{
                     position: "absolute", inset: 0, zIndex: 3, pointerEvents: "none",
                     background: "linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.55) 45%, rgba(0,0,0,0) 72%)",
@@ -501,7 +473,7 @@ export default function ArtGallery() {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 0.9, delay: 2.0, ease: EASE }}
+                  transition={{ duration: 1.1, delay: 3.2, ease: EASE }}
                   style={{
                     position: "absolute", bottom: d.placaBottom, left: "50%", zIndex: 4,
                     transform: `translateX(calc(-50% + ${d.placaLeft}px)) scale(${d.placaScale})`,
@@ -531,56 +503,40 @@ export default function ArtGallery() {
               }}>
 
                 {/* COLUMNA TEXTO */}
-                <div style={{
-                  flex: 1,
-                  padding: `${d.infoPadT}px ${d.infoPadH}px 24px`,
-                  overflowY: "auto",
-                  display: "flex", flexDirection: "column",
-                  transform: `translateX(${d.infoPadOffsetX}px)`,
-                  position: "relative", zIndex: 2,
-                }}>
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.9, ease: EASE, delay: 0.45 }}
-                    style={{ transform: `translate(${d.artGalleryLabelLeft}px, ${d.artGalleryLabelTop}px)`, marginBottom: 6 }}
-                  >
+                <motion.div
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                  transition={{ duration: 1.2, ease: EASE, delay: 0.1 }}
+                  style={{
+                    flex: 1,
+                    padding: `${d.infoPadT}px ${d.infoPadH}px 24px`,
+                    overflowY: "auto",
+                    display: "flex", flexDirection: "column",
+                    transform: `translateX(${d.infoPadOffsetX}px)`,
+                    position: "relative", zIndex: 2,
+                  }}
+                >
+                  <div style={{ transform: `translate(${d.artGalleryLabelLeft}px, ${d.artGalleryLabelTop}px)`, marginBottom: 6 }}>
                     <div style={{ ...F.mono, fontSize: `${d.artGalleryLabelFs}rem`, letterSpacing: "0.22em", color: "#6B1419" }}>
                       SPRINGS ART GALLERY
                     </div>
-                  </motion.div>
+                  </div>
 
-                  <motion.div
-                    initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1.0, ease: EASE, delay: 0.6 }}
-                    style={{ transform: `translate(${d.tituloLeft}px, ${d.tituloTop}px)`, marginBottom: 10 }}
-                  >
+                  <div style={{ transform: `translate(${d.tituloLeft}px, ${d.tituloTop}px)`, marginBottom: 10 }}>
                     <h2 style={{ ...F.display, fontSize: `${d.tituloFs}rem`, color: C.cream, lineHeight: 0.95, letterSpacing: "-0.01em", margin: 0 }}>
                       {exhibit.name}
                     </h2>
-                  </motion.div>
+                  </div>
 
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.9, ease: EASE, delay: 0.74 }}
-                    style={{ transform: `translate(${d.subtituloLeft}px, ${d.subtituloTop}px)`, marginBottom: 14 }}
-                  >
+                  <div style={{ transform: `translate(${d.subtituloLeft}px, ${d.subtituloTop}px)`, marginBottom: 14 }}>
                     <div style={{ ...F.mono, fontSize: `${d.subtituloFs}rem`, letterSpacing: "0.18em" }}>
                       <span style={{ color: C.cream }}>{exhibit.subtitle} </span>
                       <span style={{ color: "#6B1419" }}>+</span>
                     </div>
-                  </motion.div>
+                  </div>
 
-                  <motion.div
-                    initial={{ opacity: 0, scaleX: 0 }} animate={{ opacity: 1, scaleX: 1 }}
-                    transition={{ duration: 0.8, ease: EASE, delay: 0.86 }}
-                    style={{ height: "1px", background: "rgba(242,232,213,0.25)", marginBottom: 14, transformOrigin: "left" }}
-                  />
+                  <div style={{ height: "1px", background: "rgba(242,232,213,0.25)", marginBottom: 14 }} />
 
-                  <motion.div
-                    initial={{ opacity: 0, y: 7 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.9, ease: EASE, delay: 0.98 }}
-                    style={{ transform: `translate(${d.ingredientesLeft}px, ${d.ingredientesTop}px)`, marginBottom: 12 }}
-                  >
+                  <div style={{ transform: `translate(${d.ingredientesLeft}px, ${d.ingredientesTop}px)`, marginBottom: 12 }}>
                     <div style={{ display: "flex", flexDirection: "column", gap: d.ingredientesGap }}>
                       {exhibit.ingredients.map(ing => (
                         <div key={ing} style={{ ...F.mono, fontSize: `${d.ingredientesFs}rem`, letterSpacing: "0.09em", color: C.cream }}>
@@ -588,34 +544,22 @@ export default function ArtGallery() {
                         </div>
                       ))}
                     </div>
-                  </motion.div>
+                  </div>
 
-                  <motion.div
-                    initial={{ opacity: 0, y: 7 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.9, ease: EASE, delay: 1.12 }}
-                    style={{ transform: `translate(${d.descripcionLeft}px, ${d.descripcionTop}px)`, marginBottom: 10 }}
-                  >
+                  <div style={{ transform: `translate(${d.descripcionLeft}px, ${d.descripcionTop}px)`, marginBottom: 10 }}>
                     <p style={{ ...F.mono, fontSize: `${d.descripcionFs}rem`, letterSpacing: "0.06em", color: C.dim, lineHeight: 1.7, margin: 0, whiteSpace: "pre-line" }}>
                       {exhibit.description}
                     </p>
-                  </motion.div>
+                  </div>
 
-                  <motion.div
-                    initial={{ opacity: 0, x: -7 }} animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.85, ease: EASE, delay: 1.26 }}
-                    style={{ transform: `translate(${d.taglineLeft}px, ${d.taglineTop}px)`, marginBottom: 16 }}
-                  >
+                  <div style={{ transform: `translate(${d.taglineLeft}px, ${d.taglineTop}px)`, marginBottom: 16 }}>
                     <div style={{ ...F.mono, fontSize: `${d.taglineFs}rem`, letterSpacing: "0.1em", color: C.burgundy }}>
                       {exhibit.tagline}
                     </div>
-                  </motion.div>
+                  </div>
 
                   {/* Specs */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 7 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.9, ease: EASE, delay: 1.38 }}
-                    style={{ transform: `translate(${d.specsLeft}px, ${d.specsTop}px)`, marginBottom: 16 }}
-                  >
+                  <div style={{ transform: `translate(${d.specsLeft}px, ${d.specsTop}px)`, marginBottom: 16 }}>
                     <div style={{
                       border: `1px solid ${C.faint}`, padding: "12px 14px",
                       display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px 6px",
@@ -637,26 +581,26 @@ export default function ArtGallery() {
                         </div>
                       ))}
                     </div>
-                  </motion.div>
-                </div>
+                  </div>
+                </motion.div>
 
                 {/* COLUMNA FOTOS */}
-                <div style={{
-                  width: d.galeriaW,
-                  paddingTop: d.galeriaTop,
-                  paddingRight: d.galeriaRight,
-                  paddingBottom: 24,
-                  paddingLeft: d.galeriaLeft,
-                  display: "flex", flexDirection: "column",
-                  flexShrink: 0,
-                  position: "relative",
-                }}>
-                  {/* Grid de 3 fotos — scale conjunto */}
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 1.1, ease: EASE, delay: 0.55 }}
-                    style={{ flex: 1, minHeight: 0, marginBottom: 14, overflow: "hidden" }}
-                  >
+                <motion.div
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                  transition={{ duration: 1.2, ease: EASE, delay: 0.15 }}
+                  style={{
+                    width: d.galeriaW,
+                    paddingTop: d.galeriaTop,
+                    paddingRight: d.galeriaRight,
+                    paddingBottom: 24,
+                    paddingLeft: d.galeriaLeft,
+                    display: "flex", flexDirection: "column",
+                    flexShrink: 0,
+                    position: "relative",
+                  }}
+                >
+                  {/* Grid de 3 fotos */}
+                  <div style={{ flex: 1, minHeight: 0, marginBottom: 14, overflow: "hidden" }}>
                     <div style={{
                       width: "100%", height: "100%",
                       transform: `translate(${d.galeriaGridX}px, ${d.galeriaGridY}px) scale(${d.galeriaScale})`,
@@ -677,45 +621,32 @@ export default function ArtGallery() {
                         </div>
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
 
-                  {/* Quote — independiente */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.9, ease: EASE, delay: 0.9 }}
-                    style={{ transform: `translate(${d.quoteLeft}px, ${d.quoteTop}px)` }}
-                  >
+                  {/* Quote */}
+                  <div style={{ transform: `translate(${d.quoteLeft}px, ${d.quoteTop}px)` }}>
                     <span style={{ ...F.sans, fontSize: "1.2rem", color: C.cream, lineHeight: 0.8, display: "block", marginBottom: 2 }}>"</span>
                     <p style={{ ...F.sans, fontSize: `${d.quoteFs}rem`, fontWeight: 500, color: C.cream, lineHeight: 1.5, margin: 0, whiteSpace: "pre-line" }}>
                       {exhibit.quote}
                     </p>
-                  </motion.div>
+                  </div>
 
-                  {/* Springs Crew — absolutamente independiente */}
-                  <motion.div
-                    initial={{ opacity: 0, rotate: d.springsCrewRot - 4 }}
-                    animate={{ opacity: 1, rotate: d.springsCrewRot }}
-                    transition={{ duration: 1.0, ease: EASE, delay: 1.1 }}
-                    style={{
-                      position: "absolute",
-                      bottom: 80, left: 0,
-                      transform: `translate(${d.springsCrewLeft}px, ${d.springsCrewTop}px)`,
-                      fontFamily: "var(--font-caveat)",
-                      fontSize: `${d.springsCrewFs}rem`,
-                      color: "#6B1419",
-                      whiteSpace: "nowrap",
-                      pointerEvents: "none",
-                    }}
-                  >
+                  {/* Springs Crew */}
+                  <div style={{
+                    position: "absolute",
+                    bottom: 80, left: 0,
+                    transform: `translate(${d.springsCrewLeft}px, ${d.springsCrewTop}px) rotate(${d.springsCrewRot}deg)`,
+                    fontFamily: "var(--font-caveat)",
+                    fontSize: `${d.springsCrewFs}rem`,
+                    color: "#6B1419",
+                    whiteSpace: "nowrap",
+                    pointerEvents: "none",
+                  }}>
                     Springs Crew.
-                  </motion.div>
+                  </div>
 
-                  {/* Barcode — position absolute, no afecta el flujo */}
-                  <motion.div
-                    initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                    transition={{ duration: 0.85, ease: EASE, delay: 1.25 }}
-                    style={{ position: "absolute", bottom: 24, right: 0, transform: `translate(${d.barcodeLeft}px, ${d.barcodeTop}px)`, display: "flex", gap: 6, alignItems: "flex-start" }}
-                  >
+                  {/* Barcode */}
+                  <div style={{ position: "absolute", bottom: 24, right: 0, transform: `translate(${d.barcodeLeft}px, ${d.barcodeTop}px)`, display: "flex", gap: 6, alignItems: "flex-start" }}>
                     <img
                       src="/images/barcode-springs.png" alt=""
                       style={{
@@ -734,8 +665,8 @@ export default function ArtGallery() {
                       <div style={{ fontSize: `${d.barcodeLabelFs}rem`, letterSpacing: "0.1em", color: C.cream }}>ART GALLERY</div>
                       <div style={{ fontSize: `${d.barcodeLabelFs}rem`, letterSpacing: "0.1em", color: C.dim }}>{exhibit.id}</div>
                     </div>
-                  </motion.div>
-                </div>
+                  </div>
+                </motion.div>
 
               </div>
             </div>
