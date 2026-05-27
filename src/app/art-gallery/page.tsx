@@ -658,8 +658,8 @@ export default function ArtGallery() {
                 >
                   {/* Grid de 3 fotos */}
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.75, ease: EASE, delay: 0.35 }}
+                    initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.65, ease: EASE, delay: 0.35 }}
                     style={{ flex: 1, minHeight: 0, marginBottom: 14, overflow: "hidden" }}
                   >
                     <div style={{
