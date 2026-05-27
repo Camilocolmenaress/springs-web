@@ -1,461 +1,335 @@
 "use client";
 
-import { useRef, useState } from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useMotionValueEvent,
-  useInView,
-  AnimatePresence,
-  MotionConfig,
-} from "framer-motion";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const EASE = [0.16, 1, 0.3, 1] as const;
-
-// ─── ClipRevealText ───────────────────────────────────────────────────────────
-// Animación de clip: el children sube desde dentro de un contenedor overflow:hidden.
-// isVisible:true  → translateY 100%→0%, opacity 0→1 (spring)
-// isVisible:false → estado inicial, no anima hacia atrás
-
-interface ClipRevealTextProps {
-  children: React.ReactNode;
-  isVisible: boolean;
-  delay?: number;
-  className?: string;
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
 }
 
-function ClipRevealText({ children, isVisible, delay = 0, className = "" }: ClipRevealTextProps) {
-  return (
-    <div style={{ overflow: "hidden" }}>
-      <motion.div
-        className={className}
-        initial={{ y: "100%", opacity: 0 }}
-        animate={isVisible ? { y: "0%", opacity: 1 } : undefined}
-        transition={{ type: "spring", stiffness: 80, damping: 20, mass: 1, delay }}
-      >
-        {children}
-      </motion.div>
-    </div>
-  );
-}
+// ─── Estilos inyectados ───────────────────────────────────────────────────────
+// gsap-hidden: previene FOUC antes de que GSAP tome control.
+// s-card:      sombra profunda, sin border-radius (regla de marca).
+// s-chip:      glass badge con borde mostaza.
+// s-btn:       CTA mostaza con hover lift.
 
-// ─── useScrollProgress ────────────────────────────────────────────────────────
-// Devuelve scrollYProgress (0→1) del targetRef relativo al scrollContainerRef.
-// offset ["start start", "end end"]:
-//   0 = top del target alineado con top del container
-//   1 = bottom del target alineado con bottom del container
+const CSS = `
+  .gsap-hidden { visibility: hidden; }
 
-function useScrollProgress(
-  targetRef: React.RefObject<HTMLDivElement | null>,
-  scrollContainerRef: React.RefObject<HTMLDivElement | null>
-) {
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-    container: scrollContainerRef,
-    offset: ["start start", "end end"],
-  });
-  return scrollYProgress;
-}
+  .s-grain {
+    position: absolute; inset: 0;
+    pointer-events: none; z-index: 50;
+    opacity: 0.04; mix-blend-mode: overlay;
+    background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="g"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%25" height="100%25" filter="url(%23g)"/></svg>');
+  }
 
-// ─── HeroSection ─────────────────────────────────────────────────────────────
-// Ken Burns en imagen (scale 1.0→1.08, loop 20s).
-// Navbar: SPRINGS desde izquierda, PEDIR AHORA desde derecha.
-// Título: dos líneas con stagger x:-40→0.
-// Al scrollear: título hace parallax y:0→-30px.
+  .s-card {
+    background: #1A0A0C;
+    box-shadow:
+      0 80px 140px -20px rgba(0,0,0,0.98),
+      0 40px 60px -20px rgba(0,0,0,0.75),
+      inset 0 1px 0 rgba(242,232,213,0.04);
+  }
 
-interface HeroSectionProps {
-  scrollContainerRef: React.RefObject<HTMLDivElement | null>;
-}
+  .s-chip {
+    background: rgba(26,10,12,0.88);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(197,135,31,0.28);
+    box-shadow: 0 16px 32px rgba(0,0,0,0.65), inset 0 1px 0 rgba(197,135,31,0.08);
+  }
 
-function HeroSection({ scrollContainerRef }: HeroSectionProps) {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    container: scrollContainerRef,
-    offset: ["start start", "end start"],
-  });
-  const titleY = useTransform(scrollYProgress, [0, 1], [0, -30]);
-
-  return (
-    <div
-      ref={heroRef}
-      className="relative w-full bg-burgundy flex flex-col justify-between border-b border-mostaza overflow-hidden"
-      style={{ height: "100svh" }}
-    >
-      {/* Ken Burns image */}
-      <div className="absolute inset-0 z-0">
-        <motion.img
-          src="/images/hero-jacket.jpg"
-          alt="La Fija — Jacket de autor"
-          className="w-full h-full object-cover opacity-90"
-          animate={{ scale: 1.08 }}
-          initial={{ scale: 1.0 }}
-          transition={{
-            duration: 20,
-            ease: "linear",
-            repeat: Infinity,
-            repeatType: "reverse",
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-burgundy/80 via-transparent to-transparent" />
-      </div>
-
-      {/* Navbar */}
-      <div className="absolute top-0 left-0 w-full flex justify-between items-center p-6 z-20">
-        <motion.span
-          className="font-display text-2xl leading-none text-cream tracking-[0.06em]"
-          initial={{ x: -40, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8, ease: EASE, delay: 0 }}
-        >
-          SPRINGS
-        </motion.span>
-        <motion.a
-          href="/menu"
-          className="bg-mostaza text-tinta font-sans font-medium text-sm px-4 py-2 uppercase tracking-wide"
-          initial={{ x: 40, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
-        >
-          PEDIR AHORA
-        </motion.a>
-      </div>
-
-      {/* Título con parallax */}
-      <motion.div
-        className="relative z-10 p-6 flex flex-col justify-end h-full pb-12"
-        style={{ y: titleY }}
-      >
-        <div className="flex flex-col mb-16 -ml-2">
-          <motion.span
-            className="font-display text-[56px] leading-[0.8] text-cream block"
-            initial={{ x: -40, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.8, ease: EASE, delay: 0.3 }}
-          >
-            CARNE &amp;
-          </motion.span>
-          <motion.span
-            className="font-display text-[64px] leading-[0.8] text-cream -ml-4 whitespace-nowrap block"
-            initial={{ x: -40, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.8, ease: EASE, delay: 0.45 }}
-          >
-            QUESO
-          </motion.span>
-        </div>
-        <div className="flex justify-between items-end w-full">
-          <img
-            src="/images/wax-seal.png"
-            alt="Springs — Jacket de Autor · Colombia"
-            className="w-24 h-24 object-cover rotate-12"
-          />
-          <div className="font-mono text-cream text-[10px] text-right uppercase tracking-widest">
-            ↖ LA FIJA /<br />CARNE OREADA
-          </div>
-        </div>
-      </motion.div>
-    </div>
-  );
-}
-
-// ─── PinnedIngredients ────────────────────────────────────────────────────────
-// Contenedor: 300svh de alto.
-// Panel interno: sticky top:0, 100svh.
-// useScroll mapea progress 0→1 sobre los 300svh.
-// Umbrales: 0–0.33 = ingrediente 0, 0.33–0.66 = ingrediente 1, 0.66–1 = ingrediente 2.
-// AnimatePresence mode="wait" hace la transición entre ingredientes.
-
-const INGREDIENTS = [
-  { label: "CARNE\nOREADA.", bg: "#1A0A0C", color: "#F2E8D5", index: "01" },
-  { label: "HOGAO.", bg: "#6B1419", color: "#F2E8D5", index: "02" },
-  { label: "QUESO\nCOSTEÑO.", bg: "#F2E8D5", color: "#1A0A0C", index: "03" },
-] as const;
-
-interface PinnedIngredientsProps {
-  scrollContainerRef: React.RefObject<HTMLDivElement | null>;
-}
-
-function PinnedIngredients({ scrollContainerRef }: PinnedIngredientsProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const scrollYProgress = useScrollProgress(containerRef, scrollContainerRef);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    if (latest < 0.33) setActiveIndex(0);
-    else if (latest < 0.66) setActiveIndex(1);
-    else setActiveIndex(2);
-  });
-
-  const ingredient = INGREDIENTS[activeIndex as 0 | 1 | 2];
-
-  return (
-    <div
-      ref={containerRef}
-      className="relative border-b border-mostaza"
-      style={{ height: "300svh" }}
-    >
-      <motion.div
-        className="sticky top-0 w-full flex flex-col items-center justify-center"
-        style={{ height: "100svh" }}
-        animate={{ backgroundColor: ingredient.bg }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
-      >
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeIndex}
-            className="flex flex-col items-center justify-center gap-6 w-full px-8"
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -24, transition: { duration: 0.35, ease: "easeIn" } }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
-          >
-            <span
-              className="font-mono text-[10px] tracking-[4px] uppercase"
-              style={{ color: "#C5871F" }}
-            >
-              {ingredient.index} / 03
-            </span>
-            <div
-              className="font-display text-[72px] leading-[0.85] text-center whitespace-pre-line"
-              style={{ color: ingredient.color }}
-            >
-              {ingredient.label}
-            </div>
-            <div className="w-8 h-px" style={{ backgroundColor: "#C5871F" }} />
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Dots de progreso */}
-        <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-2">
-          {INGREDIENTS.map((_, i) => (
-            <div
-              key={i}
-              className="h-[2px] transition-all duration-300"
-              style={{
-                width: i === activeIndex ? "20px" : "8px",
-                backgroundColor: i === activeIndex ? "#C5871F" : "#F2E8D530",
-              }}
-            />
-          ))}
-        </div>
-      </motion.div>
-    </div>
-  );
-}
-
-// ─── PinnedManifesto ──────────────────────────────────────────────────────────
-// Contenedor: 200svh de alto.
-// Panel interno: sticky top:0, 100svh, fondo burgundy.
-// 4 líneas que se revelan con ClipRevealText a medida que scrollYProgress avanza.
-// Umbrales: línea N visible cuando scrollYProgress >= MANIFESTO_THRESHOLDS[N].
-
-const MANIFESTO_LINES: Array<{ text: string; className: string }> = [
-  {
-    text: "BIEN",
-    className: "font-display text-[72px] leading-[0.85] text-cream",
-  },
-  {
-    text: "HECHA.",
-    className: "font-display text-[72px] leading-[0.85] text-cream",
-  },
-  {
-    text: "Bucaramanga ya tenía suficientes hamburguesas iguales.",
-    className: "font-sans italic text-sm text-cream max-w-[85%] leading-[1.6]",
-  },
-  {
-    text: "Springs nace porque pedir comida también es respeto propio.",
-    className: "font-sans italic text-sm text-cream max-w-[85%] leading-[1.6]",
-  },
-];
-
-// threshold[0]=0.0: "BIEN" aparece en el momento de entrar a la sección (spec explícita)
-const MANIFESTO_THRESHOLDS: readonly number[] = [0.0, 0.25, 0.5, 0.75];
-
-interface PinnedManifestoProps {
-  scrollContainerRef: React.RefObject<HTMLDivElement | null>;
-}
-
-function PinnedManifesto({ scrollContainerRef }: PinnedManifestoProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const scrollYProgress = useScrollProgress(containerRef, scrollContainerRef);
-  const [visibleCount, setVisibleCount] = useState(0);
-
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    const count = MANIFESTO_THRESHOLDS.filter((t) => latest >= t).length;
-    setVisibleCount(count);
-  });
-
-  return (
-    <div
-      ref={containerRef}
-      className="relative border-b border-mostaza"
-      style={{ height: "200svh" }}
-    >
-      <div
-        className="sticky top-0 w-full bg-burgundy overflow-hidden"
-        style={{ height: "100svh" }}
-      >
-        {/* Fondo: imagen con baja opacidad */}
-        <div className="absolute inset-0">
-          <img
-            src="/images/hero-jacket.jpg"
-            alt=""
-            aria-hidden={true}
-            className="w-full h-full object-cover opacity-20"
-          />
-          <div className="absolute inset-0 bg-burgundy/60" />
-        </div>
-
-        {/* Contenido */}
-        <div className="relative z-10 p-6 flex flex-col justify-center h-full gap-4">
-          <span className="font-mono text-[10px] text-mostaza tracking-[3px] uppercase mb-4">
-            MANIFIESTO
-          </span>
-          {MANIFESTO_LINES.map((line, i) => (
-            <ClipRevealText
-              key={i}
-              isVisible={visibleCount > i}
-              className={line.className}
-            >
-              {line.text}
-            </ClipRevealText>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ─── CTASection ───────────────────────────────────────────────────────────────
-// Scroll-reveal normal. useInView dispara cuando entra al 20% del viewport.
-// Imagen packaging fade-in → título clip reveal → botón spring bounce → trust bar.
-
-interface CTASectionProps {
-  scrollContainerRef: React.RefObject<HTMLDivElement | null>;
-}
-
-function CTASection({ scrollContainerRef }: CTASectionProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.2, root: scrollContainerRef });
-
-  return (
-    <div ref={ref} className="w-full bg-burgundy border-b border-mostaza flex flex-col">
-      <motion.div
-        className="w-full overflow-hidden"
-        style={{ height: "300px" }}
-        initial={{ opacity: 0 }}
-        animate={inView ? { opacity: 1 } : {}}
-        transition={{ duration: 0.6, ease: EASE }}
-      >
-        <img
-          src="/images/packaging-bag.png"
-          alt="Springs — packaging"
-          className="w-full h-full object-cover object-center"
-        />
-      </motion.div>
-
-      <div className="p-6 flex flex-col gap-6 bg-burgundy">
-        <div className="flex flex-col">
-          <ClipRevealText
-            isVisible={inView}
-            delay={0.2}
-            className="font-display text-[68px] leading-[0.8] text-cream block"
-          >
-            PEDÍ
-          </ClipRevealText>
-          <ClipRevealText
-            isVisible={inView}
-            delay={0.4}
-            className="font-display text-[68px] leading-[0.8] text-cream block"
-          >
-            AHORA.
-          </ClipRevealText>
-        </div>
-
-        <motion.a
-          href="/menu"
-          className="w-full bg-mostaza text-tinta font-display text-[32px] h-16 flex items-center justify-center uppercase tracking-wider"
-          initial={{ y: 20, opacity: 0 }}
-          animate={inView ? { y: 0, opacity: 1 } : {}}
-          transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.6 }}
-        >
-          IR A PEDIR
-        </motion.a>
-
-        <motion.div
-          className="w-full text-center border-t border-mostaza/30 pt-4"
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.8, ease: EASE }}
-        >
-          <span className="font-mono text-[10px] text-cream tracking-widest uppercase">
-            30–45 MIN · CABECERA · CAÑAVERAL · SOTOMAYOR
-          </span>
-        </motion.div>
-      </div>
-    </div>
-  );
-}
-
-// ─── Footer ───────────────────────────────────────────────────────────────────
-
-function Footer() {
-  return (
-    <footer className="w-full bg-tinta p-8 flex flex-col items-center justify-center gap-6">
-      <div className="flex flex-col items-center gap-2">
-        <span className="font-display text-[48px] text-cream tracking-[0.06em] leading-none">
-          SPRINGS
-        </span>
-        <span className="font-sans italic text-base text-cream">Jacket de autor.</span>
-      </div>
-      <div className="w-full h-px bg-mostaza my-4" />
-      <div className="flex flex-col items-center gap-4 w-full">
-        <a
-          href="/menu"
-          className="font-mono text-xs text-cream uppercase tracking-widest hover:text-mostaza transition-colors"
-        >
-          MENÚ [VER]
-        </a>
-        <a
-          href="#"
-          className="font-mono text-xs text-cream uppercase tracking-widest hover:text-mostaza transition-colors"
-        >
-          EDITORIAL [LEER]
-        </a>
-        <a
-          href="#"
-          className="font-mono text-xs text-cream uppercase tracking-widest hover:text-mostaza transition-colors"
-        >
-          MANIFIESTO [SABER]
-        </a>
-      </div>
-      <div className="mt-12 w-full text-center">
-        <span className="font-mono text-[9px] text-cream/50 uppercase tracking-widest">
-          © 2026 SPRINGS · SYS.VER 1.0 // BGA-COL
-        </span>
-      </div>
-    </footer>
-  );
-}
+  .s-btn {
+    background: #C5871F;
+    color: #1A0A0C;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 56px;
+    font-family: var(--font-display);
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    transition: transform 0.32s cubic-bezier(0.25,1,0.5,1), box-shadow 0.32s ease;
+  }
+  .s-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(197,135,31,0.38), 0 4px 10px rgba(197,135,31,0.2);
+  }
+  .s-btn:active { transform: translateY(0); }
+`;
 
 // ─── MobileLanding ────────────────────────────────────────────────────────────
 
 export default function MobileLanding() {
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const wrapRef  = useRef<HTMLDivElement>(null); // scroll container
+  const sceneRef = useRef<HTMLDivElement>(null); // pinned scene
+
+  useEffect(() => {
+    const wrap  = wrapRef.current;
+    const scene = sceneRef.current;
+    if (!wrap || !scene) return;
+
+    const vh = window.innerHeight;
+
+    const ctx = gsap.context(() => {
+      // Usar el div fixed como scroller, no el window
+      ScrollTrigger.defaults({ scroller: wrap });
+
+      // ── Estados iniciales ──────────────────────────────────────────────────
+      gsap.set([".s-hero-line"], { autoAlpha: 0, y: 80, filter: "blur(20px)" });
+      gsap.set(".s-card",        { y: vh + 280, autoAlpha: 1 });
+      gsap.set([".s-img", ".s-info", ".s-wordmark", ".s-chip", ".s-cta"], { autoAlpha: 0 });
+
+      // ── Intro (al cargar, sin scroll) ──────────────────────────────────────
+      gsap.timeline({ delay: 0.2 })
+        .to(".s-hero-line-1", {
+          autoAlpha: 1, y: 0, filter: "blur(0px)",
+          duration: 1.7, ease: "expo.out",
+        })
+        .to(".s-hero-line-2", {
+          autoAlpha: 1, y: 0, filter: "blur(0px)",
+          duration: 1.7, ease: "expo.out",
+        }, "-=1.1");
+
+      // ── Timeline cinematográfico scroll-pinned ─────────────────────────────
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: scene,
+          start:  "top top",
+          end:    "+=5800",
+          pin:    true,
+          scrub:  1.2,
+          anticipatePin: 1,
+        },
+      });
+
+      tl
+        // Acto 1: tarjeta sube, hero se desvanece
+        .to(".s-hero-wrap", {
+          scale: 1.1, filter: "blur(18px)", opacity: 0.1, duration: 2,
+        }, 0)
+        .to(".s-card", {
+          y: 0, ease: "power3.inOut", duration: 2,
+        }, 0)
+
+        // Acto 2: tarjeta se abre a pantalla completa
+        .to(".s-card", {
+          width: "100%", height: "100%", ease: "power3.inOut", duration: 1.6,
+        })
+
+        // Acto 3: producto se revela dentro de la tarjeta
+        .fromTo(".s-img",
+          { scale: 1.1, autoAlpha: 0 },
+          { scale: 1, autoAlpha: 1, ease: "power3.out", duration: 2.2 },
+          "-=0.7")
+        .fromTo(".s-info",
+          { y: 50, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, ease: "expo.out", duration: 1.6 },
+          "-=1.8")
+        .fromTo(".s-wordmark",
+          { y: -20, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, ease: "expo.out", duration: 1.4 },
+          "<")
+        .fromTo(".s-chip",
+          { y: 36, autoAlpha: 0, scale: 0.9 },
+          { y: 0, autoAlpha: 1, scale: 1, stagger: 0.2, ease: "back.out(1.2)", duration: 1.3 },
+          "-=1.0")
+
+        // Pausa
+        .to({}, { duration: 2.8 })
+
+        // Acto 4: transición a CTA
+        .to([".s-img", ".s-info", ".s-wordmark", ".s-chip"], {
+          scale: 0.93, y: -28, autoAlpha: 0, duration: 1, ease: "power2.in", stagger: 0.04,
+        })
+        .to(".s-hero-wrap", { autoAlpha: 0, duration: 0.4 }, "<")
+        .to(".s-card", {
+          width: "90vw", height: "86svh", ease: "expo.inOut", duration: 1.7,
+        }, "cta")
+        .fromTo(".s-cta",
+          { autoAlpha: 0, scale: 0.88, filter: "blur(28px)" },
+          { autoAlpha: 1, scale: 1, filter: "blur(0px)", ease: "expo.out", duration: 1.7 },
+          "cta+=0.15")
+
+        // Acto 5: tarjeta sale
+        .to({}, { duration: 2 })
+        .to(".s-card", {
+          y: -(vh + 280), ease: "power2.in", duration: 1.3,
+        });
+
+    }, sceneRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <MotionConfig reducedMotion="user">
+    <>
+      <style dangerouslySetInnerHTML={{ __html: CSS }} />
+
+      {/* ── Scroll container ───────────────────────────────────────────────── */}
       <div
-        ref={scrollRef}
-        className="fixed inset-0 overflow-y-auto overflow-x-hidden bg-tinta font-sans text-cream"
+        ref={wrapRef}
+        className="fixed inset-0 overflow-y-auto overflow-x-hidden bg-tinta font-sans"
       >
-        <HeroSection scrollContainerRef={scrollRef} />
-        <PinnedIngredients scrollContainerRef={scrollRef} />
-        <PinnedManifesto scrollContainerRef={scrollRef} />
-        <CTASection scrollContainerRef={scrollRef} />
-        <Footer />
+        {/* ── Escena pinned ──────────────────────────────────────────────── */}
+        <div
+          ref={sceneRef}
+          className="relative w-full"
+          style={{ height: "100svh" }}
+        >
+          <div className="s-grain" aria-hidden="true" />
+
+          {/* Capa 1: Hero text */}
+          <div className="s-hero-wrap absolute inset-0 z-10 flex flex-col justify-center px-8 pointer-events-none">
+            <span className="s-hero-line s-hero-line-1 gsap-hidden font-display text-[72px] leading-[0.82] text-cream">
+              JACKET
+            </span>
+            <span className="s-hero-line s-hero-line-2 gsap-hidden font-display text-[72px] leading-[0.82] text-mostaza">
+              DE AUTOR.
+            </span>
+            <span className="font-mono text-[9px] text-cream/25 uppercase tracking-[4px] mt-6">
+              Bucaramanga · Colombia
+            </span>
+          </div>
+
+          {/* Capa 2: Tarjeta */}
+          <div
+            className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none"
+            style={{ perspective: "1200px" }}
+          >
+            <div
+              className="s-card gsap-hidden relative overflow-hidden pointer-events-auto"
+              style={{ width: "90vw", height: "86svh" }}
+            >
+              {/* Foto del producto */}
+              <div className="s-img gsap-hidden absolute inset-0">
+                <img
+                  src="/images/hero-jacket.jpg"
+                  alt="La Fija — Jacket de autor Springs"
+                  className="w-full h-full object-cover"
+                />
+                {/* Vignette para legibilidad */}
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      "linear-gradient(to top, #1A0A0C 0%, rgba(26,10,12,0.55) 35%, transparent 65%)",
+                  }}
+                  aria-hidden="true"
+                />
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      "linear-gradient(to right, rgba(26,10,12,0.6) 0%, transparent 55%)",
+                  }}
+                  aria-hidden="true"
+                />
+              </div>
+
+              {/* Info del producto — abajo izquierda */}
+              <div className="s-info gsap-hidden absolute bottom-0 left-0 z-10 p-8 flex flex-col">
+                <span className="font-mono text-[9px] text-mostaza tracking-[4px] uppercase mb-3">
+                  01 — LA FIJA
+                </span>
+                <h2 className="font-display text-[58px] leading-[0.82] text-cream mb-3">
+                  CARNE<br />OREADA.
+                </h2>
+                <p className="font-sans text-cream/45 text-xs leading-relaxed mb-5 max-w-[210px]">
+                  Pollo desmechado. Hogao. Queso costeño.
+                </p>
+                <span className="font-mono text-2xl text-mostaza">32,900</span>
+              </div>
+
+              {/* Wordmark — arriba derecha */}
+              <div className="s-wordmark gsap-hidden absolute top-0 right-0 z-10 p-8 flex flex-col items-end gap-1">
+                <span className="font-display text-[11px] tracking-[0.4em] text-cream/18 uppercase">
+                  SPRINGS
+                </span>
+                <span className="font-mono text-[8px] text-cream/12 tracking-widest uppercase">
+                  DARK KITCHEN
+                </span>
+              </div>
+
+              {/* Chips de ingredientes */}
+              <div className="s-chip gsap-hidden absolute top-14 left-8 z-20 px-4 py-2">
+                <span className="font-mono text-[9px] text-mostaza uppercase tracking-widest">
+                  CARNE OREADA
+                </span>
+              </div>
+              <div className="s-chip gsap-hidden absolute top-[38%] right-8 z-20 px-4 py-2">
+                <span className="font-mono text-[9px] text-mostaza uppercase tracking-widest">
+                  HOGAO
+                </span>
+              </div>
+              <div className="s-chip gsap-hidden absolute bottom-[28%] left-8 z-20 px-4 py-2">
+                <span className="font-mono text-[9px] text-mostaza uppercase tracking-widest">
+                  QUESO COSTEÑO
+                </span>
+              </div>
+
+              {/* CTA — se revela en acto 4 */}
+              <div
+                className="s-cta gsap-hidden absolute inset-0 z-30 flex flex-col justify-center px-8 pointer-events-auto"
+                style={{ background: "#6B1419" }}
+              >
+                <span className="font-mono text-[9px] text-mostaza uppercase tracking-[3px] mb-8">
+                  SPRINGS — BUCARAMANGA
+                </span>
+                <div className="flex flex-col mb-6">
+                  <span className="font-display text-[72px] leading-[0.82] text-cream">
+                    PEDIR
+                  </span>
+                  <span className="font-display text-[72px] leading-[0.82] text-mostaza">
+                    AHORA.
+                  </span>
+                </div>
+                <p className="font-sans text-cream/45 text-sm leading-relaxed mb-8 max-w-[270px]">
+                  Jackets de autor a domicilio.
+                  <br />Cabecera · Cañaveral · Sotomayor.
+                </p>
+                <a href="/menu" className="s-btn">
+                  IR A PEDIR
+                </a>
+                <span className="font-mono text-[8px] text-cream/20 uppercase tracking-[3px] mt-5">
+                  30–45 MIN · ENTREGA A DOMICILIO
+                </span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        {/* ── Footer ─────────────────────────────────────────────────────── */}
+        <footer className="w-full bg-tinta p-8 flex flex-col items-center gap-6 relative z-10">
+          <div className="flex flex-col items-center gap-2">
+            <span className="font-display text-[48px] text-cream tracking-[0.06em] leading-none">
+              SPRINGS
+            </span>
+            <span className="font-sans italic text-base text-cream">Jacket de autor.</span>
+          </div>
+          <div className="w-full h-px bg-mostaza" />
+          <div className="flex flex-col items-center gap-4 w-full">
+            <a href="/menu" className="font-mono text-xs text-cream uppercase tracking-widest hover:text-mostaza transition-colors">
+              MENÚ [VER]
+            </a>
+            <a href="#" className="font-mono text-xs text-cream uppercase tracking-widest hover:text-mostaza transition-colors">
+              EDITORIAL [LEER]
+            </a>
+            <a href="#" className="font-mono text-xs text-cream uppercase tracking-widest hover:text-mostaza transition-colors">
+              MANIFIESTO [SABER]
+            </a>
+          </div>
+          <span className="font-mono text-[9px] text-cream/50 uppercase tracking-widest mt-8">
+            © 2026 SPRINGS · SYS.VER 1.0 // BGA-COL
+          </span>
+        </footer>
+
       </div>
-    </MotionConfig>
+    </>
   );
 }
