@@ -504,7 +504,7 @@ export default function ArtGallery() {
 
                 {/* COLUMNA TEXTO */}
                 <motion.div
-                  initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                   transition={{ duration: 1.2, ease: EASE, delay: 0.15 }}
                   style={{
                     flex: 1,
