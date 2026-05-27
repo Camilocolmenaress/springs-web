@@ -332,9 +332,13 @@ function PinnedManifesto({ scrollContainerRef }: PinnedManifestoProps) {
 // Scroll-reveal normal. useInView dispara cuando entra al 20% del viewport.
 // Imagen packaging fade-in → título clip reveal → botón spring bounce → trust bar.
 
-function CTASection() {
+interface CTASectionProps {
+  scrollContainerRef: React.RefObject<HTMLDivElement | null>;
+}
+
+function CTASection({ scrollContainerRef }: CTASectionProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.2 });
+  const inView = useInView(ref, { once: true, amount: 0.2, root: scrollContainerRef });
 
   return (
     <div ref={ref} className="w-full bg-burgundy border-b border-mostaza flex flex-col">
@@ -445,12 +449,11 @@ export default function MobileLanding() {
       <div
         ref={scrollRef}
         className="fixed inset-0 overflow-y-auto overflow-x-hidden bg-tinta font-sans text-cream"
-        style={{ WebkitOverflowScrolling: "touch" }}
       >
         <HeroSection scrollContainerRef={scrollRef} />
         <PinnedIngredients scrollContainerRef={scrollRef} />
         <PinnedManifesto scrollContainerRef={scrollRef} />
-        <CTASection />
+        <CTASection scrollContainerRef={scrollRef} />
         <Footer />
       </div>
     </MotionConfig>
