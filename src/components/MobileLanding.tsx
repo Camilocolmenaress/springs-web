@@ -184,7 +184,9 @@ export default function MobileLanding() {
 
       // ── Estados iniciales ──
       gsap.set([".s-hero-line"], { autoAlpha: 0, y: 60, filter: "blur(16px)" });
-      gsap.set(cardRef.current,    { scale: 0.82, transformOrigin: "50% 50%", autoAlpha: 0 });
+      // canvas a escala 1 desde el inicio — sin zoom, transición invisible
+      gsap.set(cardRef.current,    { autoAlpha: 0 });
+      gsap.set(".s-tint",          { opacity: 1 }); // tint burgundy cubre el canvas al inicio
       gsap.set(chapterRef.current, { autoAlpha: 0, y: 20 });
       gsap.set(ctaRef.current,     { autoAlpha: 0 });
 
@@ -205,12 +207,12 @@ export default function MobileLanding() {
           trigger: outer,
           start:   "top top",
           end:     "bottom bottom",
-          scrub:   0.6,
+          scrub:   0.8,
           onUpdate: (self) => {
             const p = self.progress;
-            // Frames se reproducen entre 18% y 92%
-            if (p >= 0.18) {
-              const fp  = gsap.utils.clamp(0, 1, (p - 0.18) / 0.74);
+            // Frames se reproducen entre 22% y 82%
+            if (p >= 0.22) {
+              const fp  = gsap.utils.clamp(0, 1, (p - 0.22) / 0.60);
               const idx = Math.min(FRAME_COUNT - 1, Math.floor(fp * FRAME_COUNT));
               drawFrame(idx);
               updateChapter(fp);
@@ -219,26 +221,25 @@ export default function MobileLanding() {
         },
       });
 
-      // 0–10%: humo se desvanece, canvas aparece
-      tl.to(smokeRef.current, { autoAlpha: 0, duration: 0.10 }, 0);
-      tl.to(cardRef.current,  { autoAlpha: 1, duration: 0.10 }, 0);
+      // 0–22%: humo ↔ canvas cross-dissolve lento
+      // El canvas aparece con el tint burgundy (mismo color que el humo)
+      // → transición invisible porque ambos son del mismo tono
+      tl.to(cardRef.current,  { autoAlpha: 1, duration: 0.15 }, 0);
+      tl.to(smokeRef.current, { autoAlpha: 0, duration: 0.20 }, 0);
 
-      // 10–18%: texto sale (Ferrari-style), card hace zoom
-      tl.to(titleTopRef.current, {
-        x: "-55vw", letterSpacing: "0.02em", autoAlpha: 0,
-        ease: "power2.inOut", duration: 0.08,
+      // 8–22%: tint se desvanece → revelan los colores reales del video
+      tl.to(".s-tint", { opacity: 0, ease: "power1.inOut", duration: 0.14 }, 0.08);
+
+      // 10–22%: títulos flotan hacia arriba suavemente (sin slide horizontal)
+      tl.to([titleTopRef.current, titleBottomRef.current], {
+        y: -50, autoAlpha: 0, filter: "blur(8px)",
+        ease: "power2.in", duration: 0.12,
       }, 0.10);
-      tl.to(titleBottomRef.current, {
-        x:  "55vw", letterSpacing: "0.02em", autoAlpha: 0,
-        ease: "power2.inOut", duration: 0.08,
-      }, 0.10);
-      tl.to(cardRef.current, {
-        scale: 1, ease: "power2.out", duration: 0.08,
-      }, 0.10);
-      // Chapter label aparece
+
+      // 22%: chapter label aparece
       tl.to(chapterRef.current, {
         autoAlpha: 1, y: 0, ease: "expo.out", duration: 0.06,
-      }, 0.16);
+      }, 0.22);
 
       // 80–90%: chapter se va, CTA entra sobre el último frame
       tl.to(chapterRef.current, { autoAlpha: 0, duration: 0.04 }, 0.80);
@@ -291,6 +292,12 @@ export default function MobileLanding() {
                 ref={canvasRef}
                 aria-hidden
                 className="absolute inset-0 w-full h-full"
+              />
+              {/* Tint burgundy — mismo color que el humo, se desvanece al revelar el video */}
+              <div
+                aria-hidden
+                className="s-tint absolute inset-0 pointer-events-none"
+                style={{ background: "#6B1419" }}
               />
               {/* Vignette */}
               <div
