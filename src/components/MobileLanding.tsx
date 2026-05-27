@@ -31,7 +31,7 @@ function ClipRevealText({ children, isVisible, delay = 0, className = "" }: Clip
       <motion.div
         className={className}
         initial={{ y: "100%", opacity: 0 }}
-        animate={isVisible ? { y: "0%", opacity: 1 } : { y: "100%", opacity: 0 }}
+        animate={isVisible ? { y: "0%", opacity: 1 } : undefined}
         transition={{ type: "spring", stiffness: 80, damping: 20, mass: 1, delay }}
       >
         {children}
