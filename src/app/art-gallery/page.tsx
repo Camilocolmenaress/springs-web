@@ -453,7 +453,7 @@ export default function ArtGallery() {
               }}
             >
               {/* ── Foto — ocupa todo el panel ── */}
-              <div style={{ position: "absolute", inset: 0, overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <div style={{ position: "absolute", inset: 0, overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", isolation: "isolate" }}>
                 {/* Imagen: brightness de 0 → 1 */}
                 <motion.img
                   src={exhibit.img}
@@ -531,6 +531,7 @@ export default function ArtGallery() {
                 position: "absolute", right: 0, top: 0, bottom: 0,
                 width: `${d.infoPanelW}px`,
                 display: "flex",
+                zIndex: 10,
               }}>
 
                 {/* COLUMNA TEXTO */}
