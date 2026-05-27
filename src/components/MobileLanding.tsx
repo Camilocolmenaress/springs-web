@@ -328,6 +328,114 @@ function PinnedManifesto({ scrollContainerRef }: PinnedManifestoProps) {
   );
 }
 
+// ─── CTASection ───────────────────────────────────────────────────────────────
+// Scroll-reveal normal. useInView dispara cuando entra al 20% del viewport.
+// Imagen packaging fade-in → título clip reveal → botón spring bounce → trust bar.
+
+function CTASection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.2 });
+
+  return (
+    <div ref={ref} className="w-full bg-burgundy border-b border-mostaza flex flex-col">
+      <motion.div
+        className="w-full overflow-hidden"
+        style={{ height: "300px" }}
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : {}}
+        transition={{ duration: 0.6, ease: EASE }}
+      >
+        <img
+          src="/images/packaging-bag.png"
+          alt="Springs — packaging"
+          className="w-full h-full object-cover object-center"
+        />
+      </motion.div>
+
+      <div className="p-6 flex flex-col gap-6 bg-burgundy">
+        <div className="flex flex-col">
+          <ClipRevealText
+            isVisible={inView}
+            delay={0.2}
+            className="font-display text-[68px] leading-[0.8] text-cream block"
+          >
+            PEDÍ
+          </ClipRevealText>
+          <ClipRevealText
+            isVisible={inView}
+            delay={0.4}
+            className="font-display text-[68px] leading-[0.8] text-cream block"
+          >
+            AHORA.
+          </ClipRevealText>
+        </div>
+
+        <motion.a
+          href="/menu"
+          className="w-full bg-mostaza text-tinta font-display text-[32px] h-16 flex items-center justify-center uppercase tracking-wider"
+          initial={{ y: 20, opacity: 0 }}
+          animate={inView ? { y: 0, opacity: 1 } : {}}
+          transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.6 }}
+        >
+          IR A PEDIR
+        </motion.a>
+
+        <motion.div
+          className="w-full text-center border-t border-mostaza/30 pt-4"
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.8, ease: EASE }}
+        >
+          <span className="font-mono text-[10px] text-cream tracking-widest uppercase">
+            30–45 MIN · CABECERA · CAÑAVERAL · SOTOMAYOR
+          </span>
+        </motion.div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Footer ───────────────────────────────────────────────────────────────────
+
+function Footer() {
+  return (
+    <footer className="w-full bg-tinta p-8 flex flex-col items-center justify-center gap-6">
+      <div className="flex flex-col items-center gap-2">
+        <span className="font-display text-[48px] text-cream tracking-[0.06em] leading-none">
+          SPRINGS
+        </span>
+        <span className="font-sans italic text-base text-cream">Jacket de autor.</span>
+      </div>
+      <div className="w-full h-px bg-mostaza my-4" />
+      <div className="flex flex-col items-center gap-4 w-full">
+        <a
+          href="/menu"
+          className="font-mono text-xs text-cream uppercase tracking-widest hover:text-mostaza transition-colors"
+        >
+          MENÚ [VER]
+        </a>
+        <a
+          href="#"
+          className="font-mono text-xs text-cream uppercase tracking-widest hover:text-mostaza transition-colors"
+        >
+          EDITORIAL [LEER]
+        </a>
+        <a
+          href="#"
+          className="font-mono text-xs text-cream uppercase tracking-widest hover:text-mostaza transition-colors"
+        >
+          MANIFIESTO [SABER]
+        </a>
+      </div>
+      <div className="mt-12 w-full text-center">
+        <span className="font-mono text-[9px] text-cream/50 uppercase tracking-widest">
+          © 2026 SPRINGS · SYS.VER 1.0 // BGA-COL
+        </span>
+      </div>
+    </footer>
+  );
+}
+
 // ─── MobileLanding ────────────────────────────────────────────────────────────
 
 export default function MobileLanding() {
@@ -342,6 +450,8 @@ export default function MobileLanding() {
         <HeroSection scrollContainerRef={scrollRef} />
         <PinnedIngredients scrollContainerRef={scrollRef} />
         <PinnedManifesto scrollContainerRef={scrollRef} />
+        <CTASection />
+        <Footer />
       </div>
     </MotionConfig>
   );
