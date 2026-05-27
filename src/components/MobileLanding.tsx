@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SmokeBackground } from "@/components/ui/spooky-smoke-animation";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -181,6 +182,11 @@ export default function MobileLanding() {
           className="relative w-full"
           style={{ height: "100svh" }}
         >
+          {/* Capa 0: WebGL smoke — burgondy #6B1419, siempre detrás */}
+          <div className="absolute inset-0 z-0" aria-hidden="true">
+            <SmokeBackground smokeColor="#6B1419" />
+          </div>
+
           <div className="s-grain" aria-hidden="true" />
 
           {/* Capa 1: Hero text */}
