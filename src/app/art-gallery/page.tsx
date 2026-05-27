@@ -477,26 +477,36 @@ export default function ArtGallery() {
                   pointerEvents: "none",
                 }} />
 
-                {/* Curtain top→bottom: scaleY se contrae desde abajo, revelando arriba primero */}
-                <motion.div
-                  initial={{ scaleY: 1 }}
-                  animate={{ scaleY: 0 }}
-                  transition={{ duration: 2.2, delay: 0.85, ease: [0.4, 0.05, 0.2, 1] }}
-                  style={{
-                    position: "absolute", inset: 0, zIndex: 2, pointerEvents: "none",
-                    transformOrigin: "bottom",
-                    background: `linear-gradient(to bottom, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.97) 82%, rgba(0,0,0,0) 100%)`,
-                  }}
-                />
-
-                {/* Oscuridad residual abajo — se va más tarde */}
+                {/* Capa 1: oscuridad general, top transparente → top aparece primero */}
                 <motion.div
                   initial={{ opacity: 1 }}
                   animate={{ opacity: 0 }}
-                  transition={{ duration: 2.0, delay: 1.8, ease: [0.4, 0, 0.3, 1] }}
+                  transition={{ duration: 1.6, delay: 0.85, ease: [0.4, 0, 0.2, 1] }}
+                  style={{
+                    position: "absolute", inset: 0, zIndex: 2, pointerEvents: "none",
+                    background: "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.97) 38%, rgba(0,0,0,0.97) 100%)",
+                  }}
+                />
+
+                {/* Capa 2: zona media — se va más despacio */}
+                <motion.div
+                  initial={{ opacity: 1 }}
+                  animate={{ opacity: 0 }}
+                  transition={{ duration: 2.0, delay: 1.1, ease: [0.3, 0, 0.2, 1] }}
                   style={{
                     position: "absolute", inset: 0, zIndex: 3, pointerEvents: "none",
-                    background: "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0) 65%)",
+                    background: "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 28%, rgba(0,0,0,0.95) 65%, rgba(0,0,0,0.95) 100%)",
+                  }}
+                />
+
+                {/* Capa 3: sombra en el fondo — aguanta la oscuridad abajo hasta el final */}
+                <motion.div
+                  initial={{ opacity: 1 }}
+                  animate={{ opacity: 0 }}
+                  transition={{ duration: 2.2, delay: 1.5, ease: [0.2, 0, 0.3, 1] }}
+                  style={{
+                    position: "absolute", inset: 0, zIndex: 4, pointerEvents: "none",
+                    background: "linear-gradient(to top, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.5) 38%, rgba(0,0,0,0) 62%)",
                   }}
                 />
 
@@ -506,7 +516,7 @@ export default function ArtGallery() {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.9, delay: 3.2, ease: EASE }}
                   style={{
-                    position: "absolute", bottom: d.placaBottom, left: "50%", zIndex: 4,
+                    position: "absolute", bottom: d.placaBottom, left: "50%", zIndex: 6,
                     transform: `translateX(calc(-50% + ${d.placaLeft}px)) scale(${d.placaScale})`,
                     border: "1px solid rgba(242,232,213,0.25)",
                     padding: `${d.placaPadV}px ${d.placaPadH}px`, textAlign: "center",
