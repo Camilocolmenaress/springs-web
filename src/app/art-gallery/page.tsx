@@ -101,6 +101,8 @@ export default function ArtGallery() {
     navH:          sv(z, "layout",            "nav",          "height",     52),
     navLogoFs:     sv(z, "layout",            "nav",          "fontSize",   1.3),
     footerH:       sv(z, "layout",            "footer",       "height",     46),
+    footerFs:      sv(z, "layout",            "footer",       "fontSize",   0.41),
+    footerPadH:    sv(z, "layout",            "footer",       "horizontal", 28),
     infoPanelW:    sv(z, "layout",            "infoPanel",    "width",      380),
     // sidebar
     globeSize:     sv(z, "sidebar_contenido", "globe",        "size",        144),
@@ -128,6 +130,9 @@ export default function ArtGallery() {
     exhibitListGap:sv(z, "sidebar_contenido", "exhibitList",  "gap",        8),
     exhibitListX:  sv(z, "sidebar_contenido", "exhibitList",  "left",       0),
     exhibitListY:  sv(z, "sidebar_contenido", "exhibitList",  "top",        0),
+    div1Top:       sv(z, "sidebar_contenido", "divider1",     "top",        0),
+    div2Top:       sv(z, "sidebar_contenido", "divider2",     "top",        0),
+    div3Top:       sv(z, "sidebar_contenido", "divider3",     "top",        0),
     // galería fotos
     galeriaW:      sv(z, "galeria",           "columna",      "width",      460),
     galeriaTop:    sv(z, "galeria",           "columna",      "top",        79),
@@ -309,7 +314,7 @@ export default function ArtGallery() {
           </div>
         </div>
 
-        <div style={{ width: 48, height: "1px", background: "rgba(242,232,213,0.35)", marginBottom: 14 }} />
+        <div style={{ width: 48, height: 0, borderTop: "1px dashed rgba(242,232,213,0.35)", marginBottom: 14, transform: `translateY(${d.div1Top}px)` }} />
 
         {/* Jacket series */}
         <div style={{ transform: `translate(${d.jacketSeriesX}px, ${d.jacketSeriesY}px)`, marginBottom: 4 }}>
@@ -317,7 +322,7 @@ export default function ArtGallery() {
           <div style={{ ...F.mono, fontSize: `${d.jacketSeriesFs}rem`, letterSpacing: "0.14em", color: C.dim }}>{ex.year}</div>
         </div>
 
-        <div style={{ width: 48, height: "1px", background: "rgba(242,232,213,0.35)", margin: "14px 0" }} />
+        <div style={{ width: 48, height: 0, borderTop: "1px dashed rgba(242,232,213,0.35)", margin: "14px 0", transform: `translateY(${d.div2Top}px)` }} />
 
         {/* Location */}
         <div style={{ transform: `translate(${d.locationX}px, ${d.locationY}px)`, marginBottom: 22 }}>
@@ -325,7 +330,7 @@ export default function ArtGallery() {
             <div style={{ ...F.mono, fontSize: `${d.locationFs}rem`, letterSpacing: "0.1em", color: C.cream }}>BUCARAMANGA</div>
             <div style={{ ...F.mono, fontSize: `${d.locationFs}rem`, letterSpacing: "0.1em", color: C.dim }}>COLOMBIA</div>
           </div>
-          <div style={{ width: 48, height: "1px", background: "rgba(242,232,213,0.35)", marginBottom: 8 }} />
+          <div style={{ width: 48, height: 0, borderTop: "1px dashed rgba(242,232,213,0.35)", marginBottom: 8, transform: `translateY(${d.div3Top}px)` }} />
           <div style={{ ...F.mono, fontSize: `${d.locationFs}rem`, color: C.cream }}>7.1254° N</div>
           <div style={{ ...F.mono, fontSize: `${d.locationFs}rem`, color: C.cream }}>73.1198° W</div>
         </div>
@@ -613,16 +618,16 @@ export default function ArtGallery() {
       <footer style={{
         position: "fixed", bottom: 0, left: 0, right: 0, height: d.footerH, zIndex: 100,
         display: "flex", alignItems: "center", justifyContent: "space-between",
-        padding: "0 28px",
+        padding: `0 ${d.footerPadH}px`,
         background: "transparent",
       }}>
         <div style={{ display: "flex", gap: 18 }}>
           {["INSTAGRAM", "TIKTOK", "SPOTIFY"].map(s => (
-            <span key={s} style={{ ...F.mono, fontSize: "0.41rem", letterSpacing: "0.1em", color: C.cream, cursor: "pointer" }}>{s}</span>
+            <span key={s} style={{ ...F.mono, fontSize: `${d.footerFs}rem`, letterSpacing: "0.1em", color: C.cream, cursor: "pointer" }}>{s}</span>
           ))}
         </div>
 
-        <div style={{ ...F.mono, fontSize: "0.38rem", letterSpacing: "0.1em", color: C.cream }}>
+        <div style={{ ...F.mono, fontSize: `${d.footerFs}rem`, letterSpacing: "0.1em", color: C.cream }}>
           SPRINGS © 2025 ©
         </div>
 
@@ -635,10 +640,10 @@ export default function ArtGallery() {
             { label: "FAQS",        href: "#"              },
           ].map(item => (
             <Link key={item.label} href={item.href} style={{
-              ...F.mono, fontSize: "0.43rem", letterSpacing: "0.1em",
+              ...F.mono, fontSize: `${d.footerFs}rem`, letterSpacing: "0.1em",
               color: C.cream,
               textDecoration: "none",
-              borderBottom: item.active ? `1px solid ${C.cream}` : "none",
+              borderBottom: item.active ? `1px solid ${C.burgundy}` : "none",
               paddingBottom: item.active ? 2 : 0,
             }}>
               {item.label}
