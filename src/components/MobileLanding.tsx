@@ -160,6 +160,91 @@ function HeroSection({ scrollContainerRef }: HeroSectionProps) {
   );
 }
 
+// ─── PinnedIngredients ────────────────────────────────────────────────────────
+// Contenedor: 300svh de alto.
+// Panel interno: sticky top:0, 100svh.
+// useScroll mapea progress 0→1 sobre los 300svh.
+// Umbrales: 0–0.33 = ingrediente 0, 0.33–0.66 = ingrediente 1, 0.66–1 = ingrediente 2.
+// AnimatePresence mode="wait" hace la transición entre ingredientes.
+
+const INGREDIENTS = [
+  { label: "CARNE\nOREADA.", bg: "#1A0A0C", color: "#F2E8D5", index: "01" },
+  { label: "HOGAO.", bg: "#6B1419", color: "#F2E8D5", index: "02" },
+  { label: "QUESO\nCOSTEÑO.", bg: "#F2E8D5", color: "#1A0A0C", index: "03" },
+] as const;
+
+interface PinnedIngredientsProps {
+  scrollContainerRef: React.RefObject<HTMLDivElement | null>;
+}
+
+function PinnedIngredients({ scrollContainerRef }: PinnedIngredientsProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const scrollYProgress = useScrollProgress(containerRef, scrollContainerRef);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    if (latest < 0.33) setActiveIndex(0);
+    else if (latest < 0.66) setActiveIndex(1);
+    else setActiveIndex(2);
+  });
+
+  const ingredient = INGREDIENTS[activeIndex as 0 | 1 | 2];
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative border-b border-mostaza"
+      style={{ height: "300svh" }}
+    >
+      <motion.div
+        className="sticky top-0 w-full flex flex-col items-center justify-center"
+        style={{ height: "100svh" }}
+        animate={{ backgroundColor: ingredient.bg }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+      >
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeIndex}
+            className="flex flex-col items-center justify-center gap-6 w-full px-8"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -24 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+          >
+            <span
+              className="font-mono text-[10px] tracking-[4px] uppercase"
+              style={{ color: "#C5871F" }}
+            >
+              {ingredient.index} / 03
+            </span>
+            <div
+              className="font-display text-[72px] leading-[0.85] text-center whitespace-pre-line"
+              style={{ color: ingredient.color }}
+            >
+              {ingredient.label}
+            </div>
+            <div className="w-8 h-px" style={{ backgroundColor: "#C5871F" }} />
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Dots de progreso */}
+        <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-2">
+          {INGREDIENTS.map((_, i) => (
+            <div
+              key={i}
+              className="h-[2px] transition-all duration-300"
+              style={{
+                width: i === activeIndex ? "20px" : "8px",
+                backgroundColor: i === activeIndex ? "#C5871F" : "#F2E8D530",
+              }}
+            />
+          ))}
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
 // ─── MobileLanding ────────────────────────────────────────────────────────────
 
 export default function MobileLanding() {
@@ -172,6 +257,7 @@ export default function MobileLanding() {
         style={{ WebkitOverflowScrolling: "touch" }}
       >
         <HeroSection scrollContainerRef={scrollRef} />
+        <PinnedIngredients scrollContainerRef={scrollRef} />
       </div>
     </MotionConfig>
   );
