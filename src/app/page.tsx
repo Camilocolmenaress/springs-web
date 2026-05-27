@@ -449,66 +449,70 @@ export default function Home() {
         </a>
       </motion.nav>
 
-      {/* ── FOOTER BAR FIJO — sociales ── */}
+      {/* ── FOOTER BAR UNIFICADO ── */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, ease: EASE, delay: 0.8 }}
         style={{
-          position: "fixed", bottom: 0, left: 0, zIndex: 100,
-          display: "flex", alignItems: "center",
-          padding: "0 32px", height: 40,
+          position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 101,
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          padding: "0 32px", height: 44,
           background: "transparent",
+          borderTop: "1px solid rgba(255,255,255,0.1)",
         }}
       >
-        <div style={{ display: "flex", gap: 22 }}>
+        {/* Izquierda — sociales */}
+        <div style={{ display: "flex", gap: 22, alignItems: "center" }}>
           {["INSTAGRAM", "TIKTOK", "SPOTIFY"].map(s => (
-            <a key={s} href="#" style={{ ...F.mono, fontSize: "0.58rem", letterSpacing: "0.18em", color: C.tinta, textDecoration: "none", opacity: 0.6 }}>{s}</a>
+            <a key={s} href="#" style={{ ...F.mono, fontSize: "0.58rem", letterSpacing: "0.18em", color: "#ffffff", textDecoration: "none", opacity: 0.55, mixBlendMode: "difference" as const }}>{s}</a>
           ))}
         </div>
-      </motion.div>
 
-      {/* ── FOOTER MENU — elemento independiente con mix-blend-mode ── */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, ease: EASE, delay: 0.8 }}
-        style={{
-          display: "flex", gap: d.footerMenuItemGap,
-          position: "fixed", bottom: d.footerMenuBottom, right: d.footerMenuRight,
-          zIndex: 101,
-          mixBlendMode: "difference",
-        }}
-      >
-        {([
-          { label: "CARTA",       href: "/menu"                },
-          { label: "ART GALLERY", href: "/art-gallery"            },
-          { label: "NOSOTROS",    href: "#"                    },
-          { label: "EL CLUB",     href: "/springs-jacket-club" },
-          { label: "FAQS",        href: "#"                    },
-        ] as { label: string; href: string }[]).map(item => (
-          <motion.a
-            key={item.label}
-            href={item.href}
-            initial="rest"
-            whileHover="hover"
-            style={{ ...F.mono, fontSize: `${d.footerMenuSize}rem`, letterSpacing: `${d.footerMenuLetterSpacing}em`, wordSpacing: `${d.footerMenuWordSpacing}px`, textDecoration: "none", fontWeight: 600, position: "relative", display: "inline-block" }}
-          >
-            <motion.span style={{ display: "block", color: "#ffffff" }}>
-              {item.label}
-            </motion.span>
-            <motion.span
-              variants={{ rest: { scaleX: 0 }, hover: { scaleX: 1 } }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              style={{
-                display: "block", height: 1.5,
-                background: "#ffffff",
-                transformOrigin: "left center",
-                position: "absolute", bottom: -2, left: 0, right: 0,
-              }}
-            />
-          </motion.a>
-        ))}
+        {/* Centro — globo + copyright */}
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3, mixBlendMode: "difference" as const }}>
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style={{ opacity: 0.6 }}>
+            <circle cx="9" cy="9" r="8" stroke="white" strokeWidth="0.8"/>
+            <ellipse cx="9" cy="9" rx="4" ry="8" stroke="white" strokeWidth="0.8"/>
+            <line x1="1" y1="9" x2="17" y2="9" stroke="white" strokeWidth="0.8"/>
+            <line x1="2.5" y1="5" x2="15.5" y2="5" stroke="white" strokeWidth="0.6"/>
+            <line x1="2.5" y1="13" x2="15.5" y2="13" stroke="white" strokeWidth="0.6"/>
+          </svg>
+          <span style={{ ...F.mono, fontSize: "0.48rem", letterSpacing: "0.14em", color: "#ffffff", opacity: 0.55 }}>SPRINGS © 2025 ©</span>
+        </div>
+
+        {/* Derecha — nav */}
+        <div style={{ display: "flex", gap: d.footerMenuItemGap, alignItems: "center" }}>
+          {([
+            { label: "CARTA",       href: "/menu"                },
+            { label: "ART GALLERY", href: "/art-gallery"         },
+            { label: "NOSOTROS",    href: "#"                    },
+            { label: "EL CLUB",     href: "/springs-jacket-club" },
+            { label: "FAQS",        href: "#"                    },
+          ] as { label: string; href: string }[]).map(item => (
+            <motion.a
+              key={item.label}
+              href={item.href}
+              initial="rest"
+              whileHover="hover"
+              style={{ ...F.mono, fontSize: `${d.footerMenuSize}rem`, letterSpacing: `${d.footerMenuLetterSpacing}em`, wordSpacing: `${d.footerMenuWordSpacing}px`, textDecoration: "none", fontWeight: 600, position: "relative", display: "inline-block", mixBlendMode: "difference" as const }}
+            >
+              <motion.span style={{ display: "block", color: "#ffffff" }}>
+                {item.label}
+              </motion.span>
+              <motion.span
+                variants={{ rest: { scaleX: 0 }, hover: { scaleX: 1 } }}
+                transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                style={{
+                  display: "block", height: 1.5,
+                  background: "#ffffff",
+                  transformOrigin: "left center",
+                  position: "absolute", bottom: -2, left: 0, right: 0,
+                }}
+              />
+            </motion.a>
+          ))}
+        </div>
       </motion.div>
 
       {/* ── BARCODE FIXED ── */}
