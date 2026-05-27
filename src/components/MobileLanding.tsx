@@ -270,7 +270,8 @@ const MANIFESTO_LINES: Array<{ text: string; className: string }> = [
   },
 ];
 
-const MANIFESTO_THRESHOLDS = [0.0, 0.25, 0.5, 0.75];
+// threshold[0]=0.0: "BIEN" aparece en el momento de entrar a la sección (spec explícita)
+const MANIFESTO_THRESHOLDS: readonly number[] = [0.0, 0.25, 0.5, 0.75];
 
 interface PinnedManifestoProps {
   scrollContainerRef: React.RefObject<HTMLDivElement | null>;
@@ -316,7 +317,6 @@ function PinnedManifesto({ scrollContainerRef }: PinnedManifestoProps) {
             <ClipRevealText
               key={i}
               isVisible={visibleCount > i}
-              delay={0}
               className={line.className}
             >
               {line.text}
