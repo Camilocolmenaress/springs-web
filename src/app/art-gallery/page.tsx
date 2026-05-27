@@ -646,18 +646,6 @@ export default function ArtGallery() {
           ))}
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <div>
-            <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.1em", color: C.cream }}>SPRINGS RADIO</div>
-            <div style={{ ...F.mono, fontSize: "0.5rem", color: C.cream }}>103.7 FM</div>
-          </div>
-          <div style={{
-            width: 24, height: 24, border: `1px solid rgba(242,232,213,0.25)`,
-            display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer",
-          }}>
-            <span style={{ color: C.cream, fontSize: "0.5rem", paddingLeft: 2 }}>▶</span>
-          </div>
-        </div>
       </footer>
 
       {/* ── EDITOR ───────────────────────────────────────── */}
