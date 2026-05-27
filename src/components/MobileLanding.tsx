@@ -208,7 +208,7 @@ function PinnedIngredients({ scrollContainerRef }: PinnedIngredientsProps) {
             className="flex flex-col items-center justify-center gap-6 w-full px-8"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -24 }}
+            exit={{ opacity: 0, y: -24, transition: { duration: 0.35, ease: "easeIn" } }}
             transition={{ duration: 0.35, ease: "easeOut" }}
           >
             <span
