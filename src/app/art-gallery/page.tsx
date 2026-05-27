@@ -565,7 +565,7 @@ export default function ArtGallery() {
                     position: "absolute",
                     bottom: 80, left: 0,
                     transform: `translate(${d.springsCrewLeft}px, ${d.springsCrewTop}px) rotate(${d.springsCrewRot}deg)`,
-                    fontFamily: "var(--font-marker)",
+                    fontFamily: "var(--font-caveat)",
                     fontSize: `${d.springsCrewFs}rem`,
                     color: "#6B1419",
                     whiteSpace: "nowrap",
