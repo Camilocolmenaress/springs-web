@@ -67,12 +67,14 @@ const CSS = `
 
 export default function MobileLanding() {
   const wrapRef  = useRef<HTMLDivElement>(null); // scroll container
-  const sceneRef = useRef<HTMLDivElement>(null); // pinned scene
+  const outerRef = useRef<HTMLDivElement>(null); // tall div — scroll distance
+  const sceneRef = useRef<HTMLDivElement>(null); // CSS-sticky panel
 
   useEffect(() => {
     const wrap  = wrapRef.current;
+    const outer = outerRef.current;
     const scene = sceneRef.current;
-    if (!wrap || !scene) return;
+    if (!wrap || !outer || !scene) return;
 
     const vh = window.innerHeight;
 
@@ -99,11 +101,9 @@ export default function MobileLanding() {
       // ── Timeline cinematográfico scroll-pinned ─────────────────────────────
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: scene,
+          trigger: outer,
           start:   "top top",
-          end:     "+=5800",
-          pin:     true,
-          pinType: "transform", // requerido con scroller custom (overflow div, no window)
+          end:     "bottom bottom", // outer height = 100svh + 5800px → 5800px of scrub
           scrub:   1.2,
         },
       });
@@ -176,10 +176,15 @@ export default function MobileLanding() {
         ref={wrapRef}
         className="fixed inset-0 overflow-y-auto overflow-x-hidden bg-tinta font-sans"
       >
-        {/* ── Escena pinned ──────────────────────────────────────────────── */}
+        {/* ── Outer: provee el scroll distance para GSAP scrub ──────────── */}
+        <div
+          ref={outerRef}
+          style={{ height: "calc(100svh + 5800px)" }}
+        >
+        {/* ── Escena sticky — pinned por CSS compositor, sin JS ──────── */}
         <div
           ref={sceneRef}
-          className="relative w-full"
+          className="sticky top-0 relative w-full"
           style={{ height: "100svh" }}
         >
           {/* Capa 0: WebGL smoke — burgondy #6B1419, siempre detrás */}
@@ -309,6 +314,7 @@ export default function MobileLanding() {
             </div>
           </div>
         </div>
+        </div>{/* /outerRef */}
 
         {/* ── Footer ─────────────────────────────────────────────────────── */}
         <footer className="w-full bg-tinta p-8 flex flex-col items-center gap-6 relative z-10">
