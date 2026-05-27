@@ -47,8 +47,8 @@ function ClipRevealText({ children, isVisible, delay = 0, className = "" }: Clip
 //   1 = bottom del target alineado con bottom del container
 
 function useScrollProgress(
-  targetRef: React.RefObject<HTMLDivElement>,
-  scrollContainerRef: React.RefObject<HTMLDivElement>
+  targetRef: React.RefObject<HTMLDivElement | null>,
+  scrollContainerRef: React.RefObject<HTMLDivElement | null>
 ) {
   const { scrollYProgress } = useScroll({
     target: targetRef,
