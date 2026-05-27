@@ -161,6 +161,9 @@ export default function ArtGallery() {
     placaPadH:     sv(z, "foto",              "placa",        "paddingH",   28),
     placaPadV:     sv(z, "foto",              "placa",        "paddingV",   12),
     // info panel
+    artGalleryLabelFs:   sv(z, "infoPanel_contenido","artGalleryLabel","fontSize", 0.44),
+    artGalleryLabelLeft: sv(z, "infoPanel_contenido","artGalleryLabel","left",     0),
+    artGalleryLabelTop:  sv(z, "infoPanel_contenido","artGalleryLabel","top",      0),
     infoPadT:       sv(z, "infoPanel_contenido","paddingInfo",  "top",        32),
     infoPadH:       sv(z, "infoPanel_contenido","paddingInfo",  "horizontal", 22),
     infoPadOffsetX: sv(z, "infoPanel_contenido","paddingInfo",  "offsetX",    0),
@@ -451,8 +454,10 @@ export default function ArtGallery() {
                   transform: `translateX(${d.infoPadOffsetX}px)`,
                   position: "relative", zIndex: 2,
                 }}>
-                  <div style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.22em", color: C.mostaza, marginBottom: 6 }}>
-                    SPRINGS ART GALLERY
+                  <div style={{ transform: `translate(${d.artGalleryLabelLeft}px, ${d.artGalleryLabelTop}px)`, marginBottom: 6 }}>
+                    <div style={{ ...F.mono, fontSize: `${d.artGalleryLabelFs}rem`, letterSpacing: "0.22em", color: "#6B1419" }}>
+                      SPRINGS ART GALLERY
+                    </div>
                   </div>
 
                   <div style={{ transform: `translate(${d.tituloLeft}px, ${d.tituloTop}px)`, marginBottom: 10 }}>
@@ -462,8 +467,9 @@ export default function ArtGallery() {
                   </div>
 
                   <div style={{ transform: `translate(${d.subtituloLeft}px, ${d.subtituloTop}px)`, marginBottom: 14 }}>
-                    <div style={{ ...F.mono, fontSize: `${d.subtituloFs}rem`, letterSpacing: "0.18em", color: C.mostaza }}>
-                      {exhibit.subtitle} +
+                    <div style={{ ...F.mono, fontSize: `${d.subtituloFs}rem`, letterSpacing: "0.18em" }}>
+                      <span style={{ color: C.cream }}>{exhibit.subtitle} </span>
+                      <span style={{ color: "#6B1419" }}>+</span>
                     </div>
                   </div>
 
