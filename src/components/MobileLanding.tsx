@@ -245,6 +245,89 @@ function PinnedIngredients({ scrollContainerRef }: PinnedIngredientsProps) {
   );
 }
 
+// ─── PinnedManifesto ──────────────────────────────────────────────────────────
+// Contenedor: 200svh de alto.
+// Panel interno: sticky top:0, 100svh, fondo burgundy.
+// 4 líneas que se revelan con ClipRevealText a medida que scrollYProgress avanza.
+// Umbrales: línea N visible cuando scrollYProgress >= MANIFESTO_THRESHOLDS[N].
+
+const MANIFESTO_LINES: Array<{ text: string; className: string }> = [
+  {
+    text: "BIEN",
+    className: "font-display text-[72px] leading-[0.85] text-cream",
+  },
+  {
+    text: "HECHA.",
+    className: "font-display text-[72px] leading-[0.85] text-cream",
+  },
+  {
+    text: "Bucaramanga ya tenía suficientes hamburguesas iguales.",
+    className: "font-sans italic text-sm text-cream max-w-[85%] leading-[1.6]",
+  },
+  {
+    text: "Springs nace porque pedir comida también es respeto propio.",
+    className: "font-sans italic text-sm text-cream max-w-[85%] leading-[1.6]",
+  },
+];
+
+const MANIFESTO_THRESHOLDS = [0.0, 0.25, 0.5, 0.75];
+
+interface PinnedManifestoProps {
+  scrollContainerRef: React.RefObject<HTMLDivElement | null>;
+}
+
+function PinnedManifesto({ scrollContainerRef }: PinnedManifestoProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const scrollYProgress = useScrollProgress(containerRef, scrollContainerRef);
+  const [visibleCount, setVisibleCount] = useState(0);
+
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    const count = MANIFESTO_THRESHOLDS.filter((t) => latest >= t).length;
+    setVisibleCount(count);
+  });
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative border-b border-mostaza"
+      style={{ height: "200svh" }}
+    >
+      <div
+        className="sticky top-0 w-full bg-burgundy overflow-hidden"
+        style={{ height: "100svh" }}
+      >
+        {/* Fondo: imagen con baja opacidad */}
+        <div className="absolute inset-0">
+          <img
+            src="/images/hero-jacket.jpg"
+            alt=""
+            aria-hidden={true}
+            className="w-full h-full object-cover opacity-20"
+          />
+          <div className="absolute inset-0 bg-burgundy/60" />
+        </div>
+
+        {/* Contenido */}
+        <div className="relative z-10 p-6 flex flex-col justify-center h-full gap-4">
+          <span className="font-mono text-[10px] text-mostaza tracking-[3px] uppercase mb-4">
+            MANIFIESTO
+          </span>
+          {MANIFESTO_LINES.map((line, i) => (
+            <ClipRevealText
+              key={i}
+              isVisible={visibleCount > i}
+              delay={0}
+              className={line.className}
+            >
+              {line.text}
+            </ClipRevealText>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── MobileLanding ────────────────────────────────────────────────────────────
 
 export default function MobileLanding() {
@@ -258,6 +341,7 @@ export default function MobileLanding() {
       >
         <HeroSection scrollContainerRef={scrollRef} />
         <PinnedIngredients scrollContainerRef={scrollRef} />
+        <PinnedManifesto scrollContainerRef={scrollRef} />
       </div>
     </MotionConfig>
   );
