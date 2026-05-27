@@ -100,11 +100,11 @@ export default function MobileLanding() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: scene,
-          start:  "top top",
-          end:    "+=5800",
-          pin:    true,
-          scrub:  1.2,
-          anticipatePin: 1,
+          start:   "top top",
+          end:     "+=5800",
+          pin:     true,
+          pinType: "transform", // requerido con scroller custom (overflow div, no window)
+          scrub:   1.2,
         },
       });
 
