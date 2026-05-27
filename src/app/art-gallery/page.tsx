@@ -460,7 +460,7 @@ export default function ArtGallery() {
                   alt={exhibit.name}
                   initial={{ filter: "brightness(0.06) saturate(0.3)" }}
                   animate={{ filter: "brightness(1) saturate(1)" }}
-                  transition={{ duration: 2.8, delay: 0.45, ease: [0.4, 0, 0.2, 1] }}
+                  transition={{ duration: 2.8, delay: 0.85, ease: [0.4, 0, 0.2, 1] }}
                   style={{
                     height: `${d.imageH}%`,
                     width: "auto",
@@ -481,7 +481,7 @@ export default function ArtGallery() {
                 <motion.div
                   initial={{ scaleY: 1 }}
                   animate={{ scaleY: 0 }}
-                  transition={{ duration: 2.2, delay: 0.45, ease: [0.4, 0.05, 0.2, 1] }}
+                  transition={{ duration: 2.2, delay: 0.85, ease: [0.4, 0.05, 0.2, 1] }}
                   style={{
                     position: "absolute", inset: 0, zIndex: 2, pointerEvents: "none",
                     transformOrigin: "bottom",
@@ -493,7 +493,7 @@ export default function ArtGallery() {
                 <motion.div
                   initial={{ opacity: 1 }}
                   animate={{ opacity: 0 }}
-                  transition={{ duration: 2.0, delay: 1.4, ease: [0.4, 0, 0.3, 1] }}
+                  transition={{ duration: 2.0, delay: 1.8, ease: [0.4, 0, 0.3, 1] }}
                   style={{
                     position: "absolute", inset: 0, zIndex: 3, pointerEvents: "none",
                     background: "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0) 65%)",
@@ -504,7 +504,7 @@ export default function ArtGallery() {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 0.9, delay: 2.8, ease: EASE }}
+                  transition={{ duration: 0.9, delay: 3.2, ease: EASE }}
                   style={{
                     position: "absolute", bottom: d.placaBottom, left: "50%", zIndex: 4,
                     transform: `translateX(calc(-50% + ${d.placaLeft}px)) scale(${d.placaScale})`,
@@ -658,8 +658,8 @@ export default function ArtGallery() {
                 >
                   {/* Grid de 3 fotos */}
                   <motion.div
-                    initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.65, ease: EASE, delay: 0.35 }}
+                    initial={{ opacity: 0, x: 22 }} animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, ease: EASE, delay: 0.08 }}
                     style={{ flex: 1, minHeight: 0, marginBottom: 14, overflow: "hidden" }}
                   >
                     <div style={{
@@ -686,8 +686,8 @@ export default function ArtGallery() {
 
                   {/* Quote */}
                   <motion.div
-                    initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, ease: EASE, delay: 0.55 }}
+                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, ease: EASE, delay: 0.14 }}
                     style={{ transform: `translate(${d.quoteLeft}px, ${d.quoteTop}px)` }}
                   >
                     <span style={{ ...F.sans, fontSize: "1.2rem", color: C.cream, lineHeight: 0.8, display: "block", marginBottom: 2 }}>"</span>
@@ -698,9 +698,9 @@ export default function ArtGallery() {
 
                   {/* Springs Crew */}
                   <motion.div
-                    initial={{ opacity: 0, rotate: d.springsCrewRot - 8 }}
+                    initial={{ opacity: 0, rotate: d.springsCrewRot - 6 }}
                     animate={{ opacity: 1, rotate: d.springsCrewRot }}
-                    transition={{ duration: 0.7, ease: EASE, delay: 0.7 }}
+                    transition={{ duration: 0.5, ease: EASE, delay: 0.18 }}
                     style={{
                       position: "absolute",
                       bottom: 80, left: 0,
@@ -718,7 +718,7 @@ export default function ArtGallery() {
                   {/* Barcode */}
                   <motion.div
                     initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                    transition={{ duration: 0.6, ease: EASE, delay: 0.75 }}
+                    transition={{ duration: 0.5, ease: EASE, delay: 0.22 }}
                     style={{ position: "absolute", bottom: 24, right: 0, transform: `translate(${d.barcodeLeft}px, ${d.barcodeTop}px)`, display: "flex", gap: 6, alignItems: "flex-start" }}
                   >
                     <img
