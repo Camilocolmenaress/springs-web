@@ -699,12 +699,14 @@ export default function ArtGallery() {
                   <motion.div
                     initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, ease: EASE, delay: 0.14 }}
-                    style={{ position: "absolute", bottom: 0, left: 0, transform: `translate(${d.quoteLeft}px, ${d.quoteTop}px)`, pointerEvents: "none" }}
+                    style={{ position: "absolute", bottom: 0, left: 0, pointerEvents: "none" }}
                   >
-                    <span style={{ ...F.sans, fontSize: "1.2rem", color: C.cream, lineHeight: 0.8, display: "block", marginBottom: 2 }}>"</span>
-                    <p style={{ ...F.sans, fontSize: `${d.quoteFs}rem`, fontWeight: 500, color: C.cream, lineHeight: 1.5, margin: 0, whiteSpace: "pre-line" }}>
-                      {exhibit.quote}
-                    </p>
+                    <div style={{ transform: `translate(${d.quoteLeft}px, ${d.quoteTop}px)` }}>
+                      <span style={{ ...F.sans, fontSize: "1.2rem", color: C.cream, lineHeight: 0.8, display: "block", marginBottom: 2 }}>"</span>
+                      <p style={{ ...F.sans, fontSize: `${d.quoteFs}rem`, fontWeight: 500, color: C.cream, lineHeight: 1.5, margin: 0, whiteSpace: "pre-line" }}>
+                        {exhibit.quote}
+                      </p>
+                    </div>
                   </motion.div>
 
                   {/* Springs Crew */}
