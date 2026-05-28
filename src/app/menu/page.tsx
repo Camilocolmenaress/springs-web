@@ -54,6 +54,62 @@ export default function MenuPage() {
     setCartItems(prev => prev.filter(i => i.cartId !== cartId));
   }
 
+  // ── Edit mode: mobile frame 390px sobre fondo oscuro, editor flotante a la derecha
+  if (editMode) {
+    return (
+      <div style={{ width: "100vw", height: "100vh", background: "#0d0d0d", position: "relative", overflow: "hidden" }}>
+        {/* Etiqueta de referencia */}
+        <div style={{
+          position: "absolute", left: 0, top: 0,
+          width: 390, height: 20, background: "#1a1a1a",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          fontFamily: "JetBrains Mono, monospace", fontSize: "0.42rem",
+          letterSpacing: "0.2em", color: "rgba(242,232,213,0.3)",
+          zIndex: 10,
+        }}>
+          390 × 844 — MOBILE PREVIEW
+        </div>
+
+        {/* Frame mobile */}
+        <div style={{
+          position: "absolute", left: 0, top: 20,
+          width: 390, height: "calc(100vh - 20px)",
+          overflow: "hidden",
+          outline: "1px solid rgba(242,232,213,0.12)",
+        }}>
+          <Link
+            href="/"
+            aria-label="Volver al home"
+            style={{
+              position: "absolute", top: 16, left: 16, zIndex: 50,
+              display: "inline-flex", alignItems: "center", gap: 8,
+              padding: "8px 14px", background: "var(--cream)", color: "var(--tinta)",
+              border: "1px solid var(--tinta)",
+              fontFamily: "var(--font-jetbrains-mono), monospace",
+              fontSize: "0.65rem", letterSpacing: "0.22em",
+              textTransform: "uppercase", textDecoration: "none",
+              mixBlendMode: "multiply",
+            }}
+          >
+            <span aria-hidden>←</span> VOLVER
+          </Link>
+          <Menu onAgregar={handleAgregar} config={config} />
+        </div>
+
+        {/* DevPanel flotante — empieza a la derecha del frame, arrastrable */}
+        <DevPanel
+          config={config}
+          saved={saved}
+          onUpdate={updateProp}
+          onSave={save}
+          onExport={exportValues}
+          onReset={reset}
+          startLeft={406}
+        />
+      </div>
+    );
+  }
+
   return (
     <main style={{ width: "100vw", height: "100vh", overflowY: "auto", background: "var(--cream)", position: "relative" }}>
       <Link

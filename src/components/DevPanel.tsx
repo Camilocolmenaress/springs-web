@@ -49,9 +49,10 @@ interface Props {
   onReset: () => void;
   categoria?: string;
   inlineSidebar?: boolean;
+  startLeft?: number;
 }
 
-export default function DevPanel({ config, saved, onUpdate, onSave, onExport, onReset, categoria, inlineSidebar }: Props) {
+export default function DevPanel({ config, saved, onUpdate, onSave, onExport, onReset, categoria, inlineSidebar, startLeft }: Props) {
   const [collapsed, setCollapsed] = useState(false);
   const [openZones, setOpenZones] = useState<Record<string, boolean>>({});
   const [copied, setCopied] = useState(false);
@@ -75,7 +76,7 @@ export default function DevPanel({ config, saved, onUpdate, onSave, onExport, on
 
   const floatingStyle = {
     position: "fixed" as const,
-    right: 20,
+    ...(startLeft !== undefined ? { left: startLeft } : { right: 20 }),
     top: 60,
     zIndex: 9999,
     width: 320,
