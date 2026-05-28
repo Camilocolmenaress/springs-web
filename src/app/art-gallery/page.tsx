@@ -460,7 +460,7 @@ export default function ArtGallery() {
                   alt={exhibit.name}
                   initial={{ filter: "brightness(0.06) saturate(0.3)" }}
                   animate={{ filter: "brightness(1) saturate(1)" }}
-                  transition={{ duration: 2.8, delay: 0.85, ease: [0.4, 0, 0.2, 1] }}
+                  transition={{ duration: 2.8, delay: 0.4, ease: [0.4, 0, 0.2, 1] }}
                   style={{
                     height: `${d.imageH}%`,
                     width: "auto",
@@ -481,7 +481,7 @@ export default function ArtGallery() {
                 <motion.div
                   initial={{ opacity: 1 }}
                   animate={{ opacity: 0 }}
-                  transition={{ duration: 1.6, delay: 0.85, ease: [0.4, 0, 0.2, 1] }}
+                  transition={{ duration: 1.6, delay: 0.4, ease: [0.4, 0, 0.2, 1] }}
                   style={{
                     position: "absolute", inset: 0, zIndex: 2, pointerEvents: "none",
                     background: "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.97) 38%, rgba(0,0,0,0.97) 100%)",
@@ -492,7 +492,7 @@ export default function ArtGallery() {
                 <motion.div
                   initial={{ opacity: 1 }}
                   animate={{ opacity: 0 }}
-                  transition={{ duration: 2.0, delay: 1.1, ease: [0.3, 0, 0.2, 1] }}
+                  transition={{ duration: 2.0, delay: 0.65, ease: [0.3, 0, 0.2, 1] }}
                   style={{
                     position: "absolute", inset: 0, zIndex: 3, pointerEvents: "none",
                     background: "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 28%, rgba(0,0,0,0.95) 65%, rgba(0,0,0,0.95) 100%)",
@@ -503,7 +503,7 @@ export default function ArtGallery() {
                 <motion.div
                   initial={{ opacity: 1 }}
                   animate={{ opacity: 0 }}
-                  transition={{ duration: 2.2, delay: 1.5, ease: [0.2, 0, 0.3, 1] }}
+                  transition={{ duration: 2.2, delay: 1.05, ease: [0.2, 0, 0.3, 1] }}
                   style={{
                     position: "absolute", inset: 0, zIndex: 4, pointerEvents: "none",
                     background: "linear-gradient(to top, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.5) 38%, rgba(0,0,0,0) 62%)",
@@ -514,7 +514,7 @@ export default function ArtGallery() {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 0.9, delay: 3.2, ease: EASE }}
+                  transition={{ duration: 0.9, delay: 2.75, ease: EASE }}
                   style={{
                     position: "absolute", bottom: d.placaBottom, left: "50%", zIndex: 6,
                     transform: `translateX(calc(-50% + ${d.placaLeft}px)) scale(${d.placaScale})`,
