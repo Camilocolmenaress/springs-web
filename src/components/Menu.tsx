@@ -237,7 +237,7 @@ export default function Menu({ onAgregar, config }: Props) {
     }}>
 
       {/* ── Header ───────────────────────────────────────── */}
-      <div style={{ padding: isMobile ? "0 16px 8px" : "0 clamp(16px, 5vw, 80px) 8px", flexShrink: 0 }}>
+      <div style={{ padding: "0 16px 8px", flexShrink: 0 }}>
         {/* Fila 1: label */}
         <div style={{
           fontFamily: "var(--font-jetbrains-mono), monospace",
