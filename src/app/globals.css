@@ -5,9 +5,6 @@
   --cream: #F2E8D5;
   --tinta: #1A0A0C;
   --mostaza: #C5871F;
-  --font-display: var(--font-anton);
-  --font-sans: var(--font-inter);
-  --font-mono: var(--font-jetbrains-mono);
 }
 
 @theme inline {

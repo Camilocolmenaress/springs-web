@@ -18,9 +18,9 @@ const C = {
   fainter: "rgba(242,232,213,0.06)",
 };
 const F = {
-  display: { fontFamily: "var(--font-display)" }        as const,
-  sans:    { fontFamily: "var(--font-sans)" }            as const,
-  mono:    { fontFamily: "var(--font-mono)" }            as const,
+  display: { fontFamily: "var(--font-anton)" }           as const,
+  sans:    { fontFamily: "var(--font-inter)" }            as const,
+  mono:    { fontFamily: "var(--font-jetbrains-mono)" }   as const,
 };
 const EASE = [0.22, 1, 0.36, 1] as const;
 
