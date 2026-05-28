@@ -84,6 +84,7 @@ export default function MenuPage() {
           width: 390, height: "calc(100vh - 20px)",
           overflow: "hidden",
           outline: "1px solid rgba(242,232,213,0.12)",
+          transform: "translate(0,0)",
         }}>
           <Link
             href="/"
