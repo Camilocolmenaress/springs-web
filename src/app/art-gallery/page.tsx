@@ -18,9 +18,9 @@ const C = {
   fainter: "rgba(242,232,213,0.06)",
 };
 const F = {
-  display: { fontFamily: "Anton, sans-serif" }         as const,
-  sans:    { fontFamily: "Inter, sans-serif" }          as const,
-  mono:    { fontFamily: "JetBrains Mono, monospace" }  as const,
+  display: { fontFamily: "Anton, sans-serif" }           as const,
+  sans:    { fontFamily: "var(--font-inter)" }            as const,
+  mono:    { fontFamily: "var(--font-jetbrains-mono)" }   as const,
 };
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -29,7 +29,7 @@ const EXHIBITS = [
     id: "001", name: "LA FIJA",    subtitle: "LOADED JACKET", year: "2025",
     img: "/images/la-fija-exhibit.png",
     gallery: ["/images/gallery-001-macro.png", "/images/gallery-001-crew.png", "/images/gallery-001-side.png"],
-    ingredients: ["POLLO DESMECHADO.", "HOGAO ARTESANAL.", "QUESO COSTEÑO FUNDIDO.", "PAPAS GAJO CRUJIENTES.", "FUSE SAUCE."],
+    ingredients: ["POLLO DESMECHADO.", "HOGAO.", "QUESO COSTEÑO.", "FUSE SAUCE."],
     description: "UNA COMBINACIÓN TAN SIMPLE COMO PODEROSA,\nTAN DIRECTA COMO INOLVIDABLE.",
     tagline: "THE ORIGINAL. THE REASON.",
     origin: "BUCARAMANGA, COLOMBIA", created: "SPRINGS CREW", category: "COMFORT FOOD", temp: "68°C",
@@ -40,7 +40,7 @@ const EXHIBITS = [
     id: "002", name: "LA PESADA",  subtitle: "LOADED JACKET", year: "2025",
     img: "/images/la-fija-exhibit.png",
     gallery: ["/images/gallery-001-macro.png", "/images/gallery-001-crew.png", "/images/gallery-001-side.png"],
-    ingredients: ["CARNE DESMECHADA.", "HOGAO ARTESANAL.", "QUESO COSTEÑO FUNDIDO.", "PAPAS GAJO CRUJIENTES.", "FUSE SAUCE."],
+    ingredients: ["CARNE DESMECHADA.", "HOGAO.", "QUESO COSTEÑO.", "FUSE SAUCE."],
     description: "PARA LOS QUE NO SE QUEDAN CON HAMBRE.\nLA VERSIÓN SIN CONCESIONES.",
     tagline: "HEAVY. INTENTIONAL.",
     origin: "BUCARAMANGA, COLOMBIA", created: "SPRINGS CREW", category: "COMFORT FOOD", temp: "68°C",
@@ -51,7 +51,7 @@ const EXHIBITS = [
     id: "003", name: "LA BRAVA",   subtitle: "LOADED JACKET", year: "2025",
     img: "/images/la-fija-exhibit.png",
     gallery: ["/images/gallery-001-macro.png", "/images/gallery-001-crew.png", "/images/gallery-001-side.png"],
-    ingredients: ["CHORIZO SANTANDEREANO.", "HOGAO ARTESANAL.", "QUESO COSTEÑO FUNDIDO.", "PAPAS GAJO CRUJIENTES.", "FUSE SAUCE."],
+    ingredients: ["CHORIZO SANTANDEREANO.", "HOGAO.", "QUESO COSTEÑO.", "FUSE SAUCE."],
     description: "EL SABOR QUE AQUÍ NUNCA SE NEGOCIA.\nEL CHORIZO QUE MANDA.",
     tagline: "BORN IN SANTANDER.",
     origin: "BUCARAMANGA, COLOMBIA", created: "SPRINGS CREW", category: "COMFORT FOOD", temp: "70°C",
@@ -62,7 +62,7 @@ const EXHIBITS = [
     id: "004", name: "LA SIMPLE",  subtitle: "LOADED JACKET", year: "2025",
     img: "/images/la-fija-exhibit.png",
     gallery: ["/images/gallery-001-macro.png", "/images/gallery-001-crew.png", "/images/gallery-001-side.png"],
-    ingredients: ["CARNE MOLIDA SAZONADA.", "HOGAO ARTESANAL.", "QUESO COSTEÑO FUNDIDO.", "PAPAS GAJO CRUJIENTES.", "FUSE SAUCE."],
+    ingredients: ["CARNE MOLIDA SAZONADA.", "HOGAO.", "QUESO COSTEÑO.", "FUSE SAUCE."],
     description: "SIN RODEOS, SIN EXCESOS.\nLO ESENCIAL EJECUTADO PERFECTO.",
     tagline: "SIMPLE IS THE STATEMENT.",
     origin: "BUCARAMANGA, COLOMBIA", created: "SPRINGS CREW", category: "COMFORT FOOD", temp: "68°C",
@@ -87,7 +87,8 @@ function sv(zones: Record<string, { elements: Record<string, { props: Record<str
 }
 
 export default function ArtGallery() {
-  const [idx, setIdx]   = useState(0);
+  const [idx, setIdx]         = useState(0);
+  const [activated, setActivated] = useState<Set<number>>(new Set([0]));
   const wrapperRef      = useRef<HTMLDivElement>(null);
   const contentRef      = useRef<HTMLDivElement>(null);
   const lenisRef        = useRef<Lenis | null>(null);
@@ -235,6 +236,12 @@ export default function ArtGallery() {
         EXHIBITS.length - 1
       );
       setIdx(newIdx);
+      setActivated(prev => {
+        if (prev.has(newIdx)) return prev;
+        const next = new Set(prev);
+        next.add(newIdx);
+        return next;
+      });
     });
 
     let raf: number;
@@ -295,8 +302,9 @@ export default function ArtGallery() {
         <motion.div
           initial={{ opacity: 0, y: -14 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.75, ease: EASE, delay: 0.12 }}
-          style={{ width: d.globeSize, height: d.globeSize, flexShrink: 0, marginBottom: 18, transform: `translate(${d.globeOffsetX}px, ${d.globeOffsetY}px)` }}
+          style={{ flexShrink: 0, marginBottom: 18 }}
         >
+          <div style={{ width: d.globeSize, height: d.globeSize, transform: `translate(${d.globeOffsetX}px, ${d.globeOffsetY}px)` }}>
           <svg viewBox="0 0 110 110" width="100%" height="100%">
             <circle cx="55" cy="55" r={gr} fill="none" stroke={C.dim} strokeWidth="1.2" opacity={0.8}/>
             <motion.g
@@ -316,6 +324,7 @@ export default function ArtGallery() {
               <textPath href="#gallery-chimba-circle" startOffset={`${d.globeTextOff}%`}>FOR THE MOST CHIMBA PEOPLE ✦ </textPath>
             </text>
           </svg>
+          </div>
         </motion.div>
 
         {/* Exhibit label + number — re-anima al navegar */}
@@ -442,7 +451,9 @@ export default function ArtGallery() {
             width: `calc(100vw * ${EXHIBITS.length})`,
           }}
         >
-          {EXHIBITS.map((exhibit) => (
+          {EXHIBITS.map((exhibit, i) => {
+            const isActivated = activated.has(i);
+            return (
             <div
               key={exhibit.id}
               style={{
@@ -459,8 +470,8 @@ export default function ArtGallery() {
                   src={exhibit.img}
                   alt={exhibit.name}
                   initial={{ filter: "brightness(0.06) saturate(0.3)" }}
-                  animate={{ filter: "brightness(1) saturate(1)" }}
-                  transition={{ duration: 2.8, delay: 0.85, ease: [0.4, 0, 0.2, 1] }}
+                  animate={{ filter: isActivated ? "brightness(1) saturate(1)" : "brightness(0.06) saturate(0.3)" }}
+                  transition={{ duration: 2.8, delay: 0.4, ease: [0.4, 0, 0.2, 1] }}
                   style={{
                     height: `${d.imageH}%`,
                     width: "auto",
@@ -480,8 +491,8 @@ export default function ArtGallery() {
                 {/* Capa 1: oscuridad general, top transparente → top aparece primero */}
                 <motion.div
                   initial={{ opacity: 1 }}
-                  animate={{ opacity: 0 }}
-                  transition={{ duration: 1.6, delay: 0.85, ease: [0.4, 0, 0.2, 1] }}
+                  animate={{ opacity: isActivated ? 0 : 1 }}
+                  transition={{ duration: 1.6, delay: 0.4, ease: [0.4, 0, 0.2, 1] }}
                   style={{
                     position: "absolute", inset: 0, zIndex: 2, pointerEvents: "none",
                     background: "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.97) 38%, rgba(0,0,0,0.97) 100%)",
@@ -491,8 +502,8 @@ export default function ArtGallery() {
                 {/* Capa 2: zona media — se va más despacio */}
                 <motion.div
                   initial={{ opacity: 1 }}
-                  animate={{ opacity: 0 }}
-                  transition={{ duration: 2.0, delay: 1.1, ease: [0.3, 0, 0.2, 1] }}
+                  animate={{ opacity: isActivated ? 0 : 1 }}
+                  transition={{ duration: 2.0, delay: 0.65, ease: [0.3, 0, 0.2, 1] }}
                   style={{
                     position: "absolute", inset: 0, zIndex: 3, pointerEvents: "none",
                     background: "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 28%, rgba(0,0,0,0.95) 65%, rgba(0,0,0,0.95) 100%)",
@@ -502,8 +513,8 @@ export default function ArtGallery() {
                 {/* Capa 3: sombra en el fondo — aguanta la oscuridad abajo hasta el final */}
                 <motion.div
                   initial={{ opacity: 1 }}
-                  animate={{ opacity: 0 }}
-                  transition={{ duration: 2.2, delay: 1.5, ease: [0.2, 0, 0.3, 1] }}
+                  animate={{ opacity: isActivated ? 0 : 1 }}
+                  transition={{ duration: 2.2, delay: 1.05, ease: [0.2, 0, 0.3, 1] }}
                   style={{
                     position: "absolute", inset: 0, zIndex: 4, pointerEvents: "none",
                     background: "linear-gradient(to top, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.5) 38%, rgba(0,0,0,0) 62%)",
@@ -513,8 +524,8 @@ export default function ArtGallery() {
                 {/* Placa museo — aparece cuando ya hay luz */}
                 <motion.div
                   initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.9, delay: 3.2, ease: EASE }}
+                  animate={{ opacity: isActivated ? 1 : 0 }}
+                  transition={{ duration: 0.9, delay: 2.75, ease: EASE }}
                   style={{
                     position: "absolute", bottom: d.placaBottom, left: "50%", zIndex: 6,
                     transform: `translateX(calc(-50% + ${d.placaLeft}px)) scale(${d.placaScale})`,
@@ -554,7 +565,7 @@ export default function ArtGallery() {
                   position: "relative", zIndex: 2,
                 }}>
                   <motion.div
-                    initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 16 }} animate={isActivated ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
                     transition={{ duration: 0.55, ease: EASE, delay: 0.18 }}
                     style={{ transform: `translate(${d.artGalleryLabelLeft}px, ${d.artGalleryLabelTop}px)`, marginBottom: 6 }}
                   >
@@ -564,7 +575,7 @@ export default function ArtGallery() {
                   </motion.div>
 
                   <motion.div
-                    initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 22 }} animate={isActivated ? { opacity: 1, y: 0 } : { opacity: 0, y: 22 }}
                     transition={{ duration: 0.65, ease: EASE, delay: 0.26 }}
                     style={{ transform: `translate(${d.tituloLeft}px, ${d.tituloTop}px)`, marginBottom: 10 }}
                   >
@@ -574,7 +585,7 @@ export default function ArtGallery() {
                   </motion.div>
 
                   <motion.div
-                    initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 14 }} animate={isActivated ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
                     transition={{ duration: 0.55, ease: EASE, delay: 0.33 }}
                     style={{ transform: `translate(${d.subtituloLeft}px, ${d.subtituloTop}px)`, marginBottom: 14 }}
                   >
@@ -585,13 +596,13 @@ export default function ArtGallery() {
                   </motion.div>
 
                   <motion.div
-                    initial={{ opacity: 0, scaleX: 0 }} animate={{ opacity: 1, scaleX: 1 }}
+                    initial={{ opacity: 0, scaleX: 0 }} animate={isActivated ? { opacity: 1, scaleX: 1 } : { opacity: 0, scaleX: 0 }}
                     transition={{ duration: 0.5, ease: EASE, delay: 0.38 }}
                     style={{ height: "1px", background: "rgba(242,232,213,0.25)", marginBottom: 14, transformOrigin: "left" }}
                   />
 
                   <motion.div
-                    initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 12 }} animate={isActivated ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
                     transition={{ duration: 0.55, ease: EASE, delay: 0.43 }}
                     style={{ transform: `translate(${d.ingredientesLeft}px, ${d.ingredientesTop}px)`, marginBottom: 12 }}
                   >
@@ -605,7 +616,7 @@ export default function ArtGallery() {
                   </motion.div>
 
                   <motion.div
-                    initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 12 }} animate={isActivated ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
                     transition={{ duration: 0.55, ease: EASE, delay: 0.5 }}
                     style={{ transform: `translate(${d.descripcionLeft}px, ${d.descripcionTop}px)`, marginBottom: 10 }}
                   >
@@ -615,7 +626,7 @@ export default function ArtGallery() {
                   </motion.div>
 
                   <motion.div
-                    initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, x: -12 }} animate={isActivated ? { opacity: 1, x: 0 } : { opacity: 0, x: -12 }}
                     transition={{ duration: 0.5, ease: EASE, delay: 0.56 }}
                     style={{ transform: `translate(${d.taglineLeft}px, ${d.taglineTop}px)`, marginBottom: 16 }}
                   >
@@ -626,7 +637,7 @@ export default function ArtGallery() {
 
                   {/* Specs */}
                   <motion.div
-                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 10 }} animate={isActivated ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                     transition={{ duration: 0.55, ease: EASE, delay: 0.62 }}
                     style={{ transform: `translate(${d.specsLeft}px, ${d.specsTop}px)`, marginBottom: 16 }}
                   >
@@ -669,7 +680,7 @@ export default function ArtGallery() {
                 >
                   {/* Grid de 3 fotos */}
                   <motion.div
-                    initial={{ opacity: 0, x: 22 }} animate={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, x: 22 }} animate={isActivated ? { opacity: 1, x: 0 } : { opacity: 0, x: 22 }}
                     transition={{ duration: 0.5, ease: EASE, delay: 0.08 }}
                     style={{ flex: 1, minHeight: 0, marginBottom: 14, overflow: "hidden" }}
                   >
@@ -697,38 +708,39 @@ export default function ArtGallery() {
 
                   {/* Quote */}
                   <motion.div
-                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 10 }} animate={isActivated ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                     transition={{ duration: 0.5, ease: EASE, delay: 0.14 }}
-                    style={{ transform: `translate(${d.quoteLeft}px, ${d.quoteTop}px)` }}
+                    style={{ position: "absolute", bottom: 0, left: 0, pointerEvents: "none" }}
                   >
-                    <span style={{ ...F.sans, fontSize: "1.2rem", color: C.cream, lineHeight: 0.8, display: "block", marginBottom: 2 }}>"</span>
-                    <p style={{ ...F.sans, fontSize: `${d.quoteFs}rem`, fontWeight: 500, color: C.cream, lineHeight: 1.5, margin: 0, whiteSpace: "pre-line" }}>
-                      {exhibit.quote}
-                    </p>
+                    <div style={{ transform: `translate(${d.quoteLeft}px, ${d.quoteTop}px)` }}>
+                      <span style={{ ...F.sans, fontSize: "1.2rem", color: C.cream, lineHeight: 0.8, display: "block", marginBottom: 2 }}>"</span>
+                      <p style={{ ...F.sans, fontSize: `${d.quoteFs}rem`, fontWeight: 500, color: C.cream, lineHeight: 1.5, margin: 0, whiteSpace: "pre-line" }}>
+                        {exhibit.quote}
+                      </p>
+                    </div>
                   </motion.div>
 
                   {/* Springs Crew */}
                   <motion.div
                     initial={{ opacity: 0, rotate: d.springsCrewRot - 6 }}
-                    animate={{ opacity: 1, rotate: d.springsCrewRot }}
+                    animate={isActivated ? { opacity: 1, rotate: d.springsCrewRot } : { opacity: 0, rotate: d.springsCrewRot - 6 }}
                     transition={{ duration: 0.5, ease: EASE, delay: 0.18 }}
-                    style={{
-                      position: "absolute",
-                      bottom: 80, left: 0,
+                    style={{ position: "absolute", bottom: 80, left: 0, pointerEvents: "none" }}
+                  >
+                    <div style={{
                       transform: `translate(${d.springsCrewLeft}px, ${d.springsCrewTop}px)`,
                       fontFamily: "var(--font-caveat)",
                       fontSize: `${d.springsCrewFs}rem`,
                       color: "#6B1419",
                       whiteSpace: "nowrap",
-                      pointerEvents: "none",
-                    }}
-                  >
-                    Springs Crew.
+                    }}>
+                      Springs Crew.
+                    </div>
                   </motion.div>
 
                   {/* Barcode */}
                   <motion.div
-                    initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                    initial={{ opacity: 0 }} animate={{ opacity: isActivated ? 1 : 0 }}
                     transition={{ duration: 0.5, ease: EASE, delay: 0.22 }}
                     style={{ position: "absolute", bottom: 24, right: 0, transform: `translate(${d.barcodeLeft}px, ${d.barcodeTop}px)`, display: "flex", gap: 6, alignItems: "flex-start" }}
                   >
@@ -755,7 +767,8 @@ export default function ArtGallery() {
 
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 

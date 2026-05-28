@@ -156,9 +156,9 @@ export default function Home() {
 
   const FONT_MAP: Record<string, string> = {
     display: "Anton, sans-serif",
-    sans: "Inter, sans-serif",
-    mono: "JetBrains Mono, monospace",
-    marker: "var(--font-marker), cursive",
+    sans:    "var(--font-inter)",
+    mono:    "var(--font-jetbrains-mono)",
+    marker:  "var(--font-marker), cursive",
   };
   const COLOR_MAP: Record<string, string> = {
     burgundy: "#6B1419",
@@ -393,8 +393,8 @@ export default function Home() {
 
   const F = {
     display: { fontFamily: "Anton, sans-serif" },
-    sans:    { fontFamily: "Inter, sans-serif" },
-    mono:    { fontFamily: "JetBrains Mono, monospace" },
+    sans:    { fontFamily: "var(--font-inter)" },
+    mono:    { fontFamily: "var(--font-jetbrains-mono)" },
   };
   const C = {
     burgundy: "#6B1419",
@@ -460,17 +460,18 @@ export default function Home() {
           padding: "0 32px", height: 44,
           background: "transparent",
           borderTop: "1px solid rgba(255,255,255,0.1)",
+          mixBlendMode: "difference",
         }}
       >
         {/* Izquierda — sociales */}
         <div style={{ display: "flex", gap: 22, alignItems: "center" }}>
           {["INSTAGRAM", "TIKTOK", "SPOTIFY"].map(s => (
-            <a key={s} href="#" style={{ ...F.mono, fontSize: "0.58rem", letterSpacing: "0.18em", color: "#ffffff", textDecoration: "none", opacity: 0.55, mixBlendMode: "difference" as const }}>{s}</a>
+            <a key={s} href="#" style={{ ...F.mono, fontSize: "0.58rem", letterSpacing: "0.18em", color: "#ffffff", textDecoration: "none", opacity: 0.55 }}>{s}</a>
           ))}
         </div>
 
         {/* Centro — globo + copyright */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3, mixBlendMode: "difference" as const }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3 }}>
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style={{ opacity: 0.6 }}>
             <circle cx="9" cy="9" r="8" stroke="white" strokeWidth="0.8"/>
             <ellipse cx="9" cy="9" rx="4" ry="8" stroke="white" strokeWidth="0.8"/>
@@ -495,7 +496,7 @@ export default function Home() {
               href={item.href}
               initial="rest"
               whileHover="hover"
-              style={{ ...F.mono, fontSize: `${d.footerMenuSize}rem`, letterSpacing: `${d.footerMenuLetterSpacing}em`, wordSpacing: `${d.footerMenuWordSpacing}px`, textDecoration: "none", fontWeight: 600, position: "relative", display: "inline-block", mixBlendMode: "difference" as const }}
+              style={{ ...F.mono, fontSize: `${d.footerMenuSize}rem`, letterSpacing: `${d.footerMenuLetterSpacing}em`, wordSpacing: `${d.footerMenuWordSpacing}px`, textDecoration: "none", fontWeight: 600, position: "relative", display: "inline-block" }}
             >
               <motion.span style={{ display: "block", color: "#ffffff" }}>
                 {item.label}

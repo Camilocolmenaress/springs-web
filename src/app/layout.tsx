@@ -7,7 +7,7 @@ const anton = Anton({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-anton",
-  display: "swap",
+  display: "block",
 });
 
 const inter = Inter({
@@ -60,6 +60,11 @@ export default function RootLayout({
       lang="es"
       className={`${anton.variable} ${inter.variable} ${jetbrainsMono.variable} ${playfairDisplay.variable} ${caveatBrush.variable} ${caveat.variable} h-full antialiased`}
     >
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Anton&display=block" rel="stylesheet" />
+      </head>
       <body className="overflow-hidden h-full">
         {children}
         <CookieBanner />
