@@ -254,7 +254,7 @@ export default function MenuPage() {
                     alt={p.nombre}
                     width={112}
                     height={128}
-                    className="w-[35%] h-full object-cover flex-shrink-0 grayscale opacity-70"
+                    className="w-[35%] h-full object-cover flex-shrink-0"
                   />
                 ) : (
                   <div className="w-[35%] h-full bg-white/5 flex-shrink-0" />
