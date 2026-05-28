@@ -18,9 +18,9 @@ const C = {
   fainter: "rgba(242,232,213,0.06)",
 };
 const F = {
-  display: { fontFamily: "Anton, sans-serif" }         as const,
-  sans:    { fontFamily: "Inter, sans-serif" }          as const,
-  mono:    { fontFamily: "JetBrains Mono, monospace" }  as const,
+  display: { fontFamily: "var(--font-display)" }        as const,
+  sans:    { fontFamily: "var(--font-sans)" }            as const,
+  mono:    { fontFamily: "var(--font-mono)" }            as const,
 };
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -29,7 +29,7 @@ const EXHIBITS = [
     id: "001", name: "LA FIJA",    subtitle: "LOADED JACKET", year: "2025",
     img: "/images/la-fija-exhibit.png",
     gallery: ["/images/gallery-001-macro.png", "/images/gallery-001-crew.png", "/images/gallery-001-side.png"],
-    ingredients: ["POLLO DESMECHADO.", "HOGAO ARTESANAL.", "QUESO COSTEÑO FUNDIDO.", "PAPAS GAJO CRUJIENTES.", "FUSE SAUCE."],
+    ingredients: ["POLLO DESMECHADO.", "HOGAO.", "QUESO COSTEÑO.", "FUSE SAUCE."],
     description: "UNA COMBINACIÓN TAN SIMPLE COMO PODEROSA,\nTAN DIRECTA COMO INOLVIDABLE.",
     tagline: "THE ORIGINAL. THE REASON.",
     origin: "BUCARAMANGA, COLOMBIA", created: "SPRINGS CREW", category: "COMFORT FOOD", temp: "68°C",
@@ -40,7 +40,7 @@ const EXHIBITS = [
     id: "002", name: "LA PESADA",  subtitle: "LOADED JACKET", year: "2025",
     img: "/images/la-fija-exhibit.png",
     gallery: ["/images/gallery-001-macro.png", "/images/gallery-001-crew.png", "/images/gallery-001-side.png"],
-    ingredients: ["CARNE DESMECHADA.", "HOGAO ARTESANAL.", "QUESO COSTEÑO FUNDIDO.", "PAPAS GAJO CRUJIENTES.", "FUSE SAUCE."],
+    ingredients: ["CARNE DESMECHADA.", "HOGAO.", "QUESO COSTEÑO.", "FUSE SAUCE."],
     description: "PARA LOS QUE NO SE QUEDAN CON HAMBRE.\nLA VERSIÓN SIN CONCESIONES.",
     tagline: "HEAVY. INTENTIONAL.",
     origin: "BUCARAMANGA, COLOMBIA", created: "SPRINGS CREW", category: "COMFORT FOOD", temp: "68°C",
@@ -51,7 +51,7 @@ const EXHIBITS = [
     id: "003", name: "LA BRAVA",   subtitle: "LOADED JACKET", year: "2025",
     img: "/images/la-fija-exhibit.png",
     gallery: ["/images/gallery-001-macro.png", "/images/gallery-001-crew.png", "/images/gallery-001-side.png"],
-    ingredients: ["CHORIZO SANTANDEREANO.", "HOGAO ARTESANAL.", "QUESO COSTEÑO FUNDIDO.", "PAPAS GAJO CRUJIENTES.", "FUSE SAUCE."],
+    ingredients: ["CHORIZO SANTANDEREANO.", "HOGAO.", "QUESO COSTEÑO.", "FUSE SAUCE."],
     description: "EL SABOR QUE AQUÍ NUNCA SE NEGOCIA.\nEL CHORIZO QUE MANDA.",
     tagline: "BORN IN SANTANDER.",
     origin: "BUCARAMANGA, COLOMBIA", created: "SPRINGS CREW", category: "COMFORT FOOD", temp: "70°C",
@@ -62,7 +62,7 @@ const EXHIBITS = [
     id: "004", name: "LA SIMPLE",  subtitle: "LOADED JACKET", year: "2025",
     img: "/images/la-fija-exhibit.png",
     gallery: ["/images/gallery-001-macro.png", "/images/gallery-001-crew.png", "/images/gallery-001-side.png"],
-    ingredients: ["CARNE MOLIDA SAZONADA.", "HOGAO ARTESANAL.", "QUESO COSTEÑO FUNDIDO.", "PAPAS GAJO CRUJIENTES.", "FUSE SAUCE."],
+    ingredients: ["CARNE MOLIDA SAZONADA.", "HOGAO.", "QUESO COSTEÑO.", "FUSE SAUCE."],
     description: "SIN RODEOS, SIN EXCESOS.\nLO ESENCIAL EJECUTADO PERFECTO.",
     tagline: "SIMPLE IS THE STATEMENT.",
     origin: "BUCARAMANGA, COLOMBIA", created: "SPRINGS CREW", category: "COMFORT FOOD", temp: "68°C",
