@@ -295,8 +295,9 @@ export default function ArtGallery() {
         <motion.div
           initial={{ opacity: 0, y: -14 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.75, ease: EASE, delay: 0.12 }}
-          style={{ width: d.globeSize, height: d.globeSize, flexShrink: 0, marginBottom: 18, transform: `translate(${d.globeOffsetX}px, ${d.globeOffsetY}px)` }}
+          style={{ flexShrink: 0, marginBottom: 18 }}
         >
+          <div style={{ width: d.globeSize, height: d.globeSize, transform: `translate(${d.globeOffsetX}px, ${d.globeOffsetY}px)` }}>
           <svg viewBox="0 0 110 110" width="100%" height="100%">
             <circle cx="55" cy="55" r={gr} fill="none" stroke={C.dim} strokeWidth="1.2" opacity={0.8}/>
             <motion.g
@@ -316,6 +317,7 @@ export default function ArtGallery() {
               <textPath href="#gallery-chimba-circle" startOffset={`${d.globeTextOff}%`}>FOR THE MOST CHIMBA PEOPLE ✦ </textPath>
             </text>
           </svg>
+          </div>
         </motion.div>
 
         {/* Exhibit label + number — re-anima al navegar */}
