@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import type { PageConfig, SliderProp, FontProp, ColorProp, ImageProp, AnimationProp } from "@/types/design";
 import SliderControl from "@/components/dev/SliderControl";
@@ -34,6 +34,10 @@ const PROP_LABELS: Record<string, string> = {
   letterSpacing: "Esp. letras",
   itemGap: "Esp. entre ítems",
   wordSpacing: "Esp. palabras",
+  offsetY: "offsetY",
+  offsetX: "offsetX",
+  marginTop: "Margin top",
+  rightOffsetX: "offsetX derecha",
 };
 
 interface Props {
@@ -52,15 +56,6 @@ export default function DevPanel({ config, saved, onUpdate, onSave, onExport, on
   const [openZones, setOpenZones] = useState<Record<string, boolean>>({});
   const [copied, setCopied] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 767px)");
-    setIsMobile(mq.matches);
-    const h = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-    mq.addEventListener("change", h);
-    return () => mq.removeEventListener("change", h);
-  }, []);
 
   const toggleZone = (key: string) => {
     setOpenZones(prev => ({ ...prev, [key]: !prev[key] }));
@@ -78,78 +73,63 @@ export default function DevPanel({ config, saved, onUpdate, onSave, onExport, on
     setSaving(false);
   };
 
+  const floatingStyle = {
+    position: "fixed" as const,
+    right: 20,
+    top: 60,
+    zIndex: 9999,
+    width: 320,
+    background: C.tinta,
+    border: "1px solid rgba(242,232,213,0.18)",
+    boxShadow: "0 16px 48px rgba(0,0,0,0.7)",
+    cursor: "grab",
+    userSelect: "none" as const,
+    maxHeight: "82vh",
+    display: "flex",
+    flexDirection: "column" as const,
+  };
+
   const sidebarStyle = {
     position: "relative" as const,
-    height: "100%", width: "100%",
+    height: "100%",
+    width: "100%",
     background: C.tinta,
     borderLeft: "1px solid rgba(242,232,213,0.12)",
-    display: "flex", flexDirection: "column" as const,
+    display: "flex",
+    flexDirection: "column" as const,
     overflow: "hidden",
   };
 
-  const mobileStyle = {
-    position: "fixed" as const,
-    bottom: 0, left: 0, right: 0,
-    zIndex: 99999, width: "100%",
-    background: C.tinta,
-    border: "1px solid rgba(242,232,213,0.15)",
-    borderBottom: "none",
-    boxShadow: "0 -8px 32px rgba(0,0,0,0.7)",
-    cursor: "default", userSelect: "none" as const,
-    maxHeight: collapsed ? "44px" : "72vh",
-    display: "flex", flexDirection: "column" as const,
-    transition: "max-height 0.3s ease",
-  };
-
-  const desktopStyle = {
-    position: "fixed" as const, right: 16, top: "15%",
-    zIndex: 9999, width: 280,
-    background: C.tinta,
-    border: "1px solid rgba(242,232,213,0.15)",
-    boxShadow: "0 12px 40px rgba(0,0,0,0.6)",
-    cursor: "grab", userSelect: "none" as const,
-    maxHeight: "70vh", display: "flex", flexDirection: "column" as const,
-  };
-
-  const containerStyle = inlineSidebar ? sidebarStyle : (isMobile ? mobileStyle : desktopStyle);
-
   return (
     <motion.div
-      drag={!inlineSidebar && !isMobile}
+      drag={!inlineSidebar}
       dragMomentum={false}
-      style={containerStyle}
+      style={inlineSidebar ? sidebarStyle : floatingStyle}
     >
       {/* Header */}
       <div
         style={{
           display: "flex", justifyContent: "space-between", alignItems: "center",
-          padding: isMobile ? "12px 16px" : "9px 12px",
+          padding: "10px 14px",
           borderBottom: "1px solid rgba(242,232,213,0.1)",
-          background: C.burgundy, cursor: isMobile ? "pointer" : "grab", flexShrink: 0,
-          minHeight: isMobile ? 44 : "auto",
+          background: C.burgundy,
+          cursor: inlineSidebar ? "default" : "grab",
+          flexShrink: 0,
         }}
         onClick={() => !inlineSidebar && setCollapsed(v => !v)}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          {isMobile && !inlineSidebar && (
-            <div style={{
-              width: 32, height: 3, background: "rgba(242,232,213,0.35)",
-              position: "absolute", top: 6, left: "50%", transform: "translateX(-50%)",
-            }} />
-          )}
-          <span style={{ ...MONO, fontSize: isMobile ? "0.62rem" : "0.58rem", letterSpacing: "0.2em", color: C.cream }}>
-            SPRINGS DEV {!saved && "●"}
-          </span>
-        </div>
-        <span style={{ color: C.cream, fontSize: isMobile ? "0.8rem" : "0.6rem" }}>
-          {collapsed ? "↑" : "↓"}
+        <span style={{ ...MONO, fontSize: "0.58rem", letterSpacing: "0.2em", color: C.cream }}>
+          SPRINGS DEV {!saved && "●"}
         </span>
+        {!inlineSidebar && (
+          <span style={{ color: C.cream, fontSize: "0.65rem" }}>{collapsed ? "▲" : "▼"}</span>
+        )}
       </div>
 
       {(!collapsed || inlineSidebar) && (
         <>
           {/* Zones */}
-          <div style={{ overflowY: "auto", flex: 1, padding: "6px 0", WebkitOverflowScrolling: "touch" } as React.CSSProperties}>
+          <div style={{ overflowY: "auto", flex: 1, padding: "6px 0" }}>
             {Object.entries(config.zones).filter(([zoneKey]) =>
               zoneKey === "arrows" ||
               !categoria ||
@@ -160,10 +140,9 @@ export default function DevPanel({ config, saved, onUpdate, onSave, onExport, on
                 <div
                   onClick={() => toggleZone(zoneKey)}
                   style={{
-                    padding: isMobile ? "10px 16px" : "6px 12px", cursor: "pointer",
+                    padding: "8px 14px", cursor: "pointer",
                     display: "flex", justifyContent: "space-between", alignItems: "center",
                     borderBottom: "1px solid rgba(242,232,213,0.06)",
-                    minHeight: isMobile ? 40 : "auto",
                   }}
                 >
                   <span style={{ ...MONO, fontSize: "0.54rem", letterSpacing: "0.12em", color: C.cream, opacity: 0.8 }}>
@@ -173,7 +152,7 @@ export default function DevPanel({ config, saved, onUpdate, onSave, onExport, on
 
                 {/* Zone elements */}
                 {openZones[zoneKey] && (
-                  <div style={{ padding: isMobile ? "10px 16px" : "8px 12px" }}>
+                  <div style={{ padding: "8px 14px" }}>
                     {Object.entries(zone.elements).map(([elemKey, elem]) => (
                       <div key={elemKey} style={{
                         marginBottom: 14,
@@ -249,12 +228,12 @@ export default function DevPanel({ config, saved, onUpdate, onSave, onExport, on
           </div>
 
           {/* Action buttons */}
-          <div style={{ padding: isMobile ? "10px 16px" : "8px 12px", borderTop: "1px solid rgba(242,232,213,0.1)", flexShrink: 0, paddingBottom: isMobile ? "max(10px, env(safe-area-inset-bottom, 10px))" : "8px" }}>
+          <div style={{ padding: "10px 14px", borderTop: "1px solid rgba(242,232,213,0.1)", flexShrink: 0 }}>
             <div style={{ display: "flex", gap: 6, marginBottom: 6 }}>
               <button
                 onClick={handleSave}
                 style={{
-                  flex: 1, padding: isMobile ? "12px 0" : "8px 0",
+                  flex: 1, padding: "9px 0",
                   background: saving ? C.mostaza : saved ? "rgba(242,232,213,0.1)" : C.burgundy,
                   color: C.cream, border: "none",
                   ...MONO, fontSize: "0.54rem", letterSpacing: "0.14em", cursor: "pointer",
@@ -265,13 +244,13 @@ export default function DevPanel({ config, saved, onUpdate, onSave, onExport, on
               <button
                 onClick={handleExport}
                 style={{
-                  flex: 1, padding: isMobile ? "12px 0" : "8px 0",
+                  flex: 1, padding: "9px 0",
                   background: copied ? "#2a5a2a" : "rgba(242,232,213,0.1)",
                   color: C.cream, border: "none",
                   ...MONO, fontSize: "0.54rem", letterSpacing: "0.14em", cursor: "pointer",
                 }}
               >
-                {copied ? "COPIADO" : "COPIAR"}
+                {copied ? "COPIADO ✓" : "COPIAR JSON"}
               </button>
             </div>
             <button
