@@ -44,9 +44,10 @@ interface Props {
   onExport: () => void;
   onReset: () => void;
   categoria?: string;
+  inlineSidebar?: boolean;
 }
 
-export default function DevPanel({ config, saved, onUpdate, onSave, onExport, onReset, categoria }: Props) {
+export default function DevPanel({ config, saved, onUpdate, onSave, onExport, onReset, categoria, inlineSidebar }: Props) {
   const [collapsed, setCollapsed] = useState(false);
   const [openZones, setOpenZones] = useState<Record<string, boolean>>({});
   const [copied, setCopied] = useState(false);
@@ -77,6 +78,15 @@ export default function DevPanel({ config, saved, onUpdate, onSave, onExport, on
     setSaving(false);
   };
 
+  const sidebarStyle = {
+    position: "relative" as const,
+    height: "100%", width: "100%",
+    background: C.tinta,
+    borderLeft: "1px solid rgba(242,232,213,0.12)",
+    display: "flex", flexDirection: "column" as const,
+    overflow: "hidden",
+  };
+
   const mobileStyle = {
     position: "fixed" as const,
     bottom: 0, left: 0, right: 0,
@@ -101,11 +111,13 @@ export default function DevPanel({ config, saved, onUpdate, onSave, onExport, on
     maxHeight: "70vh", display: "flex", flexDirection: "column" as const,
   };
 
+  const containerStyle = inlineSidebar ? sidebarStyle : (isMobile ? mobileStyle : desktopStyle);
+
   return (
     <motion.div
-      drag={!isMobile}
+      drag={!inlineSidebar && !isMobile}
       dragMomentum={false}
-      style={isMobile ? mobileStyle : desktopStyle}
+      style={containerStyle}
     >
       {/* Header */}
       <div
@@ -116,10 +128,10 @@ export default function DevPanel({ config, saved, onUpdate, onSave, onExport, on
           background: C.burgundy, cursor: isMobile ? "pointer" : "grab", flexShrink: 0,
           minHeight: isMobile ? 44 : "auto",
         }}
-        onClick={() => setCollapsed(v => !v)}
+        onClick={() => !inlineSidebar && setCollapsed(v => !v)}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          {isMobile && (
+          {isMobile && !inlineSidebar && (
             <div style={{
               width: 32, height: 3, background: "rgba(242,232,213,0.35)",
               position: "absolute", top: 6, left: "50%", transform: "translateX(-50%)",
@@ -134,7 +146,7 @@ export default function DevPanel({ config, saved, onUpdate, onSave, onExport, on
         </span>
       </div>
 
-      {!collapsed && (
+      {(!collapsed || inlineSidebar) && (
         <>
           {/* Zones */}
           <div style={{ overflowY: "auto", flex: 1, padding: "6px 0", WebkitOverflowScrolling: "touch" } as React.CSSProperties}>

@@ -54,6 +54,46 @@ export default function MenuPage() {
     setCartItems(prev => prev.filter(i => i.cartId !== cartId));
   }
 
+  // ── Edit mode: split layout — mobile preview left, editor sidebar right
+  if (editMode) {
+    return (
+      <div style={{ display: "flex", width: "100vw", height: "100vh", background: "#0d0d0d", overflow: "hidden" }}>
+        {/* Mobile preview frame */}
+        <div style={{ width: 390, flexShrink: 0, height: "100vh", position: "relative", overflow: "hidden", outline: "1px solid rgba(242,232,213,0.1)" }}>
+          <Link
+            href="/"
+            aria-label="Volver al home"
+            style={{
+              position: "absolute", top: 16, left: 16, zIndex: 50,
+              display: "inline-flex", alignItems: "center", gap: 8,
+              padding: "8px 14px", background: "var(--cream)", color: "var(--tinta)",
+              border: "1px solid var(--tinta)",
+              fontFamily: "var(--font-jetbrains-mono), monospace",
+              fontSize: "0.65rem", letterSpacing: "0.22em",
+              textTransform: "uppercase", textDecoration: "none",
+              mixBlendMode: "multiply",
+            }}
+          >
+            <span aria-hidden>←</span> VOLVER
+          </Link>
+          <Menu onAgregar={handleAgregar} config={config} />
+        </div>
+        {/* Editor sidebar */}
+        <div style={{ flex: 1, height: "100vh", overflow: "hidden", minWidth: 280 }}>
+          <DevPanel
+            config={config}
+            saved={saved}
+            onUpdate={updateProp}
+            onSave={save}
+            onExport={exportValues}
+            onReset={reset}
+            inlineSidebar
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <main style={{ width: "100vw", height: "100vh", overflowY: "auto", background: "var(--cream)", position: "relative" }}>
       <Link
