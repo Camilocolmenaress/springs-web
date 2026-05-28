@@ -714,18 +714,17 @@ export default function ArtGallery() {
                     initial={{ opacity: 0, rotate: d.springsCrewRot - 6 }}
                     animate={{ opacity: 1, rotate: d.springsCrewRot }}
                     transition={{ duration: 0.5, ease: EASE, delay: 0.18 }}
-                    style={{
-                      position: "absolute",
-                      bottom: 80, left: 0,
+                    style={{ position: "absolute", bottom: 80, left: 0, pointerEvents: "none" }}
+                  >
+                    <div style={{
                       transform: `translate(${d.springsCrewLeft}px, ${d.springsCrewTop}px)`,
                       fontFamily: "var(--font-caveat)",
                       fontSize: `${d.springsCrewFs}rem`,
                       color: "#6B1419",
                       whiteSpace: "nowrap",
-                      pointerEvents: "none",
-                    }}
-                  >
-                    Springs Crew.
+                    }}>
+                      Springs Crew.
+                    </div>
                   </motion.div>
 
                   {/* Barcode */}
