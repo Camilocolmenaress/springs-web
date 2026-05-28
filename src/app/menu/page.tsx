@@ -102,6 +102,20 @@ export default function MenuPage() {
             <span aria-hidden>←</span> VOLVER
           </Link>
           <Menu onAgregar={handleAgregar} config={mobile.config} />
+          <Cart
+            items={cartItems}
+            onAdd={handleAdd}
+            onRemove={handleRemove}
+            onDelete={handleDelete}
+            bumpSignal={cartBump}
+          />
+          {pendingProduct && (
+            <ExtrasModal
+              product={pendingProduct}
+              onClose={() => setPendingProduct(null)}
+              onConfirm={handleConfirm}
+            />
+          )}
         </div>
 
         <DevPanel

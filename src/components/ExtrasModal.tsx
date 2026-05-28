@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { productos, type Producto } from "@/data/productos";
 import type { CartExtra } from "@/components/Cart";
@@ -28,8 +28,14 @@ interface LaunchState {
 export default function ExtrasModal({ product, onClose, onConfirm }: Props) {
   const [qty, setQty] = useState<Record<string, number>>({});
   const [launch, setLaunch] = useState<LaunchState | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
   const pendingExtras = useRef<CartExtra[]>([]);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    setIsMobile(mq.matches);
+  }, []);
 
   const add    = (id: string) => setQty(q => ({ ...q, [id]: (q[id] || 0) + 1 }));
   const remove = (id: string) => setQty(q => {
@@ -59,6 +65,56 @@ export default function ExtrasModal({ product, onClose, onConfirm }: Props) {
       dy: cartCy - (rect.top  + rect.height / 2),
     });
   };
+
+  if (isMobile) {
+    return (
+      <div style={{ position: "fixed", inset: 0, zIndex: 80, display: "flex", alignItems: "flex-end" }}>
+        {/* Overlay */}
+        <motion.div
+          onClick={!launch ? onClose : undefined}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: launch ? 0 : 1 }}
+          transition={{ duration: 0.25 }}
+          style={{ position: "absolute", inset: 0, background: "rgba(26,10,12,0.65)" }}
+        />
+        {/* Bottom sheet */}
+        <AnimatePresence>
+          {!launch && (
+            <motion.div
+              key="sheet"
+              ref={modalRef}
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%", transition: { duration: 0.2 } }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                position: "relative",
+                width: "100%",
+                maxHeight: "88vh",
+                background: C.cream,
+                display: "flex",
+                flexDirection: "column",
+                overflow: "hidden",
+                paddingBottom: "env(safe-area-inset-bottom, 0px)",
+              }}
+            >
+              {/* Handle */}
+              <div style={{ display: "flex", justifyContent: "center", padding: "10px 0 4px" }}>
+                <div style={{ width: 36, height: 4, background: "rgba(26,10,12,0.2)" }} />
+              </div>
+              <ModalContentMobile
+                product={product} extrasTotal={extrasTotal} qty={qty}
+                add={add} remove={remove} onClose={onClose} onConfirm={handleConfirm}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+        {launch && (
+          <GeniePill launch={launch} onComplete={() => { onConfirm(product, pendingExtras.current); onClose(); }} />
+        )}
+      </div>
+    );
+  }
 
   return (
     <div style={{ position: "fixed", inset: 0, zIndex: 80, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -154,6 +210,58 @@ function GeniePill({ launch, onComplete }: { launch: LaunchState; onComplete: ()
           />
         </motion.div>
       </motion.div>
+    </div>
+  );
+}
+
+// ─── Modal content mobile (single column bottom sheet) ───────────────────────
+function ModalContentMobile({ product, extrasTotal, qty, add, remove, onClose, onConfirm }: {
+  product: Producto; extrasTotal: number; qty: Record<string, number>;
+  add: (id: string) => void; remove: (id: string) => void;
+  onClose: () => void; onConfirm: () => void;
+}) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", flex: 1, overflow: "hidden" }}>
+      {/* Header */}
+      <div style={{ padding: "8px 20px 12px", borderBottom: "1px solid rgba(26,10,12,0.1)", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+        <div>
+          <div style={{ ...MONO, fontSize: "0.48rem", letterSpacing: "0.2em", color: C.tinta, opacity: 0.4, textTransform: "uppercase", marginBottom: 3 }}>HÁGALA MEJOR</div>
+          <div style={{ ...ANTON, fontSize: "1.3rem", letterSpacing: "0.02em", textTransform: "uppercase", color: C.tinta, lineHeight: 1 }}>{product.nombre}</div>
+          <div style={{ ...MONO, fontSize: "0.5rem", letterSpacing: "0.1em", color: C.tinta, opacity: 0.4, marginTop: 3, textTransform: "uppercase" }}>{fmt(product.precio)} COP — adicionales opcionales</div>
+        </div>
+        <button onClick={onClose} style={{ width: 28, height: 28, background: "transparent", border: `1px solid ${C.tinta}`, cursor: "pointer", ...MONO, fontSize: "0.7rem", color: C.tinta, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginLeft: 12 }}>✕</button>
+      </div>
+      {/* Extras list */}
+      <div style={{ flex: 1, overflowY: "auto", padding: "4px 20px" }}>
+        {extrasList.map(extra => {
+          const q = qty[extra.id] || 0;
+          return (
+            <div key={extra.id} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 0", borderBottom: "1px solid rgba(26,10,12,0.07)" }}>
+              <img src={extra.imagen_url || "/images/jacket-placeholder.png"} alt={extra.nombre} style={{ width: 40, height: 40, objectFit: "contain", flexShrink: 0 }} />
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ ...ANTON, fontSize: "0.78rem", letterSpacing: "0.03em", textTransform: "uppercase", color: C.tinta, lineHeight: 1.1 }}>{extra.nombre}</div>
+                <div style={{ ...MONO, fontSize: "0.54rem", color: C.tinta, opacity: 0.45, marginTop: 2 }}>+{fmt(extra.precio)} COP</div>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
+                {q > 0 && (
+                  <>
+                    <button onClick={() => remove(extra.id)} style={{ width: 28, height: 28, border: "1px solid rgba(26,10,12,0.25)", background: "transparent", cursor: "pointer", ...MONO, fontSize: "0.9rem", color: C.tinta, display: "flex", alignItems: "center", justifyContent: "center" }}>–</button>
+                    <span style={{ ...MONO, fontSize: "0.82rem", minWidth: 14, textAlign: "center", color: C.tinta }}>{q}</span>
+                  </>
+                )}
+                <button onClick={() => add(extra.id)} style={{ width: 28, height: 28, border: `1px solid ${C.tinta}`, background: C.tinta, color: C.cream, cursor: "pointer", ...MONO, fontSize: "0.9rem", display: "flex", alignItems: "center", justifyContent: "center" }}>+</button>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      {/* CTA */}
+      <div style={{ padding: "12px 20px", borderTop: "1px solid rgba(26,10,12,0.1)" }}>
+        <button onClick={onConfirm} style={{ width: "100%", padding: "14px 20px", background: C.burgundy, color: C.cream, border: "none", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", ...ANTON, fontSize: "0.82rem", letterSpacing: "0.15em", textTransform: "uppercase" }}>
+          <span>AGREGAR AL PEDIDO ↗</span>
+          <span style={{ ...MONO, fontSize: "0.9rem" }}>{fmt(product.precio + extrasTotal)}</span>
+        </button>
+      </div>
     </div>
   );
 }
