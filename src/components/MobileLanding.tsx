@@ -103,6 +103,8 @@ export default function MobileLanding() {
   const ctaRef          = useRef<HTMLDivElement>(null);
   const scrollFillRef   = useRef<HTMLDivElement>(null);
   const scrollHintRef   = useRef<HTMLDivElement>(null);
+  const springsLogoRef  = useRef<HTMLSpanElement>(null);
+  const bucaramangaRef  = useRef<HTMLSpanElement>(null);
 
   // Frame buffer
   const imagesRef    = useRef<HTMLImageElement[]>([]);
@@ -205,13 +207,17 @@ export default function MobileLanding() {
       gsap.set(".s-tint",          { opacity: 1 }); // tint burgundy cubre el canvas al inicio
       gsap.set(chapterRef.current, { autoAlpha: 0, y: 20 });
       gsap.set(ctaRef.current,     { autoAlpha: 0 });
+      gsap.set(springsLogoRef.current,  { autoAlpha: 0 });
+      gsap.set(bucaramangaRef.current,  { autoAlpha: 0 });
 
       // ── Hero intro (time-based, al cargar) ──
       gsap.timeline({ delay: 0.25 })
+        .to(springsLogoRef.current, { autoAlpha: 1, duration: 0.9, ease: "expo.out" }, 0)
+        .to(bucaramangaRef.current,  { autoAlpha: 1, duration: 0.7 }, 0.3)
         .to(".s-hero-line-1", {
           autoAlpha: 1, y: 0, filter: "blur(0px)",
           duration: 1.6, ease: "expo.out",
-        })
+        }, 0.2)
         .to(".s-hero-line-2", {
           autoAlpha: 1, y: 0, filter: "blur(0px)",
           duration: 1.6, ease: "expo.out",
@@ -252,6 +258,15 @@ export default function MobileLanding() {
 
       // 8–22%: tint se desvanece → revelan los colores reales del video
       tl.to(".s-tint", { opacity: 0, ease: "power1.inOut", duration: 0.14 }, 0.08);
+
+      // 5–20%: SPRINGS logo sube y se hace pequeño — queda sticky arriba izquierda
+      tl.to(springsLogoRef.current, {
+        top: 20, left: 16, fontSize: "15px",
+        ease: "power2.inOut", duration: 0.15,
+      }, 0.05);
+
+      // 8–18%: Bucaramanga se desvanece junto con los títulos
+      tl.to(bucaramangaRef.current, { autoAlpha: 0, y: -16, duration: 0.10 }, 0.08);
 
       // 10–22%: títulos flotan hacia arriba suavemente (sin slide horizontal)
       tl.to([titleTopRef.current, titleBottomRef.current], {
@@ -345,10 +360,10 @@ export default function MobileLanding() {
 
             {/* Capa 2 — Títulos hero (salen al hacer scroll) */}
             <div className="absolute inset-0 z-20 flex flex-col justify-center px-8 pointer-events-none">
-              <span className="font-display text-[22px] text-cream leading-none tracking-[0.06em] mb-2">
-                SPRINGS
-              </span>
-              <span className="font-mono text-[9px] text-cream/25 uppercase tracking-[4px] mb-6">
+              <span
+                ref={bucaramangaRef}
+                className="font-mono text-[9px] text-cream/25 uppercase tracking-[4px] mb-6"
+              >
                 Bucaramanga · Colombia
               </span>
               <h1
@@ -364,6 +379,15 @@ export default function MobileLanding() {
                 DE AUTOR.
               </h1>
             </div>
+
+            {/* Capa 2b — SPRINGS logo: arranca grande en hero, migra a sticky top-left */}
+            <span
+              ref={springsLogoRef}
+              className="absolute z-[45] font-display text-cream leading-none tracking-[0.06em] pointer-events-none select-none"
+              style={{ fontSize: "44px", left: "32px", top: "295px" }}
+            >
+              SPRINGS
+            </span>
 
             {/* Capa 3 — Chapter labels (durante el scrub) */}
             <div
