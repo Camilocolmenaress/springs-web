@@ -237,8 +237,8 @@ export default function Menu({ onAgregar, config }: Props) {
     }}>
 
       {/* ── Header ───────────────────────────────────────── */}
-      <div style={{ padding: "0 clamp(16px, 5vw, 80px) 8px", flexShrink: 0 }}>
-        {/* Fila 1: label bajo el botón VOLVER */}
+      <div style={{ padding: isMobile ? "0 16px 8px" : "0 clamp(16px, 5vw, 80px) 8px", flexShrink: 0 }}>
+        {/* Fila 1: label */}
         <div style={{
           fontFamily: "var(--font-jetbrains-mono), monospace",
           fontSize: "0.55rem", letterSpacing: "0.2em",
@@ -248,14 +248,15 @@ export default function Menu({ onAgregar, config }: Props) {
           — AQUÍ TIENES NUESTRO MENÚ
         </div>
         {/* Fila 2: pestañas de categoría */}
-        <div style={{ display: "flex", gap: 4, overflowX: "auto", scrollbarWidth: "none" }}>
+        <div style={{ display: "flex", gap: 4, justifyContent: "flex-start" }}>
           {CATEGORIAS.map(c => {
             const active = c.key === categoria;
             return (
               <button key={c.key} onClick={() => setCategoria(c.key)} style={{
                 fontFamily: "var(--font-jetbrains-mono), monospace",
-                fontSize: "clamp(0.45rem, 1.8vw, 0.6rem)", letterSpacing: "0.12em", textTransform: "uppercase",
-                padding: "6px clamp(8px, 2.5vw, 13px)",
+                fontSize: isMobile ? "0.5rem" : "clamp(0.45rem, 1.8vw, 0.6rem)",
+                letterSpacing: "0.12em", textTransform: "uppercase",
+                padding: isMobile ? "6px 10px" : "6px clamp(8px, 2.5vw, 13px)",
                 background: active ? C.tinta : "transparent",
                 color:      active ? C.cream : C.tinta,
                 border: `1px solid ${C.tinta}`,
