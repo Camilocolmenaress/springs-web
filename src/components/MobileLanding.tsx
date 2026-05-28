@@ -345,7 +345,10 @@ export default function MobileLanding() {
 
             {/* Capa 2 — Títulos hero (salen al hacer scroll) */}
             <div className="absolute inset-0 z-20 flex flex-col justify-center px-8 pointer-events-none">
-              <span className="font-mono text-[9px] text-cream/25 uppercase tracking-[4px] mb-4">
+              <span className="font-display text-[22px] text-cream leading-none tracking-[0.06em] mb-2">
+                SPRINGS
+              </span>
+              <span className="font-mono text-[9px] text-cream/25 uppercase tracking-[4px] mb-6">
                 Bucaramanga · Colombia
               </span>
               <h1
@@ -356,7 +359,7 @@ export default function MobileLanding() {
               </h1>
               <h1
                 ref={titleBottomRef}
-                className="s-hero-line s-hero-line-2 gsap-hidden font-display text-[72px] leading-[0.82] text-mostaza"
+                className="s-hero-line s-hero-line-2 gsap-hidden font-display text-[72px] leading-[0.82] text-mostaza mt-4"
               >
                 DE AUTOR.
               </h1>
@@ -465,22 +468,40 @@ export default function MobileLanding() {
           <div className="w-full h-px bg-mostaza/40" />
           <div className="flex flex-col items-center gap-4 w-full">
             <a
+              href="/"
+              className="font-mono text-xs text-cream/50 uppercase tracking-widest hover:text-mostaza transition-colors"
+            >
+              HOME PRINCIPAL
+            </a>
+            <a
               href="/menu"
               className="font-mono text-xs text-cream uppercase tracking-widest hover:text-mostaza transition-colors"
             >
-              MENÚ [VER]
+              CARTA
+            </a>
+            <a
+              href="/art-gallery"
+              className="font-mono text-xs text-cream uppercase tracking-widest hover:text-mostaza transition-colors"
+            >
+              ART GALLERY
             </a>
             <a
               href="#"
               className="font-mono text-xs text-cream uppercase tracking-widest hover:text-mostaza transition-colors"
             >
-              EDITORIAL [LEER]
+              NOSOTROS
+            </a>
+            <a
+              href="/springs-jacket-club"
+              className="font-mono text-xs text-cream uppercase tracking-widest hover:text-mostaza transition-colors"
+            >
+              EL CLUB
             </a>
             <a
               href="#"
               className="font-mono text-xs text-cream uppercase tracking-widest hover:text-mostaza transition-colors"
             >
-              MANIFIESTO [SABER]
+              FAQS
             </a>
           </div>
           <span className="font-mono text-[9px] text-cream/40 uppercase tracking-widest mt-8">
