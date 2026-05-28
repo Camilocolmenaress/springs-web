@@ -42,7 +42,7 @@ export const productos: Producto[] = [
     precio: 32900,
     categoria: "jacket",
     disponible: true,
-    imagen_url: "/images/la-fija.png",
+    imagen_url: "/images/la-fija.jpg",
     orden: 10,
   },
   {
@@ -52,7 +52,7 @@ export const productos: Producto[] = [
     precio: 35900,
     categoria: "jacket",
     disponible: true,
-    imagen_url: "/images/la-pesada.png",
+    imagen_url: "/images/la-pesada.jpg",
     orden: 11,
   },
   {
@@ -62,7 +62,7 @@ export const productos: Producto[] = [
     precio: 34900,
     categoria: "jacket",
     disponible: true,
-    imagen_url: "/images/la-brava.png",
+    imagen_url: "/images/la-brava.jpg",
     orden: 12,
   },
   {
@@ -72,7 +72,7 @@ export const productos: Producto[] = [
     precio: 28900,
     categoria: "jacket",
     disponible: true,
-    imagen_url: "/images/la-simple.png",
+    imagen_url: "/images/la-simple.jpg",
     orden: 13,
   },
   {
@@ -82,7 +82,7 @@ export const productos: Producto[] = [
     precio: 28900,
     categoria: "jacket",
     disponible: true,
-    imagen_url: "/images/la-honesta.png",
+    imagen_url: "/images/la-honesta.jpg",
     orden: 14,
   },
 
@@ -94,7 +94,7 @@ export const productos: Producto[] = [
     precio: 24900,
     categoria: "loaded",
     disponible: true,
-    imagen_url: "/images/loaded-placeholder.png",
+    imagen_url: "/images/loaded-pollo.jpg",
     orden: 20,
   },
   {
@@ -104,7 +104,7 @@ export const productos: Producto[] = [
     precio: 22500,
     categoria: "loaded",
     disponible: true,
-    imagen_url: "/images/loaded-placeholder.png",
+    imagen_url: "/images/loaded-molida.jpg",
     orden: 21,
   },
   {
@@ -114,7 +114,7 @@ export const productos: Producto[] = [
     precio: 24900,
     categoria: "loaded",
     disponible: true,
-    imagen_url: "/images/loaded-placeholder.png",
+    imagen_url: "/images/loaded-desmechada.jpg",
     orden: 22,
   },
   {
@@ -124,7 +124,7 @@ export const productos: Producto[] = [
     precio: 24900,
     categoria: "loaded",
     disponible: true,
-    imagen_url: "/images/loaded-placeholder.png",
+    imagen_url: "/images/loaded-chorizo.jpg",
     orden: 23,
   },
 
@@ -136,7 +136,7 @@ export const productos: Producto[] = [
     precio: 3500,
     categoria: "extra",
     disponible: true,
-    imagen_url: null,
+    imagen_url: "/images/extra-queso-costeno.jpg",
     orden: 30,
   },
   {
@@ -146,7 +146,7 @@ export const productos: Producto[] = [
     precio: 3000,
     categoria: "extra",
     disponible: true,
-    imagen_url: null,
+    imagen_url: "/images/extra-aguacate.jpg",
     orden: 31,
   },
   {
@@ -156,7 +156,7 @@ export const productos: Producto[] = [
     precio: 2500,
     categoria: "extra",
     disponible: true,
-    imagen_url: null,
+    imagen_url: "/images/extra-huevo-frito.jpg",
     orden: 32,
   },
   {
@@ -198,7 +198,7 @@ export const productos: Producto[] = [
     precio: 5000,
     categoria: "bebida",
     disponible: true,
-    imagen_url: "/images/bebida-limonada-natural.png",
+    imagen_url: "/images/bebida-limonada-natural.jpg",
     orden: 40,
   },
   {
@@ -208,7 +208,7 @@ export const productos: Producto[] = [
     precio: 5500,
     categoria: "bebida",
     disponible: true,
-    imagen_url: "/images/bebida-limonada-panela.png",
+    imagen_url: "/images/bebida-limonada-panela.jpg",
     orden: 41,
   },
   {
