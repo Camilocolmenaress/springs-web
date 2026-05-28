@@ -155,7 +155,7 @@ export default function Home() {
   );
 
   const FONT_MAP: Record<string, string> = {
-    display: "var(--font-anton)",
+    display: "Anton, sans-serif",
     sans:    "var(--font-inter)",
     mono:    "var(--font-jetbrains-mono)",
     marker:  "var(--font-marker), cursive",
@@ -392,7 +392,7 @@ export default function Home() {
   if (layout === "tablet") return <TabletLanding />;
 
   const F = {
-    display: { fontFamily: "var(--font-anton)" },
+    display: { fontFamily: "Anton, sans-serif" },
     sans:    { fontFamily: "var(--font-inter)" },
     mono:    { fontFamily: "var(--font-jetbrains-mono)" },
   };

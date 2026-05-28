@@ -18,7 +18,7 @@ const C = {
   fainter: "rgba(242,232,213,0.06)",
 };
 const F = {
-  display: { fontFamily: "var(--font-anton)" }           as const,
+  display: { fontFamily: "Anton, sans-serif" }           as const,
   sans:    { fontFamily: "var(--font-inter)" }            as const,
   mono:    { fontFamily: "var(--font-jetbrains-mono)" }   as const,
 };
