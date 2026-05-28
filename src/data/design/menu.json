@@ -157,7 +157,7 @@
           "type": "image",
           "props": {
             "size":    { "value": 55,  "unit": "vh", "min": 20, "max": 150, "step": 1 },
-            "offsetY": { "value": 0,   "unit": "px", "min": -300, "max": 300, "step": 4 },
+            "offsetY": { "value": -60, "unit": "px", "min": -300, "max": 300, "step": 4 },
             "offsetX": { "value": 0,   "unit": "px", "min": -400, "max": 400, "step": 4 }
           }
         },
@@ -165,7 +165,7 @@
           "type": "image",
           "props": {
             "size":    { "value": 55,  "unit": "vh", "min": 20, "max": 150, "step": 1 },
-            "offsetY": { "value": 0,   "unit": "px", "min": -300, "max": 300, "step": 4 },
+            "offsetY": { "value": -60,   "unit": "px", "min": -300, "max": 300, "step": 4 },
             "offsetX": { "value": 0,   "unit": "px", "min": -400, "max": 400, "step": 4 }
           }
         },
@@ -173,7 +173,7 @@
           "type": "image",
           "props": {
             "size":    { "value": 55,  "unit": "vh", "min": 20, "max": 150, "step": 1 },
-            "offsetY": { "value": 0,   "unit": "px", "min": -300, "max": 300, "step": 4 },
+            "offsetY": { "value": -60,   "unit": "px", "min": -300, "max": 300, "step": 4 },
             "offsetX": { "value": 0,   "unit": "px", "min": -400, "max": 400, "step": 4 }
           }
         },
@@ -181,7 +181,7 @@
           "type": "image",
           "props": {
             "size":    { "value": 55,  "unit": "vh", "min": 20, "max": 150, "step": 1 },
-            "offsetY": { "value": 0,   "unit": "px", "min": -300, "max": 300, "step": 4 },
+            "offsetY": { "value": -60,   "unit": "px", "min": -300, "max": 300, "step": 4 },
             "offsetX": { "value": 0,   "unit": "px", "min": -400, "max": 400, "step": 4 }
           }
         }
