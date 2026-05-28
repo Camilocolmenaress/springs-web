@@ -17,7 +17,6 @@ const CATEGORIAS: { key: Categoria; label: string }[] = [
   { key: "combo",  label: "COMBOS"  },
   { key: "jacket", label: "JACKETS" },
   { key: "loaded", label: "LOADED"  },
-  { key: "extra",  label: "EXTRAS"  },
   { key: "bebida", label: "BEBIDAS" },
 ];
 
