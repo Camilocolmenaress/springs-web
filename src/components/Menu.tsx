@@ -164,12 +164,15 @@ export default function Menu({ onAgregar, config }: Props) {
   const cardMarginTop = sv(pi?.priceCard?.props?.marginTop, -80);
   const cardOffsetX   = sv(pi?.priceCard?.props?.offsetX, 0);
   const [categoria, setCategoria] = useState<Categoria>("jacket");
-  /*
-   * vIdx es un índice virtual MONOTÓNICO (crece / decrece infinitamente).
-   * Nunca hace wrap en pantalla → elimina el "ghost" que cruzaba rapidísimo.
-   * getItem() convierte vIdx → índice real con modulo.
-   */
   const [vIdx, setVIdx] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    setIsMobile(mq.matches);
+    const h = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", h);
+    return () => mq.removeEventListener("change", h);
+  }, []);
 
   const items = useMemo(
     () => productos.filter(p => p.categoria === categoria).sort((a, b) => a.orden - b.orden),
@@ -211,7 +214,16 @@ export default function Menu({ onAgregar, config }: Props) {
   if (!activo || !items.length) return null;
 
   const categoriaLabel = CATEGORIAS.find(c => c.key === categoria)?.label ?? "";
-  const OFFSETS = [-2, -1, 0, 1, 2] as const;
+  const offsets = isMobile ? [0] : [-2, -1, 0, 1, 2];
+
+  // Mobile overrides
+  const mCenterImgSize    = "clamp(220px, 42vh, 320px)";
+  const effCenterImgSize  = isMobile ? mCenterImgSize : centerImgSize;
+  const effCardMarginTop  = isMobile ? 8 : cardMarginTop;
+  const effNameFontSize   = isMobile ? "clamp(24px, 7vw, 34px)" : nameFontSize;
+  const effCardWidth      = isMobile ? 360 : cardWidth;
+  const effArrowSize      = isMobile ? 52 : arrowSize;
+  const effTrackOffsetY   = isMobile ? 0 : trackOffsetY;
 
   return (
     <section id="menu" style={{
@@ -277,9 +289,9 @@ export default function Menu({ onAgregar, config }: Props) {
       <div style={{ position: "relative", flex: 1, display: "flex", flexDirection: "column", zIndex: 2, overflowX: "hidden", justifyContent: "center" }}>
 
         {/* Carousel track */}
-        <div style={{ position: "relative", flexShrink: 0, height: centerImgSize, overflow: "visible", transform: `translate(${trackOffsetX}px, ${trackOffsetY}px)` }}>
+        <div style={{ position: "relative", flexShrink: 0, height: effCenterImgSize, overflow: "visible", transform: `translate(${trackOffsetX}px, ${effTrackOffsetY}px)` }}>
           <AnimatePresence>
-            {OFFSETS.map(offset => {
+            {offsets.map(offset => {
               const v   = vIdx + offset;
               const p   = getItem(v);
               const abs = Math.abs(offset);
@@ -289,14 +301,14 @@ export default function Menu({ onAgregar, config }: Props) {
               const scale   = isCenter ? 1 : isNear ? 1 : 0.70;
               const opacity = isCenter ? 1 : isNear ? 0.75 : 0.50;
 
-              const imgSize  = isCenter ? centerImgSize : isNear ? nearImgSize : farImgSize;
+              const imgSize  = isCenter ? effCenterImgSize : isNear ? nearImgSize : farImgSize;
               const extraY   = isCenter ? centerOffsetY : isNear ? nearOffsetY  : farOffsetY;
               const extraX   = isCenter ? centerOffsetX : isNear ? nearOffsetX * Math.sign(offset) : farOffsetX * Math.sign(offset);
 
               return (
                 <motion.div
                   key={v}
-                  initial={false}
+                  initial={isMobile ? { opacity: 0 } : false}
                   animate={{ x: `calc(${offset * carouselGap}vw + ${extraX}px)`, y: extraY, scale, opacity }}
                   exit={{ opacity: 0, transition: { duration: 0.12 } }}
                   transition={{ type: "spring", stiffness: 150, damping: 24, mass: 0.85 }}
@@ -417,10 +429,10 @@ export default function Menu({ onAgregar, config }: Props) {
             <>
               <button onClick={goPrev} aria-label="Anterior" style={{
                 position: "absolute",
-                left:  `calc(50% - ${arrowOffsetX}vw)`,
+                left:  isMobile ? "14px" : `calc(50% - ${arrowOffsetX}vw)`,
                 top:   `calc(50% + ${arrowOffsetY}px)`,
-                transform: "translate(-50%, -50%)",
-                width: arrowSize, height: arrowSize,
+                transform: isMobile ? "translateY(-50%)" : "translate(-50%, -50%)",
+                width: effArrowSize, height: effArrowSize,
                 background: "transparent",
                 border: "none",
                 padding: 0,
@@ -431,10 +443,11 @@ export default function Menu({ onAgregar, config }: Props) {
               </button>
               <button onClick={goNext} aria-label="Siguiente" style={{
                 position: "absolute",
-                left:  `calc(50% + ${arrowOffsetX}vw)`,
+                right: isMobile ? "14px" : undefined,
+                left:  isMobile ? undefined : `calc(50% + ${arrowOffsetX}vw)`,
                 top:   `calc(50% + ${arrowOffsetY}px)`,
-                transform: "translate(-50%, -50%)",
-                width: arrowSize, height: arrowSize,
+                transform: isMobile ? "translateY(-50%)" : "translate(-50%, -50%)",
+                width: effArrowSize, height: effArrowSize,
                 background: "transparent",
                 border: "none",
                 padding: 0,
@@ -448,7 +461,7 @@ export default function Menu({ onAgregar, config }: Props) {
         </div>
 
         {/* ── Center product info ───────────────────────── */}
-        <div style={{ flexShrink: 0, padding: "0 clamp(16px, 4vw, 60px)", marginTop: `${cardMarginTop}px` }}>
+        <div style={{ flexShrink: 0, padding: isMobile ? "0 16px" : "0 clamp(16px, 4vw, 60px)", marginTop: `${effCardMarginTop}px` }}>
           <AnimatePresence mode="wait">
             <motion.div
               key={`${activo.id}-${activeRealIdx}`}
@@ -462,7 +475,7 @@ export default function Menu({ onAgregar, config }: Props) {
                 <span style={{ color: C.tinta, fontSize: starsFontSize, transform: `translateX(${starsOffsetX}px)`, display: "inline-block" }}>✦</span>
                 <h3 style={{
                   fontFamily: "var(--font-anton), sans-serif",
-                  fontSize: nameFontSize,
+                  fontSize: effNameFontSize,
                   textTransform: "uppercase", letterSpacing: "0.01em",
                   lineHeight: 1, color: C.tinta, margin: 0,
                 }}>
@@ -478,7 +491,7 @@ export default function Menu({ onAgregar, config }: Props) {
               }}>
                 {activo.descripcion.toUpperCase()}
               </p>
-              <div style={{ display: "flex", alignItems: "stretch", border: `1px solid ${C.tinta}`, maxWidth: cardWidth, margin: "0 auto", width: "100%", transform: `translateX(${cardOffsetX}px)` }}>
+              <div style={{ display: "flex", alignItems: "stretch", border: `1px solid ${C.tinta}`, maxWidth: effCardWidth, margin: "0 auto", width: "100%", transform: isMobile ? undefined : `translateX(${cardOffsetX}px)` }}>
                 <div style={{
                   flex: 1, padding: "8px 20px",
                   display: "flex", flexDirection: "column", justifyContent: "center",
