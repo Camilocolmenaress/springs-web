@@ -261,7 +261,7 @@ export default function MobileLanding() {
 
       // 5–20%: SPRINGS logo sube y se hace pequeño — queda sticky arriba izquierda
       tl.to(springsLogoRef.current, {
-        top: 20, left: 16, fontSize: "15px",
+        top: 20, left: 16, fontSize: "22px",
         ease: "power2.inOut", duration: 0.15,
       }, 0.05);
 
