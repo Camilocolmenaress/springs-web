@@ -155,9 +155,9 @@ export default function Home() {
   );
 
   const FONT_MAP: Record<string, string> = {
-    display: "Anton, sans-serif",
-    sans: "Inter, sans-serif",
-    mono: "JetBrains Mono, monospace",
+    display: "var(--font-display)",
+    sans: "var(--font-sans)",
+    mono: "var(--font-mono)",
     marker: "var(--font-marker), cursive",
   };
   const COLOR_MAP: Record<string, string> = {
@@ -392,9 +392,9 @@ export default function Home() {
   if (layout === "tablet") return <TabletLanding />;
 
   const F = {
-    display: { fontFamily: "Anton, sans-serif" },
-    sans:    { fontFamily: "Inter, sans-serif" },
-    mono:    { fontFamily: "JetBrains Mono, monospace" },
+    display: { fontFamily: "var(--font-display)" },
+    sans:    { fontFamily: "var(--font-sans)" },
+    mono:    { fontFamily: "var(--font-mono)" },
   };
   const C = {
     burgundy: "#6B1419",
