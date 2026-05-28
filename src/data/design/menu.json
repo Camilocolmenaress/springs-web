@@ -7,16 +7,16 @@
         "centerImage": {
           "type": "image",
           "props": {
-            "size":    { "value": 46,   "unit": "vh", "min": 20, "max": 120, "step": 1 },
-            "offsetY": { "value": -68,  "unit": "px", "min": -300, "max": 300, "step": 4 },
-            "offsetX": { "value": -20,  "unit": "px", "min": -400, "max": 400, "step": 4 }
+            "size":    { "value": 69,   "unit": "vh", "min": 20, "max": 120, "step": 1 },
+            "offsetY": { "value": 36,   "unit": "px", "min": -300, "max": 300, "step": 4 },
+            "offsetX": { "value": 0,    "unit": "px", "min": -400, "max": 400, "step": 4 }
           }
         },
         "nearImage": {
           "type": "image",
           "props": {
             "size":    { "value": 45,   "unit": "vh", "min": 10, "max": 80, "step": 1 },
-            "offsetY": { "value": -72,  "unit": "px", "min": -300, "max": 300, "step": 4 },
+            "offsetY": { "value": 68,   "unit": "px", "min": -300, "max": 300, "step": 4 },
             "offsetX": { "value": 128,  "unit": "px", "min": -300, "max": 300, "step": 4 }
           }
         },
@@ -31,14 +31,14 @@
         "track": {
           "type": "image",
           "props": {
-            "offsetY": { "value": -12,  "unit": "px", "min": -400, "max": 400, "step": 4 },
+            "offsetY": { "value": -24,  "unit": "px", "min": -400, "max": 400, "step": 4 },
             "offsetX": { "value": 0,    "unit": "px", "min": -400, "max": 400, "step": 4 }
           }
         },
         "spacing": {
           "type": "image",
           "props": {
-            "gap": { "value": 21.5, "unit": "vw", "min": 12, "max": 40, "step": 0.5 }
+            "gap": { "value": 22, "unit": "vw", "min": 12, "max": 40, "step": 0.5 }
           }
         }
       }
@@ -49,9 +49,9 @@
         "btn": {
           "type": "text",
           "props": {
-            "size":    { "value": 60,   "unit": "px", "min": 32,  "max": 140, "step": 4   },
-            "offsetX": { "value": 13,   "unit": "vw", "min": 5,   "max": 50,  "step": 0.5 },
-            "offsetY": { "value": -84,  "unit": "px", "min": -200, "max": 200, "step": 4  }
+            "size":    { "value": 92,   "unit": "px", "min": 32,  "max": 140, "step": 4   },
+            "offsetX": { "value": 18,   "unit": "vw", "min": 5,   "max": 50,  "step": 0.5 },
+            "offsetY": { "value": 8,    "unit": "px", "min": -200, "max": 200, "step": 4  }
           }
         }
       }
@@ -62,17 +62,17 @@
         "papa": {
           "type": "image",
           "props": {
-            "size":    { "value": 32,   "unit": "vh", "min": 10, "max": 100, "step": 1 },
+            "size":    { "value": 57,   "unit": "vh", "min": 10, "max": 100, "step": 1 },
             "offsetY": { "value": -40,  "unit": "px", "min": -200, "max": 200, "step": 4 },
-            "offsetX": { "value": 28,   "unit": "px", "min": -200, "max": 200, "step": 4 }
+            "offsetX": { "value": -24,  "unit": "px", "min": -200, "max": 200, "step": 4 }
           }
         },
         "bebida": {
           "type": "image",
           "props": {
-            "size":    { "value": 39,   "unit": "vh", "min": 10, "max": 100, "step": 1 },
-            "offsetY": { "value": -60,  "unit": "px", "min": -200, "max": 200, "step": 4 },
-            "offsetX": { "value": -124, "unit": "px", "min": -300, "max": 200, "step": 4 }
+            "size":    { "value": 53,   "unit": "vh", "min": 10, "max": 100, "step": 1 },
+            "offsetY": { "value": -76,  "unit": "px", "min": -200, "max": 200, "step": 4 },
+            "offsetX": { "value": -200, "unit": "px", "min": -300, "max": 200, "step": 4 }
           }
         }
       }
@@ -83,33 +83,33 @@
         "papa1": {
           "type": "image",
           "props": {
-            "size":    { "value": 21,   "unit": "vh", "min": 10, "max": 100, "step": 1 },
-            "offsetY": { "value": -112, "unit": "px", "min": -300, "max": 200, "step": 4 },
-            "offsetX": { "value": 40,   "unit": "px", "min": -300, "max": 300, "step": 4 }
+            "size":    { "value": 34,   "unit": "vh", "min": 10, "max": 100, "step": 1 },
+            "offsetY": { "value": -148, "unit": "px", "min": -300, "max": 200, "step": 4 },
+            "offsetX": { "value": 12,   "unit": "px", "min": -300, "max": 300, "step": 4 }
           }
         },
         "papa2": {
           "type": "image",
           "props": {
-            "size":    { "value": 24,   "unit": "vh", "min": 10, "max": 100, "step": 1 },
-            "offsetY": { "value": -72,  "unit": "px", "min": -300, "max": 200, "step": 4 },
-            "offsetX": { "value": -80,  "unit": "px", "min": -300, "max": 300, "step": 4 }
+            "size":    { "value": 39,   "unit": "vh", "min": 10, "max": 100, "step": 1 },
+            "offsetY": { "value": -96,  "unit": "px", "min": -300, "max": 200, "step": 4 },
+            "offsetX": { "value": -132, "unit": "px", "min": -300, "max": 300, "step": 4 }
           }
         },
         "bebida1": {
           "type": "image",
           "props": {
-            "size":    { "value": 26,   "unit": "vh", "min": 10, "max": 100, "step": 1 },
-            "offsetY": { "value": -112, "unit": "px", "min": -300, "max": 200, "step": 4 },
-            "offsetX": { "value": -128, "unit": "px", "min": -600, "max": 300, "step": 4 }
+            "size":    { "value": 33,   "unit": "vh", "min": 10, "max": 100, "step": 1 },
+            "offsetY": { "value": -156, "unit": "px", "min": -300, "max": 200, "step": 4 },
+            "offsetX": { "value": -184, "unit": "px", "min": -600, "max": 300, "step": 4 }
           }
         },
         "bebida2": {
           "type": "image",
           "props": {
-            "size":    { "value": 30,   "unit": "vh", "min": 10, "max": 100, "step": 1 },
-            "offsetY": { "value": -76,  "unit": "px", "min": -300, "max": 200, "step": 4 },
-            "offsetX": { "value": -384, "unit": "px", "min": -600, "max": 300, "step": 4 }
+            "size":    { "value": 37,   "unit": "vh", "min": 10, "max": 100, "step": 1 },
+            "offsetY": { "value": -112, "unit": "px", "min": -300, "max": 200, "step": 4 },
+            "offsetX": { "value": -472, "unit": "px", "min": -600, "max": 300, "step": 4 }
           }
         }
       }
@@ -120,8 +120,8 @@
         "container": {
           "type": "text",
           "props": {
-            "width":        { "value": 252,   "unit": "px", "min": 80,  "max": 500, "step": 4  },
-            "offsetY":      { "value": -24,   "unit": "px", "min": -200, "max": 200, "step": 4 },
+            "width":        { "value": 260,   "unit": "px", "min": 80,  "max": 500, "step": 4  },
+            "offsetY":      { "value": -36,   "unit": "px", "min": -200, "max": 200, "step": 4 },
             "offsetX":      { "value": -4,    "unit": "px", "min": -200, "max": 200, "step": 4 },
             "rightOffsetX": { "value": 16,    "unit": "px", "min": -200, "max": 200, "step": 4 }
           }
@@ -129,10 +129,10 @@
         "name": {
           "type": "text",
           "props": {
-            "fontSize":      { "value": 1.9,  "unit": "vw", "min": 0.8,  "max": 5,   "step": 0.1  },
-            "letterSpacing": { "value": 0.05, "unit": "em", "min": -0.2, "max": 1,   "step": 0.01 },
-            "wordSpacing":   { "value": 0.1,  "unit": "em", "min": -0.5, "max": 2,   "step": 0.05 },
-            "width":         { "value": 260,  "unit": "px", "min": 80,   "max": 600, "step": 4    }
+            "fontSize":      { "value": 1.3,   "unit": "vw", "min": 0.8,  "max": 5,   "step": 0.1  },
+            "letterSpacing": { "value": -0.02, "unit": "em", "min": -0.2, "max": 1,   "step": 0.01 },
+            "wordSpacing":   { "value": 0,     "unit": "em", "min": -0.5, "max": 2,   "step": 0.05 },
+            "width":         { "value": 260,   "unit": "px", "min": 80,   "max": 600, "step": 4    }
           }
         },
         "desc": {
@@ -156,33 +156,33 @@
         "bebida-1": {
           "type": "image",
           "props": {
-            "size":    { "value": 43,  "unit": "vh", "min": 20, "max": 150, "step": 1 },
-            "offsetY": { "value": -52, "unit": "px", "min": -300, "max": 300, "step": 4 },
-            "offsetX": { "value": 24,  "unit": "px", "min": -400, "max": 400, "step": 4 }
+            "size":    { "value": 55,  "unit": "vh", "min": 20, "max": 150, "step": 1 },
+            "offsetY": { "value": -60, "unit": "px", "min": -300, "max": 300, "step": 4 },
+            "offsetX": { "value": 0,   "unit": "px", "min": -400, "max": 400, "step": 4 }
           }
         },
         "bebida-2": {
           "type": "image",
           "props": {
-            "size":    { "value": 40,  "unit": "vh", "min": 20, "max": 150, "step": 1 },
-            "offsetY": { "value": -44, "unit": "px", "min": -300, "max": 300, "step": 4 },
-            "offsetX": { "value": 16,  "unit": "px", "min": -400, "max": 400, "step": 4 }
+            "size":    { "value": 55,  "unit": "vh", "min": 20, "max": 150, "step": 1 },
+            "offsetY": { "value": -60, "unit": "px", "min": -300, "max": 300, "step": 4 },
+            "offsetX": { "value": 0,   "unit": "px", "min": -400, "max": 400, "step": 4 }
           }
         },
         "bebida-3": {
           "type": "image",
           "props": {
-            "size":    { "value": 41,  "unit": "vh", "min": 20, "max": 150, "step": 1 },
-            "offsetY": { "value": -24, "unit": "px", "min": -300, "max": 300, "step": 4 },
-            "offsetX": { "value": 20,  "unit": "px", "min": -400, "max": 400, "step": 4 }
+            "size":    { "value": 55,  "unit": "vh", "min": 20, "max": 150, "step": 1 },
+            "offsetY": { "value": -60, "unit": "px", "min": -300, "max": 300, "step": 4 },
+            "offsetX": { "value": 0,   "unit": "px", "min": -400, "max": 400, "step": 4 }
           }
         },
         "bebida-4": {
           "type": "image",
           "props": {
-            "size":    { "value": 50,  "unit": "vh", "min": 20, "max": 150, "step": 1 },
-            "offsetY": { "value": -20, "unit": "px", "min": -300, "max": 300, "step": 4 },
-            "offsetX": { "value": 24,  "unit": "px", "min": -400, "max": 400, "step": 4 }
+            "size":    { "value": 55,  "unit": "vh", "min": 20, "max": 150, "step": 1 },
+            "offsetY": { "value": -60, "unit": "px", "min": -300, "max": 300, "step": 4 },
+            "offsetX": { "value": 0,   "unit": "px", "min": -400, "max": 400, "step": 4 }
           }
         }
       }
@@ -193,9 +193,9 @@
         "title": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 9,  "unit": "vw", "min": 5,  "max": 50, "step": 0.5 },
+            "fontSize": { "value": 22, "unit": "vw", "min": 5,  "max": 50, "step": 0.5 },
             "opacity":  { "value": 8,  "unit": "%",  "min": 0,  "max": 30, "step": 0.5 },
-            "top":      { "value": 23, "unit": "%",  "min": 5,  "max": 80, "step": 1   },
+            "top":      { "value": 36, "unit": "%",  "min": 5,  "max": 80, "step": 1   },
             "offsetX":  { "value": 0,  "unit": "px", "min": -400, "max": 400, "step": 4 }
           }
         }
@@ -207,22 +207,22 @@
         "name": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 3.5, "unit": "vw", "min": 2,  "max": 10, "step": 0.1 },
-            "offsetX":  { "value": -4,  "unit": "px", "min": -400, "max": 400, "step": 4 }
+            "fontSize": { "value": 4.1, "unit": "vw", "min": 2,  "max": 10, "step": 0.1 },
+            "offsetX":  { "value": 0,   "unit": "px", "min": -400, "max": 400, "step": 4 }
           }
         },
         "stars": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 1.1, "unit": "rem", "min": 0.3, "max": 2.5, "step": 0.05 },
+            "fontSize": { "value": 1.8, "unit": "rem", "min": 0.3, "max": 2.5, "step": 0.05 },
             "offsetX":  { "value": -16, "unit": "px",  "min": -200, "max": 200, "step": 4   }
           }
         },
         "priceCard": {
           "type": "text",
           "props": {
-            "width":     { "value": 270,  "unit": "px", "min": 200,  "max": 700, "step": 10 },
-            "marginTop": { "value": -128, "unit": "px", "min": -200, "max": 60,  "step": 4  },
+            "width":     { "value": 310,  "unit": "px", "min": 200,  "max": 700, "step": 10 },
+            "marginTop": { "value": -92,  "unit": "px", "min": -200, "max": 60,  "step": 4  },
             "offsetX":   { "value": 0,    "unit": "px", "min": -400, "max": 400, "step": 4  }
           }
         }
