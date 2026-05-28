@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Menu from "@/components/Menu";
 import Cart, { type CartItem, type CartExtra } from "@/components/Cart";
@@ -10,7 +10,17 @@ import { useDesignConfig } from "@/hooks/useDesignConfig";
 import { type Producto } from "@/data/productos";
 
 export default function MenuPage() {
-  const { config, editMode, saved, updateProp, save, reset, exportValues } = useDesignConfig("menu");
+  const desktop = useDesignConfig("menu");
+  const mobile  = useDesignConfig("menu-mobile");
+
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    setIsMobile(mq.matches);
+    const h = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", h);
+    return () => mq.removeEventListener("change", h);
+  }, []);
 
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [pendingProduct, setPendingProduct] = useState<Producto | null>(null);
@@ -54,11 +64,10 @@ export default function MenuPage() {
     setCartItems(prev => prev.filter(i => i.cartId !== cartId));
   }
 
-  // ── Edit mode: mobile frame 390px sobre fondo oscuro, editor flotante a la derecha
-  if (editMode) {
+  // Edit mode: frame 390px + DevPanel escribe SOLO en menu-mobile.json
+  if (desktop.editMode) {
     return (
       <div style={{ width: "100vw", height: "100vh", background: "#0d0d0d", position: "relative", overflow: "hidden" }}>
-        {/* Etiqueta de referencia */}
         <div style={{
           position: "absolute", left: 0, top: 0,
           width: 390, height: 20, background: "#1a1a1a",
@@ -70,7 +79,6 @@ export default function MenuPage() {
           390 × 844 — MOBILE PREVIEW
         </div>
 
-        {/* Frame mobile */}
         <div style={{
           position: "absolute", left: 0, top: 20,
           width: 390, height: "calc(100vh - 20px)",
@@ -93,17 +101,16 @@ export default function MenuPage() {
           >
             <span aria-hidden>←</span> VOLVER
           </Link>
-          <Menu onAgregar={handleAgregar} config={config} />
+          <Menu onAgregar={handleAgregar} config={mobile.config} />
         </div>
 
-        {/* DevPanel flotante — empieza a la derecha del frame, arrastrable */}
         <DevPanel
-          config={config}
-          saved={saved}
-          onUpdate={updateProp}
-          onSave={save}
-          onExport={exportValues}
-          onReset={reset}
+          config={mobile.config}
+          saved={mobile.saved}
+          onUpdate={mobile.updateProp}
+          onSave={mobile.save}
+          onExport={mobile.exportValues}
+          onReset={mobile.reset}
           startLeft={406}
         />
       </div>
@@ -138,7 +145,7 @@ export default function MenuPage() {
         <span aria-hidden>←</span> VOLVER
       </Link>
 
-      <Menu onAgregar={handleAgregar} config={config} />
+      <Menu onAgregar={handleAgregar} config={isMobile ? mobile.config : desktop.config} />
 
       <Cart
         items={cartItems}
@@ -153,17 +160,6 @@ export default function MenuPage() {
           product={pendingProduct}
           onClose={() => setPendingProduct(null)}
           onConfirm={handleConfirm}
-        />
-      )}
-
-      {editMode && (
-        <DevPanel
-          config={config}
-          saved={saved}
-          onUpdate={updateProp}
-          onSave={save}
-          onExport={exportValues}
-          onReset={reset}
         />
       )}
     </main>
