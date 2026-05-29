@@ -341,7 +341,7 @@ export default function ArtGallery() {
             <div key={exhibit.id}>
 
               {/* ── HERO ── */}
-              <section style={{
+              <section id={`mob-${exhibit.id}`} style={{
                 height: "calc(100dvh - 52px)",
                 position: "relative",
                 background: BG,
@@ -395,12 +395,13 @@ export default function ArtGallery() {
                 {/* LEFT SIDEBAR — absolute, full height */}
                 <div style={{
                   position: "absolute", left: 0, top: 0, bottom: 0,
-                  width: "36%", padding: "14px 0 0 16px",
+                  width: "36%", padding: "14px 0 14px 16px",
                   zIndex: 10, display: "flex", flexDirection: "column",
+                  overflowY: "hidden",
                 }}>
 
-                  {/* Globe */}
-                  <div style={{ width: 64, height: 64, marginBottom: 14, flexShrink: 0 }}>
+                  {/* Globe — full circle path */}
+                  <div style={{ width: 80, height: 80, marginBottom: 16, flexShrink: 0 }}>
                     <svg viewBox="0 0 110 110" width="100%" height="100%">
                       <circle cx="55" cy="55" r={33} fill="none" stroke={C.dim} strokeWidth="1.2" opacity={0.8}/>
                       <ellipse cx="55" cy="55" rx={12} ry={33} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.55}/>
@@ -409,31 +410,67 @@ export default function ArtGallery() {
                       <ellipse cx="55" cy="55" rx={33} ry={25} fill="none" stroke={C.dim} strokeWidth="0.8" opacity={0.4}/>
                       <line x1={22} y1="55" x2={88} y2="55" stroke={C.dim} strokeWidth="0.8" opacity={0.4}/>
                       <line x1="55" y1={22} x2="55" y2={88} stroke={C.dim} strokeWidth="0.8" opacity={0.4}/>
-                      <path id={`mob-c-${exhibit.id}`} fill="none" d="M16,55 a39,39 0 0,1 39,-39 a39,39 0 0,1 39,39"/>
-                      <text fontFamily="JetBrains Mono, monospace" fontSize="7.2" letterSpacing="0.8" fill={C.dim} fillOpacity={0.75}>
-                        <textPath href={`#mob-c-${exhibit.id}`} startOffset="5%">FOR THE MOST CHIMBA ✦ </textPath>
+                      <path id={`mob-c-${exhibit.id}`} fill="none" d="M5,55 a50,50 0 1,1 100,0 a50,50 0 1,1 -100,0"/>
+                      <text fontFamily="JetBrains Mono, monospace" fontSize="6.8" letterSpacing="1.1" fill={C.dim} fillOpacity={0.78}>
+                        <textPath href={`#mob-c-${exhibit.id}`} startOffset="2%">FOR THE MOST CHIMBA PEOPLE ✦ </textPath>
                       </text>
                     </svg>
                   </div>
 
                   {/* Exhibit metadata */}
-                  <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.2em", color: C.dim, marginBottom: 2 }}>EXHIBIT</div>
-                  <div style={{ ...F.display, fontSize: "2.6rem", color: C.burgundy, lineHeight: 1, marginBottom: 10 }}>{exhibit.id}</div>
+                  <div style={{ ...F.mono, fontSize: "0.38rem", letterSpacing: "0.2em", color: C.dim, marginBottom: 2, flexShrink: 0 }}>EXHIBIT</div>
+                  <div style={{ ...F.display, fontSize: "2.6rem", color: C.burgundy, lineHeight: 1, marginBottom: 10, flexShrink: 0 }}>{exhibit.id}</div>
 
-                  <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.12em", color: C.cream, marginBottom: 1 }}>JACKET SERIES</div>
-                  <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.12em", color: C.dim, marginBottom: 10 }}>{exhibit.year}</div>
+                  <div style={{ ...F.mono, fontSize: "0.38rem", letterSpacing: "0.12em", color: C.cream, marginBottom: 1, flexShrink: 0 }}>JACKET SERIES</div>
+                  <div style={{ ...F.mono, fontSize: "0.38rem", letterSpacing: "0.12em", color: C.dim, marginBottom: 10, flexShrink: 0 }}>{exhibit.year}</div>
 
-                  <div style={{ width: 28, height: "1px", background: "rgba(242,232,213,0.28)", marginBottom: 10 }} />
+                  <div style={{ width: 28, height: "1px", background: "rgba(242,232,213,0.28)", marginBottom: 10, flexShrink: 0 }} />
 
-                  <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.1em", color: C.cream, marginBottom: 1 }}>BUCARAMANGA</div>
-                  <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.1em", color: C.dim, marginBottom: 10 }}>COLOMBIA</div>
+                  <div style={{ ...F.mono, fontSize: "0.38rem", letterSpacing: "0.1em", color: C.cream, marginBottom: 1, flexShrink: 0 }}>BUCARAMANGA</div>
+                  <div style={{ ...F.mono, fontSize: "0.38rem", letterSpacing: "0.1em", color: C.dim, marginBottom: 10, flexShrink: 0 }}>COLOMBIA</div>
 
-                  <div style={{ width: 28, height: "1px", background: "rgba(242,232,213,0.28)", marginBottom: 10 }} />
+                  <div style={{ width: 28, height: "1px", background: "rgba(242,232,213,0.28)", marginBottom: 10, flexShrink: 0 }} />
 
-                  <div style={{ ...F.mono, fontSize: "0.37rem", color: C.cream, marginBottom: 1 }}>7.1254° N</div>
-                  <div style={{ ...F.mono, fontSize: "0.37rem", color: C.cream, marginBottom: 14 }}>73.1198° W</div>
+                  <div style={{ ...F.mono, fontSize: "0.38rem", color: C.cream, marginBottom: 1, flexShrink: 0 }}>7.1254° N</div>
+                  <div style={{ ...F.mono, fontSize: "0.38rem", color: C.cream, marginBottom: 14, flexShrink: 0 }}>73.1198° W</div>
 
-                  <div style={{ width: 7, height: 7, borderRadius: "50%", background: C.burgundy }} />
+                  <div style={{ width: 7, height: 7, borderRadius: "50%", background: C.burgundy, marginBottom: 14, flexShrink: 0 }} />
+
+                  {/* Exhibit list */}
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 12, flexShrink: 0 }}>
+                    {EXHIBITS.map(e => (
+                      <a key={e.id} href={`#mob-${e.id}`} style={{
+                        display: "flex", alignItems: "center", gap: 5,
+                        textDecoration: "none",
+                      }}>
+                        <span style={{ ...F.mono, fontSize: "0.37rem", color: e.id === exhibit.id ? C.burgundy : "rgba(242,232,213,0.45)" }}>{e.id}</span>
+                        <span style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.06em", color: e.id === exhibit.id ? C.cream : "rgba(242,232,213,0.55)" }}>{e.name}</span>
+                      </a>
+                    ))}
+                  </div>
+
+                  {/* Progress bar */}
+                  <div style={{ marginBottom: 12, flexShrink: 0 }}>
+                    <div style={{ display: "flex", gap: 3, marginBottom: 4 }}>
+                      {EXHIBITS.map((_, pi) => (
+                        <div key={pi} style={{
+                          height: 2, flex: 1,
+                          background: pi === EXHIBITS.findIndex(e => e.id === exhibit.id)
+                            ? C.cream : "rgba(242,232,213,0.15)",
+                        }} />
+                      ))}
+                    </div>
+                    <div style={{ ...F.mono, fontSize: "0.37rem", color: C.cream }}>
+                      {EXHIBITS.findIndex(e => e.id === exhibit.id) + 1} / {EXHIBITS.length}
+                    </div>
+                  </div>
+
+                  {/* Socials */}
+                  <div style={{ display: "flex", flexDirection: "column", gap: 4, flexShrink: 0 }}>
+                    {["INSTAGRAM", "TIKTOK", "SPOTIFY"].map(s => (
+                      <span key={s} style={{ ...F.mono, fontSize: "0.36rem", letterSpacing: "0.08em", color: "rgba(242,232,213,0.55)", cursor: "pointer" }}>{s}</span>
+                    ))}
+                  </div>
                 </div>
               </section>
 
