@@ -348,10 +348,15 @@ export default function ArtGallery() {
     galleryGap:       sv(mz, "detail", "gallery",     "gap",          3),
     galleryOffY:      sv(mz, "detail", "gallery",     "offsetY",      0),
     galleryOffX:      sv(mz, "detail", "gallery",     "offsetX",      0),
-    metaLabelFs:      sv(mz, "detail", "metadata",    "labelFs",      0.52),
-    metaValueFs:      sv(mz, "detail", "metadata",    "valueFs",      0.60),
+    metaLabelFs:      sv(mz, "detail", "metadata",    "labelFs",      0.42),
+    metaValueFs:      sv(mz, "detail", "metadata",    "valueFs",      0.48),
+    metaScale:        sv(mz, "detail", "metadata",    "scale",        100),
     metaOffY:         sv(mz, "detail", "metadata",    "offsetY",      0),
     metaOffX:         sv(mz, "detail", "metadata",    "offsetX",      0),
+    barcodeFs:        sv(mz, "detail", "barcode",     "fontSize",     0.42),
+    barcodeH:         sv(mz, "detail", "barcode",     "height",       50),
+    barcodeOffY:      sv(mz, "detail", "barcode",     "offsetY",      0),
+    barcodeOffX:      sv(mz, "detail", "barcode",     "offsetX",      0),
     quoteFs:          sv(mz, "detail", "quote",       "fontSize",     1.0),
     quoteMarkFs:      sv(mz, "detail", "quote",       "markFs",       1.5),
     quoteMarkOffY:    sv(mz, "detail", "quote",       "markOffY",     0),
@@ -616,10 +621,14 @@ export default function ArtGallery() {
 
                 {/* Metadata table + globe */}
                 <div style={{
-                  display: "flex",
-                  border: "1px solid rgba(242,232,213,0.1)",
                   marginBottom: 20,
                   transform: `translate(${m.metaOffX}px, ${m.metaOffY}px)`,
+                }}>
+                <div style={{
+                  display: "flex",
+                  border: "1px solid rgba(242,232,213,0.1)",
+                  transform: `scale(${m.metaScale / 100})`,
+                  transformOrigin: "top left",
                 }}>
                   <div style={{ flex: 1, display: "grid", gridTemplateColumns: "1fr 1fr" }}>
                     {([
@@ -651,6 +660,7 @@ export default function ArtGallery() {
                     </svg>
                   </div>
                 </div>
+                </div>
 
                 {/* Quote + Springs Crew + Barcode */}
                 <div style={{
@@ -677,16 +687,16 @@ export default function ArtGallery() {
                     </div>
                   </div>
                   {/* Barcode */}
-                  <div style={{ display: "flex", gap: 5, alignItems: "flex-start", flexShrink: 0, marginLeft: 12 }}>
+                  <div style={{ display: "flex", gap: 5, alignItems: "flex-start", flexShrink: 0, marginLeft: 12, transform: `translate(${m.barcodeOffX}px, ${m.barcodeOffY}px)` }}>
                     <img
                       src="/images/barcode-springs.png" alt=""
-                      style={{ height: 50, width: "auto", opacity: 0.65, transform: "rotate(90deg)", transformOrigin: "center", display: "block" }}
+                      style={{ height: m.barcodeH, width: "auto", opacity: 0.65, transform: "rotate(90deg)", transformOrigin: "center", display: "block" }}
                     />
                     <div style={{ ...F.mono, lineHeight: 1.6 }}>
-                      <div style={{ fontSize: `${m.metaLabelFs}rem`, letterSpacing: "0.1em", color: "rgba(242,232,213,0.8)" }}>+</div>
-                      <div style={{ fontSize: `${m.metaLabelFs}rem`, letterSpacing: "0.1em", color: C.cream }}>SPRINGS</div>
-                      <div style={{ fontSize: `${m.metaLabelFs}rem`, letterSpacing: "0.1em", color: C.cream }}>ART GALLERY</div>
-                      <div style={{ fontSize: `${m.metaLabelFs}rem`, letterSpacing: "0.1em", color: C.dim }}>{exhibit.id}</div>
+                      <div style={{ fontSize: `${m.barcodeFs}rem`, letterSpacing: "0.1em", color: "rgba(242,232,213,0.8)" }}>+</div>
+                      <div style={{ fontSize: `${m.barcodeFs}rem`, letterSpacing: "0.1em", color: C.cream }}>SPRINGS</div>
+                      <div style={{ fontSize: `${m.barcodeFs}rem`, letterSpacing: "0.1em", color: C.cream }}>ART GALLERY</div>
+                      <div style={{ fontSize: `${m.barcodeFs}rem`, letterSpacing: "0.1em", color: C.dim }}>{exhibit.id}</div>
                     </div>
                   </div>
                 </div>
