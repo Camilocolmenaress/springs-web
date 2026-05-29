@@ -3,7 +3,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { usePathname } from "next/navigation";
 import SensitiveImage from "@/components/SensitiveImage";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -30,10 +29,9 @@ function FadeUp({ children, delay = 0, style }: { children: React.ReactNode; del
 
 export default function MobileHome() {
   const router = useRouter();
-  const pathname = usePathname();
 
   return (
-    <div style={{ background: C.cream, minHeight: "100dvh", overflowX: "hidden" }}>
+    <div style={{ background: C.cream, minHeight: "100dvh" }}>
 
       {/* ── Fixed header — igual que desktop ────────────────────────── */}
       <header style={{
@@ -73,14 +71,28 @@ export default function MobileHome() {
       {/* ════════════════════════════════════════
           ZONA 1 — HERO (cream)
       ════════════════════════════════════════ */}
-      <section style={{ background: C.cream, paddingTop: 52, position: "relative", overflow: "hidden" }}>
+      <section style={{ background: C.cream, paddingTop: 52, position: "relative" }}>
 
-        {/* SPRINGS — cae desde arriba */}
+        {/* Producto hero — aparece primero, sube desde abajo */}
+        <motion.div
+          initial={{ y: 60, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1.0, ease: EASE, delay: 0.1 }}
+          style={{ position: "relative", padding: "8px 10px 0 10px" }}
+        >
+          <img
+            src="/images/la-fija.png"
+            alt="SPRINGS Jacket — La Fija"
+            style={{ width: "100%", maxWidth: 420, display: "block", margin: "0 auto" }}
+          />
+        </motion.div>
+
+        {/* SPRINGS — cae desde arriba, después de la papa */}
         <motion.div
           initial={{ y: -40, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.75, ease: EASE, delay: 0.15 }}
-          style={{ padding: "16px 18px 0 18px" }}
+          transition={{ duration: 0.75, ease: EASE, delay: 0.3 }}
+          style={{ padding: "4px 18px 0 18px", overflow: "hidden" }}
         >
           <h1 style={{
             ...F.display,
@@ -90,7 +102,6 @@ export default function MobileHome() {
             letterSpacing: "-0.02em",
             margin: 0,
             whiteSpace: "nowrap",
-            overflow: "visible",
           }}>
             SPRINGS
           </h1>
@@ -100,7 +111,7 @@ export default function MobileHome() {
         <motion.div
           initial={{ x: 40, opacity: 0, rotate: 2 }}
           animate={{ x: 0, opacity: 1, rotate: 0 }}
-          transition={{ duration: 0.65, ease: EASE, delay: 0.3 }}
+          transition={{ duration: 0.65, ease: EASE, delay: 0.45 }}
           style={{ padding: "4px 18px 0 18px" }}
         >
           <div style={{
@@ -123,8 +134,8 @@ export default function MobileHome() {
         <motion.div
           initial={{ x: -40, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.65, ease: EASE, delay: 0.5 }}
-          style={{ padding: "8px 18px 0 18px" }}
+          transition={{ duration: 0.65, ease: EASE, delay: 0.6 }}
+          style={{ padding: "6px 18px 0 18px", overflow: "hidden" }}
         >
           <a href="/art-gallery" style={{ textDecoration: "none", display: "block" }}>
             <h2 style={{
@@ -135,25 +146,10 @@ export default function MobileHome() {
               letterSpacing: "-0.02em",
               margin: 0,
               whiteSpace: "nowrap",
-              overflow: "hidden",
             }}>
               ART GALLERY
             </h2>
           </a>
-        </motion.div>
-
-        {/* Producto hero — sube desde abajo */}
-        <motion.div
-          initial={{ y: 60, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1.0, ease: EASE, delay: 0.1 }}
-          style={{ position: "relative", padding: "0 10px" }}
-        >
-          <img
-            src="/images/la-fija.png"
-            alt="SPRINGS Jacket — La Fija"
-            style={{ width: "100%", maxWidth: 420, display: "block", margin: "0 auto" }}
-          />
         </motion.div>
 
         {/* ↖ Jacket / La Fija */}
@@ -306,7 +302,7 @@ export default function MobileHome() {
       {/* ════════════════════════════════════════
           ZONA 1.5 — EMPAQUE
       ════════════════════════════════════════ */}
-      <section style={{ background: C.cream, padding: "48px 18px 56px 18px", position: "relative", overflow: "hidden" }}>
+      <section style={{ background: C.cream, padding: "48px 18px 56px 18px", position: "relative" }}>
         {/* SPRINGS fondo fantasma */}
         <div style={{
           position: "absolute", left: "-5%", top: "50%",
@@ -428,46 +424,6 @@ export default function MobileHome() {
         </div>
       </footer>
 
-      {/* ── Bottom nav fijo ──────────────────────────────────────────── */}
-      <nav style={{
-        position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 100,
-        height: 56,
-        display: "flex", alignItems: "stretch",
-        background: "rgba(10,8,6,0.42)",
-        backdropFilter: "blur(28px) saturate(1.4)",
-        WebkitBackdropFilter: "blur(28px) saturate(1.4)",
-        paddingBottom: "env(safe-area-inset-bottom)",
-      }}>
-        {[
-          {
-            href: "/", label: "HOME", active: pathname === "/",
-            icon: <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>,
-          },
-          {
-            href: "/art-gallery", label: "ART GALLERY", active: pathname === "/art-gallery",
-            icon: <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18"/><path d="M3 9h18M9 3v18"/></svg>,
-          },
-          {
-            href: "/menu", label: "CARTA", active: pathname === "/menu",
-            icon: <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>,
-          },
-        ].map(({ href, label, active, icon }) => (
-          <a
-            key={href}
-            href={href}
-            style={{
-              flex: 1, display: "flex", alignItems: "center", justifyContent: "center",
-              flexDirection: "row", gap: 6,
-              textDecoration: "none",
-              color: active ? C.burgundy : C.cream,
-              borderBottom: active ? `2px solid ${C.burgundy}` : "2px solid transparent",
-            }}
-          >
-            <span style={{ color: "inherit", display: "flex" }}>{icon}</span>
-            <span style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.12em", color: "inherit", textTransform: "uppercase" }}>{label}</span>
-          </a>
-        ))}
-      </nav>
 
     </div>
   );
