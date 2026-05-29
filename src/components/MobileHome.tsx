@@ -83,6 +83,8 @@ export default function MobileHome() {
 
   // ── Valores del config ──────────────────────────────────────
   const d = {
+    // hero section
+    heroPaddingBottom: sv(z, "hero", "section", "paddingBottom", 60),
     // productImage
     imgWidth:        sv(z, "hero", "productImage",      "width",        100),
     imgOffY:         sv(z, "hero", "productImage",      "offsetY",      0),
@@ -234,7 +236,7 @@ export default function MobileHome() {
           HERO — cada elemento usa
           transform independiente
       ════════════════════════════ */}
-      <section style={{ background: C.cream, position: "relative" }}>
+      <section style={{ background: C.cream, position: "relative", paddingBottom: d.heroPaddingBottom }}>
 
         {/* Producto */}
         <div style={{ transform: tx(d.imgOffY) }}>
