@@ -433,10 +433,10 @@ export default function ArtGallery() {
           height: 52,
           display: "flex", alignItems: "center", justifyContent: "space-between",
           padding: "0 16px",
-          background: "rgba(0,0,0,0.88)",
-          backdropFilter: "blur(14px)",
-          WebkitBackdropFilter: "blur(14px)",
-          borderBottom: "1px solid rgba(242,232,213,0.06)",
+          background: "rgba(0,0,0,0.65)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+          borderBottom: "1px solid rgba(242,232,213,0.08)",
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <Link href="/" style={{ ...F.display, fontSize: "1.15rem", letterSpacing: "0.04em", color: C.cream, textDecoration: "none" }}>
