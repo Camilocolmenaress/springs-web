@@ -338,113 +338,106 @@ export default function ArtGallery() {
                 height: "calc(100dvh - 52px)",
                 position: "relative",
                 background: BG,
-                display: "flex",
-                flexDirection: "column",
                 overflow: "hidden",
               }}>
 
-                {/* Product image — right aligned */}
-                <div style={{
-                  position: "absolute", top: 0, right: 0, bottom: 0,
-                  width: "70%", zIndex: 0,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                }}>
-                  <img
-                    src={exhibit.img}
-                    alt={exhibit.name}
-                    style={{
-                      height: "85%", width: "auto",
-                      objectFit: "contain",
-                      objectPosition: "center",
-                      display: "block",
-                    }}
-                  />
-                </div>
+                {/* Product image — right side, contains full dramatic shot */}
+                <img
+                  src={exhibit.img}
+                  alt={exhibit.name}
+                  style={{
+                    position: "absolute", right: 0, top: 0,
+                    width: "75%", height: "100%",
+                    objectFit: "cover", objectPosition: "center 15%",
+                    zIndex: 1,
+                  }}
+                />
 
-                {/* Left-side dark veil so sidebar text is legible */}
+                {/* Left dark gradient — makes sidebar legible */}
                 <div style={{
-                  position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none",
-                  background: "linear-gradient(to right, rgba(0,0,0,0.96) 32%, rgba(0,0,0,0.55) 62%, rgba(0,0,0,0.08) 100%)",
+                  position: "absolute", inset: 0, zIndex: 2, pointerEvents: "none",
+                  background: "linear-gradient(to right, #000 28%, rgba(0,0,0,0.72) 52%, rgba(0,0,0,0.15) 100%)",
                 }} />
                 {/* Bottom vignette */}
                 <div style={{
-                  position: "absolute", bottom: 0, left: 0, right: 0, height: "28%",
-                  zIndex: 1, pointerEvents: "none",
-                  background: "linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%)",
+                  position: "absolute", bottom: 0, left: 0, right: 0, height: "32%",
+                  zIndex: 2, pointerEvents: "none",
+                  background: "linear-gradient(to top, rgba(0,0,0,0.88) 0%, transparent 100%)",
                 }} />
 
-                {/* PEDIR AHORA — top right */}
-                <div style={{ position: "relative", zIndex: 10, display: "flex", justifyContent: "flex-end", padding: "14px 14px 0" }}>
-                  <Link href="/menu" style={{
-                    ...F.display, fontSize: "0.6rem", letterSpacing: "0.1em",
-                    background: C.cream, color: "#111",
-                    border: `1px solid ${C.cream}`,
-                    padding: "7px 14px",
-                    textDecoration: "none", display: "flex", alignItems: "center", gap: 5,
+                {/* PEDIR AHORA — absolute top right */}
+                <Link href="/menu" style={{
+                  position: "absolute", top: 14, right: 14, zIndex: 10,
+                  ...F.display, fontSize: "0.58rem", letterSpacing: "0.1em",
+                  background: C.cream, color: "#111",
+                  padding: "8px 13px",
+                  textDecoration: "none", display: "flex", alignItems: "center", gap: 4,
+                }}>
+                  PEDIR AHORA <span style={{ fontSize: "0.7rem" }}>↗</span>
+                </Link>
+
+                {/* Gallery label + product name + subtitle — absolute, overlaid on image */}
+                <div style={{
+                  position: "absolute", top: "16%", left: "34%", right: "4%",
+                  zIndex: 10, textAlign: "center",
+                }}>
+                  <div style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.18em", color: C.burgundy, marginBottom: 8 }}>
+                    SPRINGS ART GALLERY +
+                  </div>
+                  <h2 style={{
+                    ...F.display, fontSize: "clamp(2.6rem, 13vw, 5rem)", color: C.cream,
+                    lineHeight: 0.92, letterSpacing: "-0.01em",
+                    margin: "0 0 10px",
                   }}>
-                    PEDIR AHORA <span style={{ fontSize: "0.75rem" }}>↗</span>
-                  </Link>
+                    {exhibit.name}
+                  </h2>
+                  <div style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.16em", color: C.dim }}>
+                    {exhibit.subtitle} <span style={{ color: C.burgundy }}>+</span>
+                  </div>
                 </div>
 
-                {/* Main layout: left sidebar + center labels */}
-                <div style={{ position: "relative", zIndex: 10, flex: 1, display: "flex", padding: "12px 0 16px" }}>
+                {/* LEFT SIDEBAR — absolute, full height */}
+                <div style={{
+                  position: "absolute", left: 0, top: 0, bottom: 0,
+                  width: "36%", padding: "14px 0 0 16px",
+                  zIndex: 10, display: "flex", flexDirection: "column",
+                }}>
 
-                  {/* LEFT SIDEBAR */}
-                  <div style={{ width: "37%", padding: "0 0 0 16px", display: "flex", flexDirection: "column" }}>
-
-                    {/* Globe */}
-                    <div style={{ width: 64, height: 64, marginBottom: 14, flexShrink: 0 }}>
-                      <svg viewBox="0 0 110 110" width="100%" height="100%">
-                        <circle cx="55" cy="55" r={33} fill="none" stroke={C.dim} strokeWidth="1.2" opacity={0.8}/>
-                        <ellipse cx="55" cy="55" rx={12} ry={33} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.55}/>
-                        <ellipse cx="55" cy="55" rx={25} ry={33} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.45}/>
-                        <ellipse cx="55" cy="55" rx={33} ry={13} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.55}/>
-                        <ellipse cx="55" cy="55" rx={33} ry={25} fill="none" stroke={C.dim} strokeWidth="0.8" opacity={0.4}/>
-                        <line x1={22} y1="55" x2={88} y2="55" stroke={C.dim} strokeWidth="0.8" opacity={0.4}/>
-                        <line x1="55" y1={22} x2="55" y2={88} stroke={C.dim} strokeWidth="0.8" opacity={0.4}/>
-                        <path id={`mob-c-${exhibit.id}`} fill="none" d="M16,55 a39,39 0 0,1 39,-39 a39,39 0 0,1 39,39"/>
-                        <text fontFamily="JetBrains Mono, monospace" fontSize="7.2" letterSpacing="0.8" fill={C.dim} fillOpacity={0.75}>
-                          <textPath href={`#mob-c-${exhibit.id}`} startOffset="5%">FOR THE MOST CHIMBA ✦ </textPath>
-                        </text>
-                      </svg>
-                    </div>
-
-                    {/* Exhibit metadata */}
-                    <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.2em", color: C.dim, marginBottom: 2 }}>EXHIBIT</div>
-                    <div style={{ ...F.display, fontSize: "2.6rem", color: C.burgundy, lineHeight: 1, marginBottom: 10 }}>{exhibit.id}</div>
-
-                    <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.12em", color: C.cream, marginBottom: 1 }}>JACKET SERIES</div>
-                    <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.12em", color: C.dim, marginBottom: 10 }}>{exhibit.year}</div>
-
-                    <div style={{ width: 28, height: "1px", background: "rgba(242,232,213,0.28)", marginBottom: 10 }} />
-
-                    <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.1em", color: C.cream, marginBottom: 1 }}>BUCARAMANGA</div>
-                    <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.1em", color: C.dim, marginBottom: 10 }}>COLOMBIA</div>
-
-                    <div style={{ width: 28, height: "1px", background: "rgba(242,232,213,0.28)", marginBottom: 10 }} />
-
-                    <div style={{ ...F.mono, fontSize: "0.37rem", color: C.cream, marginBottom: 1 }}>7.1254° N</div>
-                    <div style={{ ...F.mono, fontSize: "0.37rem", color: C.cream, marginBottom: 14 }}>73.1198° W</div>
-
-                    <div style={{ width: 7, height: 7, borderRadius: "50%", background: C.burgundy }} />
+                  {/* Globe */}
+                  <div style={{ width: 64, height: 64, marginBottom: 14, flexShrink: 0 }}>
+                    <svg viewBox="0 0 110 110" width="100%" height="100%">
+                      <circle cx="55" cy="55" r={33} fill="none" stroke={C.dim} strokeWidth="1.2" opacity={0.8}/>
+                      <ellipse cx="55" cy="55" rx={12} ry={33} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.55}/>
+                      <ellipse cx="55" cy="55" rx={25} ry={33} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.45}/>
+                      <ellipse cx="55" cy="55" rx={33} ry={13} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.55}/>
+                      <ellipse cx="55" cy="55" rx={33} ry={25} fill="none" stroke={C.dim} strokeWidth="0.8" opacity={0.4}/>
+                      <line x1={22} y1="55" x2={88} y2="55" stroke={C.dim} strokeWidth="0.8" opacity={0.4}/>
+                      <line x1="55" y1={22} x2="55" y2={88} stroke={C.dim} strokeWidth="0.8" opacity={0.4}/>
+                      <path id={`mob-c-${exhibit.id}`} fill="none" d="M16,55 a39,39 0 0,1 39,-39 a39,39 0 0,1 39,39"/>
+                      <text fontFamily="JetBrains Mono, monospace" fontSize="7.2" letterSpacing="0.8" fill={C.dim} fillOpacity={0.75}>
+                        <textPath href={`#mob-c-${exhibit.id}`} startOffset="5%">FOR THE MOST CHIMBA ✦ </textPath>
+                      </text>
+                    </svg>
                   </div>
 
-                  {/* CENTER/RIGHT — gallery label + product name */}
-                  <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "0 14px 0 6px" }}>
-                    <div style={{ ...F.mono, fontSize: "0.42rem", letterSpacing: "0.18em", color: C.burgundy, marginBottom: 6, textAlign: "center" }}>
-                      SPRINGS ART GALLERY +
-                    </div>
-                    <h2 style={{
-                      ...F.display, fontSize: "2.8rem", color: C.cream,
-                      lineHeight: 0.92, letterSpacing: "-0.01em",
-                      margin: "0 0 7px", textAlign: "center",
-                    }}>
-                      {exhibit.name}
-                    </h2>
-                    <div style={{ ...F.mono, fontSize: "0.42rem", letterSpacing: "0.16em", color: C.dim, textAlign: "center" }}>
-                      {exhibit.subtitle} <span style={{ color: C.burgundy }}>+</span>
-                    </div>
-                  </div>
+                  {/* Exhibit metadata */}
+                  <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.2em", color: C.dim, marginBottom: 2 }}>EXHIBIT</div>
+                  <div style={{ ...F.display, fontSize: "2.6rem", color: C.burgundy, lineHeight: 1, marginBottom: 10 }}>{exhibit.id}</div>
+
+                  <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.12em", color: C.cream, marginBottom: 1 }}>JACKET SERIES</div>
+                  <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.12em", color: C.dim, marginBottom: 10 }}>{exhibit.year}</div>
+
+                  <div style={{ width: 28, height: "1px", background: "rgba(242,232,213,0.28)", marginBottom: 10 }} />
+
+                  <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.1em", color: C.cream, marginBottom: 1 }}>BUCARAMANGA</div>
+                  <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.1em", color: C.dim, marginBottom: 10 }}>COLOMBIA</div>
+
+                  <div style={{ width: 28, height: "1px", background: "rgba(242,232,213,0.28)", marginBottom: 10 }} />
+
+                  <div style={{ ...F.mono, fontSize: "0.37rem", color: C.cream, marginBottom: 1 }}>7.1254° N</div>
+                  <div style={{ ...F.mono, fontSize: "0.37rem", color: C.cream, marginBottom: 14 }}>73.1198° W</div>
+
+                  <div style={{ width: 7, height: 7, borderRadius: "50%", background: C.burgundy }} />
                 </div>
               </section>
 
