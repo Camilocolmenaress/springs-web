@@ -563,10 +563,14 @@ export default function ArtGallery() {
                 overflow: "hidden",
               }}>
 
-                {/* Product image — right side, contains full dramatic shot */}
-                <img
+                {/* Product image — brightness reveal like desktop */}
+                <motion.img
                   src={exhibit.img}
                   alt={exhibit.name}
+                  initial={{ filter: "brightness(0.06) saturate(0.3)" }}
+                  whileInView={{ filter: "brightness(1) saturate(1)" }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 2.8, delay: 0.4, ease: [0.4, 0, 0.2, 1] }}
                   style={{
                     position: "absolute", right: 0, top: 0,
                     width: `${m.imageWidth}%`, height: `${m.imageHeight}%`,
@@ -584,12 +588,39 @@ export default function ArtGallery() {
                   background: `linear-gradient(to top, rgba(0,0,0,${(m.vignetteOp / 100).toFixed(2)}) 0%, transparent 100%)`,
                 }} />
 
-                {/* Gallery label + product name + subtitle — absolute, overlaid on image */}
-                <div style={{
-                  position: "absolute", top: `${m.overlayTop}%`, left: `${m.overlayLeft}%`, right: "4%",
-                  zIndex: 10, textAlign: "center",
-                  transform: `translate(${m.overlayOffsetX}px, ${m.overlayOffsetY}px)`,
-                }}>
+                {/* Dark reveal layers — same 3-layer system as desktop */}
+                <motion.div
+                  initial={{ opacity: 1 }} whileInView={{ opacity: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 1.6, delay: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                  style={{ position: "absolute", inset: 0, zIndex: 3, pointerEvents: "none",
+                    background: "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.97) 38%, rgba(0,0,0,0.97) 100%)" }}
+                />
+                <motion.div
+                  initial={{ opacity: 1 }} whileInView={{ opacity: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 2.0, delay: 0.65, ease: [0.3, 0, 0.2, 1] }}
+                  style={{ position: "absolute", inset: 0, zIndex: 4, pointerEvents: "none",
+                    background: "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 28%, rgba(0,0,0,0.95) 65%, rgba(0,0,0,0.95) 100%)" }}
+                />
+                <motion.div
+                  initial={{ opacity: 1 }} whileInView={{ opacity: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 2.2, delay: 1.05, ease: [0.2, 0, 0.3, 1] }}
+                  style={{ position: "absolute", inset: 0, zIndex: 5, pointerEvents: "none",
+                    background: "linear-gradient(to top, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.5) 38%, rgba(0,0,0,0) 62%)" }}
+                />
+
+                {/* Gallery label + product name + subtitle */}
+                <motion.div
+                  initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.65, ease: EASE, delay: 1.0 }}
+                  style={{
+                    position: "absolute", top: `${m.overlayTop}%`, left: `${m.overlayLeft}%`, right: "4%",
+                    zIndex: 10, textAlign: "center",
+                    transform: `translate(${m.overlayOffsetX}px, ${m.overlayOffsetY}px)`,
+                  }}>
                   <div style={{
                     ...F.mono, fontSize: `${m.galleryLabelFs}rem`, letterSpacing: "0.18em", color: C.burgundy, marginBottom: 8,
                     transform: `translate(${m.galleryLabelOffX}px, ${m.galleryLabelOffY}px)`,
@@ -607,15 +638,19 @@ export default function ArtGallery() {
                   <div style={{ ...F.mono, fontSize: `${m.galleryLabelFs}rem`, letterSpacing: "0.16em", color: C.dim }}>
                     {exhibit.subtitle} <span style={{ color: C.burgundy }}>+</span>
                   </div>
-                </div>
+                </motion.div>
 
                 {/* LEFT SIDEBAR — absolute, full height */}
-                <div style={{
-                  position: "absolute", left: 0, top: 0, bottom: 0,
-                  width: `${m.sidebarW}%`, padding: "14px 0 0 16px",
-                  zIndex: 10, display: "flex", flexDirection: "column",
-                  transform: `translate(${m.sidebarOffX}px, ${m.sidebarOffY}px)`,
-                }}>
+                <motion.div
+                  initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.7, ease: EASE, delay: 0.5 }}
+                  style={{
+                    position: "absolute", left: 0, top: 0, bottom: 0,
+                    width: `${m.sidebarW}%`, padding: "14px 0 0 16px",
+                    zIndex: 10, display: "flex", flexDirection: "column",
+                    transform: `translate(${m.sidebarOffX}px, ${m.sidebarOffY}px)`,
+                  }}>
 
                   {/* Globe */}
                   <div style={{ width: m.globeSize, height: m.globeSize, marginBottom: 14, flexShrink: 0, transform: `translate(${m.globeOffX}px, ${m.globeOffY}px)` }}>
@@ -664,14 +699,18 @@ export default function ArtGallery() {
                   <div style={{ ...F.mono, fontSize: `${m.sidebarFs}rem`, color: C.cream, marginBottom: 14 }}>73.1198° W</div>
 
                   <div style={{ width: 7, height: 7, borderRadius: "50%", background: C.burgundy }} />
-                </div>
+                </motion.div>
               </section>
 
               {/* ── DETAIL ── */}
               <section style={{ background: "transparent", padding: `${m.detailPadTop}px 0 0 0`, marginTop: `${m.detailMarginTop}dvh`, position: "relative", zIndex: 20 }}>
 
                 {/* Ingredients / description / tagline — full width */}
-                <div style={{ marginBottom: 24 }}>
+                <motion.div
+                  initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.55, ease: EASE, delay: 0.1 }}
+                  style={{ marginBottom: 24 }}>
                   <div style={{ ...F.mono, fontSize: `${m.ingFs}vw`, letterSpacing: `${m.ingLS}em`, color: C.cream, lineHeight: 1.4, whiteSpace: "nowrap", marginBottom: 10, transform: `translate(${m.ingOffX}px, ${m.ingOffY}px)` }}>
                     {exhibit.ingredients.join(" · ")}
                   </div>
@@ -681,10 +720,14 @@ export default function ArtGallery() {
                   <div style={{ ...F.mono, fontSize: `${m.taglineFs}vw`, letterSpacing: `${m.taglineLS}em`, color: C.mostaza, whiteSpace: "nowrap", transform: `translate(${m.taglineOffX}px, ${m.taglineOffY}px)` }}>
                     {exhibit.tagline}
                   </div>
-                </div>
+                </motion.div>
 
                 {/* Gallery: 3 photos */}
-                <div style={{
+                <motion.div
+                  initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.55, ease: EASE, delay: 0.15 }}
+                  style={{
                   display: "grid", gridTemplateColumns: "1fr 1fr 1fr",
                   gap: m.galleryGap, marginBottom: 20,
                   transform: `translate(${m.galleryOffX}px, ${m.galleryOffY}px)`,
@@ -694,10 +737,14 @@ export default function ArtGallery() {
                       <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                     </div>
                   ))}
-                </div>
+                </motion.div>
 
                 {/* Metadata table + globe */}
-                <div style={{
+                <motion.div
+                  initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.55, ease: EASE, delay: 0.1 }}
+                  style={{
                   marginBottom: 20,
                   transform: `translate(${m.metaOffX}px, ${m.metaOffY}px)`,
                 }}>
@@ -737,10 +784,14 @@ export default function ArtGallery() {
                     </svg>
                   </div>
                 </div>
-                </div>
+                </motion.div>
 
                 {/* Quote + Springs Crew + Barcode */}
-                <div style={{
+                <motion.div
+                  initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.55, ease: EASE, delay: 0.1 }}
+                  style={{
                   display: "flex", alignItems: "flex-start",
                   paddingBottom: 28, marginBottom: 0,
                   borderBottom: "1px solid rgba(242,232,213,0.07)",
@@ -777,7 +828,7 @@ export default function ArtGallery() {
                     <div style={{ fontSize: `${m.barcodeLabelFs}rem`, letterSpacing: "0.1em", color: C.cream }}>ART GALLERY</div>
                     <div style={{ fontSize: `${m.barcodeLabelFs}rem`, letterSpacing: "0.1em", color: C.dim }}>{exhibit.id}</div>
                   </div>
-                </div>
+                </motion.div>
 
               </section>
             </div>
