@@ -583,7 +583,7 @@ export default function ArtGallery() {
               </section>
 
               {/* ── DETAIL ── */}
-              <section style={{ background: "transparent", padding: `${m.detailPadTop}px 0 0 ${m.detailPadH}px`, marginTop: m.detailMarginTop, position: "relative", zIndex: 20 }}>
+              <section style={{ background: "transparent", padding: `${m.detailPadTop}px 0 0 0`, marginTop: m.detailMarginTop, position: "relative", zIndex: 20 }}>
 
                 {/* Ingredients / description / tagline — full width */}
                 <div style={{ marginBottom: 24 }}>
