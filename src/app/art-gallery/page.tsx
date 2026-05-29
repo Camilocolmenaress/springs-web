@@ -332,15 +332,18 @@ export default function ArtGallery() {
     pullQuoteFs:      sv(mz, "detail", "pullQuote",  "fontSize",     0.78),
     pullQuoteOffY:    sv(mz, "detail", "pullQuote",  "offsetY",      0),
     pullQuoteOffX:    sv(mz, "detail", "pullQuote",  "offsetX",      0),
-    ingFs:            sv(mz, "detail", "ingredients","fontSize",     2.9),
-    ingOffY:          sv(mz, "detail", "ingredients","offsetY",      0),
-    ingOffX:          sv(mz, "detail", "ingredients","offsetX",      0),
-    descFs:           sv(mz, "detail", "description","fontSize",     2.4),
-    descOffY:         sv(mz, "detail", "description","offsetY",      0),
-    descOffX:         sv(mz, "detail", "description","offsetX",      0),
-    taglineFs:        sv(mz, "detail", "tagline",    "fontSize",     2.7),
-    taglineOffY:      sv(mz, "detail", "tagline",    "offsetY",      0),
-    taglineOffX:      sv(mz, "detail", "tagline",    "offsetX",      0),
+    ingFs:            sv(mz, "detail", "ingredients","fontSize",       2.9),
+    ingLS:            sv(mz, "detail", "ingredients","letterSpacing",  0.1),
+    ingOffY:          sv(mz, "detail", "ingredients","offsetY",        0),
+    ingOffX:          sv(mz, "detail", "ingredients","offsetX",        0),
+    descFs:           sv(mz, "detail", "description","fontSize",       2.4),
+    descLS:           sv(mz, "detail", "description","letterSpacing",  0.04),
+    descOffY:         sv(mz, "detail", "description","offsetY",        0),
+    descOffX:         sv(mz, "detail", "description","offsetX",        0),
+    taglineFs:        sv(mz, "detail", "tagline",    "fontSize",       2.7),
+    taglineLS:        sv(mz, "detail", "tagline",    "letterSpacing",  0.1),
+    taglineOffY:      sv(mz, "detail", "tagline",    "offsetY",        0),
+    taglineOffX:      sv(mz, "detail", "tagline",    "offsetX",        0),
     galleryH:         sv(mz, "detail", "gallery",     "height",       100),
     galleryGap:       sv(mz, "detail", "gallery",     "gap",          3),
     galleryOffY:      sv(mz, "detail", "gallery",     "offsetY",      0),
@@ -587,17 +590,13 @@ export default function ArtGallery() {
 
                 {/* Ingredients / description / tagline — full width */}
                 <div style={{ marginBottom: 24 }}>
-                  <div style={{ marginBottom: 10, transform: `translate(${m.ingOffX}px, ${m.ingOffY}px)` }}>
-                    {exhibit.ingredients.map(ing => (
-                      <div key={ing} style={{ ...F.mono, fontSize: `${m.ingFs}vw`, letterSpacing: "0.06em", color: C.cream, marginBottom: 3, lineHeight: 1.4, whiteSpace: "nowrap" }}>
-                        {ing}
-                      </div>
-                    ))}
+                  <div style={{ ...F.mono, fontSize: `${m.ingFs}vw`, letterSpacing: `${m.ingLS}em`, color: C.cream, lineHeight: 1.4, whiteSpace: "nowrap", marginBottom: 10, transform: `translate(${m.ingOffX}px, ${m.ingOffY}px)` }}>
+                    {exhibit.ingredients.join(" · ")}
                   </div>
-                  <p style={{ ...F.mono, fontSize: `${m.descFs}vw`, letterSpacing: "0.04em", color: C.dim, lineHeight: 1.62, margin: "0 0 8px", whiteSpace: "nowrap", transform: `translate(${m.descOffX}px, ${m.descOffY}px)` }}>
+                  <p style={{ ...F.mono, fontSize: `${m.descFs}vw`, letterSpacing: `${m.descLS}em`, color: C.dim, lineHeight: 1.62, margin: "0 0 8px", whiteSpace: "nowrap", transform: `translate(${m.descOffX}px, ${m.descOffY}px)` }}>
                     {exhibit.description.replace(/\n/g, " ")}
                   </p>
-                  <div style={{ ...F.mono, fontSize: `${m.taglineFs}vw`, letterSpacing: "0.1em", color: C.mostaza, whiteSpace: "nowrap", transform: `translate(${m.taglineOffX}px, ${m.taglineOffY}px)` }}>
+                  <div style={{ ...F.mono, fontSize: `${m.taglineFs}vw`, letterSpacing: `${m.taglineLS}em`, color: C.mostaza, whiteSpace: "nowrap", transform: `translate(${m.taglineOffX}px, ${m.taglineOffY}px)` }}>
                     {exhibit.tagline}
                   </div>
                 </div>
