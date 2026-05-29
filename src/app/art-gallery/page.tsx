@@ -474,16 +474,11 @@ export default function ArtGallery() {
                   }}
                 />
 
-                {/* Left dark gradient — makes sidebar legible */}
-                <div style={{
-                  position: "absolute", inset: 0, zIndex: 2, pointerEvents: "none",
-                  background: "linear-gradient(to right, #000 28%, rgba(0,0,0,0.72) 52%, rgba(0,0,0,0.15) 100%)",
-                }} />
                 {/* Bottom vignette */}
                 <div style={{
-                  position: "absolute", bottom: 0, left: 0, right: 0, height: "32%",
+                  position: "absolute", bottom: 0, left: 0, right: 0, height: "24%",
                   zIndex: 2, pointerEvents: "none",
-                  background: "linear-gradient(to top, rgba(0,0,0,0.88) 0%, transparent 100%)",
+                  background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%)",
                 }} />
 
                 {/* Gallery label + product name + subtitle — absolute, overlaid on image */}
@@ -521,6 +516,7 @@ export default function ArtGallery() {
 
                   {/* Globe */}
                   <div style={{ width: m.globeSize, height: m.globeSize, marginBottom: 14, flexShrink: 0, transform: `translate(${m.globeOffX}px, ${m.globeOffY}px)` }}>
+                    <style>{`@keyframes mob-globe-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}.mob-globe-ring{transform-origin:55px 55px;transform-box:fill-box;animation:mob-globe-spin 18s linear infinite}`}</style>
                     <svg viewBox="0 0 110 110" width="100%" height="100%">
                       <circle cx="55" cy="55" r={33} fill="none" stroke={C.dim} strokeWidth="1.2" opacity={0.8}/>
                       <ellipse cx="55" cy="55" rx={12} ry={33} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.55}/>
@@ -529,10 +525,12 @@ export default function ArtGallery() {
                       <ellipse cx="55" cy="55" rx={33} ry={25} fill="none" stroke={C.dim} strokeWidth="0.8" opacity={0.4}/>
                       <line x1={22} y1="55" x2={88} y2="55" stroke={C.dim} strokeWidth="0.8" opacity={0.4}/>
                       <line x1="55" y1={22} x2="55" y2={88} stroke={C.dim} strokeWidth="0.8" opacity={0.4}/>
-                      <path id={`mob-c-${exhibit.id}`} fill="none" d="M16,55 a39,39 0 0,1 39,-39 a39,39 0 0,1 39,39"/>
-                      <text fontFamily="JetBrains Mono, monospace" fontSize="7.2" letterSpacing="0.8" fill={C.dim} fillOpacity={0.75}>
-                        <textPath href={`#mob-c-${exhibit.id}`} startOffset="5%">FOR THE MOST CHIMBA ✦ </textPath>
-                      </text>
+                      <g className="mob-globe-ring">
+                        <path id={`mob-c-${exhibit.id}`} fill="none" d="M16,55 a39,39 0 0,1 39,-39 a39,39 0 0,1 39,39"/>
+                        <text fontFamily="JetBrains Mono, monospace" fontSize="7.2" letterSpacing="0.8" fill={C.dim} fillOpacity={0.75}>
+                          <textPath href={`#mob-c-${exhibit.id}`} startOffset="5%">FOR THE MOST CHIMBA PEOPLE ✦ </textPath>
+                        </text>
+                      </g>
                     </svg>
                   </div>
 
