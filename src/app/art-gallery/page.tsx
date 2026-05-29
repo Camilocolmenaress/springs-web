@@ -581,7 +581,7 @@ export default function ArtGallery() {
               </section>
 
               {/* ── DETAIL ── */}
-              <section style={{ background: BG, padding: `${m.detailPadTop}px ${m.detailPadH}px 0`, marginTop: m.detailMarginTop, position: "relative", zIndex: 20 }}>
+              <section style={{ background: "transparent", padding: `${m.detailPadTop}px ${m.detailPadH}px 0`, marginTop: m.detailMarginTop, position: "relative", zIndex: 20 }}>
 
                 {/* Pull quote (left) + Ingredients/desc/tagline (right) */}
                 <div style={{ display: "flex", gap: 14, marginBottom: 24 }}>
