@@ -387,6 +387,7 @@ export default function MobileHome() {
       {/* ════════ MARQUEE ════════ */}
       <div style={{ overflow: "hidden", borderTop: `1.5px solid ${C.tinta}`, borderBottom: `1.5px solid ${C.tinta}`, padding: `${d.marqueePaddingV}px 0`, background: C.cream, transform: tx(d.marqueeOffY) }}>
         <motion.div
+          key={d.marqueeSpeed}
           animate={{ x: ["0%", "-50%"] }}
           transition={{ duration: d.marqueeSpeed, repeat: Infinity, ease: "linear" }}
           style={{ display: "flex", alignItems: "center", whiteSpace: "nowrap" }}
