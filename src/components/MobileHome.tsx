@@ -194,16 +194,18 @@ export default function MobileHome() {
     container: scrollContainerRef,
     offset: ["start end", "end start"],
   });
-  const bagXRaw = useTransform(scrollYProgress, [0.15, 0.45], [-140, 0]);
-  const bagOpRaw= useTransform(scrollYProgress, [0.15, 0.20], [0, 1]);
-  const boxXRaw = useTransform(scrollYProgress, [0.20, 0.50], [140, 0]);
-  const boxOpRaw= useTransform(scrollYProgress, [0.20, 0.25], [0, 1]);
-  const cupXRaw = useTransform(scrollYProgress, [0.25, 0.55], [-120, 0]);
-  const cupOpRaw= useTransform(scrollYProgress, [0.25, 0.30], [0, 1]);
-  const sp = { stiffness: d.scrollStiffness, damping: d.scrollDamping };
-  const bagX  = useSpring(bagXRaw,  sp);  const bagOp = useSpring(bagOpRaw, sp);
-  const boxX  = useSpring(boxXRaw,  sp);  const boxOp = useSpring(boxOpRaw, sp);
-  const cupX  = useSpring(cupXRaw,  sp);  const cupOp = useSpring(cupOpRaw, sp);
+  // diagonal: bolsa izquierda-arriba → derecha-abajo
+  const bagX  = useTransform(scrollYProgress, [0.15, 0.48], [-180, 0]);
+  const bagY  = useTransform(scrollYProgress, [0.15, 0.48], [-130, 0]);
+  const bagOp = useTransform(scrollYProgress, [0.15, 0.21], [0, 1]);
+  // diagonal: caja derecha-arriba → izquierda-abajo
+  const boxX  = useTransform(scrollYProgress, [0.20, 0.53], [180, 0]);
+  const boxY  = useTransform(scrollYProgress, [0.20, 0.53], [-110, 0]);
+  const boxOp = useTransform(scrollYProgress, [0.20, 0.26], [0, 1]);
+  // diagonal: vaso derecha-arriba → izquierda-abajo
+  const cupX  = useTransform(scrollYProgress, [0.25, 0.58], [160, 0]);
+  const cupY  = useTransform(scrollYProgress, [0.25, 0.58], [-90, 0]);
+  const cupOp = useTransform(scrollYProgress, [0.25, 0.31], [0, 1]);
 
   return (
     <div
@@ -419,22 +421,22 @@ export default function MobileHome() {
           SPRINGS
         </div>
         <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column" }}>
-          <div style={{ transform: `translateX(${d.bagOffX}px)` }}>
-            <motion.div style={{ x: bagX, opacity: bagOp, y: d.bagOffY, display: "flex", justifyContent: "center", marginBottom: d.bagMbottom }}>
+          <div style={{ transform: `translateX(${d.bagOffX}px) translateY(${d.bagOffY}px)` }}>
+            <motion.div style={{ x: bagX, y: bagY, opacity: bagOp, display: "flex", justifyContent: "center", marginBottom: d.bagMbottom }}>
               <img src="/images/packaging-bag.png" alt="Bolsa Springs"
                 style={{ width: `${d.bagWidth}%`, maxWidth: 280, display: "block", filter: "drop-shadow(0 28px 52px rgba(26,10,12,0.20))" }}
               />
             </motion.div>
           </div>
-          <div style={{ transform: `translateX(${d.boxOffX}px)` }}>
-            <motion.div style={{ x: boxX, opacity: boxOp, y: d.boxOffY, display: "flex", justifyContent: "flex-end", marginBottom: d.boxMbottom }}>
+          <div style={{ transform: `translateX(${d.boxOffX}px) translateY(${d.boxOffY}px)` }}>
+            <motion.div style={{ x: boxX, y: boxY, opacity: boxOp, display: "flex", justifyContent: "flex-end", marginBottom: d.boxMbottom }}>
               <img src="/images/packaging-box.png" alt="Caja Springs"
                 style={{ width: `${d.boxWidth}%`, maxWidth: 220, display: "block", filter: "drop-shadow(0 20px 40px rgba(26,10,12,0.18))", transform: `rotate(${d.boxRotation}deg)` }}
               />
             </motion.div>
           </div>
-          <div style={{ transform: `translateX(${d.cupOffX}px)` }}>
-            <motion.div style={{ x: cupX, opacity: cupOp, y: d.cupOffY, display: "flex", justifyContent: "flex-start", paddingLeft: `${d.cupPaddingLeft}%` }}>
+          <div style={{ transform: `translateX(${d.cupOffX}px) translateY(${d.cupOffY}px)` }}>
+            <motion.div style={{ x: cupX, y: cupY, opacity: cupOp, display: "flex", justifyContent: "flex-start", paddingLeft: `${d.cupPaddingLeft}%` }}>
               <img src="/images/packaging-cup.png" alt="Vaso Springs"
                 style={{ width: `${d.cupWidth}%`, maxWidth: 160, display: "block", filter: "drop-shadow(0 16px 32px rgba(26,10,12,0.16))", transform: `rotate(${d.cupRotation}deg)` }}
               />
