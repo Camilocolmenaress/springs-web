@@ -58,14 +58,14 @@
           "type": "text",
           "props": {
             "fontSize": { "value": 15.5, "unit": "vw", "min": 4,    "max": 40,   "step": 0.5 },
-            "offsetY":  { "value": -508, "unit": "px", "min": -1000,"max": 400,  "step": 2 },
+            "offsetY":  { "value": -542, "unit": "px", "min": -1000,"max": 400,  "step": 2 },
             "offsetX":  { "value": -12,  "unit": "px", "min": -400, "max": 400,  "step": 2 }
           }
         },
         "locationLabel": {
           "type": "text",
           "props": {
-            "offsetY":  { "value": -588, "unit": "px", "min": -1000,"max": 400,  "step": 2 },
+            "offsetY":  { "value": -616, "unit": "px", "min": -1000,"max": 400,  "step": 2 },
             "offsetX":  { "value": 276,  "unit": "px", "min": -400, "max": 400,  "step": 2 },
             "fontSize": { "value": 5.0,  "unit": "vw", "min": 2,    "max": 14,   "step": 0.5 }
           }
@@ -73,9 +73,9 @@
         "locationInfo": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 0.4,  "unit": "rem", "min": 0.2,  "max": 1.0,  "step": 0.02 },
-            "offsetY":  { "value": 0,    "unit": "px",  "min": -1000,"max": 400,  "step": 2 },
-            "offsetX":  { "value": 0,    "unit": "px",  "min": -400, "max": 400,  "step": 2 }
+            "fontSize": { "value": 0.46, "unit": "rem", "min": 0.2,  "max": 1.0,  "step": 0.02 },
+            "offsetY":  { "value": -658, "unit": "px",  "min": -1000,"max": 400,  "step": 2 },
+            "offsetX":  { "value": -6,   "unit": "px",  "min": -400, "max": 400,  "step": 2 }
           }
         },
         "miercolesSticker": {
@@ -91,16 +91,16 @@
           "type": "text",
           "props": {
             "fontSize": { "value": 0.54, "unit": "rem", "min": 0.1,  "max": 1.2,  "step": 0.02 },
-            "offsetY":  { "value": -610, "unit": "px",  "min": -1000,"max": 400,  "step": 2 }
+            "offsetY":  { "value": -638, "unit": "px",  "min": -1000,"max": 400,  "step": 2 }
           }
         },
         "subtitle": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 6,  "unit": "vw", "min": 2,    "max": 16,   "step": 0.5 },
-            "rotation": { "value": -2, "unit": "deg","min": -20,  "max": 20,   "step": 0.5 },
-            "offsetY":  { "value": 0,  "unit": "px", "min": -1000,"max": 400,  "step": 2 },
-            "offsetX":  { "value": 0,  "unit": "px", "min": -400, "max": 400,  "step": 2 }
+            "fontSize": { "value": 5.5, "unit": "vw", "min": 2,    "max": 16,   "step": 0.5 },
+            "rotation": { "value": -2,  "unit": "deg","min": -20,  "max": 20,   "step": 0.5 },
+            "offsetY":  { "value": -30, "unit": "px", "min": -1000,"max": 400,  "step": 2 },
+            "offsetX":  { "value": 80,  "unit": "px", "min": -400, "max": 400,  "step": 2 }
           }
         },
         "marquee": {
