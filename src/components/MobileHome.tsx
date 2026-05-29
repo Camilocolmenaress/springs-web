@@ -31,7 +31,7 @@ export default function MobileHome() {
   const router = useRouter();
 
   return (
-    <div style={{ background: C.cream, minHeight: "100dvh" }}>
+    <div style={{ background: C.cream, height: "100dvh", overflowY: "auto", overflowX: "hidden" }}>
 
       {/* ── Fixed header — igual que desktop ────────────────────────── */}
       <header style={{
