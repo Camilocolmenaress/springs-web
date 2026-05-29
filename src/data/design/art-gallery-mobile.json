@@ -72,9 +72,10 @@
         "layout": {
           "type": "text",
           "props": {
-            "paddingTop":   { "value": 24, "unit": "px", "min": 0,  "max": 80, "step": 4 },
-            "paddingH":     { "value": 16, "unit": "px", "min": 8,  "max": 40, "step": 2 },
-            "leftColWidth": { "value": 39, "unit": "%",  "min": 20, "max": 60, "step": 1 }
+            "marginTop":    { "value": 0,  "unit": "px", "min": -300, "max": 80,  "step": 4 },
+            "paddingTop":   { "value": 24, "unit": "px", "min": 0,    "max": 80,  "step": 4 },
+            "paddingH":     { "value": 16, "unit": "px", "min": 8,    "max": 40,  "step": 2 },
+            "leftColWidth": { "value": 39, "unit": "%",  "min": 20,   "max": 60,  "step": 1 }
           }
         },
         "pullQuote": {

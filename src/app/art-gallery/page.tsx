@@ -325,7 +325,8 @@ export default function ArtGallery() {
     globeTextOffset:  sv(mz, "hero", "globe",        "textOffset",   7),
     vignetteSpread:   sv(mz, "hero", "vignette",     "spread",       55),
     vignetteOp:       sv(mz, "hero", "vignette",     "opacity",      90),
-    detailPadTop:     sv(mz, "detail", "layout",     "paddingTop",   28),
+    detailMarginTop:  sv(mz, "detail", "layout",     "marginTop",    0),
+    detailPadTop:     sv(mz, "detail", "layout",     "paddingTop",   24),
     detailPadH:       sv(mz, "detail", "layout",     "paddingH",     16),
     leftColW:         sv(mz, "detail", "layout",     "leftColWidth", 44),
     pullQuoteFs:      sv(mz, "detail", "pullQuote",  "fontSize",     0.78),
@@ -579,7 +580,7 @@ export default function ArtGallery() {
               </section>
 
               {/* ── DETAIL ── */}
-              <section style={{ background: BG, padding: `${m.detailPadTop}px ${m.detailPadH}px 0` }}>
+              <section style={{ background: BG, padding: `${m.detailPadTop}px ${m.detailPadH}px 0`, marginTop: m.detailMarginTop }}>
 
                 {/* Pull quote (left) + Ingredients/desc/tagline (right) */}
                 <div style={{ display: "flex", gap: 14, marginBottom: 24 }}>
