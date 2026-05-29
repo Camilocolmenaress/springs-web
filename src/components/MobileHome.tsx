@@ -152,6 +152,11 @@ export default function MobileHome() {
     descFontSize:    sv(z, "cultura", "description",        "fontSize",  0.56),
     descLineHeight:  sv(z, "cultura", "description",        "lineHeight",2.1),
     descOffY:        sv(z, "cultura", "description",        "offsetY",   0),
+    // subtitle
+    subtitleFontSize: sv(z, "hero", "subtitle", "fontSize",  6),
+    subtitleRotation: sv(z, "hero", "subtitle", "rotation",  -2),
+    subtitleOffY:     sv(z, "hero", "subtitle", "offsetY",   0),
+    subtitleOffX:     sv(z, "hero", "subtitle", "offsetX",   0),
     // marquee
     marqueeFontSize: sv(z, "hero", "marquee", "fontSize", 5.5),
     marqueeSpeed:    sv(z, "hero", "marquee", "speed",    18),
@@ -268,6 +273,19 @@ export default function MobileHome() {
             style={{ width: `${d.underlineWidth}%`, height: "auto", marginTop: 4, opacity: 0.85 }}
           />
         </motion.div>
+
+        {/* Subtitle — JACKETS DIFFERENT BY DEFAULT */}
+        <div style={{ padding: "0 18px", transform: tx(d.subtitleOffY, d.subtitleOffX) }}>
+          <motion.div
+            initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.65, ease: EASE, delay: 0.52 }}
+            style={{ transform: `rotate(${d.subtitleRotation}deg)`, transformOrigin: "left center", display: "inline-block" }}
+          >
+            <span style={{ fontFamily: "var(--font-marker), cursive", fontSize: `${d.subtitleFontSize}vw`, color: C.burgundy, lineHeight: 1, letterSpacing: "0.02em", textTransform: "uppercase", whiteSpace: "nowrap" }}>
+              JACKETS DIFFERENT BY DEFAULT
+            </span>
+          </motion.div>
+        </div>
 
         {/* Sensitive Content — wrapper de posición separado del motion para que tx() no lo pise y */}
         <div style={{ margin: `16px ${d.sensMarginH}px`, transform: tx(d.sensOffY) }}>
