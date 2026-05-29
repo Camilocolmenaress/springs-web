@@ -1,0 +1,180 @@
+{
+  "page": "home-mobile",
+  "zones": {
+    "hero": {
+      "label": "Hero",
+      "elements": {
+        "productImage": {
+          "type": "image",
+          "props": {
+            "width":    { "value": 100, "unit": "%",  "min": 60,  "max": 100, "step": 1 },
+            "offsetY":  { "value": 0,   "unit": "px", "min": -60, "max": 60,  "step": 2 }
+          }
+        },
+        "jacketClubSticker": {
+          "type": "image",
+          "props": {
+            "size":     { "value": 36,  "unit": "%",   "min": 16,  "max": 60,  "step": 1 },
+            "top":      { "value": 12,  "unit": "%",   "min": 0,   "max": 60,  "step": 1 },
+            "right":    { "value": 4,   "unit": "%",   "min": 0,   "max": 40,  "step": 1 },
+            "rotation": { "value": 8,   "unit": "deg", "min": -45, "max": 45,  "step": 1 }
+          }
+        },
+        "globe": {
+          "type": "image",
+          "props": {
+            "size":     { "value": 72, "unit": "px", "min": 40, "max": 120, "step": 4 },
+            "offsetY":  { "value": 6,  "unit": "px", "min": 0,  "max": 40,  "step": 2 },
+            "textOffset": { "value": 7, "unit": "%", "min": 0,  "max": 50,  "step": 1 }
+          }
+        },
+        "underline": {
+          "type": "image",
+          "props": {
+            "width":     { "value": 68, "unit": "%",  "min": 20, "max": 100, "step": 1 },
+            "marginTop": { "value": 4,  "unit": "px", "min": 0,  "max": 24,  "step": 1 }
+          }
+        },
+        "sensitiveImage": {
+          "type": "image",
+          "props": {
+            "marginH":  { "value": 18,  "unit": "px",  "min": 0,  "max": 40, "step": 2 },
+            "marginV":  { "value": 16,  "unit": "px",  "min": 0,  "max": 40, "step": 2 },
+            "fontSize": { "value": 3.5, "unit": "vw",  "min": 1,  "max": 8,  "step": 0.1 },
+            "opacity":  { "value": 60,  "unit": "%",   "min": 0,  "max": 100, "step": 5 }
+          }
+        },
+        "artGallery": {
+          "type": "text",
+          "props": {
+            "fontSize": { "value": 18, "unit": "vw",  "min": 10, "max": 28, "step": 0.5 },
+            "offsetY":  { "value": 0,  "unit": "px",  "min": -30, "max": 30, "step": 2 }
+          }
+        },
+        "miercolesSticker": {
+          "type": "image",
+          "props": {
+            "size":     { "value": 38,  "unit": "%",   "min": 20, "max": 60,  "step": 1 },
+            "right":    { "value": 12,  "unit": "px",  "min": -20, "max": 60, "step": 2 },
+            "top":      { "value": 0,   "unit": "px",  "min": -20, "max": 60, "step": 2 },
+            "rotation": { "value": -8,  "unit": "deg", "min": -45, "max": 45, "step": 1 }
+          }
+        },
+        "productList": {
+          "type": "text",
+          "props": {
+            "fontSize":  { "value": 0.42, "unit": "rem", "min": 0.2, "max": 0.8, "step": 0.02 },
+            "marginTop": { "value": 12,   "unit": "px",  "min": 0,   "max": 40,  "step": 2 }
+          }
+        }
+      }
+    },
+    "packaging": {
+      "label": "Empaque",
+      "elements": {
+        "bag": {
+          "type": "image",
+          "props": {
+            "width":        { "value": 70,  "unit": "%",  "min": 40, "max": 100, "step": 2 },
+            "marginBottom": { "value": -40, "unit": "px", "min": -80, "max": 0,  "step": 4 }
+          }
+        },
+        "box": {
+          "type": "image",
+          "props": {
+            "width":        { "value": 55,  "unit": "%",   "min": 30, "max": 80,  "step": 2 },
+            "rotation":     { "value": 4,   "unit": "deg", "min": -30, "max": 30, "step": 1 },
+            "marginBottom": { "value": -30, "unit": "px",  "min": -80, "max": 0,  "step": 4 }
+          }
+        },
+        "cup": {
+          "type": "image",
+          "props": {
+            "width":       { "value": 40, "unit": "%",   "min": 20, "max": 60,  "step": 2 },
+            "rotation":    { "value": -3, "unit": "deg", "min": -30, "max": 30, "step": 1 },
+            "paddingLeft": { "value": 8,  "unit": "%",   "min": 0,  "max": 30,  "step": 1 }
+          }
+        },
+        "scroll": {
+          "type": "config",
+          "props": {
+            "stiffness": { "value": 90, "unit": "px", "min": 20, "max": 200, "step": 5 },
+            "damping":   { "value": 22, "unit": "px", "min": 5,  "max": 50,  "step": 1 }
+          }
+        }
+      }
+    },
+    "cultura": {
+      "label": "Cultura",
+      "elements": {
+        "differentByDefault": {
+          "type": "text",
+          "props": {
+            "fontSize": { "value": 15, "unit": "vw", "min": 8,  "max": 25,  "step": 0.5 },
+            "opacity":  { "value": 18, "unit": "%",  "min": 0,  "max": 100, "step": 2 }
+          }
+        },
+        "hashtag": {
+          "type": "text",
+          "props": {
+            "fontSize": { "value": 0.5, "unit": "rem", "min": 0.3, "max": 1.0, "step": 0.02 }
+          }
+        },
+        "thisIs": {
+          "type": "text",
+          "props": {
+            "fontSize": { "value": 5.5, "unit": "vw", "min": 2, "max": 12, "step": 0.5 }
+          }
+        },
+        "ourCulture": {
+          "type": "text",
+          "props": {
+            "fontSize": { "value": 17, "unit": "vw", "min": 8, "max": 28, "step": 0.5 }
+          }
+        },
+        "description": {
+          "type": "text",
+          "props": {
+            "fontSize":    { "value": 0.56, "unit": "rem", "min": 0.3, "max": 1.2, "step": 0.02 },
+            "lineHeight":  { "value": 2.1,  "unit": "px",  "min": 1,   "max": 4,   "step": 0.1 },
+            "marginTop":   { "value": 28,   "unit": "px",  "min": 8,   "max": 60,  "step": 2 }
+          }
+        }
+      }
+    },
+    "pedirYa": {
+      "label": "Pedir Ya",
+      "elements": {
+        "title": {
+          "type": "text",
+          "props": {
+            "fontSize": { "value": 25, "unit": "vw", "min": 12, "max": 40, "step": 0.5 },
+            "marginBottom": { "value": 40, "unit": "px", "min": 16, "max": 80, "step": 4 }
+          }
+        },
+        "tagline": {
+          "type": "text",
+          "props": {
+            "fontSize":   { "value": 0.5, "unit": "rem", "min": 0.3, "max": 1.0, "step": 0.02 },
+            "marginBottom": { "value": 16, "unit": "px", "min": 4,   "max": 48,  "step": 2 }
+          }
+        },
+        "apps": {
+          "type": "block",
+          "props": {
+            "gap":        { "value": 10, "unit": "px", "min": 4,  "max": 32, "step": 2 },
+            "paddingV":   { "value": 16, "unit": "px", "min": 8,  "max": 32, "step": 2 },
+            "marginBottom": { "value": 40, "unit": "px", "min": 16, "max": 80, "step": 4 }
+          }
+        },
+        "info": {
+          "type": "block",
+          "props": {
+            "paddingV": { "value": 16, "unit": "px", "min": 8, "max": 32, "step": 2 },
+            "gap":      { "value": 1,  "unit": "px", "min": 0, "max": 16, "step": 1 }
+          }
+        }
+      }
+    }
+  }
+}
