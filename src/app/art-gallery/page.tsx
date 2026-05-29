@@ -449,11 +449,16 @@ export default function ArtGallery() {
           </div>
           <Link href="/menu" style={{
             ...F.display, fontSize: "0.58rem", letterSpacing: "0.1em",
-            background: C.cream, color: "#111",
+            background: "transparent", color: C.cream,
+            border: `1px solid ${C.cream}`,
             padding: "8px 13px",
-            textDecoration: "none", display: "flex", alignItems: "center", gap: 4,
+            textDecoration: "none", display: "flex", alignItems: "center", gap: 6,
           }}>
-            PEDIR AHORA <span style={{ fontSize: "0.7rem" }}>↗</span>
+            PEDIR AHORA
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="1" y1="11" x2="11" y2="1"/>
+              <polyline points="4,1 11,1 11,8"/>
+            </svg>
           </Link>
         </header>
 
@@ -525,7 +530,7 @@ export default function ArtGallery() {
               display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center",
               gap: 6,
               textDecoration: "none",
-              color: item.active ? C.burgundy : "rgba(242,232,213,0.35)",
+              color: item.active ? C.burgundy : C.cream,
               position: "relative",
             }}>
               {item.active && (
@@ -537,7 +542,7 @@ export default function ArtGallery() {
               {item.icon}
               <span style={{
                 ...F.mono, fontSize: "0.42rem", letterSpacing: "0.08em",
-                color: item.active ? C.burgundy : "rgba(242,232,213,0.35)",
+                color: item.active ? C.burgundy : C.cream,
               }}>
                 {item.label}
               </span>
