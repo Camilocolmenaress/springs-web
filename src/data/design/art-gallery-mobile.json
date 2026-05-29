@@ -51,9 +51,17 @@
         "globe": {
           "type": "image",
           "props": {
-            "size":    { "value": 80,  "unit": "px", "min": 40,   "max": 120, "step": 4 },
-            "offsetY": { "value": 0,   "unit": "px", "min": -80,  "max": 80,  "step": 4 },
-            "offsetX": { "value": -12, "unit": "px", "min": -80,  "max": 80,  "step": 4 }
+            "size":       { "value": 80,  "unit": "px", "min": 40,  "max": 120, "step": 4  },
+            "offsetY":    { "value": 0,   "unit": "px", "min": -80, "max": 80,  "step": 4  },
+            "offsetX":    { "value": -12, "unit": "px", "min": -80, "max": 80,  "step": 4  },
+            "textOffset": { "value": 7,   "unit": "%",  "min": 0,   "max": 100, "step": 0.5 }
+          }
+        },
+        "vignette": {
+          "type": "text",
+          "props": {
+            "height":  { "value": 45, "unit": "%", "min": 0, "max": 90, "step": 2 },
+            "opacity": { "value": 90, "unit": "%", "min": 0, "max": 100, "step": 5 }
           }
         }
       }

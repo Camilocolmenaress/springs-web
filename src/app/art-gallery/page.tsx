@@ -322,6 +322,9 @@ export default function ArtGallery() {
     globeSize:        sv(mz, "hero", "globe",        "size",         64),
     globeOffY:        sv(mz, "hero", "globe",        "offsetY",      0),
     globeOffX:        sv(mz, "hero", "globe",        "offsetX",      0),
+    globeTextOffset:  sv(mz, "hero", "globe",        "textOffset",   7),
+    vignetteH:        sv(mz, "hero", "vignette",     "height",       45),
+    vignetteOp:       sv(mz, "hero", "vignette",     "opacity",      90),
     detailPadTop:     sv(mz, "detail", "layout",     "paddingTop",   28),
     detailPadH:       sv(mz, "detail", "layout",     "paddingH",     16),
     leftColW:         sv(mz, "detail", "layout",     "leftColWidth", 44),
@@ -468,17 +471,18 @@ export default function ArtGallery() {
                   style={{
                     position: "absolute", right: 0, top: 0,
                     width: `${m.imageWidth}%`, height: `${m.imageHeight}%`,
-                    objectFit: "cover", objectPosition: `center ${m.imageObjectY}%`,
+                    objectFit: "contain", objectPosition: `center ${m.imageObjectY}%`,
                     transform: `translate(${m.imageOffsetX}px, ${m.imageOffsetY}px)`,
                     zIndex: 1,
                   }}
                 />
 
-                {/* Bottom vignette */}
+                {/* Bottom vignette — configurable */}
                 <div style={{
-                  position: "absolute", bottom: 0, left: 0, right: 0, height: "24%",
+                  position: "absolute", bottom: 0, left: 0, right: 0,
+                  height: `${m.vignetteH}%`,
                   zIndex: 2, pointerEvents: "none",
-                  background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%)",
+                  background: `linear-gradient(to top, rgba(0,0,0,${(m.vignetteOp / 100).toFixed(2)}) 0%, transparent 100%)`,
                 }} />
 
                 {/* Gallery label + product name + subtitle — absolute, overlaid on image */}
@@ -538,7 +542,7 @@ export default function ArtGallery() {
                       {/* full-circle text path (same formula as home desktop) */}
                       <path id={`mob-c-${exhibit.id}`} fill="none" d="M34,91.4 a42,42 0 0,1 42,-72.7 a42,42 0 0,1 -42,72.7"/>
                       <text fontFamily="JetBrains Mono, monospace" fontSize="7.5" letterSpacing="1.0" fill={C.dim} fillOpacity={0.8}>
-                        <textPath href={`#mob-c-${exhibit.id}`} startOffset="7%">FOR THE MOST CHIMBA PEOPLE ✦ </textPath>
+                        <textPath href={`#mob-c-${exhibit.id}`} startOffset={`${m.globeTextOffset}%`}>FOR THE MOST CHIMBA PEOPLE ✦ </textPath>
                       </text>
                     </svg>
                   </div>
