@@ -117,6 +117,10 @@ export default function MobileHome() {
     locFontSize:     sv(z, "hero", "locationLabel",     "fontSize",     5.5),
     locOffY:         sv(z, "hero", "locationLabel",     "offsetY",      0),
     locOffX:         sv(z, "hero", "locationLabel",     "offsetX",      0),
+    // location info (barbosa)
+    locInfoFontSize: sv(z, "hero", "locationInfo",      "fontSize",     0.4),
+    locInfoOffY:     sv(z, "hero", "locationInfo",      "offsetY",      0),
+    locInfoOffX:     sv(z, "hero", "locationInfo",      "offsetX",      0),
     // miercoles sticker
     mdSize:          sv(z, "hero", "miercolesSticker",  "size",         38),
     mdRight:         sv(z, "hero", "miercolesSticker",  "right",        12),
@@ -313,28 +317,38 @@ export default function MobileHome() {
 
         {/* Location label + Miércoles sticker — cada uno independiente */}
         <div style={{ position: "relative", padding: "8px 18px 0 18px", minHeight: 80 }}>
+          {/* Jacket La Fija */}
           <div style={{ transform: tx(d.locOffY, d.locOffX) }}>
-          <motion.div
-            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, ease: EASE, delay: 0.65 }}
-          >
-            <div style={{ ...F.display, fontSize: `${d.locFontSize}vw`, color: C.tinta, lineHeight: 1.1 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.25em" }}>
-                <svg aria-hidden="true" width="0.65em" height="0.65em" viewBox="0 0 24 24" fill="none">
-                  <line x1="21" y1="21" x2="3" y2="3" stroke={C.tinta} strokeWidth="4.5" strokeLinecap="round"/>
-                  <polyline points="3,11 3,3 11,3" fill="none" stroke={C.tinta} strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                Jacket
+            <motion.div
+              initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, ease: EASE, delay: 0.65 }}
+            >
+              <div style={{ ...F.display, fontSize: `${d.locFontSize}vw`, color: C.tinta, lineHeight: 1.1 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.25em" }}>
+                  <svg aria-hidden="true" width="0.65em" height="0.65em" viewBox="0 0 24 24" fill="none">
+                    <line x1="21" y1="21" x2="3" y2="3" stroke={C.tinta} strokeWidth="4.5" strokeLinecap="round"/>
+                    <polyline points="3,11 3,3 11,3" fill="none" stroke={C.tinta} strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  Jacket
+                </div>
+                <div style={{ paddingLeft: "calc(0.65em + 0.25em)" }}>La Fija</div>
               </div>
-              <div style={{ paddingLeft: "calc(0.65em + 0.25em)" }}>La Fija</div>
-            </div>
-            <div style={{ display: "flex", alignItems: "flex-start", gap: 5, marginTop: 6 }}>
-              <span style={{ ...F.mono, fontSize: "0.8rem", color: C.tinta, opacity: 0.5, lineHeight: 1 }}>⊕</span>
-              <div style={{ ...F.mono, fontSize: "0.4rem", letterSpacing: "0.14em", color: C.tinta, lineHeight: 1.6, textTransform: "uppercase", opacity: 0.6 }}>
-                Barbosa STDR – COLOMBIA<br />EST. 2025
+            </motion.div>
+          </div>
+
+          {/* Barbosa info — elemento completamente independiente */}
+          <div style={{ transform: tx(d.locInfoOffY, d.locInfoOffX) }}>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, ease: EASE, delay: 0.7 }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                <span style={{ ...F.mono, fontSize: `${d.locInfoFontSize}rem`, color: C.tinta, opacity: 0.5, lineHeight: 1 }}>⊕</span>
+                <span style={{ ...F.mono, fontSize: `${d.locInfoFontSize}rem`, letterSpacing: "0.14em", color: C.tinta, lineHeight: 1, textTransform: "uppercase", opacity: 0.6, whiteSpace: "nowrap" }}>
+                  BARBOSA STDR – COLOMBIA · EST. 2025
+                </span>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
           </div>
 
           {/* Miércoles placeholder — el sticker real está al final de la sección */}
