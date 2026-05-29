@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Menu from "@/components/Menu";
 import Cart, { type CartItem, type CartExtra } from "@/components/Cart";
@@ -18,6 +18,7 @@ function sv(prop: unknown, fallback: number): number {
 export default function MenuPage() {
   const desktop = useDesignConfig("menu");
   const mobile  = useDesignConfig("menu-mobile");
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
@@ -74,7 +75,12 @@ export default function MenuPage() {
     setCartItems(prev => prev.filter(i => i.cartId !== cartId));
   }
 
-  // Edit mode: frame 390px + DevPanel escribe SOLO en menu-mobile.json
+  async function handleMobileSave() {
+    await mobile.save();
+    iframeRef.current?.contentWindow?.location.reload();
+  }
+
+  // Edit mode: iframe 390×844 + DevPanel escribe SOLO en menu-mobile.json
   if (desktop.editMode) {
     return (
       <div style={{ width: "100vw", height: "100vh", background: "#0d0d0d", position: "relative", overflow: "hidden" }}>
@@ -89,53 +95,23 @@ export default function MenuPage() {
           390 × 844 — MOBILE PREVIEW
         </div>
 
-        <div style={{
-          position: "absolute", left: 0, top: 20,
-          width: 390, height: "calc(100vh - 20px)",
-          overflow: "hidden",
-          outline: "1px solid rgba(242,232,213,0.12)",
-          transform: "translate(0,0)",
-        }}>
-          <Link
-            href="/"
-            aria-label="Volver al home"
-            style={{
-              position: "absolute", top: 16, left: 16, zIndex: 50,
-              display: "inline-flex", alignItems: "center", gap: 8,
-              padding: "8px 14px", background: "var(--cream)", color: "var(--tinta)",
-              border: "1px solid var(--tinta)",
-              fontFamily: "var(--font-jetbrains-mono), monospace",
-              fontSize: "0.65rem", letterSpacing: "0.22em",
-              textTransform: "uppercase", textDecoration: "none",
-              mixBlendMode: "multiply",
-            }}
-          >
-            <span aria-hidden>←</span> VOLVER
-          </Link>
-          <Menu onAgregar={handleAgregar} config={mobile.config} />
-          <Cart
-            items={cartItems}
-            onAdd={handleAdd}
-            onRemove={handleRemove}
-            onDelete={handleDelete}
-            bumpSignal={cartBump}
-            floatBottom={cartBottom}
-            floatRight={cartRight}
-          />
-          {pendingProduct && (
-            <ExtrasModal
-              product={pendingProduct}
-              onClose={() => setPendingProduct(null)}
-              onConfirm={handleConfirm}
-            />
-          )}
-        </div>
+        <iframe
+          ref={iframeRef}
+          src="/menu"
+          style={{
+            position: "absolute", left: 0, top: 20,
+            width: 390, height: 844,
+            border: "none",
+            outline: "1px solid rgba(242,232,213,0.12)",
+          }}
+          title="Mobile preview"
+        />
 
         <DevPanel
           config={mobile.config}
           saved={mobile.saved}
           onUpdate={mobile.updateProp}
-          onSave={mobile.save}
+          onSave={handleMobileSave}
           onExport={mobile.exportValues}
           onReset={mobile.reset}
           startLeft={406}
