@@ -194,12 +194,12 @@ export default function MobileHome() {
     container: scrollContainerRef,
     offset: ["start end", "end start"],
   });
-  const bagXRaw = useTransform(scrollYProgress, [0.20, 0.50], [-140, 0]);
-  const bagOpRaw= useTransform(scrollYProgress, [0.20, 0.45], [0, 1]);
-  const boxXRaw = useTransform(scrollYProgress, [0.25, 0.55], [140, 0]);
-  const boxOpRaw= useTransform(scrollYProgress, [0.25, 0.50], [0, 1]);
-  const cupXRaw = useTransform(scrollYProgress, [0.30, 0.60], [-120, 0]);
-  const cupOpRaw= useTransform(scrollYProgress, [0.30, 0.55], [0, 1]);
+  const bagXRaw = useTransform(scrollYProgress, [0.15, 0.45], [-140, 0]);
+  const bagOpRaw= useTransform(scrollYProgress, [0.15, 0.20], [0, 1]);
+  const boxXRaw = useTransform(scrollYProgress, [0.20, 0.50], [140, 0]);
+  const boxOpRaw= useTransform(scrollYProgress, [0.20, 0.25], [0, 1]);
+  const cupXRaw = useTransform(scrollYProgress, [0.25, 0.55], [-120, 0]);
+  const cupOpRaw= useTransform(scrollYProgress, [0.25, 0.30], [0, 1]);
   const sp = { stiffness: d.scrollStiffness, damping: d.scrollDamping };
   const bagX  = useSpring(bagXRaw,  sp);  const bagOp = useSpring(bagOpRaw, sp);
   const boxX  = useSpring(boxXRaw,  sp);  const boxOp = useSpring(boxOpRaw, sp);
