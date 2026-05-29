@@ -135,17 +135,17 @@
         "barcode": {
           "type": "text",
           "props": {
-            "height":  { "value": 20,  "unit": "px", "min": 4,    "max": 120, "step": 2 },
-            "offsetY": { "value": -52, "unit": "px", "min": -100, "max": 100, "step": 4 },
-            "offsetX": { "value": -16, "unit": "px", "min": -100, "max": 100, "step": 4 }
+            "height":  { "value": 10,  "unit": "px", "min": 4,    "max": 120, "step": 2 },
+            "offsetY": { "value": 16,  "unit": "px", "min": -100, "max": 100, "step": 4 },
+            "offsetX": { "value": -32, "unit": "px", "min": -100, "max": 100, "step": 4 }
           }
         },
         "barcodeText": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 0.28, "unit": "rem", "min": 0.2,  "max": 1.2, "step": 0.02 },
-            "offsetY":  { "value": -52,  "unit": "px",  "min": -100, "max": 100, "step": 4    },
-            "offsetX":  { "value": -16,  "unit": "px",  "min": -100, "max": 100, "step": 4    }
+            "fontSize": { "value": 0.38, "unit": "rem", "min": 0.2,  "max": 1.2, "step": 0.02 },
+            "offsetY":  { "value": 0,    "unit": "px",  "min": -100, "max": 100, "step": 4    },
+            "offsetX":  { "value": -36,  "unit": "px",  "min": -100, "max": 100, "step": 4    }
           }
         },
         "quote": {
@@ -162,8 +162,8 @@
           "type": "text",
           "props": {
             "fontSize": { "value": 1.1,  "unit": "rem", "min": 0.5, "max": 2.5, "step": 0.05 },
-            "offsetY":  { "value": -28,  "unit": "px",  "min": -80, "max": 80,  "step": 4    },
-            "offsetX":  { "value": 80,   "unit": "px",  "min": -80, "max": 400, "step": 4    }
+            "offsetY":  { "value": -32,  "unit": "px",  "min": -80, "max": 80,  "step": 4    },
+            "offsetX":  { "value": 132,  "unit": "px",  "min": -80, "max": 400, "step": 4    }
           }
         }
       }
