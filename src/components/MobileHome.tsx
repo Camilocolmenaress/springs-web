@@ -302,23 +302,23 @@ export default function MobileHome() {
           </motion.div>
         </div>
 
-        {/* ART GALLERY — transform independiente */}
-        <motion.div
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-          transition={{ duration: 0.65, ease: EASE, delay: 0.6 }}
-          style={{ padding: "0 18px", overflow: "hidden", transform: tx(d.agOffY, d.agOffX) }}
-        >
-          <a href="/art-gallery" style={{ textDecoration: "none", display: "block" }}>
-            <h2 style={{ ...F.display, fontSize: `${d.agFontSize}vw`, color: C.tinta, lineHeight: 0.88, letterSpacing: "-0.02em", margin: 0, whiteSpace: "nowrap" }}>
-              ART GALLERY
-            </h2>
-          </a>
-        </motion.div>
+        {/* height:0 — estos elementos usan offsetY negativo grande, no deben aportar altura al layout */}
+        <div style={{ height: 0, overflow: "visible" }}>
+          {/* ART GALLERY */}
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            transition={{ duration: 0.65, ease: EASE, delay: 0.6 }}
+            style={{ padding: "0 18px", transform: tx(d.agOffY, d.agOffX) }}
+          >
+            <a href="/art-gallery" style={{ textDecoration: "none", display: "block" }}>
+              <h2 style={{ ...F.display, fontSize: `${d.agFontSize}vw`, color: C.tinta, lineHeight: 0.88, letterSpacing: "-0.02em", margin: 0, whiteSpace: "nowrap" }}>
+                ART GALLERY
+              </h2>
+            </a>
+          </motion.div>
 
-        {/* Location label + Miércoles sticker — cada uno independiente */}
-        <div style={{ position: "relative", padding: "8px 18px 0 18px", minHeight: 80 }}>
           {/* Jacket La Fija */}
-          <div style={{ transform: tx(d.locOffY, d.locOffX) }}>
+          <div style={{ padding: "0 18px", transform: tx(d.locOffY, d.locOffX) }}>
             <motion.div
               initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, ease: EASE, delay: 0.65 }}
@@ -336,8 +336,8 @@ export default function MobileHome() {
             </motion.div>
           </div>
 
-          {/* Barbosa info — elemento completamente independiente */}
-          <div style={{ transform: tx(d.locInfoOffY, d.locInfoOffX) }}>
+          {/* Barbosa info */}
+          <div style={{ padding: "0 18px", transform: tx(d.locInfoOffY, d.locInfoOffX) }}>
             <motion.div
               initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, ease: EASE, delay: 0.7 }}
@@ -351,19 +351,17 @@ export default function MobileHome() {
             </motion.div>
           </div>
 
-          {/* Miércoles placeholder — el sticker real está al final de la sección */}
+          {/* Lista de productos */}
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, ease: EASE, delay: 0.7 }}
+            style={{ padding: "0 18px", transform: tx(d.listOffY) }}
+          >
+            <p style={{ ...F.mono, fontSize: `${d.listFontSize}rem`, color: C.tinta, letterSpacing: "-0.01em", lineHeight: 1.6, textTransform: "uppercase", margin: 0, opacity: 0.65 }}>
+              LA FIJA / LA PESADA / LA BRAVA / LA SIMPLE / LA HONESTA / LOADED POLLO / LOADED MOLIDA / LOADED DESMECHADA / LOADED CHORIZO /
+            </p>
+          </motion.div>
         </div>
-
-        {/* Lista de productos — transform independiente */}
-        <motion.div
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, ease: EASE, delay: 0.7 }}
-          style={{ padding: "20px 18px 28px 18px", borderTop: `1px solid ${C.tinta}18`, marginTop: 12, transform: tx(d.listOffY) }}
-        >
-          <p style={{ ...F.mono, fontSize: `${d.listFontSize}rem`, color: C.tinta, letterSpacing: "-0.01em", lineHeight: 1.6, textTransform: "uppercase", margin: 0, opacity: 0.65 }}>
-            LA FIJA / LA PESADA / LA BRAVA / LA SIMPLE / LA HONESTA / LOADED POLLO / LOADED MOLIDA / LOADED DESMECHADA / LOADED CHORIZO /
-          </p>
-        </motion.div>
         {/* ── Stickers — fuera de cualquier contenedor con transform para que zIndex funcione ── */}
         <motion.img
           src="/images/jacket-club-sticker.png" alt="SPRINGS Jacket Club"
