@@ -105,6 +105,16 @@ export default function ArtGallery() {
     return () => mq.removeEventListener("change", handler);
   }, []);
 
+  useEffect(() => {
+    const prev = document.documentElement.style.backgroundColor;
+    document.documentElement.style.backgroundColor = "#000000";
+    document.body.style.backgroundColor = "#000000";
+    return () => {
+      document.documentElement.style.backgroundColor = prev;
+      document.body.style.backgroundColor = "";
+    };
+  }, []);
+
   const { config, editMode, saved, updateProp, save, reset, exportValues } = useDesignConfig("art-gallery");
   const mobile = useDesignConfig("art-gallery-mobile");
   const z = config.zones as Record<string, { elements: Record<string, { props: Record<string, unknown> }> }>;
