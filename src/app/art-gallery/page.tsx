@@ -585,38 +585,20 @@ export default function ArtGallery() {
               {/* ── DETAIL ── */}
               <section style={{ background: "transparent", padding: `${m.detailPadTop}px 0 0 ${m.detailPadH}px`, marginTop: m.detailMarginTop, position: "relative", zIndex: 20 }}>
 
-                {/* Pull quote (left) + Ingredients/desc/tagline (right) */}
-                <div style={{ display: "flex", gap: 14, marginBottom: 24 }}>
-                  <div style={{ flex: `0 0 ${m.leftColW}%`, borderLeft: `2px solid ${C.burgundy}`, paddingLeft: 11 }}>
-                    <p style={{
-                      fontFamily: "var(--font-inter)",
-                      fontStyle: "italic",
-                      fontSize: `${m.pullQuoteFs}rem`,
-                      fontWeight: 500,
-                      color: C.cream,
-                      lineHeight: 1.45,
-                      margin: 0,
-                      whiteSpace: "pre-line",
-                      transform: `translate(${m.pullQuoteOffX}px, ${m.pullQuoteOffY}px)`,
-                    }}>
-                      {exhibit.description.replace(/\n/g, "\n").toLowerCase().replace(/^\w|\.\s+\w/g, c => c.toUpperCase())}
-                    </p>
+                {/* Ingredients / description / tagline — full width */}
+                <div style={{ marginBottom: 24 }}>
+                  <div style={{ marginBottom: 10, transform: `translate(${m.ingOffX}px, ${m.ingOffY}px)` }}>
+                    {exhibit.ingredients.map(ing => (
+                      <div key={ing} style={{ ...F.mono, fontSize: `${m.ingFs}rem`, letterSpacing: "0.06em", color: C.cream, marginBottom: 3, lineHeight: 1.4 }}>
+                        {ing}
+                      </div>
+                    ))}
                   </div>
-
-                  <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 0 }}>
-                    <div style={{ marginBottom: 10, transform: `translate(${m.ingOffX}px, ${m.ingOffY}px)` }}>
-                      {exhibit.ingredients.map(ing => (
-                        <div key={ing} style={{ ...F.mono, fontSize: `${m.ingFs}rem`, letterSpacing: "0.06em", color: C.cream, marginBottom: 3, lineHeight: 1.4 }}>
-                          {ing}
-                        </div>
-                      ))}
-                    </div>
-                    <p style={{ ...F.mono, fontSize: `${m.descFs}rem`, letterSpacing: "0.04em", color: C.dim, lineHeight: 1.62, margin: "0 0 8px", whiteSpace: "pre-line", transform: `translate(${m.descOffX}px, ${m.descOffY}px)` }}>
-                      {exhibit.description}
-                    </p>
-                    <div style={{ ...F.mono, fontSize: `${m.taglineFs}rem`, letterSpacing: "0.1em", color: C.mostaza, transform: `translate(${m.taglineOffX}px, ${m.taglineOffY}px)` }}>
-                      {exhibit.tagline}
-                    </div>
+                  <p style={{ ...F.mono, fontSize: `${m.descFs}rem`, letterSpacing: "0.04em", color: C.dim, lineHeight: 1.62, margin: "0 0 8px", whiteSpace: "pre-line", transform: `translate(${m.descOffX}px, ${m.descOffY}px)` }}>
+                    {exhibit.description}
+                  </p>
+                  <div style={{ ...F.mono, fontSize: `${m.taglineFs}rem`, letterSpacing: "0.1em", color: C.mostaza, transform: `translate(${m.taglineOffX}px, ${m.taglineOffY}px)` }}>
+                    {exhibit.tagline}
                   </div>
                 </div>
 
