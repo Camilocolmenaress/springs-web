@@ -353,10 +353,12 @@ export default function ArtGallery() {
     metaScale:        sv(mz, "detail", "metadata",    "scale",        100),
     metaOffY:         sv(mz, "detail", "metadata",    "offsetY",      0),
     metaOffX:         sv(mz, "detail", "metadata",    "offsetX",      0),
-    barcodeFs:        sv(mz, "detail", "barcode",     "fontSize",     0.42),
-    barcodeH:         sv(mz, "detail", "barcode",     "height",       50),
-    barcodeOffY:      sv(mz, "detail", "barcode",     "offsetY",      0),
-    barcodeOffX:      sv(mz, "detail", "barcode",     "offsetX",      0),
+    barcodeH:            sv(mz, "detail", "barcode",     "height",       20),
+    barcodeOffY:         sv(mz, "detail", "barcode",     "offsetY",      0),
+    barcodeOffX:         sv(mz, "detail", "barcode",     "offsetX",      0),
+    barcodeLabelFs:      sv(mz, "detail", "barcodeText", "fontSize",     0.28),
+    barcodeLabelOffY:    sv(mz, "detail", "barcodeText", "offsetY",      0),
+    barcodeLabelOffX:    sv(mz, "detail", "barcodeText", "offsetX",      0),
     quoteFs:          sv(mz, "detail", "quote",       "fontSize",     1.0),
     quoteMarkFs:      sv(mz, "detail", "quote",       "markFs",       1.5),
     quoteMarkOffY:    sv(mz, "detail", "quote",       "markOffY",     0),
@@ -686,18 +688,19 @@ export default function ArtGallery() {
                       </div>
                     </div>
                   </div>
-                  {/* Barcode */}
-                  <div style={{ display: "flex", gap: 5, alignItems: "flex-start", flexShrink: 0, marginLeft: 12, transform: `translate(${m.barcodeOffX}px, ${m.barcodeOffY}px)` }}>
+                  {/* Barcode image — independent position */}
+                  <div style={{ flexShrink: 0, marginLeft: 12, transform: `translate(${m.barcodeOffX}px, ${m.barcodeOffY}px)` }}>
                     <img
                       src="/images/barcode-springs.png" alt=""
                       style={{ height: m.barcodeH, width: "auto", opacity: 0.65, transform: "rotate(90deg)", transformOrigin: "center", display: "block" }}
                     />
-                    <div style={{ ...F.mono, lineHeight: 1.6 }}>
-                      <div style={{ fontSize: `${m.barcodeFs}rem`, letterSpacing: "0.1em", color: "rgba(242,232,213,0.8)" }}>+</div>
-                      <div style={{ fontSize: `${m.barcodeFs}rem`, letterSpacing: "0.1em", color: C.cream }}>SPRINGS</div>
-                      <div style={{ fontSize: `${m.barcodeFs}rem`, letterSpacing: "0.1em", color: C.cream }}>ART GALLERY</div>
-                      <div style={{ fontSize: `${m.barcodeFs}rem`, letterSpacing: "0.1em", color: C.dim }}>{exhibit.id}</div>
-                    </div>
+                  </div>
+                  {/* Barcode text — independent position */}
+                  <div style={{ ...F.mono, lineHeight: 1.6, flexShrink: 0, transform: `translate(${m.barcodeLabelOffX}px, ${m.barcodeLabelOffY}px)` }}>
+                    <div style={{ fontSize: `${m.barcodeLabelFs}rem`, letterSpacing: "0.1em", color: "rgba(242,232,213,0.8)" }}>+</div>
+                    <div style={{ fontSize: `${m.barcodeLabelFs}rem`, letterSpacing: "0.1em", color: C.cream }}>SPRINGS</div>
+                    <div style={{ fontSize: `${m.barcodeLabelFs}rem`, letterSpacing: "0.1em", color: C.cream }}>ART GALLERY</div>
+                    <div style={{ fontSize: `${m.barcodeLabelFs}rem`, letterSpacing: "0.1em", color: C.dim }}>{exhibit.id}</div>
                   </div>
                 </div>
 
