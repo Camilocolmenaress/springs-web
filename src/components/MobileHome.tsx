@@ -7,23 +7,56 @@ import SensitiveImage from "@/components/SensitiveImage";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const C = { burgundy: "#6B1419", cream: "#F2E8D5", tinta: "#1A0A0C", mostaza: "#C5871F" };
+const dim = "rgba(26,10,12,0.5)";
 const F = {
   display: { fontFamily: "Anton, sans-serif" } as React.CSSProperties,
   sans:    { fontFamily: "var(--font-inter)" } as React.CSSProperties,
   mono:    { fontFamily: "var(--font-jetbrains-mono)" } as React.CSSProperties,
 };
 
+// once: false → re-anima al volver con scroll
 function FadeUp({ children, delay = 0, style }: { children: React.ReactNode; delay?: number; style?: React.CSSProperties }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.6, ease: EASE, delay }}
+      viewport={{ once: false, amount: 0.15 }}
+      transition={{ duration: 0.65, ease: EASE, delay }}
       style={style}
     >
       {children}
     </motion.div>
+  );
+}
+
+// Mismo globo exacto que Art Gallery — spinning, texto completo, sin drag
+function GlobeExact({ size = 72 }: { size?: number }) {
+  return (
+    <svg viewBox="0 0 110 110" width={size} height={size}>
+      <circle cx="55" cy="55" r={33} fill="none" stroke={dim} strokeWidth="1.2" opacity={0.85}/>
+      <motion.g
+        animate={{ rotate: 360 }}
+        transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+        style={{ transformBox: "fill-box", transformOrigin: "center" }}
+      >
+        {/* meridians */}
+        <ellipse cx="55" cy="55" rx={8}  ry={33} fill="none" stroke={dim} strokeWidth="0.85" opacity={0.55}/>
+        <ellipse cx="55" cy="55" rx={18} ry={33} fill="none" stroke={dim} strokeWidth="0.85" opacity={0.5}/>
+        <ellipse cx="55" cy="55" rx={27} ry={33} fill="none" stroke={dim} strokeWidth="0.85" opacity={0.45}/>
+        {/* parallels */}
+        <ellipse cx="55" cy="55" rx={33} ry={9}  fill="none" stroke={dim} strokeWidth="0.85" opacity={0.55}/>
+        <ellipse cx="55" cy="55" rx={33} ry={19} fill="none" stroke={dim} strokeWidth="0.85" opacity={0.5}/>
+        <ellipse cx="55" cy="55" rx={33} ry={28} fill="none" stroke={dim} strokeWidth="0.85" opacity={0.45}/>
+        {/* equator cross */}
+        <line x1={22} y1="55" x2={88} y2="55" stroke={dim} strokeWidth="0.8" opacity={0.45}/>
+        <line x1="55" y1={22} x2="55" y2={88} stroke={dim} strokeWidth="0.8" opacity={0.45}/>
+      </motion.g>
+      {/* full-circle text path — mismo que Art Gallery */}
+      <path id="mob-home-chimba" fill="none" d="M34,91.4 a42,42 0 0,1 42,-72.7 a42,42 0 0,1 -42,72.7"/>
+      <text fontFamily="JetBrains Mono, monospace" fontSize="7.5" letterSpacing="1.0" fill={dim} fillOpacity={0.9}>
+        <textPath href="#mob-home-chimba" startOffset="7%">FOR THE MOST CHIMBA PEOPLE ✦ </textPath>
+      </text>
+    </svg>
   );
 }
 
@@ -33,7 +66,7 @@ export default function MobileHome() {
   return (
     <div style={{ background: C.cream, height: "100dvh", overflowY: "auto", overflowX: "hidden" }}>
 
-      {/* ── Fixed header ─────────────────────────────────────────────── */}
+      {/* ── Header ─────────────────────────────────────────────── */}
       <header style={{
         position: "sticky", top: 0, left: 0, right: 0, zIndex: 100,
         height: 52,
@@ -68,12 +101,10 @@ export default function MobileHome() {
 
       {/* ════════════════════════════════════════
           ZONA 1 — HERO COLLAGE
-          Vicio pattern: imagen full-width,
-          texto encima, stickers flotando
       ════════════════════════════════════════ */}
       <section style={{ background: C.cream, position: "relative" }}>
 
-        {/* Producto hero — full width con sticker de Jacket Club encima */}
+        {/* Producto hero — full width, Jacket Club sticker encima */}
         <div style={{ position: "relative" }}>
           <motion.img
             src="/images/la-fija.png"
@@ -101,39 +132,6 @@ export default function MobileHome() {
             }}
             onClick={() => router.push("/springs-jacket-club")}
           />
-
-          {/* Globe sticker — izquierda centro */}
-          <motion.div
-            drag
-            dragMomentum={false}
-            whileDrag={{ scale: 1.06, zIndex: 50 }}
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ type: "spring", stiffness: 360, damping: 20, delay: 0.9 }}
-            style={{
-              position: "absolute", top: "38%", left: "2%",
-              width: "28%", aspectRatio: "1",
-              touchAction: "none", zIndex: 20, cursor: "grab",
-            }}
-          >
-            <svg viewBox="0 0 110 110" width="100%" height="100%">
-              <circle cx="55" cy="55" r="46" fill="none" stroke="rgba(26,10,12,0.45)" strokeWidth="1.2" opacity={0.8}/>
-              <motion.g
-                animate={{ rotate: 360 }}
-                transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-                style={{ transformBox: "fill-box", transformOrigin: "center" }}
-              >
-                <ellipse cx="55" cy="55" rx="16.6" ry="46" fill="none" stroke="rgba(26,10,12,0.4)" strokeWidth="0.9" opacity={0.6}/>
-                <ellipse cx="55" cy="55" rx="35.4" ry="46" fill="none" stroke="rgba(26,10,12,0.4)" strokeWidth="0.9" opacity={0.5}/>
-                <ellipse cx="55" cy="55" rx="46" ry="18.9" fill="none" stroke="rgba(26,10,12,0.4)" strokeWidth="0.9" opacity={0.6}/>
-                <line x1="9" y1="55" x2="101" y2="55" stroke="rgba(26,10,12,0.4)" strokeWidth="0.8" opacity={0.45}/>
-              </motion.g>
-              <path id="mob-chimba-circle" fill="none" d="M9,55 a46,46 0 0,1 46,-46 a46,46 0 0,1 46,46"/>
-              <text fontFamily="JetBrains Mono, monospace" fontSize="7.5" letterSpacing="1.0" fill="rgba(26,10,12,0.55)">
-                <textPath href="#mob-chimba-circle" startOffset="11.5%">FOR THE MOST CHIMBA PEOPLE ✦ </textPath>
-              </text>
-            </svg>
-          </motion.div>
         </div>
 
         {/* SPRINGS — justo debajo de la papa */}
@@ -141,7 +139,7 @@ export default function MobileHome() {
           initial={{ y: -30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.75, ease: EASE, delay: 0.3 }}
-          style={{ padding: "0 18px", overflow: "hidden" }}
+          style={{ padding: "0 18px 0 18px", overflow: "hidden" }}
         >
           <h1 style={{
             ...F.display,
@@ -156,17 +154,24 @@ export default function MobileHome() {
           </h1>
         </motion.div>
 
+        {/* Globo — debajo de SPRINGS, mismo que Art Gallery, sin drag */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, ease: EASE, delay: 0.5 }}
+          style={{ padding: "6px 18px 0 18px" }}
+        >
+          <GlobeExact size={72} />
+        </motion.div>
+
         {/* Subtítulo + underline */}
         <motion.div
           initial={{ x: 30, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.65, ease: EASE, delay: 0.45 }}
-          style={{ padding: "2px 18px 0 18px" }}
+          style={{ padding: "4px 18px 0 18px" }}
         >
-          <div style={{ ...F.display, fontSize: "clamp(12px, 4vw, 18px)", color: C.burgundy, lineHeight: 1.1, letterSpacing: "0.01em", textTransform: "uppercase", fontStyle: "italic" }}>
-            JACKETS DIFFERENT BY DEFAULT.
-          </div>
-          <img src="/images/underline-stroke.png" alt="" aria-hidden="true" style={{ width: "68%", height: "auto", marginTop: 2, opacity: 0.85 }} />
+          <img src="/images/underline-stroke.png" alt="" aria-hidden="true" style={{ width: "68%", height: "auto", marginTop: 4, opacity: 0.85 }} />
         </motion.div>
 
         {/* Sensitive Content — entre SPRINGS y ART GALLERY */}
@@ -201,9 +206,8 @@ export default function MobileHome() {
           </a>
         </motion.div>
 
-        {/* Miércoles de Dados — flotando a la derecha de la sección */}
+        {/* ↖ Jacket La Fija + Miércoles de Dados */}
         <div style={{ position: "relative", padding: "8px 18px 0 18px", minHeight: 80 }}>
-          {/* ↖ Jacket La Fija */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -227,7 +231,7 @@ export default function MobileHome() {
             </div>
           </motion.div>
 
-          {/* Miércoles de Dados — posicionado a la derecha */}
+          {/* Miércoles de Dados — derecha, draggable */}
           <motion.img
             src="/images/miercoles-dados-sticker.png"
             alt="Miércoles de Dados"
@@ -287,8 +291,8 @@ export default function MobileHome() {
       </div>
 
       {/* ════════════════════════════════════════
-          ZONA 1.5 — EMPAQUE
-          Los 3 items con scroll reveal escalonado
+          ZONA EMPAQUE — 3 items con scroll
+          once:false → aparecen y desaparecen
       ════════════════════════════════════════ */}
       <section style={{ background: C.cream, padding: "48px 18px 56px 18px", position: "relative" }}>
         {/* SPRINGS fantasma de fondo */}
@@ -303,20 +307,10 @@ export default function MobileHome() {
           SPRINGS
         </div>
 
-        <FadeUp style={{ position: "relative", zIndex: 1, marginBottom: 32 }}>
-          <div style={{ ...F.display, fontSize: "clamp(36px, 13vw, 64px)", color: C.burgundy, lineHeight: 0.88, letterSpacing: "-0.02em", textTransform: "uppercase" }}>
-            DIFFERENT<br />BY DEFAULT.
-          </div>
-          <div style={{ ...F.mono, fontSize: "0.48rem", letterSpacing: "0.22em", color: C.tinta, opacity: 0.4, marginTop: "1.4em", textTransform: "uppercase" }}>
-            BUCARAMANGA · EST. 2025
-          </div>
-        </FadeUp>
-
-        {/* 3 items de empaque — escalonados en scroll */}
+        {/* 3 items de empaque — escalonados, re-animan al scrollear */}
         <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", gap: 0 }}>
 
-          {/* Bolsa — primera en aparecer */}
-          <FadeUp delay={0.05}>
+          <FadeUp delay={0.0}>
             <div style={{ display: "flex", justifyContent: "center", marginBottom: -40 }}>
               <img
                 src="/images/packaging-bag.png"
@@ -329,7 +323,6 @@ export default function MobileHome() {
             </div>
           </FadeUp>
 
-          {/* Caja — aparece al scrollear, desplazada a la derecha */}
           <FadeUp delay={0.1}>
             <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: -30 }}>
               <img
@@ -344,8 +337,7 @@ export default function MobileHome() {
             </div>
           </FadeUp>
 
-          {/* Vaso — aparece al scrollear, desplazado a la izquierda */}
-          <FadeUp delay={0.15}>
+          <FadeUp delay={0.18}>
             <div style={{ display: "flex", justifyContent: "flex-start", paddingLeft: "8%" }}>
               <img
                 src="/images/packaging-cup.png"
@@ -362,15 +354,36 @@ export default function MobileHome() {
       </section>
 
       {/* ════════════════════════════════════════
-          ZONA 1.7 — CULTURA
+          ZONA CULTURA — fondo tinta
+          "DIFFERENT BY DEFAULT" vive aquí
       ════════════════════════════════════════ */}
       <section style={{ background: C.tinta, padding: "56px 18px 64px 18px" }}>
+
+        {/* DIFFERENT BY DEFAULT — en el fondo oscuro, igual que desktop */}
         <FadeUp>
+          <div>
+            <div style={{
+              ...F.display,
+              fontSize: "clamp(42px, 15vw, 72px)",
+              color: "transparent",
+              WebkitTextStroke: `1.5px ${C.cream}`,
+              lineHeight: 0.88,
+              letterSpacing: "-0.02em",
+              textTransform: "uppercase",
+              opacity: 0.18,
+              margin: "0 0 24px 0",
+            }}>
+              DIFFERENT<br />BY DEFAULT.
+            </div>
+          </div>
+        </FadeUp>
+
+        <FadeUp delay={0.05}>
           <div style={{ ...F.mono, fontSize: "0.5rem", letterSpacing: "0.22em", color: C.cream, opacity: 0.6, marginBottom: 20, textTransform: "uppercase" }}>
             #SPRINGSCLUB
           </div>
         </FadeUp>
-        <FadeUp delay={0.1}>
+        <FadeUp delay={0.12}>
           <div>
             <h2 style={{ ...F.display, fontSize: "clamp(18px, 5.5vw, 32px)", color: "transparent", WebkitTextStroke: `1.5px ${C.cream}`, lineHeight: 0.9, letterSpacing: "-0.01em", textTransform: "uppercase", whiteSpace: "nowrap", margin: 0 }}>
               THIS IS
@@ -380,7 +393,7 @@ export default function MobileHome() {
             </h2>
           </div>
         </FadeUp>
-        <FadeUp delay={0.2}>
+        <FadeUp delay={0.22}>
           <p style={{ ...F.mono, fontSize: "0.56rem", color: C.cream, opacity: 0.6, lineHeight: 2.1, letterSpacing: "0.06em", textTransform: "uppercase", margin: "28px 0 0 0" }}>
             MÚSICA. CALLE. HUMOR.<br />
             AMIGOS. PLANES.<br />
