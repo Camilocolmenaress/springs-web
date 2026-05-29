@@ -614,51 +614,70 @@ export default function ArtGallery() {
                   ))}
                 </div>
 
-                {/* Metadata table */}
+                {/* Metadata table + globe */}
                 <div style={{
-                  display: "grid", gridTemplateColumns: "1fr 1fr",
+                  display: "flex",
                   border: "1px solid rgba(242,232,213,0.1)",
-                  marginBottom: 24,
+                  marginBottom: 20,
                   transform: `translate(${m.metaOffX}px, ${m.metaOffY}px)`,
                 }}>
-                  {([
-                    { label: "ORIGIN",      val: exhibit.origin   },
-                    { label: "CREATED",     val: exhibit.created  },
-                    { label: "CATEGORY",    val: exhibit.category },
-                    { label: "TEMPERATURE", val: exhibit.temp     },
-                  ] as { label: string; val: string }[]).map((item, mi) => (
-                    <div key={item.label} style={{
-                      padding: "10px 12px",
-                      borderRight: mi % 2 === 0 ? "1px solid rgba(242,232,213,0.1)" : "none",
-                      borderBottom: mi < 2      ? "1px solid rgba(242,232,213,0.1)" : "none",
-                    }}>
-                      <div style={{ ...F.mono, fontSize: `${m.metaLabelFs}rem`, letterSpacing: "0.14em", color: "rgba(242,232,213,0.42)", marginBottom: 3 }}>{item.label}</div>
-                      <div style={{ ...F.mono, fontSize: `${m.metaValueFs}rem`, letterSpacing: "0.06em", color: C.cream }}>{item.val}</div>
-                    </div>
-                  ))}
+                  <div style={{ flex: 1, display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+                    {([
+                      { label: "ORIGIN",      val: exhibit.origin   },
+                      { label: "CREATED",     val: exhibit.created  },
+                      { label: "CATEGORY",    val: exhibit.category },
+                      { label: "TEMPERATURE", val: exhibit.temp     },
+                    ] as { label: string; val: string }[]).map((item, mi) => (
+                      <div key={item.label} style={{
+                        padding: "8px 10px",
+                        borderRight: mi % 2 === 0 ? "1px solid rgba(242,232,213,0.1)" : "none",
+                        borderBottom: mi < 2      ? "1px solid rgba(242,232,213,0.1)" : "none",
+                      }}>
+                        <div style={{ ...F.mono, fontSize: `${m.metaLabelFs}rem`, letterSpacing: "0.14em", color: "rgba(242,232,213,0.42)", marginBottom: 2 }}>{item.label}</div>
+                        <div style={{ ...F.mono, fontSize: `${m.metaValueFs}rem`, letterSpacing: "0.06em", color: C.cream }}>{item.val}</div>
+                      </div>
+                    ))}
+                  </div>
+                  {/* Globe wireframe */}
+                  <div style={{ width: 56, display: "flex", alignItems: "center", justifyContent: "center", borderLeft: "1px solid rgba(242,232,213,0.1)", flexShrink: 0 }}>
+                    <svg viewBox="0 0 110 110" width="40" height="40">
+                      <circle cx="55" cy="55" r={33} fill="none" stroke={C.dim} strokeWidth="1.2" opacity={0.7}/>
+                      <ellipse cx="55" cy="55" rx={10} ry={33} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.5}/>
+                      <ellipse cx="55" cy="55" rx={22} ry={33} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.45}/>
+                      <ellipse cx="55" cy="55" rx={33} ry={10} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.5}/>
+                      <ellipse cx="55" cy="55" rx={33} ry={22} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.45}/>
+                      <line x1={22} y1="55" x2={88} y2="55" stroke={C.dim} strokeWidth="0.8" opacity={0.4}/>
+                      <line x1="55" y1={22} x2="55" y2={88} stroke={C.dim} strokeWidth="0.8" opacity={0.4}/>
+                    </svg>
+                  </div>
                 </div>
 
                 {/* Quote + Springs Crew + Barcode */}
                 <div style={{
-                  display: "flex", alignItems: "flex-start", justifyContent: "space-between",
+                  display: "flex", alignItems: "flex-start",
                   paddingBottom: 28, marginBottom: 0,
                   borderBottom: "1px solid rgba(242,232,213,0.07)",
+                  transform: `translate(${m.quoteOffX}px, ${m.quoteOffY}px)`,
                 }}>
-                  <div style={{ flex: 1, transform: `translate(${m.quoteOffX}px, ${m.quoteOffY}px)` }}>
-                    <span style={{ ...F.sans, fontSize: `${m.quoteMarkFs}rem`, color: C.cream, display: "block", lineHeight: 0.8, marginBottom: 4, transform: `translateY(${m.quoteMarkOffY}px)` }}>"</span>
-                    <p style={{ ...F.sans, fontSize: `${m.quoteFs}rem`, fontWeight: 500, color: C.cream, lineHeight: 1.5, margin: "0 0 10px", whiteSpace: "pre-line" }}>
-                      {exhibit.quote}
-                    </p>
-                    <div style={{
-                      fontFamily: "var(--font-caveat, cursive)",
-                      fontSize: `${m.springsCrewFs}rem`,
-                      color: C.burgundy,
-                      transform: `translate(${m.springsCrewOffX}px, ${m.springsCrewOffY}px)`,
-                    }}>
-                      Springs Crew.
+                  {/* Quote text */}
+                  <div style={{ display: "flex", flex: 1, gap: 6, alignItems: "flex-start" }}>
+                    <span style={{ ...F.sans, fontSize: `${m.quoteMarkFs}rem`, color: C.cream, lineHeight: 0.8, flexShrink: 0, transform: `translateY(${m.quoteMarkOffY}px)` }}>"</span>
+                    <div>
+                      <p style={{ ...F.sans, fontSize: `${m.quoteFs}rem`, fontWeight: 500, color: C.cream, lineHeight: 1.5, margin: "0 0 6px", whiteSpace: "pre-line" }}>
+                        {exhibit.quote}
+                      </p>
+                      <div style={{
+                        fontFamily: "var(--font-caveat, cursive)",
+                        fontSize: `${m.springsCrewFs}rem`,
+                        color: C.burgundy,
+                        transform: `translate(${m.springsCrewOffX}px, ${m.springsCrewOffY}px)`,
+                      }}>
+                        Springs Crew.
+                      </div>
                     </div>
                   </div>
-                  <div style={{ display: "flex", gap: 5, alignItems: "flex-start", flexShrink: 0, marginLeft: 16 }}>
+                  {/* Barcode */}
+                  <div style={{ display: "flex", gap: 5, alignItems: "flex-start", flexShrink: 0, marginLeft: 12 }}>
                     <img
                       src="/images/barcode-springs.png" alt=""
                       style={{ height: 50, width: "auto", opacity: 0.65, transform: "rotate(90deg)", transformOrigin: "center", display: "block" }}
