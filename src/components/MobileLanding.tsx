@@ -303,13 +303,13 @@ export default function MobileLanding() {
         {/* ── Outer: provee 7000px de scroll distance ────────────────────── */}
         <div
           ref={outerRef}
-          style={{ height: "calc(100svh + 7000px)" }}
+          style={{ height: "calc(100dvh + 7000px)" }}
         >
           {/* ── Escena sticky — TODO vive aquí ──────────────────────────── */}
           <div
             ref={sceneRef}
             className="sticky top-0 w-full overflow-hidden bg-tinta"
-            style={{ height: "100svh" }}
+            style={{ height: "100dvh" }}
           >
 
             {/* Capa 0 — Humo WebGL (fondo inicial) */}
@@ -384,7 +384,7 @@ export default function MobileLanding() {
             <span
               ref={springsLogoRef}
               className="absolute z-[45] font-display text-cream leading-none tracking-[0.06em] pointer-events-none select-none"
-              style={{ fontSize: "44px", left: "32px", top: "295px" }}
+              style={{ fontSize: "44px", left: "32px", top: "max(env(safe-area-inset-top, 20px), 20px)" }}
             >
               SPRINGS
             </span>
