@@ -340,9 +340,20 @@ export default function ArtGallery() {
     taglineFs:        sv(mz, "detail", "tagline",    "fontSize",     0.40),
     taglineOffY:      sv(mz, "detail", "tagline",    "offsetY",      0),
     taglineOffX:      sv(mz, "detail", "tagline",    "offsetX",      0),
-    quoteFs:          sv(mz, "detail", "quote",      "fontSize",     0.60),
-    quoteOffY:        sv(mz, "detail", "quote",      "offsetY",      0),
-    quoteOffX:        sv(mz, "detail", "quote",      "offsetX",      0),
+    galleryH:         sv(mz, "detail", "gallery",     "height",       100),
+    galleryGap:       sv(mz, "detail", "gallery",     "gap",          3),
+    galleryOffY:      sv(mz, "detail", "gallery",     "offsetY",      0),
+    galleryOffX:      sv(mz, "detail", "gallery",     "offsetX",      0),
+    metaLabelFs:      sv(mz, "detail", "metadata",    "labelFs",      0.52),
+    metaValueFs:      sv(mz, "detail", "metadata",    "valueFs",      0.60),
+    metaOffY:         sv(mz, "detail", "metadata",    "offsetY",      0),
+    metaOffX:         sv(mz, "detail", "metadata",    "offsetX",      0),
+    quoteFs:          sv(mz, "detail", "quote",       "fontSize",     1.0),
+    quoteOffY:        sv(mz, "detail", "quote",       "offsetY",      0),
+    quoteOffX:        sv(mz, "detail", "quote",       "offsetX",      0),
+    springsCrewFs:    sv(mz, "detail", "springsCrew", "fontSize",     1.1),
+    springsCrewOffY:  sv(mz, "detail", "springsCrew", "offsetY",      0),
+    springsCrewOffX:  sv(mz, "detail", "springsCrew", "offsetX",      0),
   };
 
   // SSR-safe: avoid flash
@@ -606,9 +617,13 @@ export default function ArtGallery() {
                 </div>
 
                 {/* Gallery: 3 photos */}
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 3, marginBottom: 20 }}>
+                <div style={{
+                  display: "grid", gridTemplateColumns: "1fr 1fr 1fr",
+                  gap: m.galleryGap, marginBottom: 20,
+                  transform: `translate(${m.galleryOffX}px, ${m.galleryOffY}px)`,
+                }}>
                   {exhibit.gallery.map((src, gi) => (
-                    <div key={gi} style={{ aspectRatio: "1 / 1", overflow: "hidden" }}>
+                    <div key={gi} style={{ height: m.galleryH, overflow: "hidden" }}>
                       <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                     </div>
                   ))}
@@ -619,6 +634,7 @@ export default function ArtGallery() {
                   display: "grid", gridTemplateColumns: "1fr 1fr",
                   border: "1px solid rgba(242,232,213,0.1)",
                   marginBottom: 24,
+                  transform: `translate(${m.metaOffX}px, ${m.metaOffY}px)`,
                 }}>
                   {([
                     { label: "ORIGIN",      val: exhibit.origin   },
@@ -631,8 +647,8 @@ export default function ArtGallery() {
                       borderRight: mi % 2 === 0 ? "1px solid rgba(242,232,213,0.1)" : "none",
                       borderBottom: mi < 2      ? "1px solid rgba(242,232,213,0.1)" : "none",
                     }}>
-                      <div style={{ ...F.mono, fontSize: "0.34rem", letterSpacing: "0.14em", color: "rgba(242,232,213,0.42)", marginBottom: 3 }}>{item.label}</div>
-                      <div style={{ ...F.mono, fontSize: "0.41rem", letterSpacing: "0.06em", color: C.cream }}>{item.val}</div>
+                      <div style={{ ...F.mono, fontSize: `${m.metaLabelFs}rem`, letterSpacing: "0.14em", color: "rgba(242,232,213,0.42)", marginBottom: 3 }}>{item.label}</div>
+                      <div style={{ ...F.mono, fontSize: `${m.metaValueFs}rem`, letterSpacing: "0.06em", color: C.cream }}>{item.val}</div>
                     </div>
                   ))}
                 </div>
@@ -643,12 +659,17 @@ export default function ArtGallery() {
                   paddingBottom: 28, marginBottom: 0,
                   borderBottom: "1px solid rgba(242,232,213,0.07)",
                 }}>
-                  <div style={{ flex: 1 }}>
+                  <div style={{ flex: 1, transform: `translate(${m.quoteOffX}px, ${m.quoteOffY}px)` }}>
                     <span style={{ ...F.sans, fontSize: "1.5rem", color: C.cream, display: "block", lineHeight: 0.8, marginBottom: 4 }}>"</span>
-                    <p style={{ ...F.sans, fontSize: `${m.quoteFs}rem`, fontWeight: 500, color: C.cream, lineHeight: 1.5, margin: "0 0 10px", whiteSpace: "pre-line", transform: `translate(${m.quoteOffX}px, ${m.quoteOffY}px)` }}>
+                    <p style={{ ...F.sans, fontSize: `${m.quoteFs}rem`, fontWeight: 500, color: C.cream, lineHeight: 1.5, margin: "0 0 10px", whiteSpace: "pre-line" }}>
                       {exhibit.quote}
                     </p>
-                    <div style={{ fontFamily: "var(--font-caveat, cursive)", fontSize: "1.1rem", color: C.burgundy }}>
+                    <div style={{
+                      fontFamily: "var(--font-caveat, cursive)",
+                      fontSize: `${m.springsCrewFs}rem`,
+                      color: C.burgundy,
+                      transform: `translate(${m.springsCrewOffX}px, ${m.springsCrewOffY}px)`,
+                    }}>
                       Springs Crew.
                     </div>
                   </div>
@@ -658,10 +679,10 @@ export default function ArtGallery() {
                       style={{ height: 50, width: "auto", opacity: 0.65, transform: "rotate(90deg)", transformOrigin: "center", display: "block" }}
                     />
                     <div style={{ ...F.mono, lineHeight: 1.6 }}>
-                      <div style={{ fontSize: "0.34rem", letterSpacing: "0.1em", color: "rgba(242,232,213,0.8)" }}>+</div>
-                      <div style={{ fontSize: "0.34rem", letterSpacing: "0.1em", color: C.cream }}>SPRINGS</div>
-                      <div style={{ fontSize: "0.34rem", letterSpacing: "0.1em", color: C.cream }}>ART GALLERY</div>
-                      <div style={{ fontSize: "0.34rem", letterSpacing: "0.1em", color: C.dim }}>{exhibit.id}</div>
+                      <div style={{ fontSize: `${m.metaLabelFs}rem`, letterSpacing: "0.1em", color: "rgba(242,232,213,0.8)" }}>+</div>
+                      <div style={{ fontSize: `${m.metaLabelFs}rem`, letterSpacing: "0.1em", color: C.cream }}>SPRINGS</div>
+                      <div style={{ fontSize: `${m.metaLabelFs}rem`, letterSpacing: "0.1em", color: C.cream }}>ART GALLERY</div>
+                      <div style={{ fontSize: `${m.metaLabelFs}rem`, letterSpacing: "0.1em", color: C.dim }}>{exhibit.id}</div>
                     </div>
                   </div>
                 </div>
