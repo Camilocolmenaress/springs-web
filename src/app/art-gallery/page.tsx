@@ -400,7 +400,7 @@ export default function ArtGallery() {
   // ── MOBILE LAYOUT ──────────────────────────────────────────────────
   if (isMobile) {
     return (
-      <main style={{ background: BG, color: C.cream, overflowX: "hidden" }}>
+      <main style={{ background: BG, color: C.cream, overflowX: "hidden", overflowY: "auto", height: "100dvh" }}>
 
         {/* Fixed top nav */}
         <header style={{
@@ -610,7 +610,7 @@ export default function ArtGallery() {
                     <p style={{ ...F.mono, fontSize: `${m.descFs}rem`, letterSpacing: "0.04em", color: C.dim, lineHeight: 1.62, margin: "0 0 8px", whiteSpace: "pre-line", transform: `translate(${m.descOffX}px, ${m.descOffY}px)` }}>
                       {exhibit.description}
                     </p>
-                    <div style={{ ...F.mono, fontSize: `${m.taglineFs}rem`, letterSpacing: "0.1em", color: C.burgundy, transform: `translate(${m.taglineOffX}px, ${m.taglineOffY}px)` }}>
+                    <div style={{ ...F.mono, fontSize: `${m.taglineFs}rem`, letterSpacing: "0.1em", color: C.mostaza, transform: `translate(${m.taglineOffX}px, ${m.taglineOffY}px)` }}>
                       {exhibit.tagline}
                     </div>
                   </div>
