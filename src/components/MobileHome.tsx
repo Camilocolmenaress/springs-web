@@ -227,22 +227,13 @@ export default function MobileHome() {
       ════════════════════════════ */}
       <section style={{ background: C.cream, position: "relative" }}>
 
-        {/* Producto + Jacket Club sticker */}
-        <div style={{ position: "relative", transform: tx(d.imgOffY) }}>
+        {/* Producto */}
+        <div style={{ transform: tx(d.imgOffY) }}>
           <motion.img
             src="/images/la-fija.png" alt="SPRINGS Jacket — La Fija"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }}
             transition={{ duration: 1.0, ease: EASE, delay: 0.1 }}
             style={{ width: `${d.imgWidth}%`, display: "block" }}
-          />
-          <motion.img
-            src="/images/jacket-club-sticker.png" alt="SPRINGS Jacket Club"
-            drag dragMomentum={false} whileDrag={{ scale: 1.06, zIndex: 50 }}
-            initial={{ scale: 0, opacity: 0, rotate: -20 }}
-            animate={{ scale: 1, opacity: 1, rotate: d.jcRotation }}
-            transition={{ type: "spring", stiffness: 380, damping: 18, delay: 1.1 }}
-            style={{ position: "absolute", top: `${d.jcTop}%`, right: `${d.jcRight}%`, width: `${d.jcSize}%`, touchAction: "none", zIndex: 20, cursor: "grab" }}
-            onClick={() => router.push("/springs-jacket-club")}
           />
         </div>
 
@@ -328,15 +319,7 @@ export default function MobileHome() {
           </motion.div>
           </div>
 
-          {/* Miércoles de Dados — absolutamente independiente */}
-          <motion.img
-            src="/images/miercoles-dados-sticker.png" alt="Miércoles de Dados"
-            drag dragMomentum={false} whileDrag={{ scale: 1.06, zIndex: 50 }}
-            initial={{ scale: 0, opacity: 0, rotate: 35 }}
-            animate={{ scale: 1, opacity: 1, rotate: d.mdRotation }}
-            transition={{ type: "spring", stiffness: 340, damping: 16, delay: 1.3 }}
-            style={{ position: "absolute", right: d.mdRight, top: d.mdTop, width: `${d.mdSize}%`, touchAction: "none", zIndex: 20, cursor: "grab" }}
-          />
+          {/* Miércoles placeholder — el sticker real está al final de la sección */}
         </div>
 
         {/* Lista de productos — transform independiente */}
@@ -349,6 +332,24 @@ export default function MobileHome() {
             LA FIJA / LA PESADA / LA BRAVA / LA SIMPLE / LA HONESTA / LOADED POLLO / LOADED MOLIDA / LOADED DESMECHADA / LOADED CHORIZO /
           </p>
         </motion.div>
+        {/* ── Stickers — fuera de cualquier contenedor con transform para que zIndex funcione ── */}
+        <motion.img
+          src="/images/jacket-club-sticker.png" alt="SPRINGS Jacket Club"
+          drag dragMomentum={false} whileDrag={{ scale: 1.06 }}
+          initial={{ scale: 0, opacity: 0, rotate: -20 }}
+          animate={{ scale: 1, opacity: 1, rotate: d.jcRotation }}
+          transition={{ type: "spring", stiffness: 380, damping: 18, delay: 1.1 }}
+          style={{ position: "absolute", top: `${d.jcTop}%`, right: `${d.jcRight}%`, width: `${d.jcSize}%`, touchAction: "none", zIndex: 9999, cursor: "grab" }}
+          onClick={() => router.push("/springs-jacket-club")}
+        />
+        <motion.img
+          src="/images/miercoles-dados-sticker.png" alt="Miércoles de Dados"
+          drag dragMomentum={false} whileDrag={{ scale: 1.06 }}
+          initial={{ scale: 0, opacity: 0, rotate: 35 }}
+          animate={{ scale: 1, opacity: 1, rotate: d.mdRotation }}
+          transition={{ type: "spring", stiffness: 340, damping: 16, delay: 1.3 }}
+          style={{ position: "absolute", right: d.mdRight, top: d.mdTop, width: `${d.mdSize}%`, touchAction: "none", zIndex: 9999, cursor: "grab" }}
+        />
       </section>
 
       {/* ════════ MARQUEE ════════ */}
