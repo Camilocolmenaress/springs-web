@@ -25,12 +25,12 @@ function tx(y = 0, x = 0) {
   return `translateY(${y}px) translateX(${x}px)`;
 }
 
-function FadeUp({ children, delay = 0, style }: { children: React.ReactNode; delay?: number; style?: React.CSSProperties }) {
+function FadeUp({ children, delay = 0, style, root }: { children: React.ReactNode; delay?: number; style?: React.CSSProperties; root?: React.RefObject<HTMLElement | null> }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: false, amount: 0.15 }}
+      viewport={{ once: false, amount: 0.15, root }}
       transition={{ duration: 0.65, ease: EASE, delay }}
       style={style}
     >
@@ -390,17 +390,17 @@ export default function MobileHome() {
 
       {/* ════════ CULTURA ════════ */}
       <section style={{ background: C.tinta, padding: "56px 18px 64px 18px" }}>
-        <FadeUp style={{ transform: tx(d.dbdOffY) }}>
+        <FadeUp root={scrollContainerRef} style={{ transform: tx(d.dbdOffY) }}>
           <div style={{ ...F.display, fontSize: `${d.dbdFontSize}vw`, color: "transparent", WebkitTextStroke: `1.5px ${C.cream}`, lineHeight: 0.88, letterSpacing: "-0.02em", textTransform: "uppercase", opacity: d.dbdOpacity / 100, margin: "0 0 24px 0" }}>
             DIFFERENT<br />BY DEFAULT.
           </div>
         </FadeUp>
-        <FadeUp delay={0.05} style={{ transform: tx(d.hashOffY) }}>
+        <FadeUp root={scrollContainerRef} delay={0.05} style={{ transform: tx(d.hashOffY) }}>
           <div style={{ ...F.mono, fontSize: `${d.hashFontSize}rem`, letterSpacing: "0.22em", color: C.cream, opacity: 0.6, marginBottom: 20, textTransform: "uppercase" }}>
             #SPRINGSCLUB
           </div>
         </FadeUp>
-        <FadeUp delay={0.12}>
+        <FadeUp root={scrollContainerRef} delay={0.12}>
           <div>
             <h2 style={{ ...F.display, fontSize: `${d.thisIsFontSize}vw`, color: "transparent", WebkitTextStroke: `1.5px ${C.cream}`, lineHeight: 0.9, letterSpacing: "-0.01em", textTransform: "uppercase", whiteSpace: "nowrap", margin: 0, transform: tx(d.thisIsOffY) }}>
               THIS IS
@@ -410,7 +410,7 @@ export default function MobileHome() {
             </h2>
           </div>
         </FadeUp>
-        <FadeUp delay={0.22} style={{ transform: tx(d.descOffY) }}>
+        <FadeUp root={scrollContainerRef} delay={0.22} style={{ transform: tx(d.descOffY) }}>
           <p style={{ ...F.mono, fontSize: `${d.descFontSize}rem`, color: C.cream, opacity: 0.6, lineHeight: d.descLineHeight, letterSpacing: "0.06em", textTransform: "uppercase", margin: "28px 0 0 0" }}>
             MÚSICA. CALLE. HUMOR.<br />AMIGOS. PLANES.<br />NOCHES QUE SÍ CUENTAN.<br />ESTO ES SPRINGS.
           </p>
@@ -423,24 +423,24 @@ export default function MobileHome() {
           SPRINGS
         </div>
         <div style={{ position: "relative", zIndex: 1 }}>
-          <FadeUp style={{ transform: tx(d.pedirTaglineOffY) }}>
+          <FadeUp root={scrollContainerRef} style={{ transform: tx(d.pedirTaglineOffY) }}>
             <div style={{ ...F.mono, fontSize: `${d.pedirTaglineFs}rem`, letterSpacing: "0.22em", color: C.mostaza, textTransform: "uppercase", marginBottom: 16 }}>
               ↗ SIN EXCUSAS · ESTO ES SPRINGS
             </div>
           </FadeUp>
-          <FadeUp delay={0.08} style={{ transform: tx(d.pedirTitleOffY) }}>
+          <FadeUp root={scrollContainerRef} delay={0.08} style={{ transform: tx(d.pedirTitleOffY) }}>
             <h2 style={{ ...F.display, fontSize: `${d.pedirTitleFs}vw`, color: C.cream, lineHeight: 0.85, letterSpacing: "-0.01em", textTransform: "uppercase", margin: "0 0 40px 0" }}>
               PEDIR<br />YA.
             </h2>
           </FadeUp>
-          <FadeUp delay={0.16} style={{ transform: tx(d.appsOffY) }}>
+          <FadeUp root={scrollContainerRef} delay={0.16} style={{ transform: tx(d.appsOffY) }}>
             <div style={{ display: "flex", flexDirection: "column", gap: d.appsGap, marginBottom: 40 }}>
               <a href="#" style={{ ...F.display, fontSize: "1rem", letterSpacing: "0.12em", color: C.tinta, background: C.cream, padding: `${d.appsPaddingV}px 24px`, textDecoration: "none", display: "flex", justifyContent: "space-between", alignItems: "center" }}>RAPPI <span>→</span></a>
               <a href="#" style={{ ...F.display, fontSize: "1rem", letterSpacing: "0.12em", color: C.cream, background: "transparent", border: `1px solid ${C.cream}`, opacity: 0.9, padding: `${d.appsPaddingV}px 24px`, textDecoration: "none", display: "flex", justifyContent: "space-between", alignItems: "center" }}>UBER EATS <span>→</span></a>
               <a href="/menu" style={{ ...F.display, fontSize: "1rem", letterSpacing: "0.12em", color: C.mostaza, background: "transparent", border: `1px solid ${C.mostaza}`, padding: `${d.appsPaddingV}px 24px`, textDecoration: "none", display: "flex", justifyContent: "space-between", alignItems: "center" }}>PEDIDO DIRECTO <span>→</span></a>
             </div>
           </FadeUp>
-          <FadeUp delay={0.24} style={{ transform: tx(d.infoOffY) }}>
+          <FadeUp root={scrollContainerRef} delay={0.24} style={{ transform: tx(d.infoOffY) }}>
             <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
               {[
                 { label: "Horario",  val: "12PM — 9PM",   sub: "Lunes a domingo" },
