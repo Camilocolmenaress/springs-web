@@ -295,7 +295,14 @@ export default function ArtGallery() {
               BRITISH SOUL<br />COLOMBIAN HEART.
             </div>
           </div>
-          <div style={{ ...F.mono, fontSize: "1rem", color: "rgba(242,232,213,0.6)", letterSpacing: "0.05em" }}>≡</div>
+          <Link href="/menu" style={{
+            ...F.display, fontSize: "0.58rem", letterSpacing: "0.1em",
+            background: C.cream, color: "#111",
+            padding: "8px 13px",
+            textDecoration: "none", display: "flex", alignItems: "center", gap: 4,
+          }}>
+            PEDIR AHORA <span style={{ fontSize: "0.7rem" }}>↗</span>
+          </Link>
         </header>
 
         {/* Fixed bottom nav */}
@@ -364,17 +371,6 @@ export default function ArtGallery() {
                   zIndex: 2, pointerEvents: "none",
                   background: "linear-gradient(to top, rgba(0,0,0,0.88) 0%, transparent 100%)",
                 }} />
-
-                {/* PEDIR AHORA — absolute top right */}
-                <Link href="/menu" style={{
-                  position: "absolute", top: 14, right: 14, zIndex: 10,
-                  ...F.display, fontSize: "0.58rem", letterSpacing: "0.1em",
-                  background: C.cream, color: "#111",
-                  padding: "8px 13px",
-                  textDecoration: "none", display: "flex", alignItems: "center", gap: 4,
-                }}>
-                  PEDIR AHORA <span style={{ fontSize: "0.7rem" }}>↗</span>
-                </Link>
 
                 {/* Gallery label + product name + subtitle — absolute, overlaid on image */}
                 <div style={{
