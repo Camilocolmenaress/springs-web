@@ -325,7 +325,7 @@ export default function ArtGallery() {
     globeTextOffset:  sv(mz, "hero", "globe",        "textOffset",   7),
     vignetteH:        sv(mz, "hero", "vignette",     "height",       55),
     vignetteOp:       sv(mz, "hero", "vignette",     "opacity",      90),
-    detailMarginTop:  sv(mz, "detail", "layout",     "marginTop",    0),
+    detailMarginTop:  sv(mz, "detail", "layout",     "marginTop",    -52),
     detailPadTop:     sv(mz, "detail", "layout",     "paddingTop",   24),
     detailPadH:       sv(mz, "detail", "layout",     "paddingH",     16),
     leftColW:         sv(mz, "detail", "layout",     "leftColWidth", 44),
@@ -653,7 +653,7 @@ export default function ArtGallery() {
               </section>
 
               {/* ── DETAIL ── */}
-              <section style={{ background: "transparent", padding: `${m.detailPadTop}px 0 0 0`, marginTop: m.detailMarginTop, position: "relative", zIndex: 20 }}>
+              <section style={{ background: "transparent", padding: `${m.detailPadTop}px 0 0 0`, marginTop: `${m.detailMarginTop}dvh`, position: "relative", zIndex: 20 }}>
 
                 {/* Ingredients / description / tagline — full width */}
                 <div style={{ marginBottom: 24 }}>
