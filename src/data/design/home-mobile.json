@@ -49,7 +49,7 @@
           "type": "image",
           "props": {
             "marginH":  { "value": 46,  "unit": "px", "min": 0,    "max": 60,   "step": 2 },
-            "offsetY":  { "value": 152, "unit": "px", "min": -800, "max": 400,  "step": 2 },
+            "offsetY":  { "value": 98,  "unit": "px", "min": -800, "max": 400,  "step": 2 },
             "fontSize": { "value": 3.6, "unit": "vw", "min": 1,    "max": 8,    "step": 0.1 },
             "opacity":  { "value": 60,  "unit": "%",  "min": 0,    "max": 100,  "step": 5 }
           }
