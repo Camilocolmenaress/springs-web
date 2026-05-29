@@ -516,21 +516,24 @@ export default function ArtGallery() {
 
                   {/* Globe */}
                   <div style={{ width: m.globeSize, height: m.globeSize, marginBottom: 14, flexShrink: 0, transform: `translate(${m.globeOffX}px, ${m.globeOffY}px)` }}>
-                    <style>{`@keyframes mob-globe-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}.mob-globe-ring{transform-origin:55px 55px;transform-box:fill-box;animation:mob-globe-spin 18s linear infinite}`}</style>
                     <svg viewBox="0 0 110 110" width="100%" height="100%">
                       <circle cx="55" cy="55" r={33} fill="none" stroke={C.dim} strokeWidth="1.2" opacity={0.8}/>
-                      <ellipse cx="55" cy="55" rx={12} ry={33} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.55}/>
-                      <ellipse cx="55" cy="55" rx={25} ry={33} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.45}/>
-                      <ellipse cx="55" cy="55" rx={33} ry={13} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.55}/>
-                      <ellipse cx="55" cy="55" rx={33} ry={25} fill="none" stroke={C.dim} strokeWidth="0.8" opacity={0.4}/>
-                      <line x1={22} y1="55" x2={88} y2="55" stroke={C.dim} strokeWidth="0.8" opacity={0.4}/>
-                      <line x1="55" y1={22} x2="55" y2={88} stroke={C.dim} strokeWidth="0.8" opacity={0.4}/>
-                      <g className="mob-globe-ring">
-                        <path id={`mob-c-${exhibit.id}`} fill="none" d="M16,55 a39,39 0 0,1 39,-39 a39,39 0 0,1 39,39"/>
-                        <text fontFamily="JetBrains Mono, monospace" fontSize="7.2" letterSpacing="0.8" fill={C.dim} fillOpacity={0.75}>
-                          <textPath href={`#mob-c-${exhibit.id}`} startOffset="5%">FOR THE MOST CHIMBA PEOPLE ✦ </textPath>
-                        </text>
-                      </g>
+                      <motion.g
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+                        style={{ transformBox: "fill-box", transformOrigin: "center" }}
+                      >
+                        <ellipse cx="55" cy="55" rx={12} ry={33} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.55}/>
+                        <ellipse cx="55" cy="55" rx={25} ry={33} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.45}/>
+                        <ellipse cx="55" cy="55" rx={33} ry={13} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.55}/>
+                        <ellipse cx="55" cy="55" rx={33} ry={25} fill="none" stroke={C.dim} strokeWidth="0.8" opacity={0.4}/>
+                        <line x1={22} y1="55" x2={88} y2="55" stroke={C.dim} strokeWidth="0.8" opacity={0.4}/>
+                        <line x1="55" y1={22} x2="55" y2={88} stroke={C.dim} strokeWidth="0.8" opacity={0.4}/>
+                      </motion.g>
+                      <path id={`mob-c-${exhibit.id}`} fill="none" d="M16,55 a39,39 0 0,1 39,-39 a39,39 0 0,1 39,39"/>
+                      <text fontFamily="JetBrains Mono, monospace" fontSize="7.2" letterSpacing="0.8" fill={C.dim} fillOpacity={0.75}>
+                        <textPath href={`#mob-c-${exhibit.id}`} startOffset="5%">FOR THE MOST CHIMBA PEOPLE ✦ </textPath>
+                      </text>
                     </svg>
                   </div>
 
