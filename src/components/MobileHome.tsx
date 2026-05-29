@@ -152,6 +152,11 @@ export default function MobileHome() {
     descFontSize:    sv(z, "cultura", "description",        "fontSize",  0.56),
     descLineHeight:  sv(z, "cultura", "description",        "lineHeight",2.1),
     descOffY:        sv(z, "cultura", "description",        "offsetY",   0),
+    // marquee
+    marqueeFontSize: sv(z, "hero", "marquee", "fontSize", 5.5),
+    marqueeSpeed:    sv(z, "hero", "marquee", "speed",    18),
+    marqueePaddingV: sv(z, "hero", "marquee", "paddingV", 5),
+    marqueeOffY:     sv(z, "hero", "marquee", "offsetY",  0),
     // pedir ya
     pedirTitleFs:    sv(z, "pedirYa", "title",   "fontSize",     25),
     pedirTitleOffY:  sv(z, "pedirYa", "title",   "offsetY",      0),
@@ -273,14 +278,16 @@ export default function MobileHome() {
           />
         </motion.div>
 
-        {/* Sensitive Content — transform independiente */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.55, duration: 0.5 }}
-          style={{ margin: `16px ${d.sensMarginH}px`, aspectRatio: "1402 / 1122", position: "relative", overflow: "hidden", transform: tx(d.sensOffY) }}
-        >
-          <SensitiveImage src="/images/sensitive-hero.png" fontSize={d.sensFontSize} opacity={d.sensOpacity} />
-        </motion.div>
+        {/* Sensitive Content — wrapper de posición separado del motion para que tx() no lo pise y */}
+        <div style={{ margin: `16px ${d.sensMarginH}px`, transform: tx(d.sensOffY) }}>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.55, duration: 0.5 }}
+            style={{ aspectRatio: "1402 / 1122", position: "relative", overflow: "hidden" }}
+          >
+            <SensitiveImage src="/images/sensitive-hero.png" fontSize={d.sensFontSize} opacity={d.sensOpacity} />
+          </motion.div>
+        </div>
 
         {/* ART GALLERY — transform independiente */}
         <motion.div
@@ -297,10 +304,10 @@ export default function MobileHome() {
 
         {/* Location label + Miércoles sticker — cada uno independiente */}
         <div style={{ position: "relative", padding: "8px 18px 0 18px", minHeight: 80 }}>
+          <div style={{ transform: tx(d.locOffY, d.locOffX) }}>
           <motion.div
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, ease: EASE, delay: 0.65 }}
-            style={{ transform: tx(d.locOffY, d.locOffX) }}
           >
             <div style={{ ...F.display, fontSize: `${d.locFontSize}vw`, color: C.tinta, lineHeight: 1.1 }}>
               <div style={{ display: "flex", alignItems: "center", gap: "0.25em" }}>
@@ -319,6 +326,7 @@ export default function MobileHome() {
               </div>
             </div>
           </motion.div>
+          </div>
 
           {/* Miércoles de Dados — absolutamente independiente */}
           <motion.img
@@ -344,20 +352,20 @@ export default function MobileHome() {
       </section>
 
       {/* ════════ MARQUEE ════════ */}
-      <div style={{ overflow: "hidden", borderTop: `1.5px solid ${C.tinta}`, borderBottom: `1.5px solid ${C.tinta}`, padding: "5px 0", background: C.cream }}>
+      <div style={{ overflow: "hidden", borderTop: `1.5px solid ${C.tinta}`, borderBottom: `1.5px solid ${C.tinta}`, padding: `${d.marqueePaddingV}px 0`, background: C.cream, transform: tx(d.marqueeOffY) }}>
         <motion.div
           animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+          transition={{ duration: d.marqueeSpeed, repeat: Infinity, ease: "linear" }}
           style={{ display: "flex", alignItems: "center", whiteSpace: "nowrap" }}
         >
           {[0, 1].map(copy => (
             <span key={copy} style={{ display: "inline-flex", alignItems: "center" }}>
               {Array.from({ length: 12 }).map((_, i) => (
                 <span key={i} style={{ display: "inline-flex", alignItems: "center" }}>
-                  <span style={{ ...F.display, fontSize: "clamp(18px, 5.5vw, 32px)", color: C.burgundy, letterSpacing: "0.04em", lineHeight: 1 }}>SPRINGS</span>
-                  <span style={{ ...F.display, fontSize: "clamp(15px, 4.5vw, 26px)", color: C.burgundy, margin: "0 0.6em", lineHeight: 1 }}>&lt;</span>
-                  <span style={{ ...F.display, fontSize: "clamp(18px, 5.5vw, 32px)", color: "transparent", WebkitTextStroke: `1.5px ${C.burgundy}`, letterSpacing: "0.04em", lineHeight: 1 }}>SPRINGS</span>
-                  <span style={{ ...F.display, fontSize: "clamp(15px, 4.5vw, 26px)", color: C.burgundy, margin: "0 0.6em", lineHeight: 1 }}>&lt;</span>
+                  <span style={{ ...F.display, fontSize: `${d.marqueeFontSize}vw`, color: C.burgundy, letterSpacing: "0.04em", lineHeight: 1 }}>SPRINGS</span>
+                  <span style={{ ...F.display, fontSize: `${d.marqueeFontSize * 0.82}vw`, color: C.burgundy, margin: "0 0.6em", lineHeight: 1 }}>&lt;</span>
+                  <span style={{ ...F.display, fontSize: `${d.marqueeFontSize}vw`, color: "transparent", WebkitTextStroke: `1.5px ${C.burgundy}`, letterSpacing: "0.04em", lineHeight: 1 }}>SPRINGS</span>
+                  <span style={{ ...F.display, fontSize: `${d.marqueeFontSize * 0.82}vw`, color: C.burgundy, margin: "0 0.6em", lineHeight: 1 }}>&lt;</span>
                 </span>
               ))}
             </span>
