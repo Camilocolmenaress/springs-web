@@ -132,19 +132,25 @@ export default function MobileHome() {
     listFontSize:    sv(z, "hero", "productList",       "fontSize",     0.42),
     listOffY:        sv(z, "hero", "productList",       "offsetY",      0),
     // packaging
-    bagWidth:        sv(z, "packaging", "bag",    "width",        70),
-    bagOffY:         sv(z, "packaging", "bag",    "offsetY",      0),
-    bagMbottom:      sv(z, "packaging", "bag",    "marginBottom", -40),
-    boxWidth:        sv(z, "packaging", "box",    "width",        55),
-    boxRotation:     sv(z, "packaging", "box",    "rotation",     4),
-    boxOffY:         sv(z, "packaging", "box",    "offsetY",      0),
-    boxMbottom:      sv(z, "packaging", "box",    "marginBottom", -30),
-    cupWidth:        sv(z, "packaging", "cup",    "width",        40),
-    cupRotation:     sv(z, "packaging", "cup",    "rotation",     -3),
-    cupOffY:         sv(z, "packaging", "cup",    "offsetY",      0),
-    cupPaddingLeft:  sv(z, "packaging", "cup",    "paddingLeft",  8),
-    scrollStiffness: sv(z, "packaging", "scroll", "stiffness",    90),
-    scrollDamping:   sv(z, "packaging", "scroll", "damping",      22),
+    bagWidth:        sv(z, "packaging", "bag",       "width",        70),
+    bagOffY:         sv(z, "packaging", "bag",       "offsetY",      0),
+    bagOffX:         sv(z, "packaging", "bag",       "offsetX",      0),
+    bagMbottom:      sv(z, "packaging", "bag",       "marginBottom", -40),
+    boxWidth:        sv(z, "packaging", "box",       "width",        55),
+    boxRotation:     sv(z, "packaging", "box",       "rotation",     4),
+    boxOffY:         sv(z, "packaging", "box",       "offsetY",      0),
+    boxOffX:         sv(z, "packaging", "box",       "offsetX",      0),
+    boxMbottom:      sv(z, "packaging", "box",       "marginBottom", -30),
+    cupWidth:        sv(z, "packaging", "cup",       "width",        40),
+    cupRotation:     sv(z, "packaging", "cup",       "rotation",     -3),
+    cupOffY:         sv(z, "packaging", "cup",       "offsetY",      0),
+    cupOffX:         sv(z, "packaging", "cup",       "offsetX",      0),
+    cupPaddingLeft:  sv(z, "packaging", "cup",       "paddingLeft",  8),
+    scrollStiffness: sv(z, "packaging", "scroll",    "stiffness",    90),
+    scrollDamping:   sv(z, "packaging", "scroll",    "damping",      22),
+    watermarkFontSize: sv(z, "packaging", "watermark", "fontSize",   45),
+    watermarkOffY:     sv(z, "packaging", "watermark", "offsetY",    0),
+    watermarkOffX:     sv(z, "packaging", "watermark", "offsetX",    0),
     // cultura
     dbdFontSize:     sv(z, "cultura", "differentByDefault", "fontSize",  15),
     dbdOpacity:      sv(z, "cultura", "differentByDefault", "opacity",   18),
@@ -188,12 +194,12 @@ export default function MobileHome() {
     container: scrollContainerRef,
     offset: ["start end", "end start"],
   });
-  const bagXRaw = useTransform(scrollYProgress, [0.0,  0.35], [-140, 0]);
-  const bagOpRaw= useTransform(scrollYProgress, [0.0,  0.28], [0, 1]);
-  const boxXRaw = useTransform(scrollYProgress, [0.15, 0.50], [140, 0]);
-  const boxOpRaw= useTransform(scrollYProgress, [0.15, 0.43], [0, 1]);
-  const cupXRaw = useTransform(scrollYProgress, [0.30, 0.65], [-120, 0]);
-  const cupOpRaw= useTransform(scrollYProgress, [0.30, 0.58], [0, 1]);
+  const bagXRaw = useTransform(scrollYProgress, [0.0,  0.30], [-140, 0]);
+  const bagOpRaw= useTransform(scrollYProgress, [0.0,  0.25], [0, 1]);
+  const boxXRaw = useTransform(scrollYProgress, [0.05, 0.35], [140, 0]);
+  const boxOpRaw= useTransform(scrollYProgress, [0.05, 0.30], [0, 1]);
+  const cupXRaw = useTransform(scrollYProgress, [0.10, 0.40], [-120, 0]);
+  const cupOpRaw= useTransform(scrollYProgress, [0.10, 0.35], [0, 1]);
   const sp = { stiffness: d.scrollStiffness, damping: d.scrollDamping };
   const bagX  = useSpring(bagXRaw,  sp);  const bagOp = useSpring(bagOpRaw, sp);
   const boxX  = useSpring(boxXRaw,  sp);  const boxOp = useSpring(boxOpRaw, sp);
@@ -409,25 +415,31 @@ export default function MobileHome() {
 
       {/* ════════ EMPAQUE scroll-driven ════════ */}
       <section ref={packagingRef} style={{ background: C.cream, padding: "48px 18px 64px 18px", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", left: "-5%", top: "50%", transform: "translateY(-50%)", ...F.display, fontSize: "45vw", color: C.tinta, opacity: 0.03, letterSpacing: "-0.02em", whiteSpace: "nowrap", zIndex: 0, pointerEvents: "none", userSelect: "none" }}>
+        <div style={{ position: "absolute", left: 0, top: "50%", transform: `translateY(calc(-50% + ${d.watermarkOffY}px)) translateX(${d.watermarkOffX}px)`, ...F.display, fontSize: `${d.watermarkFontSize}vw`, color: C.tinta, opacity: 0.03, letterSpacing: "-0.02em", whiteSpace: "nowrap", zIndex: 0, pointerEvents: "none", userSelect: "none" }}>
           SPRINGS
         </div>
         <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column" }}>
-          <motion.div style={{ x: bagX, opacity: bagOp, y: d.bagOffY, display: "flex", justifyContent: "center", marginBottom: d.bagMbottom }}>
-            <img src="/images/packaging-bag.png" alt="Bolsa Springs"
-              style={{ width: `${d.bagWidth}%`, maxWidth: 280, display: "block", filter: "drop-shadow(0 28px 52px rgba(26,10,12,0.20))" }}
-            />
-          </motion.div>
-          <motion.div style={{ x: boxX, opacity: boxOp, y: d.boxOffY, display: "flex", justifyContent: "flex-end", marginBottom: d.boxMbottom }}>
-            <img src="/images/packaging-box.png" alt="Caja Springs"
-              style={{ width: `${d.boxWidth}%`, maxWidth: 220, display: "block", filter: "drop-shadow(0 20px 40px rgba(26,10,12,0.18))", transform: `rotate(${d.boxRotation}deg)` }}
-            />
-          </motion.div>
-          <motion.div style={{ x: cupX, opacity: cupOp, y: d.cupOffY, display: "flex", justifyContent: "flex-start", paddingLeft: `${d.cupPaddingLeft}%` }}>
-            <img src="/images/packaging-cup.png" alt="Vaso Springs"
-              style={{ width: `${d.cupWidth}%`, maxWidth: 160, display: "block", filter: "drop-shadow(0 16px 32px rgba(26,10,12,0.16))", transform: `rotate(${d.cupRotation}deg)` }}
-            />
-          </motion.div>
+          <div style={{ transform: `translateX(${d.bagOffX}px)` }}>
+            <motion.div style={{ x: bagX, opacity: bagOp, y: d.bagOffY, display: "flex", justifyContent: "center", marginBottom: d.bagMbottom }}>
+              <img src="/images/packaging-bag.png" alt="Bolsa Springs"
+                style={{ width: `${d.bagWidth}%`, maxWidth: 280, display: "block", filter: "drop-shadow(0 28px 52px rgba(26,10,12,0.20))" }}
+              />
+            </motion.div>
+          </div>
+          <div style={{ transform: `translateX(${d.boxOffX}px)` }}>
+            <motion.div style={{ x: boxX, opacity: boxOp, y: d.boxOffY, display: "flex", justifyContent: "flex-end", marginBottom: d.boxMbottom }}>
+              <img src="/images/packaging-box.png" alt="Caja Springs"
+                style={{ width: `${d.boxWidth}%`, maxWidth: 220, display: "block", filter: "drop-shadow(0 20px 40px rgba(26,10,12,0.18))", transform: `rotate(${d.boxRotation}deg)` }}
+              />
+            </motion.div>
+          </div>
+          <div style={{ transform: `translateX(${d.cupOffX}px)` }}>
+            <motion.div style={{ x: cupX, opacity: cupOp, y: d.cupOffY, display: "flex", justifyContent: "flex-start", paddingLeft: `${d.cupPaddingLeft}%` }}>
+              <img src="/images/packaging-cup.png" alt="Vaso Springs"
+                style={{ width: `${d.cupWidth}%`, maxWidth: 160, display: "block", filter: "drop-shadow(0 16px 32px rgba(26,10,12,0.16))", transform: `rotate(${d.cupRotation}deg)` }}
+              />
+            </motion.div>
+          </div>
         </div>
       </section>
 
