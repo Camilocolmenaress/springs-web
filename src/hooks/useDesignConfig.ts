@@ -6,13 +6,15 @@ import type { PageConfig, SliderProp, FontProp, ColorProp, ImageProp, AnimationP
 import homeConfig        from "@/data/design/home.json";
 import menuConfig        from "@/data/design/menu.json";
 import menuMobileConfig  from "@/data/design/menu-mobile.json";
-import artGalleryConfig  from "@/data/design/art-gallery.json";
+import artGalleryConfig        from "@/data/design/art-gallery.json";
+import artGalleryMobileConfig  from "@/data/design/art-gallery-mobile.json";
 
 const configs: Record<string, PageConfig> = {
-  home:          homeConfig        as unknown as PageConfig,
-  menu:          menuConfig        as unknown as PageConfig,
-  "menu-mobile": menuMobileConfig  as unknown as PageConfig,
-  "art-gallery": artGalleryConfig  as unknown as PageConfig,
+  home:                  homeConfig               as unknown as PageConfig,
+  menu:                  menuConfig               as unknown as PageConfig,
+  "menu-mobile":         menuMobileConfig         as unknown as PageConfig,
+  "art-gallery":         artGalleryConfig         as unknown as PageConfig,
+  "art-gallery-mobile":  artGalleryMobileConfig   as unknown as PageConfig,
 };
 
 function deepClone<T>(obj: T): T {

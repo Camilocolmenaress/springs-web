@@ -6,7 +6,7 @@ import Lenis from "lenis";
 import Link from "next/link";
 import DevPanel from "@/components/DevPanel";
 import { useDesignConfig } from "@/hooks/useDesignConfig";
-import type { SliderProp } from "@/types/design";
+import type { SliderProp, PageConfig } from "@/types/design";
 
 const BG = "#000000";
 const C = {
@@ -90,9 +90,11 @@ export default function ArtGallery() {
   const [idx, setIdx]         = useState(0);
   const [activated, setActivated] = useState<Set<number>>(new Set([0]));
   const [isMobile, setIsMobile] = useState<boolean | null>(null);
+  const [msgConfig, setMsgConfig] = useState<PageConfig | null>(null);
   const wrapperRef      = useRef<HTMLDivElement>(null);
   const contentRef      = useRef<HTMLDivElement>(null);
   const lenisRef        = useRef<Lenis | null>(null);
+  const iframeRef       = useRef<HTMLIFrameElement>(null);
   const ex              = EXHIBITS[idx];
 
   useEffect(() => {
@@ -104,6 +106,7 @@ export default function ArtGallery() {
   }, []);
 
   const { config, editMode, saved, updateProp, save, reset, exportValues } = useDesignConfig("art-gallery");
+  const mobile = useDesignConfig("art-gallery-mobile");
   const z = config.zones as Record<string, { elements: Record<string, { props: Record<string, unknown> }> }>;
 
   const d = {
@@ -267,8 +270,95 @@ export default function ArtGallery() {
     lenisRef.current.scrollTo(i * wrapper.clientWidth, { duration: 1.2 });
   };
 
+  // receive config from parent editor (when inside iframe)
+  useEffect(() => {
+    function onMsg(e: MessageEvent) {
+      if (e.data?.type === "SPRINGS_CONFIG") setMsgConfig(e.data.config as PageConfig);
+    }
+    window.addEventListener("message", onMsg);
+    return () => window.removeEventListener("message", onMsg);
+  }, []);
+
+  // push config to iframe on every slider change
+  useEffect(() => {
+    if (!editMode) return;
+    const send = () =>
+      iframeRef.current?.contentWindow?.postMessage(
+        { type: "SPRINGS_CONFIG", config: mobile.config }, "*"
+      );
+    const iframe = iframeRef.current;
+    if (!iframe) return;
+    if (iframe.contentDocument?.readyState === "complete") { send(); }
+    else { iframe.addEventListener("load", send, { once: true }); }
+  }, [mobile.config, editMode]);
+
+  async function handleMobileSave() {
+    await mobile.save();
+    iframeRef.current?.contentWindow?.location.reload();
+  }
+
+  // mobile config values (active = live preview override or saved config)
+  const mz = (msgConfig ?? mobile.config).zones as Record<string, { elements: Record<string, { props: Record<string, unknown> }> }>;
+  const m = {
+    imageWidth:    sv(mz, "hero", "productImage", "width",        75),
+    imageObjectY:  sv(mz, "hero", "productImage", "objectY",      15),
+    overlayTop:    sv(mz, "hero", "overlayText",  "top",          16),
+    overlayLeft:   sv(mz, "hero", "overlayText",  "left",         34),
+    galleryLabelFs:sv(mz, "hero", "galleryLabel", "fontSize",     0.44),
+    productNameFs: sv(mz, "hero", "productName",  "fontSize",     13),
+    sidebarW:      sv(mz, "hero", "sidebar",      "width",        36),
+    sidebarFs:     sv(mz, "hero", "sidebar",      "fontSize",     0.37),
+    globeSize:     sv(mz, "hero", "globe",        "size",         64),
+    detailPadTop:  sv(mz, "detail", "layout",     "paddingTop",   28),
+    detailPadH:    sv(mz, "detail", "layout",     "paddingH",     16),
+    leftColW:      sv(mz, "detail", "layout",     "leftColWidth", 44),
+    pullQuoteFs:   sv(mz, "detail", "pullQuote",  "fontSize",     0.78),
+    ingFs:         sv(mz, "detail", "ingredients","fontSize",     0.39),
+    descFs:        sv(mz, "detail", "description","fontSize",     0.38),
+    taglineFs:     sv(mz, "detail", "tagline",    "fontSize",     0.40),
+    quoteFs:       sv(mz, "detail", "quote",      "fontSize",     0.60),
+  };
+
   // SSR-safe: avoid flash
   if (isMobile === null) return null;
+
+  // ── MOBILE EDITOR ──────────────────────────────────────────────────
+  if (editMode) {
+    return (
+      <div style={{ width: "100vw", height: "100vh", background: "#0d0d0d", position: "relative", overflow: "hidden" }}>
+        <div style={{
+          position: "absolute", left: 0, top: 0,
+          width: 390, height: 20, background: "#1a1a1a",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          fontFamily: "JetBrains Mono, monospace", fontSize: "0.42rem",
+          letterSpacing: "0.2em", color: "rgba(242,232,213,0.3)",
+          zIndex: 10,
+        }}>
+          390 × 844 — MOBILE PREVIEW
+        </div>
+        <iframe
+          ref={iframeRef}
+          src="/art-gallery"
+          style={{
+            position: "absolute", left: 0, top: 20,
+            width: 390, height: 844,
+            border: "none",
+            outline: "1px solid rgba(242,232,213,0.12)",
+          }}
+          title="Mobile preview"
+        />
+        <DevPanel
+          config={mobile.config}
+          saved={mobile.saved}
+          onUpdate={mobile.updateProp}
+          onSave={handleMobileSave}
+          onExport={mobile.exportValues}
+          onReset={mobile.reset}
+          startLeft={406}
+        />
+      </div>
+    );
+  }
 
   // ── MOBILE LAYOUT ──────────────────────────────────────────────────
   if (isMobile) {
@@ -354,8 +444,8 @@ export default function ArtGallery() {
                   alt={exhibit.name}
                   style={{
                     position: "absolute", right: 0, top: 0,
-                    width: "75%", height: "100%",
-                    objectFit: "cover", objectPosition: "center 15%",
+                    width: `${m.imageWidth}%`, height: "100%",
+                    objectFit: "cover", objectPosition: `center ${m.imageObjectY}%`,
                     zIndex: 1,
                   }}
                 />
@@ -374,20 +464,20 @@ export default function ArtGallery() {
 
                 {/* Gallery label + product name + subtitle — absolute, overlaid on image */}
                 <div style={{
-                  position: "absolute", top: "16%", left: "34%", right: "4%",
+                  position: "absolute", top: `${m.overlayTop}%`, left: `${m.overlayLeft}%`, right: "4%",
                   zIndex: 10, textAlign: "center",
                 }}>
-                  <div style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.18em", color: C.burgundy, marginBottom: 8 }}>
+                  <div style={{ ...F.mono, fontSize: `${m.galleryLabelFs}rem`, letterSpacing: "0.18em", color: C.burgundy, marginBottom: 8 }}>
                     SPRINGS ART GALLERY +
                   </div>
                   <h2 style={{
-                    ...F.display, fontSize: "clamp(2.6rem, 13vw, 5rem)", color: C.cream,
+                    ...F.display, fontSize: `clamp(2rem, ${m.productNameFs}vw, 6rem)`, color: C.cream,
                     lineHeight: 0.92, letterSpacing: "-0.01em",
                     margin: "0 0 10px",
                   }}>
                     {exhibit.name}
                   </h2>
-                  <div style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.16em", color: C.dim }}>
+                  <div style={{ ...F.mono, fontSize: `${m.galleryLabelFs}rem`, letterSpacing: "0.16em", color: C.dim }}>
                     {exhibit.subtitle} <span style={{ color: C.burgundy }}>+</span>
                   </div>
                 </div>
@@ -395,12 +485,12 @@ export default function ArtGallery() {
                 {/* LEFT SIDEBAR — absolute, full height */}
                 <div style={{
                   position: "absolute", left: 0, top: 0, bottom: 0,
-                  width: "36%", padding: "14px 0 0 16px",
+                  width: `${m.sidebarW}%`, padding: "14px 0 0 16px",
                   zIndex: 10, display: "flex", flexDirection: "column",
                 }}>
 
                   {/* Globe */}
-                  <div style={{ width: 64, height: 64, marginBottom: 14, flexShrink: 0 }}>
+                  <div style={{ width: m.globeSize, height: m.globeSize, marginBottom: 14, flexShrink: 0 }}>
                     <svg viewBox="0 0 110 110" width="100%" height="100%">
                       <circle cx="55" cy="55" r={33} fill="none" stroke={C.dim} strokeWidth="1.2" opacity={0.8}/>
                       <ellipse cx="55" cy="55" rx={12} ry={33} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.55}/>
@@ -417,36 +507,36 @@ export default function ArtGallery() {
                   </div>
 
                   {/* Exhibit metadata */}
-                  <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.2em", color: C.dim, marginBottom: 2 }}>EXHIBIT</div>
+                  <div style={{ ...F.mono, fontSize: `${m.sidebarFs}rem`, letterSpacing: "0.2em", color: C.dim, marginBottom: 2 }}>EXHIBIT</div>
                   <div style={{ ...F.display, fontSize: "2.6rem", color: C.burgundy, lineHeight: 1, marginBottom: 10 }}>{exhibit.id}</div>
 
-                  <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.12em", color: C.cream, marginBottom: 1 }}>JACKET SERIES</div>
-                  <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.12em", color: C.dim, marginBottom: 10 }}>{exhibit.year}</div>
+                  <div style={{ ...F.mono, fontSize: `${m.sidebarFs}rem`, letterSpacing: "0.12em", color: C.cream, marginBottom: 1 }}>JACKET SERIES</div>
+                  <div style={{ ...F.mono, fontSize: `${m.sidebarFs}rem`, letterSpacing: "0.12em", color: C.dim, marginBottom: 10 }}>{exhibit.year}</div>
 
                   <div style={{ width: 28, height: "1px", background: "rgba(242,232,213,0.28)", marginBottom: 10 }} />
 
-                  <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.1em", color: C.cream, marginBottom: 1 }}>BUCARAMANGA</div>
-                  <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.1em", color: C.dim, marginBottom: 10 }}>COLOMBIA</div>
+                  <div style={{ ...F.mono, fontSize: `${m.sidebarFs}rem`, letterSpacing: "0.1em", color: C.cream, marginBottom: 1 }}>BUCARAMANGA</div>
+                  <div style={{ ...F.mono, fontSize: `${m.sidebarFs}rem`, letterSpacing: "0.1em", color: C.dim, marginBottom: 10 }}>COLOMBIA</div>
 
                   <div style={{ width: 28, height: "1px", background: "rgba(242,232,213,0.28)", marginBottom: 10 }} />
 
-                  <div style={{ ...F.mono, fontSize: "0.37rem", color: C.cream, marginBottom: 1 }}>7.1254° N</div>
-                  <div style={{ ...F.mono, fontSize: "0.37rem", color: C.cream, marginBottom: 14 }}>73.1198° W</div>
+                  <div style={{ ...F.mono, fontSize: `${m.sidebarFs}rem`, color: C.cream, marginBottom: 1 }}>7.1254° N</div>
+                  <div style={{ ...F.mono, fontSize: `${m.sidebarFs}rem`, color: C.cream, marginBottom: 14 }}>73.1198° W</div>
 
                   <div style={{ width: 7, height: 7, borderRadius: "50%", background: C.burgundy }} />
                 </div>
               </section>
 
               {/* ── DETAIL ── */}
-              <section style={{ background: BG, padding: "28px 16px 0" }}>
+              <section style={{ background: BG, padding: `${m.detailPadTop}px ${m.detailPadH}px 0` }}>
 
                 {/* Pull quote (left) + Ingredients/desc/tagline (right) */}
                 <div style={{ display: "flex", gap: 14, marginBottom: 24 }}>
-                  <div style={{ flex: "0 0 44%", borderLeft: `2px solid ${C.burgundy}`, paddingLeft: 11 }}>
+                  <div style={{ flex: `0 0 ${m.leftColW}%`, borderLeft: `2px solid ${C.burgundy}`, paddingLeft: 11 }}>
                     <p style={{
                       fontFamily: "var(--font-inter)",
                       fontStyle: "italic",
-                      fontSize: "0.78rem",
+                      fontSize: `${m.pullQuoteFs}rem`,
                       fontWeight: 500,
                       color: C.cream,
                       lineHeight: 1.45,
@@ -460,15 +550,15 @@ export default function ArtGallery() {
                   <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 0 }}>
                     <div style={{ marginBottom: 10 }}>
                       {exhibit.ingredients.map(ing => (
-                        <div key={ing} style={{ ...F.mono, fontSize: "0.39rem", letterSpacing: "0.06em", color: C.cream, marginBottom: 3, lineHeight: 1.4 }}>
+                        <div key={ing} style={{ ...F.mono, fontSize: `${m.ingFs}rem`, letterSpacing: "0.06em", color: C.cream, marginBottom: 3, lineHeight: 1.4 }}>
                           {ing}
                         </div>
                       ))}
                     </div>
-                    <p style={{ ...F.mono, fontSize: "0.38rem", letterSpacing: "0.04em", color: C.dim, lineHeight: 1.62, margin: "0 0 8px", whiteSpace: "pre-line" }}>
+                    <p style={{ ...F.mono, fontSize: `${m.descFs}rem`, letterSpacing: "0.04em", color: C.dim, lineHeight: 1.62, margin: "0 0 8px", whiteSpace: "pre-line" }}>
                       {exhibit.description}
                     </p>
-                    <div style={{ ...F.mono, fontSize: "0.4rem", letterSpacing: "0.1em", color: C.burgundy }}>
+                    <div style={{ ...F.mono, fontSize: `${m.taglineFs}rem`, letterSpacing: "0.1em", color: C.burgundy }}>
                       {exhibit.tagline}
                     </div>
                   </div>
@@ -514,7 +604,7 @@ export default function ArtGallery() {
                 }}>
                   <div style={{ flex: 1 }}>
                     <span style={{ ...F.sans, fontSize: "1.5rem", color: C.cream, display: "block", lineHeight: 0.8, marginBottom: 4 }}>"</span>
-                    <p style={{ ...F.sans, fontSize: "0.6rem", fontWeight: 500, color: C.cream, lineHeight: 1.5, margin: "0 0 10px", whiteSpace: "pre-line" }}>
+                    <p style={{ ...F.sans, fontSize: `${m.quoteFs}rem`, fontWeight: 500, color: C.cream, lineHeight: 1.5, margin: "0 0 10px", whiteSpace: "pre-line" }}>
                       {exhibit.quote}
                     </p>
                     <div style={{ fontFamily: "var(--font-caveat, cursive)", fontSize: "1.1rem", color: C.burgundy }}>
