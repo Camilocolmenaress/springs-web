@@ -467,9 +467,9 @@ export default function ArtGallery() {
           position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 300,
           height: 56,
           display: "flex", alignItems: "stretch",
-          background: "rgba(0,0,0,0.96)",
-          backdropFilter: "blur(14px)",
-          WebkitBackdropFilter: "blur(14px)",
+          background: "rgba(10,8,6,0.42)",
+          backdropFilter: "blur(28px) saturate(1.4)",
+          WebkitBackdropFilter: "blur(28px) saturate(1.4)",
           borderTop: "1px solid rgba(242,232,213,0.08)",
           paddingBottom: "env(safe-area-inset-bottom)",
         }}>
