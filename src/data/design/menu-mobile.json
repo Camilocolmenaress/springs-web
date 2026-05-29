@@ -238,6 +238,17 @@
         }
       }
     },
+    "layout": {
+      "label": "Layout general",
+      "elements": {
+        "content": {
+          "type": "text",
+          "props": {
+            "paddingTop": { "value": 40, "unit": "px", "min": 0, "max": 200, "step": 4 }
+          }
+        }
+      }
+    },
     "watermark": {
       "label": "Watermark fondo",
       "elements": {

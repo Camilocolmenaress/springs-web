@@ -140,6 +140,9 @@ export default function Menu({ onAgregar, config }: Props) {
       offsetX: sv(el?.props?.offsetX, 0),
     };
   }
+  // Layout
+  const lo = z?.layout?.elements;
+  const contentPaddingTop = sv(lo?.content?.props?.paddingTop, 0);
   // Tabs
   const ti = z?.tabs?.elements;
   const tabFontSize = sv(ti?.btn?.props?.fontSize, 0.5);
@@ -304,7 +307,7 @@ export default function Menu({ onAgregar, config }: Props) {
       </div>
 
       {/* ── Main flex area ───────────────────────────────── */}
-      <div style={{ position: "relative", flex: 1, display: "flex", flexDirection: "column", zIndex: 2, overflowX: "hidden", justifyContent: "center" }}>
+      <div style={{ position: "relative", flex: 1, display: "flex", flexDirection: "column", zIndex: 2, overflowX: "hidden", justifyContent: "center", paddingTop: contentPaddingTop }}>
 
         {/* Carousel track */}
         <div style={{ position: "relative", flexShrink: 0, height: effCenterImgSize, overflow: "visible", transform: `translate(${trackOffsetX}px, ${effTrackOffsetY}px)` }}>
