@@ -195,16 +195,16 @@ export default function MobileHome() {
     offset: ["start end", "end start"],
   });
   // diagonal: bolsa izquierda-arriba → derecha-abajo
-  const bagX  = useTransform(scrollYProgress, [0.15, 0.48], [-180, 0]);
-  const bagY  = useTransform(scrollYProgress, [0.15, 0.48], [-130, 0]);
+  const bagX  = useTransform(scrollYProgress, [0.15, 0.35], [-180, 0]);
+  const bagY  = useTransform(scrollYProgress, [0.15, 0.35], [-130, 0]);
   const bagOp = useTransform(scrollYProgress, [0.15, 0.21], [0, 1]);
   // diagonal: caja derecha-arriba → izquierda-abajo
-  const boxX  = useTransform(scrollYProgress, [0.20, 0.53], [180, 0]);
-  const boxY  = useTransform(scrollYProgress, [0.20, 0.53], [-110, 0]);
+  const boxX  = useTransform(scrollYProgress, [0.20, 0.40], [180, 0]);
+  const boxY  = useTransform(scrollYProgress, [0.20, 0.40], [-110, 0]);
   const boxOp = useTransform(scrollYProgress, [0.20, 0.26], [0, 1]);
   // diagonal: vaso derecha-arriba → izquierda-abajo
-  const cupX  = useTransform(scrollYProgress, [0.25, 0.58], [160, 0]);
-  const cupY  = useTransform(scrollYProgress, [0.25, 0.58], [-90, 0]);
+  const cupX  = useTransform(scrollYProgress, [0.25, 0.45], [160, 0]);
+  const cupY  = useTransform(scrollYProgress, [0.25, 0.45], [-90, 0]);
   const cupOp = useTransform(scrollYProgress, [0.25, 0.31], [0, 1]);
 
   return (
