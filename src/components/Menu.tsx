@@ -130,6 +130,23 @@ export default function Menu({ onAgregar, config }: Props) {
       offsetX: sv(el?.props?.offsetX, 0),
     };
   }
+  // Loaded image (per product)
+  const li = z?.loadedImage?.elements;
+  function getLoadedConfig(id: string) {
+    const el = li?.[id as keyof typeof li];
+    return {
+      size:    sv(el?.props?.size,    42),
+      offsetY: sv(el?.props?.offsetY, 0),
+      offsetX: sv(el?.props?.offsetX, 0),
+    };
+  }
+  // Tabs
+  const ti = z?.tabs?.elements;
+  const tabFontSize = sv(ti?.btn?.props?.fontSize, 0.5);
+  const tabFontUnit = ti?.btn?.props?.fontSize && typeof ti.btn.props.fontSize === "object" && "unit" in ti.btn.props.fontSize ? (ti.btn.props.fontSize as {unit:string}).unit : "rem";
+  const tabPaddingX = sv(ti?.btn?.props?.paddingX, 10);
+  const tabPaddingY = sv(ti?.btn?.props?.paddingY, 6);
+  const tabGap      = sv(ti?.btn?.props?.gap,      4);
   // Scale ratio for side slots
   const centerSizeN = sv(c?.centerImage?.props?.size, 67);
   const nearSizeN   = sv(c?.nearImage?.props?.size, 41);
@@ -248,15 +265,15 @@ export default function Menu({ onAgregar, config }: Props) {
           — AQUÍ TIENES NUESTRO MENÚ
         </div>
         {/* Fila 2: pestañas de categoría */}
-        <div style={{ display: "flex", gap: 4, justifyContent: "flex-start" }}>
+        <div style={{ display: "flex", gap: tabGap, justifyContent: "flex-start" }}>
           {CATEGORIAS.map(c => {
             const active = c.key === categoria;
             return (
               <button key={c.key} onClick={() => setCategoria(c.key)} style={{
                 fontFamily: "var(--font-jetbrains-mono), monospace",
-                fontSize: isMobile ? "0.5rem" : "clamp(0.45rem, 1.8vw, 0.6rem)",
+                fontSize: config ? `${tabFontSize}${tabFontUnit}` : (isMobile ? "0.5rem" : "clamp(0.45rem, 1.8vw, 0.6rem)"),
                 letterSpacing: "0.12em", textTransform: "uppercase",
-                padding: isMobile ? "6px 10px" : "6px clamp(8px, 2.5vw, 13px)",
+                padding: config ? `${tabPaddingY}px ${tabPaddingX}px` : (isMobile ? "6px 10px" : "6px clamp(8px, 2.5vw, 13px)"),
                 background: active ? C.tinta : "transparent",
                 color:      active ? C.cream : C.tinta,
                 border: `1px solid ${C.tinta}`,
@@ -367,7 +384,18 @@ export default function Menu({ onAgregar, config }: Props) {
                     </div>
                   ) : p.categoria === "bebida" ? (
                     <BebidaImg p={p} isCenter={isCenter} sideRatio={sideRatio} getBebidaConfig={getBebidaConfig} imgSrc={imgSrc} />
-                  ) : (
+                  ) : p.categoria === "loaded" && li ? (() => {
+                    const lc = getLoadedConfig(p.id);
+                    const lSize = isCenter ? `${lc.size}vh` : `${lc.size * sideRatio}vh`;
+                    const lX = isCenter ? lc.offsetX : lc.offsetX * sideRatio;
+                    const lY = isCenter ? lc.offsetY : lc.offsetY * sideRatio;
+                    return (
+                      <img src={imgSrc(p)} alt={p.nombre} style={{
+                        width: lSize, height: lSize, objectFit: "contain", display: "block",
+                        transform: `translate(${lX}px, ${lY}px)`,
+                      }} />
+                    );
+                  })() : (
                     <img
                       src={imgSrc(p)}
                       alt={p.nombre}

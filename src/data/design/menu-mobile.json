@@ -187,6 +187,57 @@
         }
       }
     },
+    "tabs": {
+      "label": "Pestañas categoría",
+      "elements": {
+        "btn": {
+          "type": "text",
+          "props": {
+            "fontSize":   { "value": 0.5,  "unit": "rem", "min": 0.3, "max": 1,   "step": 0.02 },
+            "paddingX":   { "value": 10,   "unit": "px",  "min": 4,   "max": 32,  "step": 2    },
+            "paddingY":   { "value": 6,    "unit": "px",  "min": 2,   "max": 20,  "step": 2    },
+            "gap":        { "value": 4,    "unit": "px",  "min": 0,   "max": 20,  "step": 2    }
+          }
+        }
+      }
+    },
+    "loadedImage": {
+      "label": "Loaded — imagen",
+      "elements": {
+        "loaded-1": {
+          "type": "image",
+          "props": {
+            "size":    { "value": 42,  "unit": "vh", "min": 20, "max": 150, "step": 1 },
+            "offsetY": { "value": -144, "unit": "px", "min": -300, "max": 300, "step": 4 },
+            "offsetX": { "value": 0,   "unit": "px", "min": -400, "max": 400, "step": 4 }
+          }
+        },
+        "loaded-2": {
+          "type": "image",
+          "props": {
+            "size":    { "value": 42,  "unit": "vh", "min": 20, "max": 150, "step": 1 },
+            "offsetY": { "value": -144, "unit": "px", "min": -300, "max": 300, "step": 4 },
+            "offsetX": { "value": 0,   "unit": "px", "min": -400, "max": 400, "step": 4 }
+          }
+        },
+        "loaded-3": {
+          "type": "image",
+          "props": {
+            "size":    { "value": 42,  "unit": "vh", "min": 20, "max": 150, "step": 1 },
+            "offsetY": { "value": -144, "unit": "px", "min": -300, "max": 300, "step": 4 },
+            "offsetX": { "value": 0,   "unit": "px", "min": -400, "max": 400, "step": 4 }
+          }
+        },
+        "loaded-4": {
+          "type": "image",
+          "props": {
+            "size":    { "value": 42,  "unit": "vh", "min": 20, "max": 150, "step": 1 },
+            "offsetY": { "value": -144, "unit": "px", "min": -300, "max": 300, "step": 4 },
+            "offsetX": { "value": 0,   "unit": "px", "min": -400, "max": 400, "step": 4 }
+          }
+        }
+      }
+    },
     "watermark": {
       "label": "Watermark fondo",
       "elements": {
