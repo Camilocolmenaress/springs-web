@@ -375,28 +375,30 @@ export default function ArtGallery() {
   // ── MOBILE EDITOR ──────────────────────────────────────────────────
   if (editMode) {
     return (
-      <div style={{ width: "100vw", height: "100vh", background: "#0d0d0d", position: "relative", overflow: "hidden" }}>
-        <div style={{
-          position: "absolute", left: 0, top: 0,
-          width: 390, height: 20, background: "#1a1a1a",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          fontFamily: "JetBrains Mono, monospace", fontSize: "0.42rem",
-          letterSpacing: "0.2em", color: "rgba(242,232,213,0.3)",
-          zIndex: 10,
-        }}>
-          390 × 844 — MOBILE PREVIEW
+      <div style={{ width: "100vw", height: "100vh", background: "#0d0d0d", display: "flex", overflow: "hidden" }}>
+        {/* Left: device frame + iframe */}
+        <div style={{ flexShrink: 0, overflowY: "auto", paddingBottom: 24 }}>
+          <div style={{
+            width: 390, height: 20, background: "#1a1a1a",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontFamily: "JetBrains Mono, monospace", fontSize: "0.42rem",
+            letterSpacing: "0.2em", color: "rgba(242,232,213,0.3)",
+            position: "sticky", top: 0, zIndex: 10,
+          }}>
+            390 × 844 — MOBILE PREVIEW
+          </div>
+          <iframe
+            ref={iframeRef}
+            src="/art-gallery"
+            style={{
+              display: "block",
+              width: 390, height: 844,
+              border: "none",
+              outline: "1px solid rgba(242,232,213,0.12)",
+            }}
+            title="Mobile preview"
+          />
         </div>
-        <iframe
-          ref={iframeRef}
-          src="/art-gallery"
-          style={{
-            position: "absolute", left: 0, top: 20,
-            width: 390, height: 844,
-            border: "none",
-            outline: "1px solid rgba(242,232,213,0.12)",
-          }}
-          title="Mobile preview"
-        />
         <DevPanel
           config={mobile.config}
           saved={mobile.saved}
