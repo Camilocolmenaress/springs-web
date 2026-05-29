@@ -8,6 +8,7 @@ import DragSticker from "@/components/DragSticker";
 import DevPanel from "@/components/DevPanel";
 import { useDesignConfig } from "@/hooks/useDesignConfig";
 import MobileLanding from "@/components/MobileLanding";
+import MobileGate from "@/components/MobileGate";
 import TabletLanding from "@/components/TabletLanding";
 import SensitiveImage from "@/components/SensitiveImage";
 
@@ -388,7 +389,7 @@ export default function Home() {
   }, [handArmEntrance]);
 
 
-  if (layout === null || layout === "mobile") return <MobileLanding />;
+  if (layout === null || layout === "mobile") return <MobileGate />;
   if (layout === "tablet") return <TabletLanding />;
 
   const F = {
