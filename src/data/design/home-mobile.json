@@ -107,7 +107,7 @@
           "type": "text",
           "props": {
             "fontSize": { "value": 8,    "unit": "vw", "min": 2,    "max": 16,   "step": 0.5 },
-            "speed":    { "value": 35,  "unit": "px", "min": 4,    "max": 100,  "step": 1 },
+            "speed":    { "value": 4,   "unit": "px", "min": 1,    "max": 100,  "step": 1 },
             "paddingV": { "value": 5,   "unit": "px", "min": 0,    "max": 30,   "step": 1 },
             "offsetY":  { "value": -468,"unit": "px", "min": -800, "max": 400,  "step": 2 }
           }
