@@ -130,7 +130,7 @@ export default function DevPanel({ config, saved, onUpdate, onSave, onExport, on
       {(!collapsed || inlineSidebar) && (
         <>
           {/* Zones */}
-          <div style={{ overflowY: "auto", flex: 1, padding: "6px 0" }}>
+          <div style={{ overflowY: "auto", flex: 1, padding: "6px 0" }} onPointerDown={(e) => e.stopPropagation()}>
             {Object.entries(config.zones).filter(([zoneKey]) =>
               zoneKey === "arrows" ||
               !categoria ||

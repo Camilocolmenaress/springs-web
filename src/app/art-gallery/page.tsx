@@ -300,23 +300,46 @@ export default function ArtGallery() {
   // mobile config values (active = live preview override or saved config)
   const mz = (msgConfig ?? mobile.config).zones as Record<string, { elements: Record<string, { props: Record<string, unknown> }> }>;
   const m = {
-    imageWidth:    sv(mz, "hero", "productImage", "width",        75),
-    imageObjectY:  sv(mz, "hero", "productImage", "objectY",      15),
-    overlayTop:    sv(mz, "hero", "overlayText",  "top",          16),
-    overlayLeft:   sv(mz, "hero", "overlayText",  "left",         34),
-    galleryLabelFs:sv(mz, "hero", "galleryLabel", "fontSize",     0.44),
-    productNameFs: sv(mz, "hero", "productName",  "fontSize",     13),
-    sidebarW:      sv(mz, "hero", "sidebar",      "width",        36),
-    sidebarFs:     sv(mz, "hero", "sidebar",      "fontSize",     0.37),
-    globeSize:     sv(mz, "hero", "globe",        "size",         64),
-    detailPadTop:  sv(mz, "detail", "layout",     "paddingTop",   28),
-    detailPadH:    sv(mz, "detail", "layout",     "paddingH",     16),
-    leftColW:      sv(mz, "detail", "layout",     "leftColWidth", 44),
-    pullQuoteFs:   sv(mz, "detail", "pullQuote",  "fontSize",     0.78),
-    ingFs:         sv(mz, "detail", "ingredients","fontSize",     0.39),
-    descFs:        sv(mz, "detail", "description","fontSize",     0.38),
-    taglineFs:     sv(mz, "detail", "tagline",    "fontSize",     0.40),
-    quoteFs:       sv(mz, "detail", "quote",      "fontSize",     0.60),
+    imageWidth:       sv(mz, "hero", "productImage", "width",        75),
+    imageHeight:      sv(mz, "hero", "productImage", "height",       100),
+    imageOffsetY:     sv(mz, "hero", "productImage", "offsetY",      0),
+    imageOffsetX:     sv(mz, "hero", "productImage", "offsetX",      0),
+    imageObjectY:     sv(mz, "hero", "productImage", "objectY",      15),
+    overlayTop:       sv(mz, "hero", "overlayText",  "top",          16),
+    overlayLeft:      sv(mz, "hero", "overlayText",  "left",         34),
+    overlayOffsetY:   sv(mz, "hero", "overlayText",  "offsetY",      0),
+    overlayOffsetX:   sv(mz, "hero", "overlayText",  "offsetX",      0),
+    galleryLabelFs:   sv(mz, "hero", "galleryLabel", "fontSize",     0.44),
+    galleryLabelOffY: sv(mz, "hero", "galleryLabel", "offsetY",      0),
+    galleryLabelOffX: sv(mz, "hero", "galleryLabel", "offsetX",      0),
+    productNameFs:    sv(mz, "hero", "productName",  "fontSize",     13),
+    productNameOffY:  sv(mz, "hero", "productName",  "offsetY",      0),
+    productNameOffX:  sv(mz, "hero", "productName",  "offsetX",      0),
+    sidebarW:         sv(mz, "hero", "sidebar",      "width",        36),
+    sidebarFs:        sv(mz, "hero", "sidebar",      "fontSize",     0.37),
+    sidebarOffY:      sv(mz, "hero", "sidebar",      "offsetY",      0),
+    sidebarOffX:      sv(mz, "hero", "sidebar",      "offsetX",      0),
+    globeSize:        sv(mz, "hero", "globe",        "size",         64),
+    globeOffY:        sv(mz, "hero", "globe",        "offsetY",      0),
+    globeOffX:        sv(mz, "hero", "globe",        "offsetX",      0),
+    detailPadTop:     sv(mz, "detail", "layout",     "paddingTop",   28),
+    detailPadH:       sv(mz, "detail", "layout",     "paddingH",     16),
+    leftColW:         sv(mz, "detail", "layout",     "leftColWidth", 44),
+    pullQuoteFs:      sv(mz, "detail", "pullQuote",  "fontSize",     0.78),
+    pullQuoteOffY:    sv(mz, "detail", "pullQuote",  "offsetY",      0),
+    pullQuoteOffX:    sv(mz, "detail", "pullQuote",  "offsetX",      0),
+    ingFs:            sv(mz, "detail", "ingredients","fontSize",     0.39),
+    ingOffY:          sv(mz, "detail", "ingredients","offsetY",      0),
+    ingOffX:          sv(mz, "detail", "ingredients","offsetX",      0),
+    descFs:           sv(mz, "detail", "description","fontSize",     0.38),
+    descOffY:         sv(mz, "detail", "description","offsetY",      0),
+    descOffX:         sv(mz, "detail", "description","offsetX",      0),
+    taglineFs:        sv(mz, "detail", "tagline",    "fontSize",     0.40),
+    taglineOffY:      sv(mz, "detail", "tagline",    "offsetY",      0),
+    taglineOffX:      sv(mz, "detail", "tagline",    "offsetX",      0),
+    quoteFs:          sv(mz, "detail", "quote",      "fontSize",     0.60),
+    quoteOffY:        sv(mz, "detail", "quote",      "offsetY",      0),
+    quoteOffX:        sv(mz, "detail", "quote",      "offsetX",      0),
   };
 
   // SSR-safe: avoid flash
@@ -444,8 +467,9 @@ export default function ArtGallery() {
                   alt={exhibit.name}
                   style={{
                     position: "absolute", right: 0, top: 0,
-                    width: `${m.imageWidth}%`, height: "100%",
+                    width: `${m.imageWidth}%`, height: `${m.imageHeight}%`,
                     objectFit: "cover", objectPosition: `center ${m.imageObjectY}%`,
+                    transform: `translate(${m.imageOffsetX}px, ${m.imageOffsetY}px)`,
                     zIndex: 1,
                   }}
                 />
@@ -466,14 +490,19 @@ export default function ArtGallery() {
                 <div style={{
                   position: "absolute", top: `${m.overlayTop}%`, left: `${m.overlayLeft}%`, right: "4%",
                   zIndex: 10, textAlign: "center",
+                  transform: `translate(${m.overlayOffsetX}px, ${m.overlayOffsetY}px)`,
                 }}>
-                  <div style={{ ...F.mono, fontSize: `${m.galleryLabelFs}rem`, letterSpacing: "0.18em", color: C.burgundy, marginBottom: 8 }}>
+                  <div style={{
+                    ...F.mono, fontSize: `${m.galleryLabelFs}rem`, letterSpacing: "0.18em", color: C.burgundy, marginBottom: 8,
+                    transform: `translate(${m.galleryLabelOffX}px, ${m.galleryLabelOffY}px)`,
+                  }}>
                     SPRINGS ART GALLERY +
                   </div>
                   <h2 style={{
                     ...F.display, fontSize: `clamp(2rem, ${m.productNameFs}vw, 6rem)`, color: C.cream,
                     lineHeight: 0.92, letterSpacing: "-0.01em",
                     margin: "0 0 10px",
+                    transform: `translate(${m.productNameOffX}px, ${m.productNameOffY}px)`,
                   }}>
                     {exhibit.name}
                   </h2>
@@ -487,10 +516,11 @@ export default function ArtGallery() {
                   position: "absolute", left: 0, top: 0, bottom: 0,
                   width: `${m.sidebarW}%`, padding: "14px 0 0 16px",
                   zIndex: 10, display: "flex", flexDirection: "column",
+                  transform: `translate(${m.sidebarOffX}px, ${m.sidebarOffY}px)`,
                 }}>
 
                   {/* Globe */}
-                  <div style={{ width: m.globeSize, height: m.globeSize, marginBottom: 14, flexShrink: 0 }}>
+                  <div style={{ width: m.globeSize, height: m.globeSize, marginBottom: 14, flexShrink: 0, transform: `translate(${m.globeOffX}px, ${m.globeOffY}px)` }}>
                     <svg viewBox="0 0 110 110" width="100%" height="100%">
                       <circle cx="55" cy="55" r={33} fill="none" stroke={C.dim} strokeWidth="1.2" opacity={0.8}/>
                       <ellipse cx="55" cy="55" rx={12} ry={33} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.55}/>
@@ -542,23 +572,24 @@ export default function ArtGallery() {
                       lineHeight: 1.45,
                       margin: 0,
                       whiteSpace: "pre-line",
+                      transform: `translate(${m.pullQuoteOffX}px, ${m.pullQuoteOffY}px)`,
                     }}>
                       {exhibit.description.replace(/\n/g, "\n").toLowerCase().replace(/^\w|\.\s+\w/g, c => c.toUpperCase())}
                     </p>
                   </div>
 
                   <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 0 }}>
-                    <div style={{ marginBottom: 10 }}>
+                    <div style={{ marginBottom: 10, transform: `translate(${m.ingOffX}px, ${m.ingOffY}px)` }}>
                       {exhibit.ingredients.map(ing => (
                         <div key={ing} style={{ ...F.mono, fontSize: `${m.ingFs}rem`, letterSpacing: "0.06em", color: C.cream, marginBottom: 3, lineHeight: 1.4 }}>
                           {ing}
                         </div>
                       ))}
                     </div>
-                    <p style={{ ...F.mono, fontSize: `${m.descFs}rem`, letterSpacing: "0.04em", color: C.dim, lineHeight: 1.62, margin: "0 0 8px", whiteSpace: "pre-line" }}>
+                    <p style={{ ...F.mono, fontSize: `${m.descFs}rem`, letterSpacing: "0.04em", color: C.dim, lineHeight: 1.62, margin: "0 0 8px", whiteSpace: "pre-line", transform: `translate(${m.descOffX}px, ${m.descOffY}px)` }}>
                       {exhibit.description}
                     </p>
-                    <div style={{ ...F.mono, fontSize: `${m.taglineFs}rem`, letterSpacing: "0.1em", color: C.burgundy }}>
+                    <div style={{ ...F.mono, fontSize: `${m.taglineFs}rem`, letterSpacing: "0.1em", color: C.burgundy, transform: `translate(${m.taglineOffX}px, ${m.taglineOffY}px)` }}>
                       {exhibit.tagline}
                     </div>
                   </div>
@@ -604,7 +635,7 @@ export default function ArtGallery() {
                 }}>
                   <div style={{ flex: 1 }}>
                     <span style={{ ...F.sans, fontSize: "1.5rem", color: C.cream, display: "block", lineHeight: 0.8, marginBottom: 4 }}>"</span>
-                    <p style={{ ...F.sans, fontSize: `${m.quoteFs}rem`, fontWeight: 500, color: C.cream, lineHeight: 1.5, margin: "0 0 10px", whiteSpace: "pre-line" }}>
+                    <p style={{ ...F.sans, fontSize: `${m.quoteFs}rem`, fontWeight: 500, color: C.cream, lineHeight: 1.5, margin: "0 0 10px", whiteSpace: "pre-line", transform: `translate(${m.quoteOffX}px, ${m.quoteOffY}px)` }}>
                       {exhibit.quote}
                     </p>
                     <div style={{ fontFamily: "var(--font-caveat, cursive)", fontSize: "1.1rem", color: C.burgundy }}>
