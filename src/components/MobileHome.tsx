@@ -20,6 +20,11 @@ function sv(zones: PageConfig["zones"], zone: string, element: string, prop: str
   return ((zones[zone]?.elements[element]?.props[prop] as SliderProp)?.value ?? fallback);
 }
 
+// translateY/X independiente — no afecta el flujo de los vecinos
+function tx(y = 0, x = 0) {
+  return `translateY(${y}px) translateX(${x}px)`;
+}
+
 function FadeUp({ children, delay = 0, style }: { children: React.ReactNode; delay?: number; style?: React.CSSProperties }) {
   return (
     <motion.div
@@ -64,7 +69,7 @@ export default function MobileHome() {
   const router = useRouter();
   const { config: savedConfig } = useDesignConfig("home-mobile");
 
-  // recibe config en tiempo real desde el editor padre (iframe postMessage)
+  // recibe config en tiempo real desde el editor (iframe postMessage)
   const [msgConfig, setMsgConfig] = useState<PageConfig | null>(null);
   useEffect(() => {
     function onMsg(e: MessageEvent) {
@@ -76,60 +81,90 @@ export default function MobileHome() {
 
   const z = (msgConfig ?? savedConfig).zones;
 
+  // ── Valores del config ──────────────────────────────────────
   const d = {
-    imgWidth:         sv(z, "hero", "productImage",      "width",        100),
-    imgOffY:          sv(z, "hero", "productImage",      "offsetY",      0),
-    jcSize:           sv(z, "hero", "jacketClubSticker", "size",         36),
-    jcTop:            sv(z, "hero", "jacketClubSticker", "top",          12),
-    jcRight:          sv(z, "hero", "jacketClubSticker", "right",        4),
-    jcRotation:       sv(z, "hero", "jacketClubSticker", "rotation",     8),
-    globeSize:        sv(z, "hero", "globe",             "size",         72),
-    globeOffY:        sv(z, "hero", "globe",             "offsetY",      6),
-    globeTextOffset:  sv(z, "hero", "globe",             "textOffset",   7),
-    underlineWidth:   sv(z, "hero", "underline",         "width",        68),
-    underlineMarginT: sv(z, "hero", "underline",         "marginTop",    4),
-    sensMarginH:      sv(z, "hero", "sensitiveImage",    "marginH",      18),
-    sensMarginV:      sv(z, "hero", "sensitiveImage",    "marginV",      16),
-    sensFontSize:     sv(z, "hero", "sensitiveImage",    "fontSize",     3.5),
-    sensOpacity:      sv(z, "hero", "sensitiveImage",    "opacity",      60),
-    agFontSize:       sv(z, "hero", "artGallery",        "fontSize",     18),
-    agOffY:           sv(z, "hero", "artGallery",        "offsetY",      0),
-    mdSize:           sv(z, "hero", "miercolesSticker",  "size",         38),
-    mdRight:          sv(z, "hero", "miercolesSticker",  "right",        12),
-    mdTop:            sv(z, "hero", "miercolesSticker",  "top",          0),
-    mdRotation:       sv(z, "hero", "miercolesSticker",  "rotation",     -8),
-    listFontSize:     sv(z, "hero", "productList",       "fontSize",     0.42),
-    listMarginT:      sv(z, "hero", "productList",       "marginTop",    12),
-    bagWidth:         sv(z, "packaging", "bag",    "width",        70),
-    bagMbottom:       sv(z, "packaging", "bag",    "marginBottom", -40),
-    boxWidth:         sv(z, "packaging", "box",    "width",        55),
-    boxRotation:      sv(z, "packaging", "box",    "rotation",     4),
-    boxMbottom:       sv(z, "packaging", "box",    "marginBottom", -30),
-    cupWidth:         sv(z, "packaging", "cup",    "width",        40),
-    cupRotation:      sv(z, "packaging", "cup",    "rotation",     -3),
-    cupPaddingLeft:   sv(z, "packaging", "cup",    "paddingLeft",  8),
-    scrollStiffness:  sv(z, "packaging", "scroll", "stiffness",    90),
-    scrollDamping:    sv(z, "packaging", "scroll", "damping",      22),
-    dbdFontSize:      sv(z, "cultura", "differentByDefault", "fontSize",   15),
-    dbdOpacity:       sv(z, "cultura", "differentByDefault", "opacity",    18),
-    hashFontSize:     sv(z, "cultura", "hashtag",            "fontSize",   0.5),
-    thisIsFontSize:   sv(z, "cultura", "thisIs",             "fontSize",   5.5),
-    ourCultureFs:     sv(z, "cultura", "ourCulture",         "fontSize",   17),
-    descFontSize:     sv(z, "cultura", "description",        "fontSize",   0.56),
-    descLineHeight:   sv(z, "cultura", "description",        "lineHeight", 2.1),
-    descMarginT:      sv(z, "cultura", "description",        "marginTop",  28),
-    pedirTitleFs:     sv(z, "pedirYa", "title",   "fontSize",     25),
-    pedirTitleMb:     sv(z, "pedirYa", "title",   "marginBottom", 40),
-    pedirTaglineFs:   sv(z, "pedirYa", "tagline", "fontSize",     0.5),
-    pedirTaglineMb:   sv(z, "pedirYa", "tagline", "marginBottom", 16),
-    appsGap:          sv(z, "pedirYa", "apps",    "gap",          10),
-    appsPaddingV:     sv(z, "pedirYa", "apps",    "paddingV",     16),
-    appsMb:           sv(z, "pedirYa", "apps",    "marginBottom", 40),
-    infoPaddingV:     sv(z, "pedirYa", "info",    "paddingV",     16),
-    infoGap:          sv(z, "pedirYa", "info",    "gap",          1),
+    // productImage
+    imgWidth:        sv(z, "hero", "productImage",      "width",        100),
+    imgOffY:         sv(z, "hero", "productImage",      "offsetY",      0),
+    // jacket club sticker
+    jcSize:          sv(z, "hero", "jacketClubSticker", "size",         36),
+    jcTop:           sv(z, "hero", "jacketClubSticker", "top",          12),
+    jcRight:         sv(z, "hero", "jacketClubSticker", "right",        4),
+    jcRotation:      sv(z, "hero", "jacketClubSticker", "rotation",     8),
+    // SPRINGS title
+    springsFontSize: sv(z, "hero", "springsTitle",      "fontSize",     27),
+    springsOffY:     sv(z, "hero", "springsTitle",      "offsetY",      0),
+    springsOffX:     sv(z, "hero", "springsTitle",      "offsetX",      0),
+    // globe
+    globeSize:       sv(z, "hero", "globe",             "size",         72),
+    globeOffY:       sv(z, "hero", "globe",             "offsetY",      0),
+    globeOffX:       sv(z, "hero", "globe",             "offsetX",      0),
+    globeTextOffset: sv(z, "hero", "globe",             "textOffset",   7),
+    // underline
+    underlineWidth:  sv(z, "hero", "underline",         "width",        68),
+    underlineOffY:   sv(z, "hero", "underline",         "offsetY",      0),
+    underlineOffX:   sv(z, "hero", "underline",         "offsetX",      0),
+    // sensitive image
+    sensMarginH:     sv(z, "hero", "sensitiveImage",    "marginH",      18),
+    sensOffY:        sv(z, "hero", "sensitiveImage",    "offsetY",      0),
+    sensFontSize:    sv(z, "hero", "sensitiveImage",    "fontSize",     3.5),
+    sensOpacity:     sv(z, "hero", "sensitiveImage",    "opacity",      60),
+    // art gallery
+    agFontSize:      sv(z, "hero", "artGallery",        "fontSize",     18),
+    agOffY:          sv(z, "hero", "artGallery",        "offsetY",      0),
+    agOffX:          sv(z, "hero", "artGallery",        "offsetX",      0),
+    // location label
+    locFontSize:     sv(z, "hero", "locationLabel",     "fontSize",     5.5),
+    locOffY:         sv(z, "hero", "locationLabel",     "offsetY",      0),
+    locOffX:         sv(z, "hero", "locationLabel",     "offsetX",      0),
+    // miercoles sticker
+    mdSize:          sv(z, "hero", "miercolesSticker",  "size",         38),
+    mdRight:         sv(z, "hero", "miercolesSticker",  "right",        12),
+    mdTop:           sv(z, "hero", "miercolesSticker",  "top",          0),
+    mdRotation:      sv(z, "hero", "miercolesSticker",  "rotation",     -8),
+    // product list
+    listFontSize:    sv(z, "hero", "productList",       "fontSize",     0.42),
+    listOffY:        sv(z, "hero", "productList",       "offsetY",      0),
+    // packaging
+    bagWidth:        sv(z, "packaging", "bag",    "width",        70),
+    bagOffY:         sv(z, "packaging", "bag",    "offsetY",      0),
+    bagMbottom:      sv(z, "packaging", "bag",    "marginBottom", -40),
+    boxWidth:        sv(z, "packaging", "box",    "width",        55),
+    boxRotation:     sv(z, "packaging", "box",    "rotation",     4),
+    boxOffY:         sv(z, "packaging", "box",    "offsetY",      0),
+    boxMbottom:      sv(z, "packaging", "box",    "marginBottom", -30),
+    cupWidth:        sv(z, "packaging", "cup",    "width",        40),
+    cupRotation:     sv(z, "packaging", "cup",    "rotation",     -3),
+    cupOffY:         sv(z, "packaging", "cup",    "offsetY",      0),
+    cupPaddingLeft:  sv(z, "packaging", "cup",    "paddingLeft",  8),
+    scrollStiffness: sv(z, "packaging", "scroll", "stiffness",    90),
+    scrollDamping:   sv(z, "packaging", "scroll", "damping",      22),
+    // cultura
+    dbdFontSize:     sv(z, "cultura", "differentByDefault", "fontSize",  15),
+    dbdOpacity:      sv(z, "cultura", "differentByDefault", "opacity",   18),
+    dbdOffY:         sv(z, "cultura", "differentByDefault", "offsetY",   0),
+    hashFontSize:    sv(z, "cultura", "hashtag",            "fontSize",  0.5),
+    hashOffY:        sv(z, "cultura", "hashtag",            "offsetY",   0),
+    thisIsFontSize:  sv(z, "cultura", "thisIs",             "fontSize",  5.5),
+    thisIsOffY:      sv(z, "cultura", "thisIs",             "offsetY",   0),
+    ourCultureFs:    sv(z, "cultura", "ourCulture",         "fontSize",  17),
+    ourCultureOffY:  sv(z, "cultura", "ourCulture",         "offsetY",   0),
+    descFontSize:    sv(z, "cultura", "description",        "fontSize",  0.56),
+    descLineHeight:  sv(z, "cultura", "description",        "lineHeight",2.1),
+    descOffY:        sv(z, "cultura", "description",        "offsetY",   0),
+    // pedir ya
+    pedirTitleFs:    sv(z, "pedirYa", "title",   "fontSize",     25),
+    pedirTitleOffY:  sv(z, "pedirYa", "title",   "offsetY",      0),
+    pedirTaglineFs:  sv(z, "pedirYa", "tagline", "fontSize",     0.5),
+    pedirTaglineOffY:sv(z, "pedirYa", "tagline", "offsetY",      0),
+    appsGap:         sv(z, "pedirYa", "apps",    "gap",          10),
+    appsPaddingV:    sv(z, "pedirYa", "apps",    "paddingV",     16),
+    appsOffY:        sv(z, "pedirYa", "apps",    "offsetY",      0),
+    infoPaddingV:    sv(z, "pedirYa", "info",    "paddingV",     16),
+    infoOffY:        sv(z, "pedirYa", "info",    "offsetY",      0),
   };
 
-  // scroll-driven packaging
+  // ── Scroll-driven packaging ──────────────────────────────────
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const packagingRef       = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -137,7 +172,6 @@ export default function MobileHome() {
     container: scrollContainerRef,
     offset: ["start end", "end start"],
   });
-
   const bagXRaw = useTransform(scrollYProgress, [0.0,  0.35], [-140, 0]);
   const bagOpRaw= useTransform(scrollYProgress, [0.0,  0.28], [0, 1]);
   const boxXRaw = useTransform(scrollYProgress, [0.15, 0.50], [140, 0]);
@@ -145,12 +179,9 @@ export default function MobileHome() {
   const cupXRaw = useTransform(scrollYProgress, [0.30, 0.65], [-120, 0]);
   const cupOpRaw= useTransform(scrollYProgress, [0.30, 0.58], [0, 1]);
   const sp = { stiffness: d.scrollStiffness, damping: d.scrollDamping };
-  const bagX  = useSpring(bagXRaw,  sp);
-  const bagOp = useSpring(bagOpRaw, sp);
-  const boxX  = useSpring(boxXRaw,  sp);
-  const boxOp = useSpring(boxOpRaw, sp);
-  const cupX  = useSpring(cupXRaw,  sp);
-  const cupOp = useSpring(cupOpRaw, sp);
+  const bagX  = useSpring(bagXRaw,  sp);  const bagOp = useSpring(bagOpRaw, sp);
+  const boxX  = useSpring(boxXRaw,  sp);  const boxOp = useSpring(boxOpRaw, sp);
+  const cupX  = useSpring(cupXRaw,  sp);  const cupOp = useSpring(cupOpRaw, sp);
 
   return (
     <div
@@ -158,7 +189,7 @@ export default function MobileHome() {
       style={{ background: C.cream, height: "100dvh", overflowY: "auto", overflowX: "hidden" }}
     >
 
-      {/* ── Header ─────────────────────────────────────────────── */}
+      {/* ── Header sticky ──────────────────────────────────── */}
       <header style={{
         position: "sticky", top: 0, zIndex: 100, height: 52,
         display: "flex", alignItems: "center", justifyContent: "space-between",
@@ -176,12 +207,7 @@ export default function MobileHome() {
         </div>
         <button
           onClick={() => router.push("/menu")}
-          style={{
-            ...F.mono, fontSize: "0.48rem", letterSpacing: "0.14em",
-            background: C.burgundy, color: C.cream,
-            border: "none", padding: "7px 12px", cursor: "pointer",
-            display: "flex", alignItems: "center", gap: 5,
-          }}
+          style={{ ...F.mono, fontSize: "0.48rem", letterSpacing: "0.14em", background: C.burgundy, color: C.cream, border: "none", padding: "7px 12px", cursor: "pointer", display: "flex", alignItems: "center", gap: 5 }}
         >
           PEDIR AHORA
           <svg aria-hidden="true" width="9" height="9" viewBox="0 0 10 10" fill="none">
@@ -190,20 +216,22 @@ export default function MobileHome() {
         </button>
       </header>
 
-      {/* ════════ HERO ════════ */}
+      {/* ════════════════════════════
+          HERO — cada elemento usa
+          transform independiente
+      ════════════════════════════ */}
       <section style={{ background: C.cream, position: "relative" }}>
-        <div style={{ position: "relative" }}>
+
+        {/* Producto + Jacket Club sticker */}
+        <div style={{ position: "relative", transform: tx(d.imgOffY) }}>
           <motion.img
-            src="/images/la-fija.png"
-            alt="SPRINGS Jacket — La Fija"
-            initial={{ y: 40, opacity: 0 }}
-            animate={{ y: d.imgOffY, opacity: 1 }}
+            src="/images/la-fija.png" alt="SPRINGS Jacket — La Fija"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
             transition={{ duration: 1.0, ease: EASE, delay: 0.1 }}
             style={{ width: `${d.imgWidth}%`, display: "block" }}
           />
           <motion.img
-            src="/images/jacket-club-sticker.png"
-            alt="SPRINGS Jacket Club"
+            src="/images/jacket-club-sticker.png" alt="SPRINGS Jacket Club"
             drag dragMomentum={false} whileDrag={{ scale: 1.06, zIndex: 50 }}
             initial={{ scale: 0, opacity: 0, rotate: -20 }}
             animate={{ scale: 1, opacity: 1, rotate: d.jcRotation }}
@@ -213,46 +241,51 @@ export default function MobileHome() {
           />
         </div>
 
+        {/* SPRINGS — transform independiente */}
         <motion.div
-          initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
           transition={{ duration: 0.75, ease: EASE, delay: 0.3 }}
-          style={{ padding: "0 18px", overflow: "hidden" }}
+          style={{ padding: "0 18px", overflow: "hidden", transform: tx(d.springsOffY, d.springsOffX) }}
         >
-          <h1 style={{ ...F.display, fontSize: "clamp(78px, 27vw, 130px)", color: C.tinta, lineHeight: 0.88, letterSpacing: "-0.02em", margin: 0, whiteSpace: "nowrap" }}>
+          <h1 style={{ ...F.display, fontSize: `${d.springsFontSize}vw`, color: C.tinta, lineHeight: 0.88, letterSpacing: "-0.02em", margin: 0, whiteSpace: "nowrap" }}>
             SPRINGS
           </h1>
         </motion.div>
 
+        {/* Globo — transform completamente independiente */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, ease: EASE, delay: 0.5 }}
-          style={{ padding: `${d.globeOffY}px 18px 0 18px` }}
+          style={{ padding: "6px 18px 0 18px", transform: tx(d.globeOffY, d.globeOffX) }}
         >
           <GlobeExact size={d.globeSize} textOffset={d.globeTextOffset} />
         </motion.div>
 
+        {/* Underline — transform independiente */}
         <motion.div
-          initial={{ x: 30, opacity: 0 }} animate={{ x: 0, opacity: 1 }}
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
           transition={{ duration: 0.65, ease: EASE, delay: 0.45 }}
-          style={{ padding: "0 18px" }}
+          style={{ padding: "0 18px", transform: tx(d.underlineOffY, d.underlineOffX) }}
         >
           <img src="/images/underline-stroke.png" alt="" aria-hidden="true"
-            style={{ width: `${d.underlineWidth}%`, height: "auto", marginTop: d.underlineMarginT, opacity: 0.85 }}
+            style={{ width: `${d.underlineWidth}%`, height: "auto", marginTop: 4, opacity: 0.85 }}
           />
         </motion.div>
 
+        {/* Sensitive Content — transform independiente */}
         <motion.div
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.55, duration: 0.5 }}
-          style={{ margin: `${d.sensMarginV}px ${d.sensMarginH}px`, aspectRatio: "1402 / 1122", position: "relative", overflow: "hidden" }}
+          style={{ margin: `16px ${d.sensMarginH}px`, aspectRatio: "1402 / 1122", position: "relative", overflow: "hidden", transform: tx(d.sensOffY) }}
         >
           <SensitiveImage src="/images/sensitive-hero.png" fontSize={d.sensFontSize} opacity={d.sensOpacity} />
         </motion.div>
 
+        {/* ART GALLERY — transform independiente */}
         <motion.div
-          initial={{ x: -40, opacity: 0 }} animate={{ x: 0, opacity: 1 }}
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
           transition={{ duration: 0.65, ease: EASE, delay: 0.6 }}
-          style={{ padding: `${d.agOffY}px 18px 0 18px`, overflow: "hidden" }}
+          style={{ padding: "0 18px", overflow: "hidden", transform: tx(d.agOffY, d.agOffX) }}
         >
           <a href="/art-gallery" style={{ textDecoration: "none", display: "block" }}>
             <h2 style={{ ...F.display, fontSize: `${d.agFontSize}vw`, color: C.tinta, lineHeight: 0.88, letterSpacing: "-0.02em", margin: 0, whiteSpace: "nowrap" }}>
@@ -261,9 +294,14 @@ export default function MobileHome() {
           </a>
         </motion.div>
 
+        {/* Location label + Miércoles sticker — cada uno independiente */}
         <div style={{ position: "relative", padding: "8px 18px 0 18px", minHeight: 80 }}>
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, ease: EASE, delay: 0.65 }}>
-            <div style={{ ...F.display, fontSize: "clamp(16px, 5.5vw, 28px)", color: C.tinta, lineHeight: 1.1 }}>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, ease: EASE, delay: 0.65 }}
+            style={{ transform: tx(d.locOffY, d.locOffX) }}
+          >
+            <div style={{ ...F.display, fontSize: `${d.locFontSize}vw`, color: C.tinta, lineHeight: 1.1 }}>
               <div style={{ display: "flex", alignItems: "center", gap: "0.25em" }}>
                 <svg aria-hidden="true" width="0.65em" height="0.65em" viewBox="0 0 24 24" fill="none">
                   <line x1="21" y1="21" x2="3" y2="3" stroke={C.tinta} strokeWidth="4.5" strokeLinecap="round"/>
@@ -280,6 +318,8 @@ export default function MobileHome() {
               </div>
             </div>
           </motion.div>
+
+          {/* Miércoles de Dados — absolutamente independiente */}
           <motion.img
             src="/images/miercoles-dados-sticker.png" alt="Miércoles de Dados"
             drag dragMomentum={false} whileDrag={{ scale: 1.06, zIndex: 50 }}
@@ -290,10 +330,11 @@ export default function MobileHome() {
           />
         </div>
 
+        {/* Lista de productos — transform independiente */}
         <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: 1 }}
           transition={{ duration: 0.5, ease: EASE, delay: 0.7 }}
-          style={{ padding: "20px 18px 28px 18px", borderTop: `1px solid ${C.tinta}18`, marginTop: d.listMarginT }}
+          style={{ padding: "20px 18px 28px 18px", borderTop: `1px solid ${C.tinta}18`, marginTop: 12, transform: tx(d.listOffY) }}
         >
           <p style={{ ...F.mono, fontSize: `${d.listFontSize}rem`, color: C.tinta, letterSpacing: "-0.01em", lineHeight: 1.6, textTransform: "uppercase", margin: 0, opacity: 0.65 }}>
             LA FIJA / LA PESADA / LA BRAVA / LA SIMPLE / LA HONESTA / LOADED POLLO / LOADED MOLIDA / LOADED DESMECHADA / LOADED CHORIZO /
@@ -329,38 +370,48 @@ export default function MobileHome() {
           SPRINGS
         </div>
         <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column" }}>
-          <motion.div style={{ x: bagX, opacity: bagOp, display: "flex", justifyContent: "center", marginBottom: d.bagMbottom }}>
-            <img src="/images/packaging-bag.png" alt="Bolsa Springs" style={{ width: `${d.bagWidth}%`, maxWidth: 280, display: "block", filter: "drop-shadow(0 28px 52px rgba(26,10,12,0.20))" }}/>
+          <motion.div style={{ x: bagX, opacity: bagOp, y: d.bagOffY, display: "flex", justifyContent: "center", marginBottom: d.bagMbottom }}>
+            <img src="/images/packaging-bag.png" alt="Bolsa Springs"
+              style={{ width: `${d.bagWidth}%`, maxWidth: 280, display: "block", filter: "drop-shadow(0 28px 52px rgba(26,10,12,0.20))" }}
+            />
           </motion.div>
-          <motion.div style={{ x: boxX, opacity: boxOp, display: "flex", justifyContent: "flex-end", marginBottom: d.boxMbottom }}>
-            <img src="/images/packaging-box.png" alt="Caja Springs" style={{ width: `${d.boxWidth}%`, maxWidth: 220, display: "block", filter: "drop-shadow(0 20px 40px rgba(26,10,12,0.18))", transform: `rotate(${d.boxRotation}deg)` }}/>
+          <motion.div style={{ x: boxX, opacity: boxOp, y: d.boxOffY, display: "flex", justifyContent: "flex-end", marginBottom: d.boxMbottom }}>
+            <img src="/images/packaging-box.png" alt="Caja Springs"
+              style={{ width: `${d.boxWidth}%`, maxWidth: 220, display: "block", filter: "drop-shadow(0 20px 40px rgba(26,10,12,0.18))", transform: `rotate(${d.boxRotation}deg)` }}
+            />
           </motion.div>
-          <motion.div style={{ x: cupX, opacity: cupOp, display: "flex", justifyContent: "flex-start", paddingLeft: `${d.cupPaddingLeft}%` }}>
-            <img src="/images/packaging-cup.png" alt="Vaso Springs" style={{ width: `${d.cupWidth}%`, maxWidth: 160, display: "block", filter: "drop-shadow(0 16px 32px rgba(26,10,12,0.16))", transform: `rotate(${d.cupRotation}deg)` }}/>
+          <motion.div style={{ x: cupX, opacity: cupOp, y: d.cupOffY, display: "flex", justifyContent: "flex-start", paddingLeft: `${d.cupPaddingLeft}%` }}>
+            <img src="/images/packaging-cup.png" alt="Vaso Springs"
+              style={{ width: `${d.cupWidth}%`, maxWidth: 160, display: "block", filter: "drop-shadow(0 16px 32px rgba(26,10,12,0.16))", transform: `rotate(${d.cupRotation}deg)` }}
+            />
           </motion.div>
         </div>
       </section>
 
       {/* ════════ CULTURA ════════ */}
       <section style={{ background: C.tinta, padding: "56px 18px 64px 18px" }}>
-        <FadeUp>
+        <FadeUp style={{ transform: tx(d.dbdOffY) }}>
           <div style={{ ...F.display, fontSize: `${d.dbdFontSize}vw`, color: "transparent", WebkitTextStroke: `1.5px ${C.cream}`, lineHeight: 0.88, letterSpacing: "-0.02em", textTransform: "uppercase", opacity: d.dbdOpacity / 100, margin: "0 0 24px 0" }}>
             DIFFERENT<br />BY DEFAULT.
           </div>
         </FadeUp>
-        <FadeUp delay={0.05}>
+        <FadeUp delay={0.05} style={{ transform: tx(d.hashOffY) }}>
           <div style={{ ...F.mono, fontSize: `${d.hashFontSize}rem`, letterSpacing: "0.22em", color: C.cream, opacity: 0.6, marginBottom: 20, textTransform: "uppercase" }}>
             #SPRINGSCLUB
           </div>
         </FadeUp>
         <FadeUp delay={0.12}>
           <div>
-            <h2 style={{ ...F.display, fontSize: `${d.thisIsFontSize}vw`, color: "transparent", WebkitTextStroke: `1.5px ${C.cream}`, lineHeight: 0.9, letterSpacing: "-0.01em", textTransform: "uppercase", whiteSpace: "nowrap", margin: 0 }}>THIS IS</h2>
-            <h2 style={{ ...F.display, fontSize: `${d.ourCultureFs}vw`, color: C.cream, lineHeight: 0.9, letterSpacing: "-0.015em", textTransform: "uppercase", whiteSpace: "nowrap", margin: 0 }}>OUR CULTURE</h2>
+            <h2 style={{ ...F.display, fontSize: `${d.thisIsFontSize}vw`, color: "transparent", WebkitTextStroke: `1.5px ${C.cream}`, lineHeight: 0.9, letterSpacing: "-0.01em", textTransform: "uppercase", whiteSpace: "nowrap", margin: 0, transform: tx(d.thisIsOffY) }}>
+              THIS IS
+            </h2>
+            <h2 style={{ ...F.display, fontSize: `${d.ourCultureFs}vw`, color: C.cream, lineHeight: 0.9, letterSpacing: "-0.015em", textTransform: "uppercase", whiteSpace: "nowrap", margin: 0, transform: tx(d.ourCultureOffY) }}>
+              OUR CULTURE
+            </h2>
           </div>
         </FadeUp>
-        <FadeUp delay={0.22}>
-          <p style={{ ...F.mono, fontSize: `${d.descFontSize}rem`, color: C.cream, opacity: 0.6, lineHeight: d.descLineHeight, letterSpacing: "0.06em", textTransform: "uppercase", margin: `${d.descMarginT}px 0 0 0` }}>
+        <FadeUp delay={0.22} style={{ transform: tx(d.descOffY) }}>
+          <p style={{ ...F.mono, fontSize: `${d.descFontSize}rem`, color: C.cream, opacity: 0.6, lineHeight: d.descLineHeight, letterSpacing: "0.06em", textTransform: "uppercase", margin: "28px 0 0 0" }}>
             MÚSICA. CALLE. HUMOR.<br />AMIGOS. PLANES.<br />NOCHES QUE SÍ CUENTAN.<br />ESTO ES SPRINGS.
           </p>
         </FadeUp>
@@ -372,25 +423,25 @@ export default function MobileHome() {
           SPRINGS
         </div>
         <div style={{ position: "relative", zIndex: 1 }}>
-          <FadeUp>
-            <div style={{ ...F.mono, fontSize: `${d.pedirTaglineFs}rem`, letterSpacing: "0.22em", color: C.mostaza, textTransform: "uppercase", marginBottom: d.pedirTaglineMb }}>
+          <FadeUp style={{ transform: tx(d.pedirTaglineOffY) }}>
+            <div style={{ ...F.mono, fontSize: `${d.pedirTaglineFs}rem`, letterSpacing: "0.22em", color: C.mostaza, textTransform: "uppercase", marginBottom: 16 }}>
               ↗ SIN EXCUSAS · ESTO ES SPRINGS
             </div>
           </FadeUp>
-          <FadeUp delay={0.08}>
-            <h2 style={{ ...F.display, fontSize: `${d.pedirTitleFs}vw`, color: C.cream, lineHeight: 0.85, letterSpacing: "-0.01em", textTransform: "uppercase", margin: `0 0 ${d.pedirTitleMb}px 0` }}>
+          <FadeUp delay={0.08} style={{ transform: tx(d.pedirTitleOffY) }}>
+            <h2 style={{ ...F.display, fontSize: `${d.pedirTitleFs}vw`, color: C.cream, lineHeight: 0.85, letterSpacing: "-0.01em", textTransform: "uppercase", margin: "0 0 40px 0" }}>
               PEDIR<br />YA.
             </h2>
           </FadeUp>
-          <FadeUp delay={0.16}>
-            <div style={{ display: "flex", flexDirection: "column", gap: d.appsGap, marginBottom: d.appsMb }}>
+          <FadeUp delay={0.16} style={{ transform: tx(d.appsOffY) }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: d.appsGap, marginBottom: 40 }}>
               <a href="#" style={{ ...F.display, fontSize: "1rem", letterSpacing: "0.12em", color: C.tinta, background: C.cream, padding: `${d.appsPaddingV}px 24px`, textDecoration: "none", display: "flex", justifyContent: "space-between", alignItems: "center" }}>RAPPI <span>→</span></a>
               <a href="#" style={{ ...F.display, fontSize: "1rem", letterSpacing: "0.12em", color: C.cream, background: "transparent", border: `1px solid ${C.cream}`, opacity: 0.9, padding: `${d.appsPaddingV}px 24px`, textDecoration: "none", display: "flex", justifyContent: "space-between", alignItems: "center" }}>UBER EATS <span>→</span></a>
               <a href="/menu" style={{ ...F.display, fontSize: "1rem", letterSpacing: "0.12em", color: C.mostaza, background: "transparent", border: `1px solid ${C.mostaza}`, padding: `${d.appsPaddingV}px 24px`, textDecoration: "none", display: "flex", justifyContent: "space-between", alignItems: "center" }}>PEDIDO DIRECTO <span>→</span></a>
             </div>
           </FadeUp>
-          <FadeUp delay={0.24}>
-            <div style={{ display: "flex", flexDirection: "column", gap: d.infoGap }}>
+          <FadeUp delay={0.24} style={{ transform: tx(d.infoOffY) }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
               {[
                 { label: "Horario",  val: "12PM — 9PM",   sub: "Lunes a domingo" },
                 { label: "Zona",     val: "BUCARAMANGA",  sub: "Cabecera · Cañaveral · Sotomayor" },
