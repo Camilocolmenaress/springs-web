@@ -216,14 +216,14 @@ export default function Menu({ onAgregar, config }: Props) {
   const categoriaLabel = CATEGORIAS.find(c => c.key === categoria)?.label ?? "";
   const offsets = isMobile ? [0] : [-2, -1, 0, 1, 2];
 
-  // Mobile overrides
-  const mCenterImgSize    = "clamp(220px, 42vh, 320px)";
-  const effCenterImgSize  = isMobile ? mCenterImgSize : centerImgSize;
-  const effCardMarginTop  = isMobile ? 8 : cardMarginTop;
-  const effNameFontSize   = isMobile ? "clamp(24px, 7vw, 34px)" : nameFontSize;
-  const effCardWidth      = isMobile ? 360 : cardWidth;
-  const effArrowSize      = isMobile ? 52 : arrowSize;
-  const effTrackOffsetY   = isMobile ? 0 : trackOffsetY;
+  // Mobile fallbacks: only when no config is provided
+  const noConfig = !config;
+  const effCenterImgSize  = (noConfig && isMobile) ? "clamp(220px, 42vh, 320px)" : centerImgSize;
+  const effCardMarginTop  = (noConfig && isMobile) ? 8   : cardMarginTop;
+  const effNameFontSize   = (noConfig && isMobile) ? "clamp(24px, 7vw, 34px)" : nameFontSize;
+  const effCardWidth      = (noConfig && isMobile) ? 360 : cardWidth;
+  const effArrowSize      = (noConfig && isMobile) ? 52  : arrowSize;
+  const effTrackOffsetY   = (noConfig && isMobile) ? 0   : trackOffsetY;
 
   return (
     <section id="menu" style={{
@@ -430,9 +430,9 @@ export default function Menu({ onAgregar, config }: Props) {
             <>
               <button onClick={goPrev} aria-label="Anterior" style={{
                 position: "absolute",
-                left:  isMobile ? "14px" : `calc(50% - ${arrowOffsetX}vw)`,
+                left:  (noConfig && isMobile) ? "14px" : `calc(50% - ${arrowOffsetX}vw)`,
                 top:   `calc(50% + ${arrowOffsetY}px)`,
-                transform: isMobile ? "translateY(-50%)" : "translate(-50%, -50%)",
+                transform: (noConfig && isMobile) ? "translateY(-50%)" : "translate(-50%, -50%)",
                 width: effArrowSize, height: effArrowSize,
                 background: "transparent",
                 border: "none",
@@ -444,10 +444,10 @@ export default function Menu({ onAgregar, config }: Props) {
               </button>
               <button onClick={goNext} aria-label="Siguiente" style={{
                 position: "absolute",
-                right: isMobile ? "14px" : undefined,
-                left:  isMobile ? undefined : `calc(50% + ${arrowOffsetX}vw)`,
+                right: (noConfig && isMobile) ? "14px" : undefined,
+                left:  (noConfig && isMobile) ? undefined : `calc(50% + ${arrowOffsetX}vw)`,
                 top:   `calc(50% + ${arrowOffsetY}px)`,
-                transform: isMobile ? "translateY(-50%)" : "translate(-50%, -50%)",
+                transform: (noConfig && isMobile) ? "translateY(-50%)" : "translate(-50%, -50%)",
                 width: effArrowSize, height: effArrowSize,
                 background: "transparent",
                 border: "none",
