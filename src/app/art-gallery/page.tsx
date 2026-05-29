@@ -273,128 +273,282 @@ export default function ArtGallery() {
   // ── MOBILE LAYOUT ──────────────────────────────────────────────────
   if (isMobile) {
     return (
-      <main style={{ background: BG, height: "100dvh", overflow: "hidden", position: "relative" }}>
+      <main style={{ background: BG, color: C.cream, overflowX: "hidden" }}>
 
-        {/* Full-screen photo background */}
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={ex.id}
-            src={ex.img}
-            alt={ex.name}
-            initial={{ opacity: 0, scale: 1.04 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            style={{
-              position: "absolute", inset: 0,
-              width: "100%", height: "100%",
-              objectFit: "cover", objectPosition: "center",
-              zIndex: 0,
-            }}
-          />
-        </AnimatePresence>
-
-        {/* Bottom gradient vignette */}
-        <div style={{
-          position: "absolute", bottom: 0, left: 0, right: 0, height: "65%",
-          background: "linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.7) 40%, transparent 100%)",
-          zIndex: 1, pointerEvents: "none",
-        }} />
-
-        {/* Top nav */}
-        <div style={{
-          position: "absolute", top: 0, left: 0, right: 0, zIndex: 10,
-          height: 52, display: "flex", alignItems: "center", justifyContent: "space-between",
-          padding: "0 20px",
-          background: "linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 100%)",
+        {/* Fixed top nav */}
+        <header style={{
+          position: "fixed", top: 0, left: 0, right: 0, zIndex: 300,
+          height: 52,
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          padding: "0 16px",
+          background: "rgba(0,0,0,0.88)",
+          backdropFilter: "blur(14px)",
+          WebkitBackdropFilter: "blur(14px)",
+          borderBottom: "1px solid rgba(242,232,213,0.06)",
         }}>
-          <Link href="/" style={{ ...F.display, fontSize: "1.2rem", letterSpacing: "0.05em", color: C.cream, textDecoration: "none" }}>SPRINGS</Link>
-          <Link href="/menu" style={{
-            ...F.display, fontSize: "0.62rem", letterSpacing: "0.1em",
-            background: C.burgundy, color: C.cream, padding: "8px 16px",
-            textDecoration: "none",
-          }}>PEDIR AHORA ↗</Link>
-        </div>
-
-        {/* Left arrow */}
-        {idx > 0 && (
-          <button onClick={() => setIdx(i => i - 1)} style={{
-            position: "absolute", left: 16, top: "38%", zIndex: 10,
-            background: "rgba(0,0,0,0.4)", border: "1px solid rgba(242,232,213,0.2)",
-            width: 40, height: 40, cursor: "pointer",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            color: C.cream, fontSize: "1rem",
-          }}>‹</button>
-        )}
-
-        {/* Right arrow */}
-        {idx < EXHIBITS.length - 1 && (
-          <button onClick={() => setIdx(i => i + 1)} style={{
-            position: "absolute", right: 16, top: "38%", zIndex: 10,
-            background: "rgba(0,0,0,0.4)", border: "1px solid rgba(242,232,213,0.2)",
-            width: 40, height: 40, cursor: "pointer",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            color: C.cream, fontSize: "1rem",
-          }}>›</button>
-        )}
-
-        {/* Bottom info panel */}
-        <div style={{
-          position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 5,
-          padding: "20px 20px max(20px, env(safe-area-inset-bottom, 20px))",
-          background: "rgba(0,0,0,0.0)",
-        }}>
-          {/* Gallery label */}
-          <div style={{ ...F.mono, fontSize: "0.42rem", letterSpacing: "0.22em", color: C.burgundy, marginBottom: 6 }}>
-            SPRINGS ART GALLERY — EXHIBIT {ex.id}
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <Link href="/" style={{ ...F.display, fontSize: "1.15rem", letterSpacing: "0.04em", color: C.cream, textDecoration: "none" }}>
+              SPRINGS
+            </Link>
+            <span style={{ ...F.mono, fontSize: "0.45rem", color: "rgba(242,232,213,0.3)" }}>+</span>
+            <div style={{ ...F.mono, fontSize: "0.34rem", letterSpacing: "0.12em", color: "rgba(242,232,213,0.38)", lineHeight: 1.5 }}>
+              BRITISH SOUL<br />COLOMBIAN HEART.
+            </div>
           </div>
+          <div style={{ ...F.mono, fontSize: "1rem", color: "rgba(242,232,213,0.6)", letterSpacing: "0.05em" }}>≡</div>
+        </header>
 
-          {/* Product name + content — animates on exhibit change */}
-          <AnimatePresence mode="wait">
-            <motion.div key={ex.id + "-name"}
-              initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <h2 style={{ ...F.display, fontSize: "3rem", color: C.cream, lineHeight: 0.95, letterSpacing: "-0.01em", margin: "0 0 6px" }}>
-                {ex.name}
-              </h2>
-              <div style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.18em", color: C.dim, marginBottom: 12 }}>
-                {ex.subtitle} +
-              </div>
+        {/* Fixed bottom nav */}
+        <nav style={{
+          position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 300,
+          height: 52,
+          display: "flex", alignItems: "center", justifyContent: "space-around",
+          padding: "0 4px 0",
+          background: "rgba(0,0,0,0.92)",
+          backdropFilter: "blur(14px)",
+          WebkitBackdropFilter: "blur(14px)",
+          borderTop: "1px solid rgba(242,232,213,0.08)",
+        }}>
+          {[
+            { label: "CARTA",       href: "/menu" },
+            { label: "ART GALLERY", href: "/art-gallery", active: true },
+            { label: "NOSOTROS",    href: "#" },
+            { label: "EL CLUB",     href: "#" },
+            { label: "FAQS",        href: "#" },
+          ].map(item => (
+            <Link key={item.label} href={item.href} style={{
+              ...F.mono, fontSize: "0.36rem", letterSpacing: "0.07em",
+              color: item.active ? C.cream : "rgba(242,232,213,0.42)",
+              textDecoration: "none",
+              borderBottom: item.active ? `1px solid ${C.burgundy}` : "none",
+              paddingBottom: item.active ? 1 : 0,
+            }}>
+              {item.label}
+            </Link>
+          ))}
+        </nav>
 
-              {/* Ingredients */}
-              <div style={{ ...F.mono, fontSize: "0.42rem", letterSpacing: "0.08em", color: C.cream, marginBottom: 10, lineHeight: 1.7 }}>
-                {ex.ingredients.join("  ·  ")}
-              </div>
+        {/* Scrollable content */}
+        <div style={{ paddingTop: 52, paddingBottom: 52 }}>
+          {EXHIBITS.map((exhibit) => (
+            <div key={exhibit.id}>
 
-              {/* Description */}
-              <p style={{ ...F.mono, fontSize: "0.42rem", letterSpacing: "0.06em", color: C.dim, lineHeight: 1.65, margin: "0 0 8px", whiteSpace: "pre-line" }}>
-                {ex.description}
-              </p>
+              {/* ── HERO ── */}
+              <section style={{
+                height: "calc(100dvh - 52px)",
+                position: "relative",
+                background: BG,
+                display: "flex",
+                flexDirection: "column",
+                overflow: "hidden",
+              }}>
 
-              {/* Tagline */}
-              <div style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.1em", color: C.burgundy, marginBottom: 16 }}>
-                {ex.tagline}
-              </div>
-            </motion.div>
-          </AnimatePresence>
+                {/* Product image — right aligned */}
+                <div style={{
+                  position: "absolute", top: 0, right: 0, bottom: 0,
+                  width: "70%", zIndex: 0,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                }}>
+                  <img
+                    src={exhibit.img}
+                    alt={exhibit.name}
+                    style={{
+                      height: "85%", width: "auto",
+                      objectFit: "contain",
+                      objectPosition: "center",
+                      display: "block",
+                    }}
+                  />
+                </div>
 
-          {/* Dots + price row */}
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <div style={{ display: "flex", gap: 6 }}>
-              {EXHIBITS.map((_, i) => (
-                <button key={i} onClick={() => setIdx(i)} style={{
-                  width: i === idx ? 20 : 7, height: 7,
-                  background: i === idx ? C.cream : "rgba(242,232,213,0.25)",
-                  border: "none", cursor: "pointer", padding: 0,
-                  transition: "width 0.25s, background 0.25s",
+                {/* Left-side dark veil so sidebar text is legible */}
+                <div style={{
+                  position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none",
+                  background: "linear-gradient(to right, rgba(0,0,0,0.96) 32%, rgba(0,0,0,0.55) 62%, rgba(0,0,0,0.08) 100%)",
                 }} />
-              ))}
+                {/* Bottom vignette */}
+                <div style={{
+                  position: "absolute", bottom: 0, left: 0, right: 0, height: "28%",
+                  zIndex: 1, pointerEvents: "none",
+                  background: "linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%)",
+                }} />
+
+                {/* PEDIR AHORA — top right */}
+                <div style={{ position: "relative", zIndex: 10, display: "flex", justifyContent: "flex-end", padding: "14px 14px 0" }}>
+                  <Link href="/menu" style={{
+                    ...F.display, fontSize: "0.6rem", letterSpacing: "0.1em",
+                    background: C.cream, color: "#111",
+                    border: `1px solid ${C.cream}`,
+                    padding: "7px 14px",
+                    textDecoration: "none", display: "flex", alignItems: "center", gap: 5,
+                  }}>
+                    PEDIR AHORA <span style={{ fontSize: "0.75rem" }}>↗</span>
+                  </Link>
+                </div>
+
+                {/* Main layout: left sidebar + center labels */}
+                <div style={{ position: "relative", zIndex: 10, flex: 1, display: "flex", padding: "12px 0 16px" }}>
+
+                  {/* LEFT SIDEBAR */}
+                  <div style={{ width: "37%", padding: "0 0 0 16px", display: "flex", flexDirection: "column" }}>
+
+                    {/* Globe */}
+                    <div style={{ width: 64, height: 64, marginBottom: 14, flexShrink: 0 }}>
+                      <svg viewBox="0 0 110 110" width="100%" height="100%">
+                        <circle cx="55" cy="55" r={33} fill="none" stroke={C.dim} strokeWidth="1.2" opacity={0.8}/>
+                        <ellipse cx="55" cy="55" rx={12} ry={33} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.55}/>
+                        <ellipse cx="55" cy="55" rx={25} ry={33} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.45}/>
+                        <ellipse cx="55" cy="55" rx={33} ry={13} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.55}/>
+                        <ellipse cx="55" cy="55" rx={33} ry={25} fill="none" stroke={C.dim} strokeWidth="0.8" opacity={0.4}/>
+                        <line x1={22} y1="55" x2={88} y2="55" stroke={C.dim} strokeWidth="0.8" opacity={0.4}/>
+                        <line x1="55" y1={22} x2="55" y2={88} stroke={C.dim} strokeWidth="0.8" opacity={0.4}/>
+                        <path id={`mob-c-${exhibit.id}`} fill="none" d="M16,55 a39,39 0 0,1 39,-39 a39,39 0 0,1 39,39"/>
+                        <text fontFamily="JetBrains Mono, monospace" fontSize="7.2" letterSpacing="0.8" fill={C.dim} fillOpacity={0.75}>
+                          <textPath href={`#mob-c-${exhibit.id}`} startOffset="5%">FOR THE MOST CHIMBA ✦ </textPath>
+                        </text>
+                      </svg>
+                    </div>
+
+                    {/* Exhibit metadata */}
+                    <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.2em", color: C.dim, marginBottom: 2 }}>EXHIBIT</div>
+                    <div style={{ ...F.display, fontSize: "2.6rem", color: C.burgundy, lineHeight: 1, marginBottom: 10 }}>{exhibit.id}</div>
+
+                    <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.12em", color: C.cream, marginBottom: 1 }}>JACKET SERIES</div>
+                    <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.12em", color: C.dim, marginBottom: 10 }}>{exhibit.year}</div>
+
+                    <div style={{ width: 28, height: "1px", background: "rgba(242,232,213,0.28)", marginBottom: 10 }} />
+
+                    <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.1em", color: C.cream, marginBottom: 1 }}>BUCARAMANGA</div>
+                    <div style={{ ...F.mono, fontSize: "0.37rem", letterSpacing: "0.1em", color: C.dim, marginBottom: 10 }}>COLOMBIA</div>
+
+                    <div style={{ width: 28, height: "1px", background: "rgba(242,232,213,0.28)", marginBottom: 10 }} />
+
+                    <div style={{ ...F.mono, fontSize: "0.37rem", color: C.cream, marginBottom: 1 }}>7.1254° N</div>
+                    <div style={{ ...F.mono, fontSize: "0.37rem", color: C.cream, marginBottom: 14 }}>73.1198° W</div>
+
+                    <div style={{ width: 7, height: 7, borderRadius: "50%", background: C.burgundy }} />
+                  </div>
+
+                  {/* CENTER/RIGHT — gallery label + product name */}
+                  <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "0 14px 0 6px" }}>
+                    <div style={{ ...F.mono, fontSize: "0.42rem", letterSpacing: "0.18em", color: C.burgundy, marginBottom: 6, textAlign: "center" }}>
+                      SPRINGS ART GALLERY +
+                    </div>
+                    <h2 style={{
+                      ...F.display, fontSize: "2.8rem", color: C.cream,
+                      lineHeight: 0.92, letterSpacing: "-0.01em",
+                      margin: "0 0 7px", textAlign: "center",
+                    }}>
+                      {exhibit.name}
+                    </h2>
+                    <div style={{ ...F.mono, fontSize: "0.42rem", letterSpacing: "0.16em", color: C.dim, textAlign: "center" }}>
+                      {exhibit.subtitle} <span style={{ color: C.burgundy }}>+</span>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* ── DETAIL ── */}
+              <section style={{ background: BG, padding: "28px 16px 0" }}>
+
+                {/* Pull quote (left) + Ingredients/desc/tagline (right) */}
+                <div style={{ display: "flex", gap: 14, marginBottom: 24 }}>
+                  <div style={{ flex: "0 0 44%", borderLeft: `2px solid ${C.burgundy}`, paddingLeft: 11 }}>
+                    <p style={{
+                      fontFamily: "var(--font-inter)",
+                      fontStyle: "italic",
+                      fontSize: "0.78rem",
+                      fontWeight: 500,
+                      color: C.cream,
+                      lineHeight: 1.45,
+                      margin: 0,
+                      whiteSpace: "pre-line",
+                    }}>
+                      {exhibit.description.replace(/\n/g, "\n").toLowerCase().replace(/^\w|\.\s+\w/g, c => c.toUpperCase())}
+                    </p>
+                  </div>
+
+                  <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 0 }}>
+                    <div style={{ marginBottom: 10 }}>
+                      {exhibit.ingredients.map(ing => (
+                        <div key={ing} style={{ ...F.mono, fontSize: "0.39rem", letterSpacing: "0.06em", color: C.cream, marginBottom: 3, lineHeight: 1.4 }}>
+                          {ing}
+                        </div>
+                      ))}
+                    </div>
+                    <p style={{ ...F.mono, fontSize: "0.38rem", letterSpacing: "0.04em", color: C.dim, lineHeight: 1.62, margin: "0 0 8px", whiteSpace: "pre-line" }}>
+                      {exhibit.description}
+                    </p>
+                    <div style={{ ...F.mono, fontSize: "0.4rem", letterSpacing: "0.1em", color: C.burgundy }}>
+                      {exhibit.tagline}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Gallery: 3 photos */}
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 3, marginBottom: 20 }}>
+                  {exhibit.gallery.map((src, gi) => (
+                    <div key={gi} style={{ aspectRatio: "1 / 1", overflow: "hidden" }}>
+                      <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                    </div>
+                  ))}
+                </div>
+
+                {/* Metadata table */}
+                <div style={{
+                  display: "grid", gridTemplateColumns: "1fr 1fr",
+                  border: "1px solid rgba(242,232,213,0.1)",
+                  marginBottom: 24,
+                }}>
+                  {([
+                    { label: "ORIGIN",      val: exhibit.origin   },
+                    { label: "CREATED",     val: exhibit.created  },
+                    { label: "CATEGORY",    val: exhibit.category },
+                    { label: "TEMPERATURE", val: exhibit.temp     },
+                  ] as { label: string; val: string }[]).map((item, mi) => (
+                    <div key={item.label} style={{
+                      padding: "10px 12px",
+                      borderRight: mi % 2 === 0 ? "1px solid rgba(242,232,213,0.1)" : "none",
+                      borderBottom: mi < 2      ? "1px solid rgba(242,232,213,0.1)" : "none",
+                    }}>
+                      <div style={{ ...F.mono, fontSize: "0.34rem", letterSpacing: "0.14em", color: "rgba(242,232,213,0.42)", marginBottom: 3 }}>{item.label}</div>
+                      <div style={{ ...F.mono, fontSize: "0.41rem", letterSpacing: "0.06em", color: C.cream }}>{item.val}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Quote + Springs Crew + Barcode */}
+                <div style={{
+                  display: "flex", alignItems: "flex-start", justifyContent: "space-between",
+                  paddingBottom: 28, marginBottom: 0,
+                  borderBottom: "1px solid rgba(242,232,213,0.07)",
+                }}>
+                  <div style={{ flex: 1 }}>
+                    <span style={{ ...F.sans, fontSize: "1.5rem", color: C.cream, display: "block", lineHeight: 0.8, marginBottom: 4 }}>"</span>
+                    <p style={{ ...F.sans, fontSize: "0.6rem", fontWeight: 500, color: C.cream, lineHeight: 1.5, margin: "0 0 10px", whiteSpace: "pre-line" }}>
+                      {exhibit.quote}
+                    </p>
+                    <div style={{ fontFamily: "var(--font-caveat, cursive)", fontSize: "1.1rem", color: C.burgundy }}>
+                      Springs Crew.
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", gap: 5, alignItems: "flex-start", flexShrink: 0, marginLeft: 16 }}>
+                    <img
+                      src="/images/barcode-springs.png" alt=""
+                      style={{ height: 50, width: "auto", opacity: 0.65, transform: "rotate(90deg)", transformOrigin: "center", display: "block" }}
+                    />
+                    <div style={{ ...F.mono, lineHeight: 1.6 }}>
+                      <div style={{ fontSize: "0.34rem", letterSpacing: "0.1em", color: "rgba(242,232,213,0.8)" }}>+</div>
+                      <div style={{ fontSize: "0.34rem", letterSpacing: "0.1em", color: C.cream }}>SPRINGS</div>
+                      <div style={{ fontSize: "0.34rem", letterSpacing: "0.1em", color: C.cream }}>ART GALLERY</div>
+                      <div style={{ fontSize: "0.34rem", letterSpacing: "0.1em", color: C.dim }}>{exhibit.id}</div>
+                    </div>
+                  </div>
+                </div>
+
+              </section>
             </div>
-            <div style={{ ...F.mono, fontSize: "0.9rem", letterSpacing: "0.04em", color: C.cream }}>
-              {ex.price} <span style={{ fontSize: "0.55rem", color: C.dim }}>COP</span>
-            </div>
-          </div>
+          ))}
         </div>
 
       </main>
