@@ -89,10 +89,19 @@ function sv(zones: Record<string, { elements: Record<string, { props: Record<str
 export default function ArtGallery() {
   const [idx, setIdx]         = useState(0);
   const [activated, setActivated] = useState<Set<number>>(new Set([0]));
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
   const wrapperRef      = useRef<HTMLDivElement>(null);
   const contentRef      = useRef<HTMLDivElement>(null);
   const lenisRef        = useRef<Lenis | null>(null);
   const ex              = EXHIBITS[idx];
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
 
   const { config, editMode, saved, updateProp, save, reset, exportValues } = useDesignConfig("art-gallery");
   const z = config.zones as Record<string, { elements: Record<string, { props: Record<string, unknown> }> }>;
@@ -213,6 +222,7 @@ export default function ArtGallery() {
   const gdy = +(tr * 1.732).toFixed(1);
 
   useEffect(() => {
+    if (isMobile) return;
     const wrapper = wrapperRef.current;
     const content = contentRef.current;
     if (!wrapper || !content) return;
@@ -249,7 +259,7 @@ export default function ArtGallery() {
     raf = requestAnimationFrame(tick);
 
     return () => { cancelAnimationFrame(raf); lenis.destroy(); lenisRef.current = null; };
-  }, []);
+  }, [isMobile]);
 
   const goTo = (i: number) => {
     const wrapper = wrapperRef.current;
@@ -257,6 +267,141 @@ export default function ArtGallery() {
     lenisRef.current.scrollTo(i * wrapper.clientWidth, { duration: 1.2 });
   };
 
+  // SSR-safe: avoid flash
+  if (isMobile === null) return null;
+
+  // ── MOBILE LAYOUT ──────────────────────────────────────────────────
+  if (isMobile) {
+    return (
+      <main style={{ background: BG, height: "100dvh", overflow: "hidden", position: "relative" }}>
+
+        {/* Full-screen photo background */}
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={ex.id}
+            src={ex.img}
+            alt={ex.name}
+            initial={{ opacity: 0, scale: 1.04 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            style={{
+              position: "absolute", inset: 0,
+              width: "100%", height: "100%",
+              objectFit: "cover", objectPosition: "center",
+              zIndex: 0,
+            }}
+          />
+        </AnimatePresence>
+
+        {/* Bottom gradient vignette */}
+        <div style={{
+          position: "absolute", bottom: 0, left: 0, right: 0, height: "65%",
+          background: "linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.7) 40%, transparent 100%)",
+          zIndex: 1, pointerEvents: "none",
+        }} />
+
+        {/* Top nav */}
+        <div style={{
+          position: "absolute", top: 0, left: 0, right: 0, zIndex: 10,
+          height: 52, display: "flex", alignItems: "center", justifyContent: "space-between",
+          padding: "0 20px",
+          background: "linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 100%)",
+        }}>
+          <Link href="/" style={{ ...F.display, fontSize: "1.2rem", letterSpacing: "0.05em", color: C.cream, textDecoration: "none" }}>SPRINGS</Link>
+          <Link href="/menu" style={{
+            ...F.display, fontSize: "0.62rem", letterSpacing: "0.1em",
+            background: C.burgundy, color: C.cream, padding: "8px 16px",
+            textDecoration: "none",
+          }}>PEDIR AHORA ↗</Link>
+        </div>
+
+        {/* Left arrow */}
+        {idx > 0 && (
+          <button onClick={() => setIdx(i => i - 1)} style={{
+            position: "absolute", left: 16, top: "38%", zIndex: 10,
+            background: "rgba(0,0,0,0.4)", border: "1px solid rgba(242,232,213,0.2)",
+            width: 40, height: 40, cursor: "pointer",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            color: C.cream, fontSize: "1rem",
+          }}>‹</button>
+        )}
+
+        {/* Right arrow */}
+        {idx < EXHIBITS.length - 1 && (
+          <button onClick={() => setIdx(i => i + 1)} style={{
+            position: "absolute", right: 16, top: "38%", zIndex: 10,
+            background: "rgba(0,0,0,0.4)", border: "1px solid rgba(242,232,213,0.2)",
+            width: 40, height: 40, cursor: "pointer",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            color: C.cream, fontSize: "1rem",
+          }}>›</button>
+        )}
+
+        {/* Bottom info panel */}
+        <div style={{
+          position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 5,
+          padding: "20px 20px max(20px, env(safe-area-inset-bottom, 20px))",
+          background: "rgba(0,0,0,0.0)",
+        }}>
+          {/* Gallery label */}
+          <div style={{ ...F.mono, fontSize: "0.42rem", letterSpacing: "0.22em", color: C.burgundy, marginBottom: 6 }}>
+            SPRINGS ART GALLERY — EXHIBIT {ex.id}
+          </div>
+
+          {/* Product name + content — animates on exhibit change */}
+          <AnimatePresence mode="wait">
+            <motion.div key={ex.id + "-name"}
+              initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <h2 style={{ ...F.display, fontSize: "3rem", color: C.cream, lineHeight: 0.95, letterSpacing: "-0.01em", margin: "0 0 6px" }}>
+                {ex.name}
+              </h2>
+              <div style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.18em", color: C.dim, marginBottom: 12 }}>
+                {ex.subtitle} +
+              </div>
+
+              {/* Ingredients */}
+              <div style={{ ...F.mono, fontSize: "0.42rem", letterSpacing: "0.08em", color: C.cream, marginBottom: 10, lineHeight: 1.7 }}>
+                {ex.ingredients.join("  ·  ")}
+              </div>
+
+              {/* Description */}
+              <p style={{ ...F.mono, fontSize: "0.42rem", letterSpacing: "0.06em", color: C.dim, lineHeight: 1.65, margin: "0 0 8px", whiteSpace: "pre-line" }}>
+                {ex.description}
+              </p>
+
+              {/* Tagline */}
+              <div style={{ ...F.mono, fontSize: "0.44rem", letterSpacing: "0.1em", color: C.burgundy, marginBottom: 16 }}>
+                {ex.tagline}
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Dots + price row */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <div style={{ display: "flex", gap: 6 }}>
+              {EXHIBITS.map((_, i) => (
+                <button key={i} onClick={() => setIdx(i)} style={{
+                  width: i === idx ? 20 : 7, height: 7,
+                  background: i === idx ? C.cream : "rgba(242,232,213,0.25)",
+                  border: "none", cursor: "pointer", padding: 0,
+                  transition: "width 0.25s, background 0.25s",
+                }} />
+              ))}
+            </div>
+            <div style={{ ...F.mono, fontSize: "0.9rem", letterSpacing: "0.04em", color: C.cream }}>
+              {ex.price} <span style={{ fontSize: "0.55rem", color: C.dim }}>COP</span>
+            </div>
+          </div>
+        </div>
+
+      </main>
+    );
+  }
+
+  // ── DESKTOP LAYOUT ─────────────────────────────────────────────────
   return (
     <main style={{ background: BG, height: "100vh", overflow: "hidden", color: C.cream }}>
 
