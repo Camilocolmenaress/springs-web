@@ -89,7 +89,8 @@
         "ingredients": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 0.70, "unit": "rem", "min": 0.4, "max": 1.2, "step": 0.02 },
+            "fontSize": { "value": 0.70, "unit": "rem", "min": 0.4, "max": 3.0, "step": 0.02 },
+            "width":    { "value": 95,   "unit": "vw",  "min": 10,  "max": 200, "step": 1   },
             "offsetY":  { "value": 0,    "unit": "px",  "min": -100, "max": 100, "step": 4 },
             "offsetX":  { "value": 0,    "unit": "px",  "min": -100, "max": 100, "step": 4 }
           }
@@ -97,7 +98,8 @@
         "description": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 0.58, "unit": "rem", "min": 0.4, "max": 1.2, "step": 0.02 },
+            "fontSize": { "value": 0.58, "unit": "rem", "min": 0.4, "max": 3.0, "step": 0.02 },
+            "width":    { "value": 95,   "unit": "vw",  "min": 10,  "max": 200, "step": 1   },
             "offsetY":  { "value": 0,    "unit": "px",  "min": -100, "max": 100, "step": 4 },
             "offsetX":  { "value": 0,    "unit": "px",  "min": -100, "max": 100, "step": 4 }
           }
@@ -105,7 +107,8 @@
         "tagline": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 0.66, "unit": "rem", "min": 0.4, "max": 1.2, "step": 0.02 },
+            "fontSize": { "value": 0.66, "unit": "rem", "min": 0.4, "max": 3.0, "step": 0.02 },
+            "width":    { "value": 95,   "unit": "vw",  "min": 10,  "max": 200, "step": 1   },
             "offsetY":  { "value": 0,    "unit": "px",  "min": -100, "max": 100, "step": 4 },
             "offsetX":  { "value": 0,    "unit": "px",  "min": -100, "max": 100, "step": 4 }
           }

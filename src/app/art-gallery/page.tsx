@@ -333,12 +333,15 @@ export default function ArtGallery() {
     pullQuoteOffY:    sv(mz, "detail", "pullQuote",  "offsetY",      0),
     pullQuoteOffX:    sv(mz, "detail", "pullQuote",  "offsetX",      0),
     ingFs:            sv(mz, "detail", "ingredients","fontSize",     0.39),
+    ingW:             sv(mz, "detail", "ingredients","width",        95),
     ingOffY:          sv(mz, "detail", "ingredients","offsetY",      0),
     ingOffX:          sv(mz, "detail", "ingredients","offsetX",      0),
     descFs:           sv(mz, "detail", "description","fontSize",     0.38),
+    descW:            sv(mz, "detail", "description","width",        95),
     descOffY:         sv(mz, "detail", "description","offsetY",      0),
     descOffX:         sv(mz, "detail", "description","offsetX",      0),
     taglineFs:        sv(mz, "detail", "tagline",    "fontSize",     0.40),
+    taglineW:         sv(mz, "detail", "tagline",    "width",        95),
     taglineOffY:      sv(mz, "detail", "tagline",    "offsetY",      0),
     taglineOffX:      sv(mz, "detail", "tagline",    "offsetX",      0),
     galleryH:         sv(mz, "detail", "gallery",     "height",       100),
@@ -587,17 +590,17 @@ export default function ArtGallery() {
 
                 {/* Ingredients / description / tagline — full width */}
                 <div style={{ marginBottom: 24 }}>
-                  <div style={{ marginBottom: 10, transform: `translate(${m.ingOffX}px, ${m.ingOffY}px)` }}>
+                  <div style={{ marginBottom: 10, width: `${m.ingW}vw`, overflow: "visible", transform: `translate(${m.ingOffX}px, ${m.ingOffY}px)` }}>
                     {exhibit.ingredients.map(ing => (
-                      <div key={ing} style={{ ...F.mono, fontSize: `${m.ingFs}rem`, letterSpacing: "0.06em", color: C.cream, marginBottom: 3, lineHeight: 1.4 }}>
+                      <div key={ing} style={{ ...F.mono, fontSize: `${m.ingFs}rem`, letterSpacing: "0.06em", color: C.cream, marginBottom: 3, lineHeight: 1.4, whiteSpace: "nowrap" }}>
                         {ing}
                       </div>
                     ))}
                   </div>
-                  <p style={{ ...F.mono, fontSize: `${m.descFs}rem`, letterSpacing: "0.04em", color: C.dim, lineHeight: 1.62, margin: "0 0 8px", whiteSpace: "pre-line", transform: `translate(${m.descOffX}px, ${m.descOffY}px)` }}>
-                    {exhibit.description}
+                  <p style={{ ...F.mono, fontSize: `${m.descFs}rem`, letterSpacing: "0.04em", color: C.dim, lineHeight: 1.62, margin: "0 0 8px", whiteSpace: "nowrap", width: `${m.descW}vw`, overflow: "visible", transform: `translate(${m.descOffX}px, ${m.descOffY}px)` }}>
+                    {exhibit.description.replace(/\n/g, " ")}
                   </p>
-                  <div style={{ ...F.mono, fontSize: `${m.taglineFs}rem`, letterSpacing: "0.1em", color: C.mostaza, transform: `translate(${m.taglineOffX}px, ${m.taglineOffY}px)` }}>
+                  <div style={{ ...F.mono, fontSize: `${m.taglineFs}rem`, letterSpacing: "0.1em", color: C.mostaza, whiteSpace: "nowrap", width: `${m.taglineW}vw`, overflow: "visible", transform: `translate(${m.taglineOffX}px, ${m.taglineOffY}px)` }}>
                     {exhibit.tagline}
                   </div>
                 </div>
