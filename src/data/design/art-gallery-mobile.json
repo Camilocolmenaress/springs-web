@@ -73,15 +73,15 @@
           "type": "text",
           "props": {
             "marginTop":    { "value": 0,  "unit": "px", "min": -300, "max": 80,  "step": 4 },
-            "paddingTop":   { "value": 24, "unit": "px", "min": 0,    "max": 80,  "step": 4 },
-            "paddingH":     { "value": 16, "unit": "px", "min": 8,    "max": 40,  "step": 2 },
-            "leftColWidth": { "value": 39, "unit": "%",  "min": 20,   "max": 60,  "step": 1 }
+            "paddingTop":   { "value": 0,  "unit": "px", "min": 0,    "max": 80,  "step": 4 },
+            "paddingH":     { "value": 18, "unit": "px", "min": 8,    "max": 40,  "step": 2 },
+            "leftColWidth": { "value": 44, "unit": "%",  "min": 20,   "max": 60,  "step": 1 }
           }
         },
         "pullQuote": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 0.78, "unit": "rem", "min": 0.4,  "max": 1.5,  "step": 0.02 },
+            "fontSize": { "value": 1.1,  "unit": "rem", "min": 0.4,  "max": 1.8,  "step": 0.02 },
             "offsetY":  { "value": 0,    "unit": "px",  "min": -100, "max": 100,  "step": 4 },
             "offsetX":  { "value": 0,    "unit": "px",  "min": -100, "max": 100,  "step": 4 }
           }
@@ -89,7 +89,7 @@
         "ingredients": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 0.72, "unit": "rem", "min": 0.4, "max": 1.2, "step": 0.02 },
+            "fontSize": { "value": 0.70, "unit": "rem", "min": 0.4, "max": 1.2, "step": 0.02 },
             "offsetY":  { "value": 0,    "unit": "px",  "min": -100, "max": 100, "step": 4 },
             "offsetX":  { "value": 0,    "unit": "px",  "min": -100, "max": 100, "step": 4 }
           }
@@ -97,7 +97,7 @@
         "description": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 0.68, "unit": "rem", "min": 0.4, "max": 1.2, "step": 0.02 },
+            "fontSize": { "value": 0.58, "unit": "rem", "min": 0.4, "max": 1.2, "step": 0.02 },
             "offsetY":  { "value": 0,    "unit": "px",  "min": -100, "max": 100, "step": 4 },
             "offsetX":  { "value": 0,    "unit": "px",  "min": -100, "max": 100, "step": 4 }
           }
@@ -113,17 +113,17 @@
         "gallery": {
           "type": "image",
           "props": {
-            "height":  { "value": 100, "unit": "px", "min": 60,  "max": 200, "step": 4 },
-            "gap":     { "value": 3,   "unit": "px", "min": 0,   "max": 16,  "step": 1 },
-            "offsetY": { "value": 0,   "unit": "px", "min": -80, "max": 80,  "step": 4 },
-            "offsetX": { "value": 0,   "unit": "px", "min": -80, "max": 80,  "step": 4 }
+            "height":  { "value": 96,  "unit": "px", "min": 60,  "max": 200, "step": 4 },
+            "gap":     { "value": 6,   "unit": "px", "min": 0,   "max": 16,  "step": 1 },
+            "offsetY": { "value": -4,  "unit": "px", "min": -80, "max": 80,  "step": 4 },
+            "offsetX": { "value": -4,  "unit": "px", "min": -80, "max": 80,  "step": 4 }
           }
         },
         "metadata": {
           "type": "text",
           "props": {
-            "labelFs": { "value": 0.52, "unit": "rem", "min": 0.3, "max": 1.0, "step": 0.02 },
-            "valueFs": { "value": 0.60, "unit": "rem", "min": 0.3, "max": 1.0, "step": 0.02 },
+            "labelFs": { "value": 0.48, "unit": "rem", "min": 0.3, "max": 1.0, "step": 0.02 },
+            "valueFs": { "value": 0.56, "unit": "rem", "min": 0.3, "max": 1.0, "step": 0.02 },
             "offsetY": { "value": 0,    "unit": "px",  "min": -80, "max": 80,  "step": 4 },
             "offsetX": { "value": 0,    "unit": "px",  "min": -80, "max": 80,  "step": 4 }
           }
@@ -131,7 +131,7 @@
         "quote": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 1.0,  "unit": "rem", "min": 0.5,  "max": 2.0, "step": 0.05 },
+            "fontSize": { "value": 0.80, "unit": "rem", "min": 0.5,  "max": 2.0, "step": 0.05 },
             "offsetY":  { "value": 0,    "unit": "px",  "min": -100, "max": 100, "step": 4 },
             "offsetX":  { "value": 0,    "unit": "px",  "min": -100, "max": 100, "step": 4 }
           }
