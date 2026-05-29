@@ -8,17 +8,51 @@ import ExtrasModal from "@/components/ExtrasModal";
 import DevPanel from "@/components/DevPanel";
 import { useDesignConfig } from "@/hooks/useDesignConfig";
 import { type Producto } from "@/data/productos";
-import type { SliderProp } from "@/types/design";
+import type { SliderProp, PageConfig } from "@/types/design";
 
 function sv(prop: unknown, fallback: number): number {
   if (prop && typeof prop === "object" && "value" in prop) return (prop as SliderProp).value;
   return fallback;
 }
 
+function cartProps(config: PageConfig | null) {
+  const cb = config?.zones?.cartButton?.elements as Record<string, { props: Record<string, unknown> }> | undefined;
+  return {
+    bottom: sv(cb?.btn?.props?.bottom, 24),
+    right:  sv(cb?.btn?.props?.right,  24),
+  };
+}
+
 export default function MenuPage() {
   const desktop = useDesignConfig("menu");
   const mobile  = useDesignConfig("menu-mobile");
   const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  // --- live config injected from parent via postMessage (when inside iframe) ---
+  const [msgConfig, setMsgConfig] = useState<PageConfig | null>(null);
+  useEffect(() => {
+    function onMsg(e: MessageEvent) {
+      if (e.data?.type === "SPRINGS_CONFIG") setMsgConfig(e.data.config as PageConfig);
+    }
+    window.addEventListener("message", onMsg);
+    return () => window.removeEventListener("message", onMsg);
+  }, []);
+
+  // --- push config to iframe whenever slider moves ---
+  useEffect(() => {
+    if (!desktop.editMode) return;
+    const send = () =>
+      iframeRef.current?.contentWindow?.postMessage(
+        { type: "SPRINGS_CONFIG", config: mobile.config }, "*"
+      );
+    const iframe = iframeRef.current;
+    if (!iframe) return;
+    if (iframe.contentDocument?.readyState === "complete") {
+      send();
+    } else {
+      iframe.addEventListener("load", send, { once: true });
+    }
+  }, [mobile.config, desktop.editMode]);
 
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
@@ -29,9 +63,9 @@ export default function MenuPage() {
     return () => mq.removeEventListener("change", h);
   }, []);
 
-  const cb = mobile.config?.zones?.cartButton?.elements as Record<string, { props: Record<string, unknown> }> | undefined;
-  const cartBottom = sv(cb?.btn?.props?.bottom, 24);
-  const cartRight  = sv(cb?.btn?.props?.right,  24);
+  // active config: postMessage override > normal selection
+  const activeConfig = msgConfig ?? (isMobile ? mobile.config : desktop.config);
+  const { bottom: cartBottom, right: cartRight } = cartProps(activeConfig);
 
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [pendingProduct, setPendingProduct] = useState<Producto | null>(null);
@@ -80,7 +114,7 @@ export default function MenuPage() {
     iframeRef.current?.contentWindow?.location.reload();
   }
 
-  // Edit mode: iframe 390×844 + DevPanel escribe SOLO en menu-mobile.json
+  // Edit mode: iframe 390×844 + DevPanel
   if (desktop.editMode) {
     return (
       <div style={{ width: "100vw", height: "100vh", background: "#0d0d0d", position: "relative", overflow: "hidden" }}>
@@ -148,7 +182,7 @@ export default function MenuPage() {
         <span aria-hidden>←</span> VOLVER
       </Link>
 
-      <Menu onAgregar={handleAgregar} config={isMobile ? mobile.config : desktop.config} />
+      <Menu onAgregar={handleAgregar} config={activeConfig} />
 
       <Cart
         items={cartItems}
@@ -156,8 +190,8 @@ export default function MenuPage() {
         onRemove={handleRemove}
         onDelete={handleDelete}
         bumpSignal={cartBump}
-        floatBottom={isMobile ? cartBottom : undefined}
-        floatRight={isMobile ? cartRight : undefined}
+        floatBottom={isMobile || !!msgConfig ? cartBottom : undefined}
+        floatRight={isMobile || !!msgConfig ? cartRight : undefined}
       />
 
       {pendingProduct && (
