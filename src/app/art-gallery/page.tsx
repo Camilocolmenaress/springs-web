@@ -517,22 +517,28 @@ export default function ArtGallery() {
                   {/* Globe */}
                   <div style={{ width: m.globeSize, height: m.globeSize, marginBottom: 14, flexShrink: 0, transform: `translate(${m.globeOffX}px, ${m.globeOffY}px)` }}>
                     <svg viewBox="0 0 110 110" width="100%" height="100%">
-                      <circle cx="55" cy="55" r={33} fill="none" stroke={C.dim} strokeWidth="1.2" opacity={0.8}/>
+                      <circle cx="55" cy="55" r={33} fill="none" stroke={C.dim} strokeWidth="1.2" opacity={0.85}/>
                       <motion.g
                         animate={{ rotate: 360 }}
                         transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
                         style={{ transformBox: "fill-box", transformOrigin: "center" }}
                       >
-                        <ellipse cx="55" cy="55" rx={12} ry={33} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.55}/>
-                        <ellipse cx="55" cy="55" rx={25} ry={33} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.45}/>
-                        <ellipse cx="55" cy="55" rx={33} ry={13} fill="none" stroke={C.dim} strokeWidth="0.9" opacity={0.55}/>
-                        <ellipse cx="55" cy="55" rx={33} ry={25} fill="none" stroke={C.dim} strokeWidth="0.8" opacity={0.4}/>
-                        <line x1={22} y1="55" x2={88} y2="55" stroke={C.dim} strokeWidth="0.8" opacity={0.4}/>
-                        <line x1="55" y1={22} x2="55" y2={88} stroke={C.dim} strokeWidth="0.8" opacity={0.4}/>
+                        {/* meridians */}
+                        <ellipse cx="55" cy="55" rx={8}  ry={33} fill="none" stroke={C.dim} strokeWidth="0.85" opacity={0.55}/>
+                        <ellipse cx="55" cy="55" rx={18} ry={33} fill="none" stroke={C.dim} strokeWidth="0.85" opacity={0.5}/>
+                        <ellipse cx="55" cy="55" rx={27} ry={33} fill="none" stroke={C.dim} strokeWidth="0.85" opacity={0.45}/>
+                        {/* parallels */}
+                        <ellipse cx="55" cy="55" rx={33} ry={9}  fill="none" stroke={C.dim} strokeWidth="0.85" opacity={0.55}/>
+                        <ellipse cx="55" cy="55" rx={33} ry={19} fill="none" stroke={C.dim} strokeWidth="0.85" opacity={0.5}/>
+                        <ellipse cx="55" cy="55" rx={33} ry={28} fill="none" stroke={C.dim} strokeWidth="0.85" opacity={0.45}/>
+                        {/* equator cross */}
+                        <line x1={22} y1="55" x2={88} y2="55" stroke={C.dim} strokeWidth="0.8" opacity={0.45}/>
+                        <line x1="55" y1={22} x2="55" y2={88} stroke={C.dim} strokeWidth="0.8" opacity={0.45}/>
                       </motion.g>
-                      <path id={`mob-c-${exhibit.id}`} fill="none" d="M16,55 a39,39 0 0,1 39,-39 a39,39 0 0,1 39,39"/>
-                      <text fontFamily="JetBrains Mono, monospace" fontSize="7.2" letterSpacing="0.8" fill={C.dim} fillOpacity={0.75}>
-                        <textPath href={`#mob-c-${exhibit.id}`} startOffset="5%">FOR THE MOST CHIMBA PEOPLE ✦ </textPath>
+                      {/* full-circle text path (same formula as home desktop) */}
+                      <path id={`mob-c-${exhibit.id}`} fill="none" d="M34,91.4 a42,42 0 0,1 42,-72.7 a42,42 0 0,1 -42,72.7"/>
+                      <text fontFamily="JetBrains Mono, monospace" fontSize="7.5" letterSpacing="1.0" fill={C.dim} fillOpacity={0.8}>
+                        <textPath href={`#mob-c-${exhibit.id}`} startOffset="7%">FOR THE MOST CHIMBA PEOPLE ✦ </textPath>
                       </text>
                     </svg>
                   </div>
