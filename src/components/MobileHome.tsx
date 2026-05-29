@@ -18,12 +18,14 @@ const F = {
   mono:    { fontFamily: "var(--font-jetbrains-mono)" } as React.CSSProperties,
 };
 
+const PRODUCTS = "LA FIJA / LA PESADA / LA BRAVA / LA SIMPLE / LA HONESTA / LOADED POLLO / LOADED MOLIDA / LOADED DESMECHADA / LOADED CHORIZO /";
+
 function FadeUp({ children, delay = 0, style }: { children: React.ReactNode; delay?: number; style?: React.CSSProperties }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
+      viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.65, ease: EASE, delay }}
       style={style}
     >
@@ -37,7 +39,7 @@ export default function MobileHome() {
   const pathname = usePathname();
 
   return (
-    <div style={{ background: C.tinta, minHeight: "100dvh", overflowX: "hidden" }}>
+    <div style={{ background: C.cream, minHeight: "100dvh", overflowX: "hidden" }}>
 
       {/* ── Fixed header ─────────────────────────────────────────────── */}
       <header style={{
@@ -45,84 +47,173 @@ export default function MobileHome() {
         height: 52,
         display: "flex", alignItems: "center", justifyContent: "space-between",
         padding: "0 20px",
-        background: "rgba(10,8,6,0.42)",
-        backdropFilter: "blur(28px) saturate(1.4)",
-        WebkitBackdropFilter: "blur(28px) saturate(1.4)",
+        background: "rgba(242,232,213,0.55)",
+        backdropFilter: "blur(20px) saturate(1.3)",
+        WebkitBackdropFilter: "blur(20px) saturate(1.3)",
       }}>
-        <span style={{ ...F.display, fontSize: "1.4rem", letterSpacing: "0.04em", color: C.cream }}>
-          SPRINGS
-        </span>
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <span style={{ ...F.display, fontSize: "1.4rem", letterSpacing: "0.04em", color: C.tinta }}>
+            SPRINGS
+          </span>
+          <span style={{ color: C.tinta, fontSize: "0.7rem", opacity: 0.4 }}>✦</span>
+          <div style={{ ...F.mono, fontSize: "0.36rem", letterSpacing: "0.08em", color: C.tinta, lineHeight: 1.4, textTransform: "uppercase", opacity: 0.5 }}>
+            BRITISH SOUL<br />COLOMBIAN HEART.
+          </div>
+        </div>
         <button
           onClick={() => router.push("/menu")}
           style={{
-            ...F.mono, fontSize: "0.52rem", letterSpacing: "0.14em",
-            background: "transparent", color: C.cream,
-            border: `1px solid ${C.cream}`, padding: "6px 14px", cursor: "pointer",
-            display: "flex", alignItems: "center", gap: 6,
+            ...F.mono, fontSize: "0.5rem", letterSpacing: "0.14em",
+            background: C.burgundy, color: C.cream,
+            border: "none", padding: "7px 14px", cursor: "pointer",
+            display: "flex", alignItems: "center", gap: 5,
           }}
         >
           PEDIR AHORA
-          <svg aria-hidden="true" width="10" height="10" viewBox="0 0 10 10" fill="none">
-            <path d="M2 8L8 2M8 2H3M8 2V7" stroke="currentColor" strokeWidth="1.2"/>
+          <svg aria-hidden="true" width="9" height="9" viewBox="0 0 10 10" fill="none">
+            <path d="M2 8L8 2M8 2H3M8 2V7" stroke="currentColor" strokeWidth="1.3"/>
           </svg>
         </button>
       </header>
 
       {/* ── Section 1: Hero ─────────────────────────────────────────── */}
       <section style={{
-        minHeight: "100dvh",
-        display: "flex", flexDirection: "column", justifyContent: "flex-end",
-        padding: "0 0 120px 0",
-        position: "relative", overflow: "hidden",
-        background: C.tinta,
+        background: C.cream,
+        paddingTop: 52,
+        position: "relative",
+        overflow: "hidden",
       }}>
-        {/* Product image */}
-        <motion.img
-          src="/images/la-fija-hero.jpg"
-          alt="La Fija"
-          initial={{ scale: 1.08, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1.8, ease: EASE }}
+        {/* SPRINGS title — overflow like desktop */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: EASE, delay: 0.1 }}
           style={{
-            position: "absolute", inset: 0,
-            width: "100%", height: "100%",
-            objectFit: "cover", objectPosition: "center",
+            padding: "20px 20px 0 20px",
+            overflow: "hidden",
           }}
-        />
-        {/* Dark overlay */}
-        <div style={{
-          position: "absolute", inset: 0,
-          background: "linear-gradient(to top, rgba(26,10,12,0.92) 0%, rgba(26,10,12,0.3) 50%, transparent 100%)",
-        }} />
+        >
+          <h1 style={{
+            ...F.display,
+            fontSize: "clamp(80px, 28vw, 140px)",
+            color: C.tinta,
+            lineHeight: 0.88,
+            letterSpacing: "-0.02em",
+            margin: 0,
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+          }}>
+            SPRINGS
+          </h1>
+        </motion.div>
 
-        {/* Content */}
-        <div style={{ position: "relative", zIndex: 2, padding: "0 24px" }}>
-          <motion.div
-            initial={{ opacity: 0, y: 32 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: EASE, delay: 0.3 }}
-          >
-            <div style={{ ...F.mono, fontSize: "0.5rem", letterSpacing: "0.2em", color: C.mostaza, marginBottom: 8, textTransform: "uppercase" }}>
-              BRITISH SOUL · COLOMBIAN HEART
-            </div>
-            <h1 style={{ ...F.display, fontSize: "clamp(64px, 22vw, 96px)", color: C.cream, lineHeight: 0.9, letterSpacing: "-0.02em", margin: "0 0 16px 0" }}>
-              SPRINGS
-            </h1>
-            <div style={{ ...F.sans, fontSize: "1rem", color: C.cream, opacity: 0.7, marginBottom: 28, fontStyle: "italic" }}>
-              Different by default.
-            </div>
-          </motion.div>
+        {/* Product image */}
+        <motion.div
+          initial={{ opacity: 0, scale: 1.04 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.4, ease: EASE, delay: 0.2 }}
+          style={{ position: "relative", margin: "0 0 -24px 0" }}
+        >
+          <img
+            src="/images/la-fija.png"
+            alt="La Fija — Jacket de pollo desmechado"
+            style={{
+              width: "88%",
+              maxWidth: 360,
+              display: "block",
+              marginLeft: "auto",
+              marginRight: "auto",
+              position: "relative",
+              zIndex: 2,
+            }}
+          />
+        </motion.div>
 
+        {/* Tagline */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: EASE, delay: 0.45 }}
+          style={{ padding: "0 20px 8px 20px" }}
+        >
+          <div style={{
+            ...F.display,
+            fontSize: "clamp(13px, 4.2vw, 20px)",
+            color: C.burgundy,
+            letterSpacing: "0.01em",
+            fontStyle: "italic",
+            lineHeight: 1.1,
+          }}>
+            JACKETS DIFFERENT BY DEFAULT.
+          </div>
+        </motion.div>
+
+        {/* Globe label */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, ease: EASE, delay: 0.6 }}
+          style={{
+            padding: "4px 20px 12px 20px",
+            display: "flex", alignItems: "center", gap: 8,
+          }}
+        >
+          <div style={{
+            width: 28, height: 28, flexShrink: 0,
+            border: `1px solid ${C.tinta}40`,
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={C.tinta} strokeWidth="1" opacity={0.5}>
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/>
+            </svg>
+          </div>
+          <div>
+            <div style={{ ...F.mono, fontSize: "0.46rem", letterSpacing: "0.06em", color: C.tinta, opacity: 0.55, textTransform: "uppercase" }}>
+              ↖ Jacket La Fija
+            </div>
+            <div style={{ ...F.mono, fontSize: "0.4rem", letterSpacing: "0.06em", color: C.tinta, opacity: 0.4, textTransform: "uppercase" }}>
+              BARBOSA STDR — COLOMBIA EST. 2025
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Product list */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, ease: EASE, delay: 0.7 }}
+          style={{
+            padding: "12px 20px 24px 20px",
+            borderTop: `1px solid ${C.tinta}18`,
+          }}
+        >
+          <div style={{
+            ...F.mono,
+            fontSize: "0.42rem",
+            letterSpacing: "0.04em",
+            color: C.tinta,
+            opacity: 0.55,
+            lineHeight: 1.9,
+            textTransform: "uppercase",
+          }}>
+            {PRODUCTS}
+          </div>
+        </motion.div>
+
+        {/* CTA button */}
+        <div style={{ padding: "0 20px 56px 20px" }}>
           <motion.button
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, ease: EASE, delay: 0.7 }}
+            transition={{ duration: 0.5, ease: EASE, delay: 0.8 }}
             onClick={() => router.push("/menu")}
             style={{
-              ...F.mono, fontSize: "0.6rem", letterSpacing: "0.18em",
-              background: C.burgundy, color: C.cream,
-              border: "none", padding: "14px 28px", cursor: "pointer",
+              ...F.mono, fontSize: "0.58rem", letterSpacing: "0.16em",
+              background: C.tinta, color: C.cream,
+              border: "none", padding: "13px 28px", cursor: "pointer",
               textTransform: "uppercase",
+              width: "100%",
             }}
           >
             VER LA CARTA
@@ -132,35 +223,40 @@ export default function MobileHome() {
 
       {/* ── Section 2: ART GALLERY ──────────────────────────────────── */}
       <section style={{
-        minHeight: "80dvh",
-        display: "flex", flexDirection: "column", justifyContent: "center",
-        padding: "80px 24px",
-        background: C.burgundy,
-        position: "relative", overflow: "hidden",
+        background: C.cream,
+        padding: "48px 20px 56px 20px",
+        borderTop: `1px solid ${C.tinta}14`,
       }}>
-        <FadeUp delay={0}>
-          <div style={{ ...F.mono, fontSize: "0.48rem", letterSpacing: "0.22em", color: C.cream, opacity: 0.6, marginBottom: 16, textTransform: "uppercase" }}>
+        <FadeUp>
+          <div style={{ ...F.mono, fontSize: "0.42rem", letterSpacing: "0.18em", color: C.tinta, opacity: 0.4, marginBottom: 10, textTransform: "uppercase" }}>
             SPRINGS ✦ 2025
           </div>
         </FadeUp>
-        <FadeUp delay={0.1}>
-          <h2 style={{ ...F.display, fontSize: "clamp(56px, 18vw, 80px)", color: C.cream, lineHeight: 0.9, letterSpacing: "-0.02em", margin: "0 0 24px 0" }}>
-            ART<br />GALLERY
-          </h2>
+        <FadeUp delay={0.08}>
+          <a href="/art-gallery" style={{ textDecoration: "none", display: "block" }}>
+            <h2 style={{
+              ...F.display,
+              fontSize: "clamp(64px, 22vw, 110px)",
+              color: C.tinta,
+              lineHeight: 0.88,
+              letterSpacing: "-0.02em",
+              margin: "0 0 20px 0",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+            }}>
+              ART<br />GALLERY
+            </h2>
+          </a>
         </FadeUp>
-        <FadeUp delay={0.2}>
-          <p style={{ ...F.sans, fontSize: "0.85rem", color: C.cream, opacity: 0.7, lineHeight: 1.6, marginBottom: 32, maxWidth: 260 }}>
-            Cada exhibit es una pieza. Cada Jacket, un objeto de deseo.
-          </p>
-        </FadeUp>
-        <FadeUp delay={0.3}>
+        <FadeUp delay={0.16}>
           <a
             href="/art-gallery"
             style={{
-              ...F.mono, fontSize: "0.58rem", letterSpacing: "0.16em",
-              color: C.cream, textDecoration: "none",
-              border: `1px solid ${C.cream}`, padding: "12px 24px",
-              display: "inline-flex", alignItems: "center", gap: 8,
+              ...F.mono, fontSize: "0.52rem", letterSpacing: "0.14em",
+              color: C.tinta, textDecoration: "none",
+              border: `1px solid ${C.tinta}50`, padding: "10px 20px",
+              display: "inline-flex", alignItems: "center", gap: 7,
+              opacity: 0.8,
             }}
           >
             ENTRAR
@@ -171,70 +267,93 @@ export default function MobileHome() {
         </FadeUp>
       </section>
 
-      {/* ── Section 3: THIS IS OUR CULTURE ─────────────────────────── */}
-      <section style={{
-        minHeight: "80dvh",
-        display: "flex", flexDirection: "column", justifyContent: "center",
-        padding: "80px 24px",
-        background: C.tinta,
-      }}>
-        <FadeUp delay={0}>
-          <div style={{ ...F.mono, fontSize: "0.48rem", letterSpacing: "0.22em", color: C.mostaza, marginBottom: 16, textTransform: "uppercase" }}>
-            THIS IS
-          </div>
-        </FadeUp>
-        <FadeUp delay={0.1}>
-          <h2 style={{ ...F.display, fontSize: "clamp(52px, 16vw, 72px)", color: C.cream, lineHeight: 0.92, letterSpacing: "-0.02em", margin: "0 0 28px 0" }}>
-            OUR<br />CULTURE
-          </h2>
-        </FadeUp>
-        <FadeUp delay={0.2}>
-          <p style={{ ...F.mono, fontSize: "0.6rem", color: C.cream, opacity: 0.65, lineHeight: 2.2, letterSpacing: "0.08em", textTransform: "uppercase" }}>
-            MÚSICA. CALLE. HUMOR.<br />
-            AMIGOS. PLANES.<br />
-            NOCHES QUE SÍ CUENTAN.<br />
-            ESTO ES SPRINGS.
-          </p>
-        </FadeUp>
-      </section>
-
-      {/* ── Section 4: Carta links ──────────────────────────────────── */}
+      {/* ── Section 3: Stickers ─────────────────────────────────────── */}
       <section style={{
         background: C.cream,
-        padding: "64px 24px 120px 24px",
+        padding: "8px 20px 48px 20px",
+        borderTop: `1px solid ${C.tinta}10`,
+        display: "flex", gap: 16, alignItems: "flex-start",
       }}>
-        <FadeUp>
-          <div style={{ ...F.mono, fontSize: "0.48rem", letterSpacing: "0.22em", color: C.tinta, opacity: 0.5, marginBottom: 32, textTransform: "uppercase" }}>
-            SPRINGS · BUCARAMANGA · DOMICILIO
-          </div>
+        <FadeUp style={{ flex: 1 }}>
+          <a href="/springs-jacket-club" style={{ display: "block" }}>
+            <img
+              src="/images/jacket-club-sticker.png"
+              alt="Springs Jacket Club"
+              style={{ width: "100%", maxWidth: 160, display: "block" }}
+            />
+          </a>
         </FadeUp>
+        <FadeUp delay={0.1} style={{ flex: 1 }}>
+          <img
+            src="/images/miercoles-dados-sticker.png"
+            alt="Miércoles de Dados"
+            style={{ width: "100%", maxWidth: 160, display: "block" }}
+          />
+        </FadeUp>
+      </section>
 
-        {[
-          { label: "JACKETS", sub: "desde 28,900", href: "/menu" },
-          { label: "LOADED",  sub: "desde 22,500", href: "/menu" },
-          { label: "EL CLUB", sub: "Jacket Club",  href: "/springs-jacket-club" },
-        ].map(({ label, sub, href }, i) => (
-          <FadeUp key={label} delay={i * 0.08}>
+      {/* ── Section 4: Ticker ───────────────────────────────────────── */}
+      <section style={{
+        background: C.tinta,
+        overflow: "hidden",
+        padding: "14px 0",
+        borderTop: `2px solid ${C.tinta}`,
+      }}>
+        <motion.div
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ duration: 12, ease: "linear", repeat: Infinity }}
+          style={{
+            display: "flex", gap: 0, whiteSpace: "nowrap", width: "max-content",
+          }}
+        >
+          {Array.from({ length: 8 }).map((_, i) => (
+            <span key={i} style={{
+              ...F.display,
+              fontSize: "clamp(22px, 7vw, 36px)",
+              color: C.cream,
+              opacity: 0.15,
+              letterSpacing: "0.02em",
+              paddingRight: 32,
+            }}>
+              SPRINGS &lt;
+            </span>
+          ))}
+        </motion.div>
+      </section>
+
+      {/* ── Footer ──────────────────────────────────────────────────── */}
+      <footer style={{
+        background: C.tinta,
+        padding: "40px 20px 100px 20px",
+      }}>
+        <div style={{ ...F.display, fontSize: "2.8rem", color: C.cream, letterSpacing: "0.04em", marginBottom: 4 }}>
+          SPRINGS
+        </div>
+        <div style={{ ...F.mono, fontSize: "0.42rem", letterSpacing: "0.1em", color: C.cream, opacity: 0.4, marginBottom: 32, textTransform: "uppercase" }}>
+          SPRINGS © 2025 · BUCARAMANGA, COL
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+          {[
+            { label: "CARTA",       href: "/menu" },
+            { label: "ART GALLERY", href: "/art-gallery" },
+            { label: "EL CLUB",     href: "/springs-jacket-club" },
+            { label: "INSTAGRAM",   href: "https://instagram.com/springs.col" },
+            { label: "TIKTOK",      href: "https://tiktok.com/@springs.col" },
+          ].map(({ label, href }) => (
             <a
+              key={label}
               href={href}
               style={{
-                display: "flex", justifyContent: "space-between", alignItems: "center",
-                padding: "18px 0",
-                borderBottom: `1px solid ${C.tinta}20`,
-                textDecoration: "none",
+                ...F.mono, fontSize: "0.5rem", letterSpacing: "0.14em",
+                color: C.cream, opacity: 0.55, textDecoration: "none",
+                textTransform: "uppercase",
               }}
             >
-              <div>
-                <div style={{ ...F.display, fontSize: "1.6rem", color: C.tinta, letterSpacing: "-0.01em" }}>{label}</div>
-                <div style={{ ...F.mono, fontSize: "0.42rem", letterSpacing: "0.1em", color: C.tinta, opacity: 0.5, textTransform: "uppercase", marginTop: 2 }}>{sub}</div>
-              </div>
-              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M3 13L13 3M13 3H5M13 3V11" stroke={C.tinta} strokeWidth="1.4"/>
-              </svg>
+              {label}
             </a>
-          </FadeUp>
-        ))}
-      </section>
+          ))}
+        </div>
+      </footer>
 
       {/* ── Bottom nav ──────────────────────────────────────────────── */}
       <nav style={{
