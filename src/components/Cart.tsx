@@ -37,9 +37,11 @@ interface CartProps {
   onDelete: (cartId: string) => void;
   bumpSignal?: number;
   onCheckout?: () => void;
+  floatBottom?: number;
+  floatRight?: number;
 }
 
-export default function Cart({ items, onAdd, onRemove, onDelete, bumpSignal = 0, onCheckout }: CartProps) {
+export default function Cart({ items, onAdd, onRemove, onDelete, bumpSignal = 0, onCheckout, floatBottom, floatRight }: CartProps) {
   const [open, setOpen] = useState(false);
   const btnAnim = useAnimation();
   const prevBump = useRef(0);
@@ -85,8 +87,8 @@ export default function Cart({ items, onAdd, onRemove, onDelete, bumpSignal = 0,
         aria-label={`Ver pedido${totalItems > 0 ? `, ${totalItems} items` : ""}`}
         style={{
           position: "fixed",
-          bottom: 24,
-          right: 24,
+          bottom: floatBottom ?? 24,
+          right: floatRight ?? 24,
           zIndex: 50,
           display: "flex",
           alignItems: "center",

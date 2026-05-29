@@ -8,6 +8,12 @@ import ExtrasModal from "@/components/ExtrasModal";
 import DevPanel from "@/components/DevPanel";
 import { useDesignConfig } from "@/hooks/useDesignConfig";
 import { type Producto } from "@/data/productos";
+import type { SliderProp } from "@/types/design";
+
+function sv(prop: unknown, fallback: number): number {
+  if (prop && typeof prop === "object" && "value" in prop) return (prop as SliderProp).value;
+  return fallback;
+}
 
 export default function MenuPage() {
   const desktop = useDesignConfig("menu");
@@ -21,6 +27,10 @@ export default function MenuPage() {
     mq.addEventListener("change", h);
     return () => mq.removeEventListener("change", h);
   }, []);
+
+  const cb = mobile.config?.zones?.cartButton?.elements as Record<string, { props: Record<string, unknown> }> | undefined;
+  const cartBottom = sv(cb?.btn?.props?.bottom, 24);
+  const cartRight  = sv(cb?.btn?.props?.right,  24);
 
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [pendingProduct, setPendingProduct] = useState<Producto | null>(null);
@@ -109,6 +119,8 @@ export default function MenuPage() {
             onRemove={handleRemove}
             onDelete={handleDelete}
             bumpSignal={cartBump}
+            floatBottom={cartBottom}
+            floatRight={cartRight}
           />
           {pendingProduct && (
             <ExtrasModal
@@ -168,6 +180,8 @@ export default function MenuPage() {
         onRemove={handleRemove}
         onDelete={handleDelete}
         bumpSignal={cartBump}
+        floatBottom={isMobile ? cartBottom : undefined}
+        floatRight={isMobile ? cartRight : undefined}
       />
 
       {pendingProduct && (
