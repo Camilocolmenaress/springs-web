@@ -60,8 +60,8 @@
         "vignette": {
           "type": "text",
           "props": {
-            "height":  { "value": 45, "unit": "%", "min": 0, "max": 90, "step": 2 },
-            "opacity": { "value": 90, "unit": "%", "min": 0, "max": 100, "step": 5 }
+            "spread":  { "value": 55, "unit": "%", "min": 20, "max": 90, "step": 2 },
+            "opacity": { "value": 90, "unit": "%", "min": 0,  "max": 100, "step": 5 }
           }
         }
       }

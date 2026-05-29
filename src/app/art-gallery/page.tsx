@@ -323,7 +323,7 @@ export default function ArtGallery() {
     globeOffY:        sv(mz, "hero", "globe",        "offsetY",      0),
     globeOffX:        sv(mz, "hero", "globe",        "offsetX",      0),
     globeTextOffset:  sv(mz, "hero", "globe",        "textOffset",   7),
-    vignetteH:        sv(mz, "hero", "vignette",     "height",       45),
+    vignetteSpread:   sv(mz, "hero", "vignette",     "spread",       55),
     vignetteOp:       sv(mz, "hero", "vignette",     "opacity",      90),
     detailPadTop:     sv(mz, "detail", "layout",     "paddingTop",   28),
     detailPadH:       sv(mz, "detail", "layout",     "paddingH",     16),
@@ -477,12 +477,11 @@ export default function ArtGallery() {
                   }}
                 />
 
-                {/* Bottom vignette — configurable */}
+                {/* Vignette — radial, bordes oscuros centro transparente */}
                 <div style={{
-                  position: "absolute", bottom: 0, left: 0, right: 0,
-                  height: `${m.vignetteH}%`,
+                  position: "absolute", inset: 0,
                   zIndex: 2, pointerEvents: "none",
-                  background: `linear-gradient(to top, rgba(0,0,0,${(m.vignetteOp / 100).toFixed(2)}) 0%, transparent 100%)`,
+                  background: `radial-gradient(ellipse at center, transparent ${m.vignetteSpread}%, rgba(0,0,0,${(m.vignetteOp / 100).toFixed(2)}) 100%)`,
                 }} />
 
                 {/* Gallery label + product name + subtitle — absolute, overlaid on image */}
