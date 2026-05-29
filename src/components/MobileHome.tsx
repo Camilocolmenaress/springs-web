@@ -252,14 +252,15 @@ export default function MobileHome() {
           </h1>
         </motion.div>
 
-        {/* Globo — transform completamente independiente */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, ease: EASE, delay: 0.5 }}
-          style={{ padding: "6px 18px 0 18px", transform: tx(d.globeOffY, d.globeOffX) }}
-        >
-          <GlobeExact size={d.globeSize} textOffset={d.globeTextOffset} />
-        </motion.div>
+        {/* Globo — wrapper de posición separado del animation div para que tx() no lo sobreescriba Framer */}
+        <div style={{ padding: "6px 18px 0 18px", transform: tx(d.globeOffY, d.globeOffX) }}>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, ease: EASE, delay: 0.5 }}
+          >
+            <GlobeExact size={d.globeSize} textOffset={d.globeTextOffset} />
+          </motion.div>
+        </div>
 
         {/* Underline — transform independiente */}
         <motion.div
