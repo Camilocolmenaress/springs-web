@@ -460,9 +460,9 @@ export default function ArtGallery() {
         {/* Fixed bottom nav */}
         <nav style={{
           position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 300,
-          height: 60,
+          height: 56,
           display: "flex", alignItems: "stretch",
-          background: "rgba(0,0,0,0.92)",
+          background: "rgba(0,0,0,0.96)",
           backdropFilter: "blur(14px)",
           WebkitBackdropFilter: "blur(14px)",
           borderTop: "1px solid rgba(242,232,213,0.08)",
@@ -472,7 +472,7 @@ export default function ArtGallery() {
             {
               label: "CARTA", href: "/menu",
               icon: (
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="5" y="3" width="14" height="18" rx="1"/>
                   <line x1="9" y1="8" x2="15" y2="8"/>
                   <line x1="9" y1="12" x2="15" y2="12"/>
@@ -483,7 +483,7 @@ export default function ArtGallery() {
             {
               label: "ART GALLERY", href: "/art-gallery", active: true,
               icon: (
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="3" y="3" width="18" height="18" rx="1"/>
                   <circle cx="8.5" cy="8.5" r="1.5"/>
                   <polyline points="21,15 16,10 5,21"/>
@@ -493,7 +493,7 @@ export default function ArtGallery() {
             {
               label: "NOSOTROS", href: "#",
               icon: (
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
                   <circle cx="9" cy="7" r="4"/>
                   <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
@@ -504,7 +504,7 @@ export default function ArtGallery() {
             {
               label: "EL CLUB", href: "#",
               icon: (
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                   <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
                 </svg>
               ),
@@ -512,7 +512,7 @@ export default function ArtGallery() {
             {
               label: "FAQS", href: "#",
               icon: (
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="10"/>
                   <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
                   <line x1="12" y1="17" x2="12.01" y2="17"/>
@@ -522,22 +522,22 @@ export default function ArtGallery() {
           ] as { label: string; href: string; active?: boolean; icon: React.ReactNode }[]).map(item => (
             <Link key={item.label} href={item.href} style={{
               flex: 1,
-              display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-              gap: 4,
+              display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center",
+              gap: 6,
               textDecoration: "none",
-              color: item.active ? C.cream : "rgba(242,232,213,0.38)",
+              color: item.active ? C.burgundy : "rgba(242,232,213,0.35)",
               position: "relative",
             }}>
               {item.active && (
                 <span style={{
-                  position: "absolute", top: 0, left: "20%", right: "20%",
+                  position: "absolute", bottom: 0, left: "10%", right: "10%",
                   height: 2, background: C.burgundy,
                 }} />
               )}
               {item.icon}
               <span style={{
-                ...F.mono, fontSize: "0.3rem", letterSpacing: "0.06em",
-                color: item.active ? C.cream : "rgba(242,232,213,0.38)",
+                ...F.mono, fontSize: "0.42rem", letterSpacing: "0.08em",
+                color: item.active ? C.burgundy : "rgba(242,232,213,0.35)",
               }}>
                 {item.label}
               </span>
