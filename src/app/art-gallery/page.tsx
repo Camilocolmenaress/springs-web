@@ -323,7 +323,7 @@ export default function ArtGallery() {
     globeOffY:        sv(mz, "hero", "globe",        "offsetY",      0),
     globeOffX:        sv(mz, "hero", "globe",        "offsetX",      0),
     globeTextOffset:  sv(mz, "hero", "globe",        "textOffset",   7),
-    vignetteSpread:   sv(mz, "hero", "vignette",     "spread",       55),
+    vignetteH:        sv(mz, "hero", "vignette",     "height",       55),
     vignetteOp:       sv(mz, "hero", "vignette",     "opacity",      90),
     detailMarginTop:  sv(mz, "detail", "layout",     "marginTop",    0),
     detailPadTop:     sv(mz, "detail", "layout",     "paddingTop",   24),
@@ -489,11 +489,12 @@ export default function ArtGallery() {
                   }}
                 />
 
-                {/* Vignette — radial, bordes oscuros centro transparente */}
+                {/* Vignette — linear, bottom edge blends image into dark background */}
                 <div style={{
-                  position: "absolute", inset: 0,
+                  position: "absolute", bottom: 0, left: 0, right: 0,
+                  height: `${m.vignetteH}%`,
                   zIndex: 2, pointerEvents: "none",
-                  background: `radial-gradient(ellipse at center, transparent ${m.vignetteSpread}%, rgba(0,0,0,${(m.vignetteOp / 100).toFixed(2)}) 100%)`,
+                  background: `linear-gradient(to top, rgba(0,0,0,${(m.vignetteOp / 100).toFixed(2)}) 0%, transparent 100%)`,
                 }} />
 
                 {/* Gallery label + product name + subtitle — absolute, overlaid on image */}
@@ -580,7 +581,7 @@ export default function ArtGallery() {
               </section>
 
               {/* ── DETAIL ── */}
-              <section style={{ background: BG, padding: `${m.detailPadTop}px ${m.detailPadH}px 0`, marginTop: m.detailMarginTop }}>
+              <section style={{ background: BG, padding: `${m.detailPadTop}px ${m.detailPadH}px 0`, marginTop: m.detailMarginTop, position: "relative", zIndex: 20 }}>
 
                 {/* Pull quote (left) + Ingredients/desc/tagline (right) */}
                 <div style={{ display: "flex", gap: 14, marginBottom: 24 }}>
