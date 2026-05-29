@@ -350,6 +350,8 @@ export default function ArtGallery() {
     metaOffY:         sv(mz, "detail", "metadata",    "offsetY",      0),
     metaOffX:         sv(mz, "detail", "metadata",    "offsetX",      0),
     quoteFs:          sv(mz, "detail", "quote",       "fontSize",     1.0),
+    quoteMarkFs:      sv(mz, "detail", "quote",       "markFs",       1.5),
+    quoteMarkOffY:    sv(mz, "detail", "quote",       "markOffY",     0),
     quoteOffY:        sv(mz, "detail", "quote",       "offsetY",      0),
     quoteOffX:        sv(mz, "detail", "quote",       "offsetX",      0),
     springsCrewFs:    sv(mz, "detail", "springsCrew", "fontSize",     1.1),
@@ -581,7 +583,7 @@ export default function ArtGallery() {
               </section>
 
               {/* ── DETAIL ── */}
-              <section style={{ background: "transparent", padding: `${m.detailPadTop}px ${m.detailPadH}px 0`, marginTop: m.detailMarginTop, position: "relative", zIndex: 20 }}>
+              <section style={{ background: "transparent", padding: `${m.detailPadTop}px 0 0 ${m.detailPadH}px`, marginTop: m.detailMarginTop, position: "relative", zIndex: 20 }}>
 
                 {/* Pull quote (left) + Ingredients/desc/tagline (right) */}
                 <div style={{ display: "flex", gap: 14, marginBottom: 24 }}>
@@ -662,7 +664,7 @@ export default function ArtGallery() {
                   borderBottom: "1px solid rgba(242,232,213,0.07)",
                 }}>
                   <div style={{ flex: 1, transform: `translate(${m.quoteOffX}px, ${m.quoteOffY}px)` }}>
-                    <span style={{ ...F.sans, fontSize: "1.5rem", color: C.cream, display: "block", lineHeight: 0.8, marginBottom: 4 }}>"</span>
+                    <span style={{ ...F.sans, fontSize: `${m.quoteMarkFs}rem`, color: C.cream, display: "block", lineHeight: 0.8, marginBottom: 4, transform: `translateY(${m.quoteMarkOffY}px)` }}>"</span>
                     <p style={{ ...F.sans, fontSize: `${m.quoteFs}rem`, fontWeight: 500, color: C.cream, lineHeight: 1.5, margin: "0 0 10px", whiteSpace: "pre-line" }}>
                       {exhibit.quote}
                     </p>

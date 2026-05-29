@@ -37,6 +37,8 @@ const PROP_LABELS: Record<string, string> = {
   offsetY: "offsetY",
   offsetX: "offsetX",
   marginTop: "Margin top",
+  markFs:    "Tamaño comilla",
+  markOffY:  "offsetY comilla",
   rightOffsetX: "offsetX derecha",
 };
 
