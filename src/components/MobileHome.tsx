@@ -469,6 +469,15 @@ export default function MobileHome() {
 
       {/* ════════ CULTURA ════════ */}
       <motion.section ref={culturaRef} style={{ background: C.tinta, padding: "56px 18px 64px 18px", position: "relative", zIndex: 2, y: cultureY }}>
+        {/* THIS IS / OUR CULTURE — fijo en el cream encima del panel */}
+        <div style={{ position: "absolute", top: -140, left: 18, zIndex: 3, pointerEvents: "none" }}>
+          <h2 style={{ ...F.display, fontSize: `${d.thisIsFontSize}vw`, color: "transparent", WebkitTextStroke: `1.5px ${C.tinta}`, lineHeight: 0.9, letterSpacing: "-0.01em", textTransform: "uppercase", whiteSpace: "nowrap", margin: 0, transform: tx(d.thisIsOffY) }}>
+            THIS IS
+          </h2>
+          <h2 style={{ ...F.display, fontSize: `${d.ourCultureFs}vw`, color: C.tinta, lineHeight: 0.9, letterSpacing: "-0.015em", textTransform: "uppercase", whiteSpace: "nowrap", margin: 0, transform: tx(d.ourCultureOffY) }}>
+            OUR CULTURE
+          </h2>
+        </div>
         <FadeUp root={scrollContainerRef} style={{ transform: tx(d.dbdOffY) }}>
           <div style={{ ...F.display, fontSize: `${d.dbdFontSize}vw`, color: "transparent", WebkitTextStroke: `1.5px ${C.cream}`, lineHeight: 0.88, letterSpacing: "-0.02em", textTransform: "uppercase", opacity: d.dbdOpacity / 100, margin: "0 0 24px 0" }}>
             DIFFERENT<br />BY DEFAULT.
@@ -477,16 +486,6 @@ export default function MobileHome() {
         <FadeUp root={scrollContainerRef} delay={0.05} style={{ transform: tx(d.hashOffY) }}>
           <div style={{ ...F.mono, fontSize: `${d.hashFontSize}rem`, letterSpacing: "0.22em", color: C.cream, opacity: 0.6, marginBottom: 20, textTransform: "uppercase" }}>
             #SPRINGSCLUB
-          </div>
-        </FadeUp>
-        <FadeUp root={scrollContainerRef} delay={0.12}>
-          <div>
-            <h2 style={{ ...F.display, fontSize: `${d.thisIsFontSize}vw`, color: "transparent", WebkitTextStroke: `1.5px ${C.cream}`, lineHeight: 0.9, letterSpacing: "-0.01em", textTransform: "uppercase", whiteSpace: "nowrap", margin: 0, transform: tx(d.thisIsOffY) }}>
-              THIS IS
-            </h2>
-            <h2 style={{ ...F.display, fontSize: `${d.ourCultureFs}vw`, color: C.cream, lineHeight: 0.9, letterSpacing: "-0.015em", textTransform: "uppercase", whiteSpace: "nowrap", margin: 0, transform: tx(d.ourCultureOffY) }}>
-              OUR CULTURE
-            </h2>
           </div>
         </FadeUp>
         <FadeUp root={scrollContainerRef} delay={0.22} style={{ transform: tx(d.descOffY) }}>
