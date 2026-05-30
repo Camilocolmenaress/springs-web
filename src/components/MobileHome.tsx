@@ -186,14 +186,25 @@ export default function MobileHome() {
     infoOffY:        sv(z, "pedirYa", "info",    "offsetY",      0),
   };
 
-  // ── Scroll-driven packaging ──────────────────────────────────
+  // ── Scroll-driven packaging + cultura ────────────────────────
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const packagingRef       = useRef<HTMLDivElement>(null);
+  const culturaRef         = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: packagingRef,
     container: scrollContainerRef,
     offset: ["start end", "end start"],
   });
+  const { scrollYProgress: culturaProgress } = useScroll({
+    target: culturaRef,
+    container: scrollContainerRef,
+    offset: ["start end", "start 0.25"],
+  });
+  // misma curva cubic ease-out que el panel desktop (Math.pow(1-p, 3))
+  const cultureYRaw = useTransform(culturaProgress, (p) =>
+    Math.pow(1 - Math.max(0, Math.min(1, p)), 3) * 260
+  );
+  const cultureY = useSpring(cultureYRaw, { stiffness: 140, damping: 22 });
   const sp = { stiffness: 180, damping: 28 };
   // diagonal: bolsa izquierda-arriba → derecha-abajo
   const bagXRaw = useTransform(scrollYProgress, [0.15, 0.35], [-180, 0]);
@@ -453,7 +464,7 @@ export default function MobileHome() {
       </section>
 
       {/* ════════ CULTURA ════════ */}
-      <section style={{ background: C.tinta, padding: "56px 18px 64px 18px" }}>
+      <motion.section ref={culturaRef} style={{ background: C.tinta, padding: "56px 18px 64px 18px", position: "relative", zIndex: 2, y: cultureY }}>
         <FadeUp root={scrollContainerRef} style={{ transform: tx(d.dbdOffY) }}>
           <div style={{ ...F.display, fontSize: `${d.dbdFontSize}vw`, color: "transparent", WebkitTextStroke: `1.5px ${C.cream}`, lineHeight: 0.88, letterSpacing: "-0.02em", textTransform: "uppercase", opacity: d.dbdOpacity / 100, margin: "0 0 24px 0" }}>
             DIFFERENT<br />BY DEFAULT.
@@ -479,7 +490,7 @@ export default function MobileHome() {
             MÚSICA. CALLE. HUMOR.<br />AMIGOS. PLANES.<br />NOCHES QUE SÍ CUENTAN.<br />ESTO ES SPRINGS.
           </p>
         </FadeUp>
-      </section>
+      </motion.section>
 
       {/* ════════ PEDIR YA ════════ */}
       <section style={{ background: C.burgundy, padding: "56px 18px 72px 18px", position: "relative", overflow: "hidden" }}>
