@@ -198,7 +198,7 @@ export default function MobileHome() {
   const { scrollYProgress: culturaProgress } = useScroll({
     target: culturaRef,
     container: scrollContainerRef,
-    offset: ["start end", "start 0.6"],
+    offset: ["start end", "start 0.15"],
   });
   // misma curva cubic ease-out que el panel desktop (Math.pow(1-p, 3))
   const cultureYRaw = useTransform(culturaProgress, (p) =>
@@ -434,7 +434,7 @@ export default function MobileHome() {
       </div>
 
       {/* ════════ EMPAQUE scroll-driven ════════ */}
-      <section ref={packagingRef} style={{ background: C.cream, padding: "48px 18px 64px 18px", position: "relative", overflowX: "hidden" }}>
+      <section ref={packagingRef} style={{ background: C.cream, padding: "48px 18px 260px 18px", position: "relative", overflowX: "hidden" }}>
         <div style={{ position: "absolute", left: 0, top: "50%", transform: `translateY(calc(-50% + ${d.watermarkOffY}px)) translateX(${d.watermarkOffX}px)`, ...F.display, fontSize: `${d.watermarkFontSize}vw`, color: C.tinta, opacity: 0.03, letterSpacing: "-0.02em", whiteSpace: "nowrap", zIndex: 0, pointerEvents: "none", userSelect: "none" }}>
           SPRINGS
         </div>
