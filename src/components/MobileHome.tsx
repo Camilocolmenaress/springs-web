@@ -446,19 +446,23 @@ export default function MobileHome() {
               />
             </motion.div>
           </div>
-          <div style={{ transform: `translateX(${d.boxOffX}px) translateY(${d.boxOffY}px)` }}>
-            <motion.div style={{ x: boxX, y: boxY, opacity: boxOp, display: "flex", justifyContent: "flex-end", marginBottom: d.boxMbottom }}>
-              <img src="/images/packaging-box.png" alt="Caja Springs"
-                style={{ width: `${d.boxWidth}%`, maxWidth: 220, display: "block", filter: "drop-shadow(0 20px 40px rgba(26,10,12,0.18))", transform: `rotate(${d.boxRotation}deg)` }}
-              />
-            </motion.div>
+          <div style={{ height: 0, overflow: "visible" }}>
+            <div style={{ transform: `translateX(${d.boxOffX}px) translateY(${d.boxOffY}px)` }}>
+              <motion.div style={{ x: boxX, y: boxY, opacity: boxOp, display: "flex", justifyContent: "flex-end", marginBottom: d.boxMbottom }}>
+                <img src="/images/packaging-box.png" alt="Caja Springs"
+                  style={{ width: `${d.boxWidth}%`, maxWidth: 220, display: "block", filter: "drop-shadow(0 20px 40px rgba(26,10,12,0.18))", transform: `rotate(${d.boxRotation}deg)` }}
+                />
+              </motion.div>
+            </div>
           </div>
-          <div style={{ transform: `translateX(${d.cupOffX}px) translateY(${d.cupOffY}px)` }}>
-            <motion.div style={{ x: cupX, y: cupY, opacity: cupOp, display: "flex", justifyContent: "flex-start", paddingLeft: `${d.cupPaddingLeft}%` }}>
-              <img src="/images/packaging-cup.png" alt="Vaso Springs"
-                style={{ width: `${d.cupWidth}%`, maxWidth: 160, display: "block", filter: "drop-shadow(0 16px 32px rgba(26,10,12,0.16))", transform: `rotate(${d.cupRotation}deg)` }}
-              />
-            </motion.div>
+          <div style={{ height: 0, overflow: "visible" }}>
+            <div style={{ transform: `translateX(${d.cupOffX}px) translateY(${d.cupOffY}px)` }}>
+              <motion.div style={{ x: cupX, y: cupY, opacity: cupOp, display: "flex", justifyContent: "flex-start", paddingLeft: `${d.cupPaddingLeft}%` }}>
+                <img src="/images/packaging-cup.png" alt="Vaso Springs"
+                  style={{ width: `${d.cupWidth}%`, maxWidth: 160, display: "block", filter: "drop-shadow(0 16px 32px rgba(26,10,12,0.16))", transform: `rotate(${d.cupRotation}deg)` }}
+                />
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>
