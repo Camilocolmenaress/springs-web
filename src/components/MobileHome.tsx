@@ -206,6 +206,7 @@ export default function MobileHome() {
     return Math.pow(1 - Math.min(1, t), 4) * 400;
   });
   const cultureY = useSpring(cultureYRaw, { stiffness: 120, damping: 20 });
+  const counterY = useTransform(cultureY, v => -v);
   const sp = { stiffness: 180, damping: 28 };
   // diagonal: bolsa izquierda-arriba → derecha-abajo
   const bagXRaw = useTransform(scrollYProgress, [0.30, 0.50], [-180, 0]);
@@ -514,16 +515,19 @@ export default function MobileHome() {
         <h2 style={{ ...F.display, fontSize: `${d.ourCultureFs}vw`, lineHeight: 0.88, margin: "0 0 32px 0", visibility: "hidden" }}>
           OUR CULTURE
         </h2>
-        {/* Receipt */}
-        <FadeUp root={scrollContainerRef} delay={0.10}>
-          <img src="/images/culture-receipt.png" alt="" style={{ width: "72%", maxWidth: 280, display: "block", margin: "0 auto 40px auto", transform: "rotate(-3deg)", filter: "drop-shadow(0 12px 32px rgba(0,0,0,0.5))" }} />
-        </FadeUp>
-        {/* DIFFERENT BY DEFAULT */}
-        <FadeUp root={scrollContainerRef} delay={0.16} style={{ transform: tx(d.dbdOffY) }}>
-          <div style={{ ...F.display, fontSize: `${d.dbdFontSize}vw`, color: C.burgundy, lineHeight: 0.88, letterSpacing: "-0.02em", textTransform: "uppercase", margin: "0 0 24px 0" }}>
-            DIFFERENT<br />BY DEFAULT.
+        {/* Receipt + DIFFERENT BY DEFAULT — counter-animados: no siguen el y del panel */}
+        <motion.div style={{ y: counterY }}>
+          <FadeUp root={scrollContainerRef} delay={0.10}>
+            <img src="/images/culture-receipt.png" alt="" style={{ width: "72%", maxWidth: 280, display: "block", margin: "0 auto 40px auto", transform: "rotate(-3deg)", filter: "drop-shadow(0 12px 32px rgba(0,0,0,0.5))" }} />
+          </FadeUp>
+          <div style={{ transform: tx(d.dbdOffY) }}>
+            <FadeUp root={scrollContainerRef} delay={0.16}>
+              <div style={{ ...F.display, fontSize: `${d.dbdFontSize}vw`, color: C.burgundy, lineHeight: 0.88, letterSpacing: "-0.02em", textTransform: "uppercase", margin: "0 0 24px 0" }}>
+                DIFFERENT<br />BY DEFAULT.
+              </div>
+            </FadeUp>
           </div>
-        </FadeUp>
+        </motion.div>
         {/* Description */}
         <FadeUp root={scrollContainerRef} delay={0.22} style={{ transform: tx(d.descOffY) }}>
           <p style={{ ...F.mono, fontSize: `${d.descFontSize}rem`, color: C.cream, opacity: 0.6, lineHeight: d.descLineHeight, letterSpacing: "0.06em", textTransform: "uppercase", margin: 0 }}>
