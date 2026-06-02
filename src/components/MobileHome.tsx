@@ -503,6 +503,12 @@ export default function MobileHome() {
           <h2 style={{ ...F.display, fontSize: `${d.ourCultureFs}vw`, color: C.cream, lineHeight: 0.88, letterSpacing: "-0.015em", textTransform: "uppercase", margin: "0 0 32px 0", transform: tx(d.ourCultureOffY) }}>
             OUR CULTURE
           </h2>
+          {/* Receipt — en el overlay, después de los títulos en DOM = encima de ellos */}
+          <div style={{ transform: tx(d.receiptOffY, d.receiptOffX) }}>
+            <FadeUp root={scrollContainerRef} delay={0.10}>
+              <img src="/images/culture-receipt.png" alt="" style={{ width: `${d.receiptWidth}%`, maxWidth: 280, display: "block", margin: "0 auto 40px auto", transform: `rotate(${d.receiptRotation}deg)`, filter: "drop-shadow(0 12px 32px rgba(0,0,0,0.5))" }} />
+            </FadeUp>
+          </div>
         </div>
       )}
 
@@ -522,11 +528,6 @@ export default function MobileHome() {
         </h2>
         {/* Receipt + DIFFERENT BY DEFAULT — counter-animados: no siguen el y del panel */}
         <motion.div style={{ y: counterY }}>
-          <div style={{ transform: tx(d.receiptOffY, d.receiptOffX) }}>
-            <FadeUp root={scrollContainerRef} delay={0.10}>
-              <img src="/images/culture-receipt.png" alt="" style={{ width: `${d.receiptWidth}%`, maxWidth: 280, display: "block", margin: "0 auto 40px auto", transform: `rotate(${d.receiptRotation}deg)`, filter: "drop-shadow(0 12px 32px rgba(0,0,0,0.5))" }} />
-            </FadeUp>
-          </div>
           <div style={{ transform: tx(d.dbdOffY) }}>
             <FadeUp root={scrollContainerRef} delay={0.16}>
               <div style={{ ...F.display, fontSize: `${d.dbdFontSize}vw`, color: C.burgundy, lineHeight: 0.88, letterSpacing: "-0.02em", textTransform: "uppercase", margin: "0 0 24px 0" }}>
