@@ -207,23 +207,23 @@ export default function MobileHome() {
   const cultureY = useSpring(cultureYRaw, { stiffness: 140, damping: 22 });
   const sp = { stiffness: 180, damping: 28 };
   // diagonal: bolsa izquierda-arriba → derecha-abajo
-  const bagXRaw = useTransform(scrollYProgress, [0.15, 0.35], [-180, 0]);
-  const bagYRaw = useTransform(scrollYProgress, [0.15, 0.35], [-130, 0]);
+  const bagXRaw = useTransform(scrollYProgress, [0.30, 0.50], [-180, 0]);
+  const bagYRaw = useTransform(scrollYProgress, [0.30, 0.50], [-130, 0]);
   const bagX  = useSpring(bagXRaw, sp);
   const bagY  = useSpring(bagYRaw, sp);
-  const bagOp = useTransform(scrollYProgress, [0.15, 0.21], [0, 1]);
+  const bagOp = useTransform(scrollYProgress, [0.30, 0.36], [0, 1]);
   // diagonal: caja derecha-arriba → izquierda-abajo
-  const boxXRaw = useTransform(scrollYProgress, [0.20, 0.40], [180, 0]);
-  const boxYRaw = useTransform(scrollYProgress, [0.20, 0.40], [-110, 0]);
+  const boxXRaw = useTransform(scrollYProgress, [0.36, 0.56], [180, 0]);
+  const boxYRaw = useTransform(scrollYProgress, [0.36, 0.56], [-110, 0]);
   const boxX  = useSpring(boxXRaw, sp);
   const boxY  = useSpring(boxYRaw, sp);
-  const boxOp = useTransform(scrollYProgress, [0.20, 0.26], [0, 1]);
+  const boxOp = useTransform(scrollYProgress, [0.36, 0.42], [0, 1]);
   // diagonal: vaso derecha-arriba → izquierda-abajo
-  const cupXRaw = useTransform(scrollYProgress, [0.25, 0.45], [160, 0]);
-  const cupYRaw = useTransform(scrollYProgress, [0.25, 0.45], [-90, 0]);
+  const cupXRaw = useTransform(scrollYProgress, [0.42, 0.62], [160, 0]);
+  const cupYRaw = useTransform(scrollYProgress, [0.42, 0.62], [-90, 0]);
   const cupX  = useSpring(cupXRaw, sp);
   const cupY  = useSpring(cupYRaw, sp);
-  const cupOp = useTransform(scrollYProgress, [0.25, 0.31], [0, 1]);
+  const cupOp = useTransform(scrollYProgress, [0.42, 0.48], [0, 1]);
 
   return (
     <div
