@@ -198,13 +198,13 @@ export default function MobileHome() {
   const { scrollYProgress: culturaProgress } = useScroll({
     target: culturaRef,
     container: scrollContainerRef,
-    offset: ["start end", "start -0.4"],
+    offset: ["start end", "start -1.2"],
   });
   // misma curva cubic ease-out que el panel desktop (Math.pow(1-p, 3))
   const cultureYRaw = useTransform(culturaProgress, (p) =>
-    Math.pow(1 - Math.max(0, Math.min(1, p)), 3) * 260
+    Math.pow(1 - Math.max(0, Math.min(1, p)), 3) * 520
   );
-  const cultureY = useSpring(cultureYRaw, { stiffness: 140, damping: 22 });
+  const cultureY = useSpring(cultureYRaw, { stiffness: 120, damping: 20 });
   const sp = { stiffness: 180, damping: 28 };
   // diagonal: bolsa izquierda-arriba → derecha-abajo
   const bagXRaw = useTransform(scrollYProgress, [0.30, 0.50], [-180, 0]);
