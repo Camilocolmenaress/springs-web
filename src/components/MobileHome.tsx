@@ -152,6 +152,7 @@ export default function MobileHome() {
     watermarkOffY:     sv(z, "packaging", "watermark", "offsetY",    0),
     watermarkOffX:     sv(z, "packaging", "watermark", "offsetX",    0),
     // cultura
+    culturaPaddingBottom: sv(z, "cultura", "section", "paddingBottom", 180),
     receiptWidth:    sv(z, "cultura", "receipt", "width",    72),
     receiptOffY:     sv(z, "cultura", "receipt", "offsetY",  0),
     receiptOffX:     sv(z, "cultura", "receipt", "offsetX",  0),
@@ -513,7 +514,7 @@ export default function MobileHome() {
       )}
 
       {/* ════════ CULTURA ════════ */}
-      <motion.section ref={culturaRef} style={{ background: C.tinta, padding: "48px 18px 180px 18px", position: "relative", zIndex: 2, y: cultureY }}>
+      <motion.section ref={culturaRef} style={{ background: C.tinta, padding: `48px 18px ${d.culturaPaddingBottom}px 18px`, position: "relative", zIndex: 2, y: cultureY }}>
         {/* THIS IS + #SPRINGSCLUB row — invisible spacer para preservar layout */}
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 4, visibility: "hidden" }}>
           <h2 style={{ ...F.display, fontSize: `${d.thisIsFontSize}vw`, lineHeight: 0.9, margin: 0 }}>
