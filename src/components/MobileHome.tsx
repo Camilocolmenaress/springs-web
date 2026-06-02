@@ -168,6 +168,7 @@ export default function MobileHome() {
     descFontSize:    sv(z, "cultura", "description",        "fontSize",  0.56),
     descLineHeight:  sv(z, "cultura", "description",        "lineHeight",2.1),
     descOffY:        sv(z, "cultura", "description",        "offsetY",   0),
+    descOffX:        sv(z, "cultura", "description",        "offsetX",   0),
     // subtitle
     subtitleFontSize: sv(z, "hero", "subtitle", "fontSize",  6),
     subtitleRotation: sv(z, "hero", "subtitle", "rotation",  -2),
@@ -535,11 +536,13 @@ export default function MobileHome() {
           </div>
         </motion.div>
         {/* Description */}
-        <FadeUp root={scrollContainerRef} delay={0.22} style={{ transform: tx(d.descOffY) }}>
-          <p style={{ ...F.mono, fontSize: `${d.descFontSize}rem`, color: C.cream, opacity: 0.6, lineHeight: d.descLineHeight, letterSpacing: "0.06em", textTransform: "uppercase", margin: 0 }}>
-            MÚSICA. CALLE. HUMOR.<br />AMIGOS. PLANES.<br />NOCHES QUE SÍ CUENTAN.<br />ESTO ES SPRINGS.
-          </p>
-        </FadeUp>
+        <div style={{ transform: tx(d.descOffY, d.descOffX) }}>
+          <FadeUp root={scrollContainerRef} delay={0.22}>
+            <p style={{ ...F.mono, fontSize: `${d.descFontSize}rem`, color: C.cream, opacity: 0.6, lineHeight: d.descLineHeight, letterSpacing: "0.06em", textTransform: "uppercase", margin: 0 }}>
+              MÚSICA. CALLE. HUMOR.<br />AMIGOS. PLANES.<br />NOCHES QUE SÍ CUENTAN.<br />ESTO ES SPRINGS.
+            </p>
+          </FadeUp>
+        </div>
       </motion.section>
 
       {/* ════════ PEDIR YA ════════ */}
