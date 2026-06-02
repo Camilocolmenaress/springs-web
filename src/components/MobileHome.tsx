@@ -198,12 +198,13 @@ export default function MobileHome() {
   const { scrollYProgress: culturaProgress } = useScroll({
     target: culturaRef,
     container: scrollContainerRef,
-    offset: ["start end", "start -1.2"],
+    offset: ["start end", "start -1.0"],
   });
-  // misma curva cubic ease-out que el panel desktop (Math.pow(1-p, 3))
-  const cultureYRaw = useTransform(culturaProgress, (p) =>
-    Math.pow(1 - Math.max(0, Math.min(1, p)), 3) * 520
-  );
+  // arranca desde el borde inferior (400px) y entra rápido hasta posición sticky (440px desde top)
+  const cultureYRaw = useTransform(culturaProgress, (p) => {
+    const t = Math.max(0, (p - 0.28) / 0.40);
+    return Math.pow(1 - Math.min(1, t), 4) * 400;
+  });
   const cultureY = useSpring(cultureYRaw, { stiffness: 120, damping: 20 });
   const sp = { stiffness: 180, damping: 28 };
   // diagonal: bolsa izquierda-arriba → derecha-abajo
@@ -225,10 +226,24 @@ export default function MobileHome() {
   const cupY  = useSpring(cupYRaw, sp);
   const cupOp = useTransform(scrollYProgress, [0.42, 0.48], [0, 1]);
 
+  const [culturaHeaderY, setCulturaHeaderY] = useState<number | null>(null);
+  useEffect(() => {
+    const measure = () => {
+      if (!culturaRef.current || !scrollContainerRef.current) return;
+      const containerRect = scrollContainerRef.current.getBoundingClientRect();
+      const culturaRect = culturaRef.current.getBoundingClientRect();
+      const scrollTop = scrollContainerRef.current.scrollTop;
+      setCulturaHeaderY(culturaRect.top - containerRect.top + scrollTop + 48);
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+
   return (
     <div
       ref={scrollContainerRef}
-      style={{ background: C.cream, height: "100dvh", overflowY: "auto", overflowX: "hidden" }}
+      style={{ background: C.cream, height: "100dvh", overflowY: "auto", overflowX: "hidden", position: "relative" }}
     >
 
       {/* ── Header sticky ──────────────────────────────────── */}
@@ -434,7 +449,7 @@ export default function MobileHome() {
       </div>
 
       {/* ════════ EMPAQUE scroll-driven ════════ */}
-      <section ref={packagingRef} style={{ background: C.cream, padding: "48px 18px 80px 18px", position: "relative", overflowX: "hidden" }}>
+      <section ref={packagingRef} style={{ background: C.cream, padding: "48px 18px 24px 18px", position: "relative", overflowX: "clip" }}>
         <div style={{ position: "absolute", left: 0, top: "50%", transform: `translateY(calc(-50% + ${d.watermarkOffY}px)) translateX(${d.watermarkOffX}px)`, ...F.display, fontSize: `${d.watermarkFontSize}vw`, color: C.tinta, opacity: 0.03, letterSpacing: "-0.02em", whiteSpace: "nowrap", zIndex: 0, pointerEvents: "none", userSelect: "none" }}>
           SPRINGS
         </div>
@@ -465,13 +480,13 @@ export default function MobileHome() {
             </div>
           </div>
         </div>
+
       </section>
 
-      {/* ════════ CULTURA ════════ */}
-      <motion.section ref={culturaRef} style={{ background: C.tinta, padding: "48px 18px 72px 18px", position: "relative", zIndex: 2, y: cultureY }}>
-        {/* THIS IS + #SPRINGSCLUB row */}
-        <FadeUp root={scrollContainerRef} style={{ transform: tx(d.thisIsOffY) }}>
-          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 4 }}>
+      {/* ════════ CULTURA TEXT OVERLAY — fijo, el panel oscuro sube por detrás ════════ */}
+      {culturaHeaderY !== null && (
+        <div style={{ position: "absolute", top: culturaHeaderY, left: 18, right: 18, zIndex: 10, pointerEvents: "none" }}>
+          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 4, transform: tx(d.thisIsOffY) }}>
             <h2 style={{ ...F.display, fontSize: `${d.thisIsFontSize}vw`, color: "transparent", WebkitTextStroke: `1.5px ${C.cream}`, lineHeight: 0.9, letterSpacing: "-0.01em", textTransform: "uppercase", margin: 0 }}>
               THIS IS
             </h2>
@@ -479,13 +494,26 @@ export default function MobileHome() {
               #SPRINGSCLUB
             </div>
           </div>
-        </FadeUp>
-        {/* OUR CULTURE */}
-        <FadeUp root={scrollContainerRef} delay={0.04} style={{ transform: tx(d.ourCultureOffY) }}>
-          <h2 style={{ ...F.display, fontSize: `${d.ourCultureFs}vw`, color: C.cream, lineHeight: 0.88, letterSpacing: "-0.015em", textTransform: "uppercase", margin: "0 0 32px 0" }}>
+          <h2 style={{ ...F.display, fontSize: `${d.ourCultureFs}vw`, color: C.cream, lineHeight: 0.88, letterSpacing: "-0.015em", textTransform: "uppercase", margin: "0 0 32px 0", transform: tx(d.ourCultureOffY) }}>
             OUR CULTURE
           </h2>
-        </FadeUp>
+        </div>
+      )}
+
+      {/* ════════ CULTURA ════════ */}
+      <motion.section ref={culturaRef} style={{ background: C.tinta, padding: "48px 18px 180px 18px", position: "relative", zIndex: 2, y: cultureY }}>
+        {/* THIS IS + #SPRINGSCLUB row — invisible spacer para preservar layout */}
+        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 4, visibility: "hidden" }}>
+          <h2 style={{ ...F.display, fontSize: `${d.thisIsFontSize}vw`, lineHeight: 0.9, margin: 0 }}>
+            THIS IS
+          </h2>
+          <div style={{ ...F.mono, fontSize: `${d.hashFontSize}rem`, paddingTop: 4 }}>
+            #SPRINGSCLUB
+          </div>
+        </div>
+        <h2 style={{ ...F.display, fontSize: `${d.ourCultureFs}vw`, lineHeight: 0.88, margin: "0 0 32px 0", visibility: "hidden" }}>
+          OUR CULTURE
+        </h2>
         {/* Receipt */}
         <FadeUp root={scrollContainerRef} delay={0.10}>
           <img src="/images/culture-receipt.png" alt="" style={{ width: "72%", maxWidth: 280, display: "block", margin: "0 auto 40px auto", transform: "rotate(-3deg)", filter: "drop-shadow(0 12px 32px rgba(0,0,0,0.5))" }} />
