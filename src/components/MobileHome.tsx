@@ -465,31 +465,40 @@ export default function MobileHome() {
             </div>
           </div>
         </div>
-        {/* THIS IS / OUR CULTURE — fijo en el cream, zIndex 3 para flotar sobre el panel tinta (zIndex 2) */}
-        <div style={{ position: "absolute", bottom: 24, left: 18, zIndex: 3, pointerEvents: "none" }}>
-          <h2 style={{ ...F.display, fontSize: `${d.thisIsFontSize}vw`, color: "transparent", WebkitTextStroke: `1.5px ${C.cream}`, lineHeight: 0.9, letterSpacing: "-0.01em", textTransform: "uppercase", whiteSpace: "nowrap", margin: 0 }}>
-            THIS IS
-          </h2>
-          <h2 style={{ ...F.display, fontSize: `${d.ourCultureFs}vw`, color: C.cream, lineHeight: 0.9, letterSpacing: "-0.015em", textTransform: "uppercase", whiteSpace: "nowrap", margin: 0 }}>
-            OUR CULTURE
-          </h2>
-        </div>
       </section>
 
       {/* ════════ CULTURA ════════ */}
-      <motion.section ref={culturaRef} style={{ background: C.tinta, padding: "56px 18px 64px 18px", position: "relative", zIndex: 2, y: cultureY }}>
-        <FadeUp root={scrollContainerRef} style={{ transform: tx(d.dbdOffY) }}>
-          <div style={{ ...F.display, fontSize: `${d.dbdFontSize}vw`, color: "transparent", WebkitTextStroke: `1.5px ${C.cream}`, lineHeight: 0.88, letterSpacing: "-0.02em", textTransform: "uppercase", opacity: d.dbdOpacity / 100, margin: "0 0 24px 0" }}>
+      <motion.section ref={culturaRef} style={{ background: C.tinta, padding: "48px 18px 72px 18px", position: "relative", zIndex: 2, y: cultureY }}>
+        {/* THIS IS + #SPRINGSCLUB row */}
+        <FadeUp root={scrollContainerRef} style={{ transform: tx(d.thisIsOffY) }}>
+          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 4 }}>
+            <h2 style={{ ...F.display, fontSize: `${d.thisIsFontSize}vw`, color: "transparent", WebkitTextStroke: `1.5px ${C.cream}`, lineHeight: 0.9, letterSpacing: "-0.01em", textTransform: "uppercase", margin: 0 }}>
+              THIS IS
+            </h2>
+            <div style={{ ...F.mono, fontSize: `${d.hashFontSize}rem`, letterSpacing: "0.22em", color: C.cream, opacity: 0.6, textTransform: "uppercase", paddingTop: 4 }}>
+              #SPRINGSCLUB
+            </div>
+          </div>
+        </FadeUp>
+        {/* OUR CULTURE */}
+        <FadeUp root={scrollContainerRef} delay={0.04} style={{ transform: tx(d.ourCultureOffY) }}>
+          <h2 style={{ ...F.display, fontSize: `${d.ourCultureFs}vw`, color: C.cream, lineHeight: 0.88, letterSpacing: "-0.015em", textTransform: "uppercase", margin: "0 0 32px 0" }}>
+            OUR CULTURE
+          </h2>
+        </FadeUp>
+        {/* Receipt */}
+        <FadeUp root={scrollContainerRef} delay={0.10}>
+          <img src="/images/culture-receipt.png" alt="" style={{ width: "72%", maxWidth: 280, display: "block", margin: "0 auto 40px auto", transform: "rotate(-3deg)", filter: "drop-shadow(0 12px 32px rgba(0,0,0,0.5))" }} />
+        </FadeUp>
+        {/* DIFFERENT BY DEFAULT */}
+        <FadeUp root={scrollContainerRef} delay={0.16} style={{ transform: tx(d.dbdOffY) }}>
+          <div style={{ ...F.display, fontSize: `${d.dbdFontSize}vw`, color: C.burgundy, lineHeight: 0.88, letterSpacing: "-0.02em", textTransform: "uppercase", margin: "0 0 24px 0" }}>
             DIFFERENT<br />BY DEFAULT.
           </div>
         </FadeUp>
-        <FadeUp root={scrollContainerRef} delay={0.05} style={{ transform: tx(d.hashOffY) }}>
-          <div style={{ ...F.mono, fontSize: `${d.hashFontSize}rem`, letterSpacing: "0.22em", color: C.cream, opacity: 0.6, marginBottom: 20, textTransform: "uppercase" }}>
-            #SPRINGSCLUB
-          </div>
-        </FadeUp>
+        {/* Description */}
         <FadeUp root={scrollContainerRef} delay={0.22} style={{ transform: tx(d.descOffY) }}>
-          <p style={{ ...F.mono, fontSize: `${d.descFontSize}rem`, color: C.cream, opacity: 0.6, lineHeight: d.descLineHeight, letterSpacing: "0.06em", textTransform: "uppercase", margin: "28px 0 0 0" }}>
+          <p style={{ ...F.mono, fontSize: `${d.descFontSize}rem`, color: C.cream, opacity: 0.6, lineHeight: d.descLineHeight, letterSpacing: "0.06em", textTransform: "uppercase", margin: 0 }}>
             MÚSICA. CALLE. HUMOR.<br />AMIGOS. PLANES.<br />NOCHES QUE SÍ CUENTAN.<br />ESTO ES SPRINGS.
           </p>
         </FadeUp>
