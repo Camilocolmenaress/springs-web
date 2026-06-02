@@ -198,7 +198,7 @@ export default function MobileHome() {
   const { scrollYProgress: culturaProgress } = useScroll({
     target: culturaRef,
     container: scrollContainerRef,
-    offset: ["start end", "start 0.15"],
+    offset: ["start end", "start -0.4"],
   });
   // misma curva cubic ease-out que el panel desktop (Math.pow(1-p, 3))
   const cultureYRaw = useTransform(culturaProgress, (p) =>
