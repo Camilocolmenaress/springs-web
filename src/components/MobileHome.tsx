@@ -152,6 +152,10 @@ export default function MobileHome() {
     watermarkOffY:     sv(z, "packaging", "watermark", "offsetY",    0),
     watermarkOffX:     sv(z, "packaging", "watermark", "offsetX",    0),
     // cultura
+    receiptWidth:    sv(z, "cultura", "receipt", "width",    72),
+    receiptOffY:     sv(z, "cultura", "receipt", "offsetY",  0),
+    receiptOffX:     sv(z, "cultura", "receipt", "offsetX",  0),
+    receiptRotation: sv(z, "cultura", "receipt", "rotation", -3),
     dbdFontSize:     sv(z, "cultura", "differentByDefault", "fontSize",  15),
     dbdOpacity:      sv(z, "cultura", "differentByDefault", "opacity",   18),
     dbdOffY:         sv(z, "cultura", "differentByDefault", "offsetY",   0),
@@ -517,9 +521,11 @@ export default function MobileHome() {
         </h2>
         {/* Receipt + DIFFERENT BY DEFAULT — counter-animados: no siguen el y del panel */}
         <motion.div style={{ y: counterY }}>
-          <FadeUp root={scrollContainerRef} delay={0.10}>
-            <img src="/images/culture-receipt.png" alt="" style={{ width: "72%", maxWidth: 280, display: "block", margin: "0 auto 40px auto", transform: "rotate(-3deg)", filter: "drop-shadow(0 12px 32px rgba(0,0,0,0.5))" }} />
-          </FadeUp>
+          <div style={{ transform: tx(d.receiptOffY, d.receiptOffX) }}>
+            <FadeUp root={scrollContainerRef} delay={0.10}>
+              <img src="/images/culture-receipt.png" alt="" style={{ width: `${d.receiptWidth}%`, maxWidth: 280, display: "block", margin: "0 auto 40px auto", transform: `rotate(${d.receiptRotation}deg)`, filter: "drop-shadow(0 12px 32px rgba(0,0,0,0.5))" }} />
+            </FadeUp>
+          </div>
           <div style={{ transform: tx(d.dbdOffY) }}>
             <FadeUp root={scrollContainerRef} delay={0.16}>
               <div style={{ ...F.display, fontSize: `${d.dbdFontSize}vw`, color: C.burgundy, lineHeight: 0.88, letterSpacing: "-0.02em", textTransform: "uppercase", margin: "0 0 24px 0" }}>

@@ -172,6 +172,15 @@
     "cultura": {
       "label": "Cultura",
       "elements": {
+        "receipt": {
+          "type": "image",
+          "props": {
+            "width":    { "value": 72,  "unit": "%",   "min": 10,   "max": 120, "step": 2 },
+            "offsetY":  { "value": 0,   "unit": "px",  "min": -400, "max": 400, "step": 2 },
+            "offsetX":  { "value": 0,   "unit": "px",  "min": -200, "max": 200, "step": 2 },
+            "rotation": { "value": -3,  "unit": "deg", "min": -45,  "max": 45,  "step": 1 }
+          }
+        },
         "differentByDefault": {
           "type": "text",
           "props": {
