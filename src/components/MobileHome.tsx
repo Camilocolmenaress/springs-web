@@ -434,7 +434,7 @@ export default function MobileHome() {
       </div>
 
       {/* ════════ EMPAQUE scroll-driven ════════ */}
-      <section ref={packagingRef} style={{ background: C.cream, padding: "48px 18px 160px 18px", position: "relative", overflowX: "hidden" }}>
+      <section ref={packagingRef} style={{ background: C.cream, padding: "48px 18px 80px 18px", position: "relative", overflowX: "hidden" }}>
         <div style={{ position: "absolute", left: 0, top: "50%", transform: `translateY(calc(-50% + ${d.watermarkOffY}px)) translateX(${d.watermarkOffX}px)`, ...F.display, fontSize: `${d.watermarkFontSize}vw`, color: C.tinta, opacity: 0.03, letterSpacing: "-0.02em", whiteSpace: "nowrap", zIndex: 0, pointerEvents: "none", userSelect: "none" }}>
           SPRINGS
         </div>
