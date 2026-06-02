@@ -535,15 +535,15 @@ export default function MobileHome() {
               </div>
             </FadeUp>
           </div>
+          {/* Description — dentro del counterY: no se mueve con el panel */}
+          <div style={{ transform: tx(d.descOffY, d.descOffX) }}>
+            <FadeUp root={scrollContainerRef} delay={0.22}>
+              <p style={{ ...F.mono, fontSize: `${d.descFontSize}rem`, color: C.cream, opacity: 0.6, lineHeight: d.descLineHeight, letterSpacing: "0.06em", textTransform: "uppercase", margin: 0 }}>
+                MÚSICA. CALLE. HUMOR.<br />AMIGOS. PLANES.<br />NOCHES QUE SÍ CUENTAN.<br />ESTO ES SPRINGS.
+              </p>
+            </FadeUp>
+          </div>
         </motion.div>
-        {/* Description */}
-        <div style={{ transform: tx(d.descOffY, d.descOffX) }}>
-          <FadeUp root={scrollContainerRef} delay={0.22}>
-            <p style={{ ...F.mono, fontSize: `${d.descFontSize}rem`, color: C.cream, opacity: 0.6, lineHeight: d.descLineHeight, letterSpacing: "0.06em", textTransform: "uppercase", margin: 0 }}>
-              MÚSICA. CALLE. HUMOR.<br />AMIGOS. PLANES.<br />NOCHES QUE SÍ CUENTAN.<br />ESTO ES SPRINGS.
-            </p>
-          </FadeUp>
-        </div>
       </motion.section>
 
       {/* ════════ PEDIR YA ════════ */}
