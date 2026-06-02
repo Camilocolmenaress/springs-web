@@ -189,7 +189,12 @@ export default function MobileHome() {
     appsPaddingV:    sv(z, "pedirYa", "apps",    "paddingV",     16),
     appsOffY:        sv(z, "pedirYa", "apps",    "offsetY",      0),
     infoPaddingV:    sv(z, "pedirYa", "info",    "paddingV",     16),
+    infoPaddingH:    sv(z, "pedirYa", "info",    "paddingH",     16),
     infoOffY:        sv(z, "pedirYa", "info",    "offsetY",      0),
+    wmFontSize:      sv(z, "pedirYa", "watermark", "fontSize",   22),
+    wmRotation:      sv(z, "pedirYa", "watermark", "rotation",   -12),
+    wmOffY:          sv(z, "pedirYa", "watermark", "offsetY",    10),
+    wmOffX:          sv(z, "pedirYa", "watermark", "offsetX",    -15),
   };
 
   // ── Scroll-driven packaging + cultura ────────────────────────
@@ -549,7 +554,7 @@ export default function MobileHome() {
 
       {/* ════════ PEDIR YA ════════ */}
       <section style={{ background: C.burgundy, padding: "56px 18px 72px 18px", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", bottom: "10%", right: "-15%", ...F.display, fontSize: "22vw", color: C.cream, opacity: 0.04, letterSpacing: "-0.02em", whiteSpace: "nowrap", zIndex: 0, pointerEvents: "none", userSelect: "none", transform: "rotate(-12deg)", transformOrigin: "right bottom" }}>
+        <div style={{ position: "absolute", bottom: `${d.wmOffY}%`, right: `${d.wmOffX * -1}%`, ...F.display, fontSize: `${d.wmFontSize}vw`, color: C.cream, opacity: 0.04, letterSpacing: "-0.02em", whiteSpace: "nowrap", zIndex: 0, pointerEvents: "none", userSelect: "none", transform: `rotate(${d.wmRotation}deg)`, transformOrigin: "right bottom" }}>
           SPRINGS
         </div>
         <div style={{ position: "relative", zIndex: 1 }}>
@@ -577,7 +582,7 @@ export default function MobileHome() {
                 { label: "Zona",     val: "BUCARAMANGA",  sub: "Cabecera · Cañaveral · Sotomayor" },
                 { label: "Síguenos",val: "@SPRINGS.COL", sub: "Instagram · TikTok" },
               ].map(item => (
-                <div key={item.label} style={{ background: "rgba(242,232,213,0.06)", padding: `${d.infoPaddingV}px 0`, borderBottom: `1px solid rgba(242,232,213,0.08)` }}>
+                <div key={item.label} style={{ background: "rgba(242,232,213,0.06)", padding: `${d.infoPaddingV}px ${d.infoPaddingH}px`, borderBottom: `1px solid rgba(242,232,213,0.08)` }}>
                   <div style={{ ...F.mono, fontSize: "0.5rem", letterSpacing: "0.22em", color: C.mostaza, textTransform: "uppercase", marginBottom: 4 }}>{item.label}</div>
                   <div style={{ ...F.display, fontSize: "1.3rem", letterSpacing: "0.05em", color: C.cream }}>{item.val}</div>
                   <div style={{ ...F.sans, fontSize: "0.7rem", color: C.cream, opacity: 0.4, marginTop: 2 }}>{item.sub}</div>
