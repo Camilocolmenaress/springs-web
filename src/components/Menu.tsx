@@ -194,6 +194,41 @@ export default function Menu({ onAgregar, config }: Props) {
     return () => mq.removeEventListener("change", h);
   }, []);
 
+  // Precarga + pre-decode de las imágenes del menú para que el carrusel pinte
+  // al instante al pasar de producto. CLAVE: prioridad BAJA — así estas
+  // precargas ceden el ancho de banda a la imagen visible (LCP, fetchPriority
+  // "high" abajo) y no retrasan la entrada a la página. Se difiere a idle para
+  // no competir con el primer render.
+  useEffect(() => {
+    const urls = new Set<string>();
+    for (const p of productos) urls.add(p.imagen_url || "/images/jacket-placeholder.webp");
+    urls.add("/images/combo-papa.webp");
+    urls.add("/images/combo-bebida.webp");
+    // Difiere las precargas hasta DESPUÉS del evento load (cuando la imagen LCP
+    // y las visibles del carrusel ya terminaron). En 4G esto evita que ~3MB de
+    // precargas le roben ancho de banda a la entrada; en conexión rápida corre
+    // igual de pronto. Prioridad "low" como segunda barrera.
+    let cancelled = false;
+    let timer: ReturnType<typeof setTimeout>;
+    const run = () => {
+      if (cancelled) return;
+      urls.forEach((src) => {
+        const img = new window.Image();
+        (img as HTMLImageElement & { fetchPriority?: string }).fetchPriority = "low";
+        img.src = src;
+        img.decode().catch(() => {});
+      });
+    };
+    const schedule = () => { timer = setTimeout(run, 200); };
+    if (document.readyState === "complete") schedule();
+    else window.addEventListener("load", schedule, { once: true });
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+      window.removeEventListener("load", schedule);
+    };
+  }, []);
+
   const items = useMemo(
     () => productos.filter(p => p.categoria === categoria).sort((a, b) => a.orden - b.orden),
     [categoria],
@@ -393,7 +428,7 @@ export default function Menu({ onAgregar, config }: Props) {
                     const lX = isCenter ? lc.offsetX : lc.offsetX * sideRatio;
                     const lY = isCenter ? lc.offsetY : lc.offsetY * sideRatio;
                     return (
-                      <img src={imgSrc(p)} alt={p.nombre} style={{
+                      <img src={imgSrc(p)} alt={p.nombre} fetchPriority={isCenter ? "high" : "low"} style={{
                         width: lSize, height: lSize, objectFit: "contain", display: "block",
                         transform: `translate(${lX}px, ${lY}px)`,
                       }} />
@@ -402,6 +437,7 @@ export default function Menu({ onAgregar, config }: Props) {
                     <img
                       src={imgSrc(p)}
                       alt={p.nombre}
+                      fetchPriority={isCenter ? "high" : "low"}
                       style={{ width: imgSize, height: imgSize, objectFit: "contain", display: "block" }}
                     />
                   )}

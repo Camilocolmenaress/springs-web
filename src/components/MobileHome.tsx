@@ -260,7 +260,7 @@ export default function MobileHome() {
     ["/images/packaging-bag.webp", "/images/packaging-box.webp", "/images/packaging-cup.webp"].forEach((src) => {
       const img = new window.Image();
       img.src = src;
-      img.decode?.().catch(() => {});
+      img.decode().catch(() => {});
     });
   }, []);
 
