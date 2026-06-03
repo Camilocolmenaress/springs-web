@@ -194,6 +194,41 @@ export default function Menu({ onAgregar, config }: Props) {
     return () => mq.removeEventListener("change", h);
   }, []);
 
+  // Precarga + pre-decode de las imágenes del menú para que el carrusel pinte
+  // al instante al pasar de producto. CLAVE: prioridad BAJA — así estas
+  // precargas ceden el ancho de banda a la imagen visible (LCP, fetchPriority
+  // "high" abajo) y no retrasan la entrada a la página. Se difiere a idle para
+  // no competir con el primer render.
+  useEffect(() => {
+    const urls = new Set<string>();
+    for (const p of productos) urls.add(p.imagen_url || "/images/jacket-placeholder.webp");
+    urls.add("/images/combo-papa.webp");
+    urls.add("/images/combo-bebida.webp");
+    // Difiere las precargas hasta DESPUÉS del evento load (cuando la imagen LCP
+    // y las visibles del carrusel ya terminaron). En 4G esto evita que ~3MB de
+    // precargas le roben ancho de banda a la entrada; en conexión rápida corre
+    // igual de pronto. Prioridad "low" como segunda barrera.
+    let cancelled = false;
+    let timer: ReturnType<typeof setTimeout>;
+    const run = () => {
+      if (cancelled) return;
+      urls.forEach((src) => {
+        const img = new window.Image();
+        (img as HTMLImageElement & { fetchPriority?: string }).fetchPriority = "low";
+        img.src = src;
+        img.decode().catch(() => {});
+      });
+    };
+    const schedule = () => { timer = setTimeout(run, 200); };
+    if (document.readyState === "complete") schedule();
+    else window.addEventListener("load", schedule, { once: true });
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+      window.removeEventListener("load", schedule);
+    };
+  }, []);
+
   const items = useMemo(
     () => productos.filter(p => p.categoria === categoria).sort((a, b) => a.orden - b.orden),
     [categoria],
@@ -209,7 +244,7 @@ export default function Menu({ onAgregar, config }: Props) {
 
   const activo         = total > 0 ? getItem(vIdx) : null;
   const activeRealIdx  = total > 0 ? ((vIdx % total) + total) % total : 0;
-  const imgSrc = (p: Producto) => p.imagen_url || "/images/jacket-placeholder.png";
+  const imgSrc = (p: Producto) => p.imagen_url || "/images/jacket-placeholder.webp";
 
   const goPrev = useCallback(() => setVIdx(v => v - 1), []);
   const goNext = useCallback(() => setVIdx(v => v + 1), []);
@@ -351,38 +386,38 @@ export default function Menu({ onAgregar, config }: Props) {
                 >
                   {isCenter && p.id === "combo-1" ? (
                     <div style={{ display: "flex", alignItems: "flex-end", width: centerImgSize, height: centerImgSize, overflow: "visible" }}>
-                      <img src="/images/combo-papa.png" alt="Papa"
+                      <img src="/images/combo-papa.webp" alt="Papa"
                         style={{ width: comboPapaSize, height: comboPapaSize, objectFit: "contain", display: "block", flexShrink: 0, transform: `translate(${comboPapaOffsetX}px, ${comboPapaOffsetY}px)` }} />
-                      <img src="/images/combo-bebida.png" alt="Bebida"
+                      <img src="/images/combo-bebida.webp" alt="Bebida"
                         style={{ width: comboBebidaSize, height: comboBebidaSize, objectFit: "contain", display: "block", flexShrink: 0, marginLeft: -8, transform: `translate(${comboBebidaOffsetX}px, ${comboBebidaOffsetY}px)` }} />
                     </div>
                   ) : isCenter && p.id === "combo-2" ? (
                     <div style={{ display: "flex", alignItems: "flex-end", width: centerImgSize, height: centerImgSize, overflow: "visible" }}>
-                      <img src="/images/combo-papa.png" alt="Papa 1"
+                      <img src="/images/combo-papa.webp" alt="Papa 1"
                         style={{ width: dos.papa1.size, height: dos.papa1.size, objectFit: "contain", display: "block", flexShrink: 0, transform: `translate(${dos.papa1.x}px, ${dos.papa1.y}px)` }} />
-                      <img src="/images/combo-papa.png" alt="Papa 2"
+                      <img src="/images/combo-papa.webp" alt="Papa 2"
                         style={{ width: dos.papa2.size, height: dos.papa2.size, objectFit: "contain", display: "block", flexShrink: 0, marginLeft: -16, transform: `translate(${dos.papa2.x}px, ${dos.papa2.y}px)`, filter: "drop-shadow(-12px 8px 16px rgba(0,0,0,0.45))" }} />
-                      <img src="/images/combo-bebida.png" alt="Bebida 1"
+                      <img src="/images/combo-bebida.webp" alt="Bebida 1"
                         style={{ width: dos.bebida1.size, height: dos.bebida1.size, objectFit: "contain", display: "block", flexShrink: 0, marginLeft: -8, transform: `translate(${dos.bebida1.x}px, ${dos.bebida1.y}px)` }} />
-                      <img src="/images/combo-bebida.png" alt="Bebida 2"
+                      <img src="/images/combo-bebida.webp" alt="Bebida 2"
                         style={{ width: dos.bebida2.size, height: dos.bebida2.size, objectFit: "contain", display: "block", flexShrink: 0, marginLeft: -12, transform: `translate(${dos.bebida2.x}px, ${dos.bebida2.y}px)`, filter: "drop-shadow(-10px 6px 14px rgba(0,0,0,0.4))" }} />
                     </div>
                   ) : !isCenter && p.id === "combo-1" ? (
                     <div style={{ display: "flex", alignItems: "flex-end", width: imgSize, height: imgSize, overflow: "visible" }}>
-                      <img src="/images/combo-papa.png" alt="Papa"
+                      <img src="/images/combo-papa.webp" alt="Papa"
                         style={{ width: `${comboPapaN * sideRatio}vh`, height: `${comboPapaN * sideRatio}vh`, objectFit: "contain", display: "block", flexShrink: 0, transform: `translate(${comboPapaOffsetX * sideRatio}px, ${comboPapaOffsetY * sideRatio}px)` }} />
-                      <img src="/images/combo-bebida.png" alt="Bebida"
+                      <img src="/images/combo-bebida.webp" alt="Bebida"
                         style={{ width: `${comboBebidaN * sideRatio}vh`, height: `${comboBebidaN * sideRatio}vh`, objectFit: "contain", display: "block", flexShrink: 0, marginLeft: -8 * sideRatio, transform: `translate(${comboBebidaOffsetX * sideRatio}px, ${comboBebidaOffsetY * sideRatio}px)` }} />
                     </div>
                   ) : !isCenter && p.id === "combo-2" ? (
                     <div style={{ display: "flex", alignItems: "flex-end", width: imgSize, height: imgSize, overflow: "visible" }}>
-                      <img src="/images/combo-papa.png" alt="Papa 1"
+                      <img src="/images/combo-papa.webp" alt="Papa 1"
                         style={{ width: `${sv(cd?.papa1?.props?.size, 34) * sideRatio}vh`, height: `${sv(cd?.papa1?.props?.size, 34) * sideRatio}vh`, objectFit: "contain", display: "block", flexShrink: 0, transform: `translate(${dos.papa1.x * sideRatio}px, ${dos.papa1.y * sideRatio}px)` }} />
-                      <img src="/images/combo-papa.png" alt="Papa 2"
+                      <img src="/images/combo-papa.webp" alt="Papa 2"
                         style={{ width: `${sv(cd?.papa2?.props?.size, 39) * sideRatio}vh`, height: `${sv(cd?.papa2?.props?.size, 39) * sideRatio}vh`, objectFit: "contain", display: "block", flexShrink: 0, marginLeft: -16 * sideRatio, transform: `translate(${dos.papa2.x * sideRatio}px, ${dos.papa2.y * sideRatio}px)`, filter: "drop-shadow(-12px 8px 16px rgba(0,0,0,0.45))" }} />
-                      <img src="/images/combo-bebida.png" alt="Bebida 1"
+                      <img src="/images/combo-bebida.webp" alt="Bebida 1"
                         style={{ width: `${sv(cd?.bebida1?.props?.size, 33) * sideRatio}vh`, height: `${sv(cd?.bebida1?.props?.size, 33) * sideRatio}vh`, objectFit: "contain", display: "block", flexShrink: 0, marginLeft: -8 * sideRatio, transform: `translate(${dos.bebida1.x * sideRatio}px, ${dos.bebida1.y * sideRatio}px)` }} />
-                      <img src="/images/combo-bebida.png" alt="Bebida 2"
+                      <img src="/images/combo-bebida.webp" alt="Bebida 2"
                         style={{ width: `${sv(cd?.bebida2?.props?.size, 37) * sideRatio}vh`, height: `${sv(cd?.bebida2?.props?.size, 37) * sideRatio}vh`, objectFit: "contain", display: "block", flexShrink: 0, marginLeft: -12 * sideRatio, transform: `translate(${dos.bebida2.x * sideRatio}px, ${dos.bebida2.y * sideRatio}px)`, filter: "drop-shadow(-10px 6px 14px rgba(0,0,0,0.4))" }} />
                     </div>
                   ) : p.categoria === "bebida" ? (
@@ -393,7 +428,7 @@ export default function Menu({ onAgregar, config }: Props) {
                     const lX = isCenter ? lc.offsetX : lc.offsetX * sideRatio;
                     const lY = isCenter ? lc.offsetY : lc.offsetY * sideRatio;
                     return (
-                      <img src={imgSrc(p)} alt={p.nombre} style={{
+                      <img src={imgSrc(p)} alt={p.nombre} fetchPriority={isCenter ? "high" : "low"} style={{
                         width: lSize, height: lSize, objectFit: "contain", display: "block",
                         transform: `translate(${lX}px, ${lY}px)`,
                       }} />
@@ -402,6 +437,7 @@ export default function Menu({ onAgregar, config }: Props) {
                     <img
                       src={imgSrc(p)}
                       alt={p.nombre}
+                      fetchPriority={isCenter ? "high" : "low"}
                       style={{ width: imgSize, height: imgSize, objectFit: "contain", display: "block" }}
                     />
                   )}
@@ -470,7 +506,7 @@ export default function Menu({ onAgregar, config }: Props) {
                 padding: 0,
                 cursor: "pointer", zIndex: 30,
               }}>
-                <img src="/images/arrow-circle.png" alt="Anterior"
+                <img src="/images/arrow-circle.webp" alt="Anterior"
                   style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
               </button>
               <button onClick={goNext} aria-label="Siguiente" style={{
@@ -485,7 +521,7 @@ export default function Menu({ onAgregar, config }: Props) {
                 padding: 0,
                 cursor: "pointer", zIndex: 30,
               }}>
-                <img src="/images/arrow-circle.png" alt="Siguiente"
+                <img src="/images/arrow-circle.webp" alt="Siguiente"
                   style={{ width: "100%", height: "100%", objectFit: "contain", display: "block", transform: "scaleX(-1)" }} />
               </button>
             </>
