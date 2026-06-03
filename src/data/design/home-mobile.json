@@ -265,8 +265,8 @@
           "props": {
             "fontSize": { "value": 22,  "unit": "vw", "min": 4,    "max": 80,   "step": 1 },
             "rotation": { "value": -12, "unit": "deg", "min": -45,  "max": 45,   "step": 1 },
-            "offsetY":  { "value": 10,  "unit": "%",  "min": -100, "max": 100,  "step": 1 },
-            "offsetX":  { "value": -15, "unit": "%",  "min": -100, "max": 100,  "step": 1 }
+            "offsetY":  { "value": 4,   "unit": "%",  "min": -100, "max": 100,  "step": 1 },
+            "offsetX":  { "value": -1,  "unit": "%",  "min": -100, "max": 100,  "step": 1 }
           }
         }
       }
