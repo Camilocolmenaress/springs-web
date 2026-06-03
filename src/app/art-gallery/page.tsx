@@ -27,8 +27,8 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 const EXHIBITS = [
   {
     id: "001", name: "LA FIJA",    subtitle: "LOADED JACKET", year: "2025",
-    img: "/images/la-fija-exhibit.png",
-    gallery: ["/images/gallery-001-macro.png", "/images/gallery-001-crew.png", "/images/gallery-001-side.png"],
+    img: "/images/la-fija-exhibit.webp",
+    gallery: ["/images/gallery-001-macro.webp", "/images/gallery-001-crew.webp", "/images/gallery-001-side.webp"],
     ingredients: ["POLLO DESMECHADO.", "HOGAO.", "QUESO COSTEÑO.", "FUSE SAUCE."],
     description: "UNA COMBINACIÓN TAN SIMPLE COMO PODEROSA,\nTAN DIRECTA COMO INOLVIDABLE.",
     tagline: "THE ORIGINAL. THE REASON.",
@@ -38,8 +38,8 @@ const EXHIBITS = [
   },
   {
     id: "002", name: "LA PESADA",  subtitle: "LOADED JACKET", year: "2025",
-    img: "/images/la-fija-exhibit.png",
-    gallery: ["/images/gallery-001-macro.png", "/images/gallery-001-crew.png", "/images/gallery-001-side.png"],
+    img: "/images/la-fija-exhibit.webp",
+    gallery: ["/images/gallery-001-macro.webp", "/images/gallery-001-crew.webp", "/images/gallery-001-side.webp"],
     ingredients: ["CARNE DESMECHADA.", "HOGAO.", "QUESO COSTEÑO.", "FUSE SAUCE."],
     description: "PARA LOS QUE NO SE QUEDAN CON HAMBRE.\nLA VERSIÓN SIN CONCESIONES.",
     tagline: "HEAVY. INTENTIONAL.",
@@ -49,8 +49,8 @@ const EXHIBITS = [
   },
   {
     id: "003", name: "LA BRAVA",   subtitle: "LOADED JACKET", year: "2025",
-    img: "/images/la-fija-exhibit.png",
-    gallery: ["/images/gallery-001-macro.png", "/images/gallery-001-crew.png", "/images/gallery-001-side.png"],
+    img: "/images/la-fija-exhibit.webp",
+    gallery: ["/images/gallery-001-macro.webp", "/images/gallery-001-crew.webp", "/images/gallery-001-side.webp"],
     ingredients: ["CHORIZO SANTANDEREANO.", "HOGAO.", "QUESO COSTEÑO.", "FUSE SAUCE."],
     description: "EL SABOR QUE AQUÍ NUNCA SE NEGOCIA.\nEL CHORIZO QUE MANDA.",
     tagline: "BORN IN SANTANDER.",
@@ -60,8 +60,8 @@ const EXHIBITS = [
   },
   {
     id: "004", name: "LA SIMPLE",  subtitle: "LOADED JACKET", year: "2025",
-    img: "/images/la-fija-exhibit.png",
-    gallery: ["/images/gallery-001-macro.png", "/images/gallery-001-crew.png", "/images/gallery-001-side.png"],
+    img: "/images/la-fija-exhibit.webp",
+    gallery: ["/images/gallery-001-macro.webp", "/images/gallery-001-crew.webp", "/images/gallery-001-side.webp"],
     ingredients: ["CARNE MOLIDA SAZONADA.", "HOGAO.", "QUESO COSTEÑO.", "FUSE SAUCE."],
     description: "SIN RODEOS, SIN EXCESOS.\nLO ESENCIAL EJECUTADO PERFECTO.",
     tagline: "SIMPLE IS THE STATEMENT.",
@@ -71,8 +71,8 @@ const EXHIBITS = [
   },
   {
     id: "005", name: "LA HONESTA", subtitle: "LOADED JACKET", year: "2025",
-    img: "/images/la-fija-exhibit.png",
-    gallery: ["/images/gallery-001-macro.png", "/images/gallery-001-crew.png", "/images/gallery-001-side.png"],
+    img: "/images/la-fija-exhibit.webp",
+    gallery: ["/images/gallery-001-macro.webp", "/images/gallery-001-crew.webp", "/images/gallery-001-side.webp"],
     ingredients: ["QUESO COSTEÑO DOBLE.", "HOGAO DOBLE.", "AGUACATE.", "PAPAS GAJO CRUJIENTES.", "FUSE SAUCE."],
     description: "SIN CARNE, CON TODO.\nLA QUE DEMUESTRA QUE NO NECESITAS MÁS.",
     tagline: "HONEST BY DESIGN.",
@@ -817,7 +817,7 @@ export default function ArtGallery() {
                   {/* Barcode image — independent position */}
                   <div style={{ flexShrink: 0, marginLeft: 12, transform: `translate(${m.barcodeOffX}px, ${m.barcodeOffY}px)` }}>
                     <img
-                      src="/images/barcode-springs.png" alt=""
+                      src="/images/barcode-springs.webp" alt=""
                       style={{ height: m.barcodeH, width: "auto", opacity: 0.65, transform: "rotate(90deg)", transformOrigin: "center", display: "block" }}
                     />
                   </div>
@@ -1328,7 +1328,7 @@ export default function ArtGallery() {
                     style={{ position: "absolute", bottom: 24, right: 0, transform: `translate(${d.barcodeLeft}px, ${d.barcodeTop}px)`, display: "flex", gap: 6, alignItems: "flex-start" }}
                   >
                     <img
-                      src="/images/barcode-springs.png" alt=""
+                      src="/images/barcode-springs.webp" alt=""
                       style={{
                         height: d.barcodeSize,
                         width: "auto",

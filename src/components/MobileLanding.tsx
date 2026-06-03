@@ -13,7 +13,7 @@ if (typeof window !== "undefined") {
 
 const FRAME_COUNT = 120;
 const frameUrl = (i: number) =>
-  `/images/frames/la-fija-${String(i + 1).padStart(3, "0")}.jpg`;
+  `/images/frames/la-fija-${String(i + 1).padStart(3, "0")}.webp`;
 
 interface Chapter { from: number; label: string; sub: string | null }
 const CHAPTERS: Chapter[] = [

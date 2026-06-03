@@ -257,7 +257,7 @@ export default function MobileHome() {
   // y lo hace en el main thread de golpe → long task ~135ms. Decodificarlas al
   // montar las deja listas en caché antes del reveal.
   useEffect(() => {
-    ["/images/packaging-bag.png", "/images/packaging-box.png", "/images/packaging-cup.png"].forEach((src) => {
+    ["/images/packaging-bag.webp", "/images/packaging-box.webp", "/images/packaging-cup.webp"].forEach((src) => {
       const img = new window.Image();
       img.src = src;
       img.decode?.().catch(() => {});
@@ -306,7 +306,7 @@ export default function MobileHome() {
         {/* Producto */}
         <div style={{ transform: tx(d.imgOffY) }}>
           <motion.img
-            src="/images/la-fija.png" alt="SPRINGS Jacket — La Fija" decoding="async"
+            src="/images/la-fija.webp" alt="SPRINGS Jacket — La Fija" decoding="async"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }}
             transition={{ duration: 1.0, ease: EASE, delay: 0.1 }}
             style={{ width: `${d.imgWidth}%`, display: "block" }}
@@ -340,7 +340,7 @@ export default function MobileHome() {
           transition={{ duration: 0.65, ease: EASE, delay: 0.45 }}
           style={{ padding: "0 18px", transform: tx(d.underlineOffY, d.underlineOffX) }}
         >
-          <img src="/images/underline-stroke.png" alt="" aria-hidden="true" decoding="async"
+          <img src="/images/underline-stroke.webp" alt="" aria-hidden="true" decoding="async"
             style={{ width: `${d.underlineWidth}%`, height: "auto", marginTop: 4, opacity: 0.85 }}
           />
         </motion.div>
@@ -365,7 +365,7 @@ export default function MobileHome() {
             transition={{ delay: 0.55, duration: 0.5 }}
             style={{ aspectRatio: "1402 / 1122", position: "relative", overflow: "hidden" }}
           >
-            <SensitiveImage src="/images/sensitive-hero.png" fontSize={d.sensFontSize} opacity={d.sensOpacity} />
+            <SensitiveImage src="/images/sensitive-hero.webp" fontSize={d.sensFontSize} opacity={d.sensOpacity} />
           </motion.div>
         </div>
 
@@ -431,7 +431,7 @@ export default function MobileHome() {
         </div>
         {/* ── Stickers — fuera de cualquier contenedor con transform para que zIndex funcione ── */}
         <motion.img
-          src="/images/jacket-club-sticker.png" alt="SPRINGS Jacket Club" decoding="async"
+          src="/images/jacket-club-sticker.webp" alt="SPRINGS Jacket Club" decoding="async"
           drag dragMomentum={false} whileDrag={{ scale: 1.06 }}
           initial={{ scale: 0, opacity: 0, rotate: -20 }}
           animate={{ scale: 1, opacity: 1, rotate: d.jcRotation }}
@@ -440,7 +440,7 @@ export default function MobileHome() {
           onClick={() => router.push("/springs-jacket-club")}
         />
         <motion.img
-          src="/images/miercoles-dados-sticker.png" alt="Miércoles de Dados" decoding="async"
+          src="/images/miercoles-dados-sticker.webp" alt="Miércoles de Dados" decoding="async"
           drag dragMomentum={false} whileDrag={{ scale: 1.06 }}
           initial={{ scale: 0, opacity: 0, rotate: 35 }}
           animate={{ scale: 1, opacity: 1, rotate: d.mdRotation }}
@@ -480,7 +480,7 @@ export default function MobileHome() {
         <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column" }}>
           <div style={{ transform: `translateX(${d.bagOffX}px) translateY(${d.bagOffY}px)` }}>
             <motion.div style={{ x: bagX, y: bagY, opacity: bagOp, willChange: "transform", display: "flex", justifyContent: "center", marginBottom: d.bagMbottom }}>
-              <img src="/images/packaging-bag.png" alt="Bolsa Springs" decoding="async"
+              <img src="/images/packaging-bag.webp" alt="Bolsa Springs" decoding="async"
                 style={{ width: `${d.bagWidth}%`, maxWidth: 280, display: "block", filter: "drop-shadow(0 28px 52px rgba(26,10,12,0.20))" }}
               />
             </motion.div>
@@ -488,7 +488,7 @@ export default function MobileHome() {
           <div style={{ height: 0, overflow: "visible" }}>
             <div style={{ transform: `translateX(${d.boxOffX}px) translateY(${d.boxOffY}px)` }}>
               <motion.div style={{ x: boxX, y: boxY, opacity: boxOp, willChange: "transform", display: "flex", justifyContent: "flex-end", marginBottom: d.boxMbottom }}>
-                <img src="/images/packaging-box.png" alt="Caja Springs" decoding="async"
+                <img src="/images/packaging-box.webp" alt="Caja Springs" decoding="async"
                   style={{ width: `${d.boxWidth}%`, maxWidth: 220, display: "block", filter: "drop-shadow(0 20px 40px rgba(26,10,12,0.18))", transform: `rotate(${d.boxRotation}deg)` }}
                 />
               </motion.div>
@@ -497,7 +497,7 @@ export default function MobileHome() {
           <div style={{ height: 0, overflow: "visible" }}>
             <div style={{ transform: `translateX(${d.cupOffX}px) translateY(${d.cupOffY}px)` }}>
               <motion.div style={{ x: cupX, y: cupY, opacity: cupOp, willChange: "transform", display: "flex", justifyContent: "flex-start", paddingLeft: `${d.cupPaddingLeft}%` }}>
-                <img src="/images/packaging-cup.png" alt="Vaso Springs" decoding="async"
+                <img src="/images/packaging-cup.webp" alt="Vaso Springs" decoding="async"
                   style={{ width: `${d.cupWidth}%`, maxWidth: 160, display: "block", filter: "drop-shadow(0 16px 32px rgba(26,10,12,0.16))", transform: `rotate(${d.cupRotation}deg)` }}
                 />
               </motion.div>
@@ -524,7 +524,7 @@ export default function MobileHome() {
           {/* Receipt — en el overlay, después de los títulos en DOM = encima de ellos */}
           <div style={{ transform: tx(d.receiptOffY, d.receiptOffX) }}>
             <FadeUp root={scrollContainerRef} delay={0.10}>
-              <img src="/images/culture-receipt.png" alt="" decoding="async" style={{ width: `${d.receiptWidth}%`, maxWidth: 280, display: "block", margin: "0 auto 40px auto", transform: `rotate(${d.receiptRotation}deg)`, filter: "drop-shadow(0 12px 32px rgba(0,0,0,0.5))" }} />
+              <img src="/images/culture-receipt.webp" alt="" decoding="async" style={{ width: `${d.receiptWidth}%`, maxWidth: 280, display: "block", margin: "0 auto 40px auto", transform: `rotate(${d.receiptRotation}deg)`, filter: "drop-shadow(0 12px 32px rgba(0,0,0,0.5))" }} />
             </FadeUp>
           </div>
         </div>

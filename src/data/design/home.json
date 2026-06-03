@@ -86,7 +86,7 @@
           "type": "image",
           "props": {
             "src": {
-              "value": "/images/la-brava.png",
+              "value": "/images/la-brava.webp",
               "folder": "/images"
             },
             "width": {
@@ -257,7 +257,7 @@
           "type": "image",
           "props": {
             "src": {
-              "value": "/images/jacket-club-sticker.png",
+              "value": "/images/jacket-club-sticker.webp",
               "folder": "/images"
             },
             "width": {
@@ -287,7 +287,7 @@
           "type": "image",
           "props": {
             "src": {
-              "value": "/images/underline-stroke.png",
+              "value": "/images/underline-stroke.webp",
               "folder": "/images"
             },
             "width": {
@@ -423,7 +423,7 @@
           "type": "image",
           "props": {
             "src": {
-              "value": "/images/barcode-springs.png",
+              "value": "/images/barcode-springs.webp",
               "folder": "/images"
             },
             "height": {
@@ -460,7 +460,7 @@
           "type": "image",
           "props": {
             "src": {
-              "value": "/images/miercoles-dados-sticker.png",
+              "value": "/images/miercoles-dados-sticker.webp",
               "folder": "/images"
             },
             "width": {
@@ -497,7 +497,7 @@
           "type": "image",
           "props": {
             "src": {
-              "value": "/images/hero-arm.png",
+              "value": "/images/hero-arm.webp",
               "folder": "/images"
             },
             "width": {
@@ -527,7 +527,7 @@
           "type": "image",
           "props": {
             "src": {
-              "value": "/images/sensitive-hero.png",
+              "value": "/images/sensitive-hero.webp",
               "folder": "/images"
             },
             "left": {
@@ -649,7 +649,7 @@
           "type": "image",
           "props": {
             "src": {
-              "value": "/images/packaging-box.png",
+              "value": "/images/packaging-box.webp",
               "folder": "/images"
             },
             "left": {
@@ -686,7 +686,7 @@
           "type": "image",
           "props": {
             "src": {
-              "value": "/images/packaging-bag.png",
+              "value": "/images/packaging-bag.webp",
               "folder": "/images"
             },
             "left": {
@@ -723,7 +723,7 @@
           "type": "image",
           "props": {
             "src": {
-              "value": "/images/packaging-cup.png",
+              "value": "/images/packaging-cup.webp",
               "folder": "/images"
             },
             "left": {
@@ -877,7 +877,7 @@
           "type": "image",
           "props": {
             "src": {
-              "value": "/images/culture-receipt.png",
+              "value": "/images/culture-receipt.webp",
               "folder": "/images"
             },
             "height": {
@@ -941,7 +941,7 @@
           "type": "image",
           "props": {
             "src": {
-              "value": "/images/culture-night.jpg",
+              "value": "/images/culture-night.webp",
               "folder": "/images"
             },
             "left": {

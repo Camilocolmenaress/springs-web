@@ -238,7 +238,7 @@ export default function MobileEditorPage() {
         {/* La Fija (papa) */}
         <Sticker id="potato" {...INIT.potato} containerRef={containerRef} onUpdate={handleUpdate}>
           <div style={{ width: 307, height: Math.round(SECTION_H * 0.58), position: "relative" }}>
-            <Image src="/images/la-fija.png" alt="La Fija" fill priority
+            <Image src="/images/la-fija.webp" alt="La Fija" fill priority
               style={{ objectFit: "cover", objectPosition: "center top" }} sizes="82vw" />
           </div>
         </Sticker>
@@ -283,7 +283,7 @@ export default function MobileEditorPage() {
         {/* Jacket Club sticker */}
         <Sticker id="jcSticker" {...INIT.jcSticker} containerRef={containerRef} onUpdate={handleUpdate} zIndex={21}>
           <div style={{ width: 105, height: 105, position: "relative" }}>
-            <Image src="/images/jacket-club-sticker.png" alt="Jacket Club" fill style={{ objectFit: "contain" }} sizes="28vw" />
+            <Image src="/images/jacket-club-sticker.webp" alt="Jacket Club" fill style={{ objectFit: "contain" }} sizes="28vw" />
           </div>
         </Sticker>
 
@@ -315,7 +315,7 @@ export default function MobileEditorPage() {
         {/* Underline stroke */}
         <Sticker id="underline" {...INIT.underline} containerRef={containerRef} onUpdate={handleUpdate}>
           <div style={{ position: "relative", width: 187, height: 11 }}>
-            <Image src="/images/underline-stroke.png" alt="" fill style={{ objectFit: "contain", objectPosition: "left center" }} sizes="50vw" />
+            <Image src="/images/underline-stroke.webp" alt="" fill style={{ objectFit: "contain", objectPosition: "left center" }} sizes="50vw" />
           </div>
         </Sticker>
 
@@ -346,7 +346,7 @@ export default function MobileEditorPage() {
         {/* Dados sticker */}
         <Sticker id="dados" {...INIT.dados} containerRef={containerRef} onUpdate={handleUpdate} zIndex={22}>
           <div style={{ width: 97, height: 97, position: "relative" }}>
-            <Image src="/images/miercoles-dados-sticker.png" alt="Dados" fill style={{ objectFit: "contain" }} sizes="26vw" />
+            <Image src="/images/miercoles-dados-sticker.webp" alt="Dados" fill style={{ objectFit: "contain" }} sizes="26vw" />
           </div>
         </Sticker>
 

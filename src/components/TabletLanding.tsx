@@ -52,7 +52,7 @@ export default function TabletLanding() {
         <SectionReveal className="relative w-full h-[70vh] min-h-[600px] flex items-center justify-center overflow-hidden bg-tinta border-b border-mostaza">
           <div className="absolute inset-0 opacity-40 mix-blend-luminosity">
             <img
-              src="/images/la-fija.png"
+              src="/images/la-fija.webp"
               alt="La Fija"
               className="w-full h-full object-cover object-center"
             />
@@ -104,7 +104,7 @@ export default function TabletLanding() {
             <img
               alt="Jacket de autor — Springs"
               className="w-full h-full object-cover border border-mostaza"
-              src="/images/la-fija-exhibit.png"
+              src="/images/la-fija-exhibit.webp"
             />
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <h2 className="font-display text-[80px] leading-[0.9] text-cream text-center uppercase tracking-tighter mix-blend-difference">

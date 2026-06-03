@@ -237,7 +237,7 @@ function ModalContentMobile({ product, extrasTotal, qty, add, remove, onClose, o
           const q = qty[extra.id] || 0;
           return (
             <div key={extra.id} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 0", borderBottom: "1px solid rgba(26,10,12,0.07)" }}>
-              <img src={extra.imagen_url || "/images/jacket-placeholder.png"} alt={extra.nombre} style={{ width: 40, height: 40, objectFit: "contain", flexShrink: 0 }} />
+              <img src={extra.imagen_url || "/images/jacket-placeholder.webp"} alt={extra.nombre} style={{ width: 40, height: 40, objectFit: "contain", flexShrink: 0 }} />
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ ...ANTON, fontSize: "0.78rem", letterSpacing: "0.03em", textTransform: "uppercase", color: C.tinta, lineHeight: 1.1 }}>{extra.nombre}</div>
                 <div style={{ ...MONO, fontSize: "0.54rem", color: C.tinta, opacity: 0.45, marginTop: 2 }}>+{fmt(extra.precio)} COP</div>
@@ -286,7 +286,7 @@ function ModalContent({ product, extrasTotal, qty, add, remove, onClose, onConfi
             const q = qty[extra.id] || 0;
             return (
               <div key={extra.id} style={{ display: "flex", alignItems: "center", gap: 14, padding: "11px 0", borderBottom: "1px solid rgba(26,10,12,0.07)" }}>
-                <img src={extra.imagen_url || "/images/jacket-placeholder.png"} alt={extra.nombre} style={{ width: 44, height: 44, objectFit: "contain", flexShrink: 0 }} />
+                <img src={extra.imagen_url || "/images/jacket-placeholder.webp"} alt={extra.nombre} style={{ width: 44, height: 44, objectFit: "contain", flexShrink: 0 }} />
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ ...ANTON, fontSize: "0.82rem", letterSpacing: "0.03em", textTransform: "uppercase", color: C.tinta, lineHeight: 1.1 }}>{extra.nombre}</div>
                   <div style={{ ...MONO, fontSize: "0.58rem", color: C.tinta, opacity: 0.45, marginTop: 3 }}>+{fmt(extra.precio)} COP</div>
@@ -316,7 +316,7 @@ function ModalContent({ product, extrasTotal, qty, add, remove, onClose, onConfi
 
       <div style={{ width: "42%", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", padding: 32, background: "rgba(26,10,12,0.03)", borderLeft: "1px solid rgba(26,10,12,0.08)", position: "relative" }}>
         <button onClick={onClose} style={{ position: "absolute", top: 14, right: 14, width: 26, height: 26, background: "transparent", border: `1px solid ${C.tinta}`, cursor: "pointer", ...MONO, fontSize: "0.7rem", color: C.tinta, display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
-        <img src={product.imagen_url || "/images/jacket-placeholder.png"} alt={product.nombre} style={{ width: "100%", maxHeight: "75%", objectFit: "contain" }} />
+        <img src={product.imagen_url || "/images/jacket-placeholder.webp"} alt={product.nombre} style={{ width: "100%", maxHeight: "75%", objectFit: "contain" }} />
       </div>
     </>
   );

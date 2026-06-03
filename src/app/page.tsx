@@ -218,7 +218,7 @@ export default function Home() {
     artGallerySize:   (hero?.artGallery?.props?.fontSize as { value: number })?.value ?? 7,
     artGalleryBottom: (hero?.artGallery?.props?.bottom as { value: number })?.value ?? 120,
     artGalleryLeft:   (hero?.artGallery?.props?.left as { value: number })?.value ?? 2,
-    heroImage:    (hero?.image?.props?.src as { value: string })?.value ?? "/images/la-fija.png",
+    heroImage:    (hero?.image?.props?.src as { value: string })?.value ?? "/images/la-fija.webp",
     titleFont:    fontCSS((hero?.title?.props?.fontFamily as { value: string })?.value ?? "display"),
     titleColor:   colorHex((hero?.title?.props?.color as { value: string })?.value ?? "tinta"),
     subtitleFont: fontCSS((hero?.subtitle?.props?.fontFamily as { value: string })?.value ?? "marker"),
@@ -241,11 +241,11 @@ export default function Home() {
     miercolesDadosLeft:     (hero?.miercolesDados?.props?.left as { value: number })?.value ?? 3,
     miercolesDadosBottom:   (hero?.miercolesDados?.props?.bottom as { value: number })?.value ?? 10,
     miercolesDadosRotation: (hero?.miercolesDados?.props?.rotation as { value: number })?.value ?? -14,
-    handArmSrc:    (hero?.handArm?.props?.src as { value: string })?.value ?? "/images/hero-arm.png",
+    handArmSrc:    (hero?.handArm?.props?.src as { value: string })?.value ?? "/images/hero-arm.webp",
     handArmWidth:  (hero?.handArm?.props?.width as { value: number })?.value ?? 48,
     handArmLeft:   (hero?.handArm?.props?.left as { value: number })?.value ?? 50,
     handArmBottom: (hero?.handArm?.props?.bottom as { value: number })?.value ?? 10,
-    sensitiveSrc:      (hero?.sensitiveImage?.props?.src as { value: string })?.value ?? "/images/sensitive-hero.png",
+    sensitiveSrc:      (hero?.sensitiveImage?.props?.src as { value: string })?.value ?? "/images/sensitive-hero.webp",
     sensitiveLeft:     (hero?.sensitiveImage?.props?.left as { value: number })?.value ?? 36,
     sensitiveBottom:   (hero?.sensitiveImage?.props?.bottom as { value: number })?.value ?? 18,
     sensitiveSize:     (hero?.sensitiveImage?.props?.size as { value: number })?.value ?? 32,
@@ -260,17 +260,17 @@ export default function Home() {
     taglineLeft:       (pack?.tagline?.props?.left as { value: number })?.value ?? 148.5,
     taglineTop:        (pack?.tagline?.props?.top as { value: number })?.value ?? 49,
     taglineSize:       (pack?.tagline?.props?.fontSize as { value: number })?.value ?? 6.5,
-    boxSrc:            (pack?.box?.props?.src as { value: string })?.value ?? "/images/packaging-box.png",
+    boxSrc:            (pack?.box?.props?.src as { value: string })?.value ?? "/images/packaging-box.webp",
     boxLeft:           (pack?.box?.props?.left as { value: number })?.value ?? 139.5,
     boxTop:            (pack?.box?.props?.top as { value: number })?.value ?? 3.5,
     boxWidth:          (pack?.box?.props?.width as { value: number })?.value ?? 22,
     boxRotation:       (pack?.box?.props?.rotation as { value: number })?.value ?? -29,
-    bagSrc:            (pack?.bag?.props?.src as { value: string })?.value ?? "/images/packaging-bag.png",
+    bagSrc:            (pack?.bag?.props?.src as { value: string })?.value ?? "/images/packaging-bag.webp",
     bagLeft:           (pack?.bag?.props?.left as { value: number })?.value ?? 102.5,
     bagTop:            (pack?.bag?.props?.top as { value: number })?.value ?? 1,
     bagWidth:          (pack?.bag?.props?.width as { value: number })?.value ?? 36,
     bagRotation:       (pack?.bag?.props?.rotation as { value: number })?.value ?? 0,
-    cupSrc:            (pack?.cup?.props?.src as { value: string })?.value ?? "/images/packaging-cup.png",
+    cupSrc:            (pack?.cup?.props?.src as { value: string })?.value ?? "/images/packaging-cup.webp",
     cupLeft:           (pack?.cup?.props?.left as { value: number })?.value ?? 129.5,
     cupTop:            (pack?.cup?.props?.top as { value: number })?.value ?? 16,
     cupWidth:          (pack?.cup?.props?.width as { value: number })?.value ?? 18,
@@ -294,12 +294,12 @@ export default function Home() {
     cultureDescLeft:   (cult?.description?.props?.left as { value: number })?.value ?? 308,
     cultureDescTop:    (cult?.description?.props?.top as { value: number })?.value ?? 68,
     cultureDescSize:   (cult?.description?.props?.fontSize as { value: number })?.value ?? 0.85,
-    cultureImgSrc:     (cult?.image?.props?.src as { value: string })?.value ?? "/images/culture-night.jpg",
+    cultureImgSrc:     (cult?.image?.props?.src as { value: string })?.value ?? "/images/culture-night.webp",
     cultureImgLeft:    (cult?.image?.props?.left as { value: number })?.value ?? 360,
     cultureImgTop:     (cult?.image?.props?.top as { value: number })?.value ?? 0,
     cultureImgWidth:   (cult?.image?.props?.width as { value: number })?.value ?? 70,
     cultureImgHeight:  (cult?.image?.props?.height as { value: number })?.value ?? 100,
-    cultureReceiptSrc:      (cult?.receipt?.props?.src as { value: string })?.value ?? "/images/culture-receipt.png",
+    cultureReceiptSrc:      (cult?.receipt?.props?.src as { value: string })?.value ?? "/images/culture-receipt.webp",
     cultureReceiptHeight:   (cult?.receipt?.props?.height as { value: number })?.value ?? 28,
     cultureReceiptLeft:     (cult?.receipt?.props?.left as { value: number })?.value ?? 153,
     cultureReceiptTop:      (cult?.receipt?.props?.top as { value: number })?.value ?? 8,
@@ -519,7 +519,7 @@ export default function Home() {
 
       {/* ── BARCODE FIXED ── */}
       <motion.img
-        src="/images/barcode-springs.png"
+        src="/images/barcode-springs.webp"
         alt="SPRINGS 2024"
         initial={{ opacity: 0 }}
         animate={{ opacity: d.barcodeOpacity / 100 }}
@@ -773,7 +773,7 @@ export default function Home() {
 
           {/* Trazo de pincel — desliza desde la derecha */}
           <motion.img
-            src="/images/underline-stroke.png"
+            src="/images/underline-stroke.webp"
             alt=""
             initial={{ x: 50, opacity: 0, rotate: d.underlineRotation + 6 }}
             animate={{ x: 0, opacity: 1, rotate: d.underlineRotation }}
@@ -886,7 +886,7 @@ export default function Home() {
 
           {/* 1. SPRINGS Jacket Club — sticker slam */}
           <motion.img
-            src={jacketClubHovered ? "/images/jacket-club-sticker-hover.png" : "/images/jacket-club-sticker.png"}
+            src={jacketClubHovered ? "/images/jacket-club-sticker-hover.webp" : "/images/jacket-club-sticker.webp"}
             alt="SPRINGS Jacket Club"
             drag
             dragTransition={{ power: 0.8, timeConstant: 350 }}
@@ -953,7 +953,7 @@ export default function Home() {
 
           {/* 9. MIÉRCOLES DE DADOS — sticker slam con más spin */}
           <motion.img
-            src={miercolesDadosHovered ? "/images/miercoles-dados-sticker-hover.png" : "/images/miercoles-dados-sticker.png"}
+            src={miercolesDadosHovered ? "/images/miercoles-dados-sticker-hover.webp" : "/images/miercoles-dados-sticker.webp"}
             alt="Miércoles de Dados"
             drag
             dragTransition={{ power: 0.8, timeConstant: 350 }}
