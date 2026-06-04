@@ -579,20 +579,20 @@ export default function MobileHome() {
         </div>
         <div style={{ position: "relative", zIndex: 1 }}>
           <FadeUp root={scrollContainerRef} style={{ transform: tx(d.pedirTaglineOffY) }}>
-            <div style={{ ...F.mono, fontSize: `${d.pedirTaglineFs}rem`, letterSpacing: "0.22em", color: C.mostaza, textTransform: "uppercase", marginBottom: 16 }}>
+            <div style={{ ...F.mono, fontSize: `${d.pedirTaglineFs}rem`, letterSpacing: "0.22em", color: C.mostaza, textTransform: "uppercase", marginBottom: 40 }}>
               ↗ SIN EXCUSAS · ESTO ES SPRINGS
             </div>
           </FadeUp>
           <FadeUp root={scrollContainerRef} delay={0.08} style={{ transform: tx(d.pedirTitleOffY) }}>
-            <h2 style={{ ...F.display, fontSize: `${d.pedirTitleFs}vw`, color: C.cream, lineHeight: 0.85, letterSpacing: "-0.01em", textTransform: "uppercase", margin: "0 0 40px 0" }}>
+            <h2 style={{ ...F.display, fontSize: `${d.pedirTitleFs}vw`, color: C.cream, lineHeight: 0.85, letterSpacing: "-0.01em", textTransform: "uppercase", margin: "0 0 48px 0" }}>
               PEDIR<br />YA.
             </h2>
           </FadeUp>
           <FadeUp root={scrollContainerRef} delay={0.16} style={{ transform: tx(d.appsOffY) }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: d.appsGap, marginBottom: 40 }}>
-              <a href="#" style={{ ...F.display, fontSize: "1rem", letterSpacing: "0.12em", color: C.tinta, background: C.cream, padding: `${d.appsPaddingV}px 24px`, textDecoration: "none", display: "flex", justifyContent: "space-between", alignItems: "center" }}>RAPPI <span>→</span></a>
-              <a href="#" style={{ ...F.display, fontSize: "1rem", letterSpacing: "0.12em", color: C.cream, background: "transparent", border: `1px solid ${C.cream}`, opacity: 0.9, padding: `${d.appsPaddingV}px 24px`, textDecoration: "none", display: "flex", justifyContent: "space-between", alignItems: "center" }}>UBER EATS <span>→</span></a>
-              <a href="/menu" style={{ ...F.display, fontSize: "1rem", letterSpacing: "0.12em", color: C.mostaza, background: "transparent", border: `1px solid ${C.mostaza}`, padding: `${d.appsPaddingV}px 24px`, textDecoration: "none", display: "flex", justifyContent: "space-between", alignItems: "center" }}>PEDIDO DIRECTO <span>→</span></a>
+            <div style={{ marginBottom: 40 }}>
+              <a href="/menu" style={{ ...F.display, fontSize: "1.1rem", letterSpacing: "0.12em", color: C.tinta, background: C.cream, padding: `${d.appsPaddingV}px 24px`, textDecoration: "none", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                PEDIR AHORA <span>→</span>
+              </a>
             </div>
           </FadeUp>
           <FadeUp root={scrollContainerRef} delay={0.24} style={{ transform: tx(d.infoOffY) }}>
