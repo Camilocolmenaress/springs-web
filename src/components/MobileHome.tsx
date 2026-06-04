@@ -281,6 +281,17 @@ export default function MobileHome() {
     };
   }, []);
 
+  // Permite scroll de documento en mobile (globals.css pone overflow:hidden en body para el scroll horizontal del desktop)
+  useEffect(() => {
+    const prev = document.documentElement.style.overflow;
+    document.documentElement.style.overflow = "auto";
+    document.body.style.overflow = "auto";
+    return () => {
+      document.documentElement.style.overflow = prev;
+      document.body.style.overflow = "";
+    };
+  }, []);
+
   // Pre-decodifica las imágenes del reveal de packaging. Arrancan en opacity:0,
   // así que el navegador difiere su decode hasta que aparecen a ~37% de scroll
   // y lo hace en el main thread de golpe → long task ~135ms. Decodificarlas al
