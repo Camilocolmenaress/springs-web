@@ -7,115 +7,379 @@
         "section": {
           "type": "config",
           "props": {
-            "paddingBottom": { "value": 64, "unit": "px", "min": 0, "max": 400, "step": 4 }
+            "paddingBottom": {
+              "value": 64,
+              "unit": "px",
+              "min": 0,
+              "max": 400,
+              "step": 4
+            }
           }
         },
         "productImage": {
           "type": "image",
           "props": {
-            "width":   { "value": 99,  "unit": "%",  "min": 60,    "max": 100,  "step": 1 },
-            "offsetY": { "value": 18,  "unit": "px", "min": -600,  "max": 400,  "step": 2 }
+            "width": {
+              "value": 99,
+              "unit": "%",
+              "min": 60,
+              "max": 100,
+              "step": 1
+            },
+            "offsetY": {
+              "value": 18,
+              "unit": "px",
+              "min": -600,
+              "max": 400,
+              "step": 2
+            }
           }
         },
         "jacketClubSticker": {
           "type": "image",
           "props": {
-            "size":     { "value": 32,  "unit": "%",   "min": 8,    "max": 80,   "step": 1 },
-            "top":      { "value": 56,  "unit": "%",   "min": -30,  "max": 300,  "step": 1 },
-            "right":    { "value": 71,  "unit": "%",   "min": -30,  "max": 120,  "step": 1 },
-            "rotation": { "value": 0,   "unit": "deg", "min": -45,  "max": 45,   "step": 1 }
+            "size": {
+              "value": 32,
+              "unit": "%",
+              "min": 8,
+              "max": 80,
+              "step": 1
+            },
+            "top": {
+              "value": 56,
+              "unit": "%",
+              "min": -30,
+              "max": 300,
+              "step": 1
+            },
+            "right": {
+              "value": 71,
+              "unit": "%",
+              "min": -30,
+              "max": 120,
+              "step": 1
+            },
+            "rotation": {
+              "value": 0,
+              "unit": "deg",
+              "min": -45,
+              "max": 45,
+              "step": 1
+            }
           }
         },
         "springsTitle": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 27,   "unit": "vw", "min": 8,    "max": 50,   "step": 0.5 },
-            "offsetY":  { "value": 134,  "unit": "px", "min": -800, "max": 400,  "step": 2 },
-            "offsetX":  { "value": 46,   "unit": "px", "min": -400, "max": 400,  "step": 2 }
+            "fontSize": {
+              "value": 27,
+              "unit": "vw",
+              "min": 8,
+              "max": 50,
+              "step": 0.5
+            },
+            "offsetY": {
+              "value": 134,
+              "unit": "px",
+              "min": -800,
+              "max": 400,
+              "step": 2
+            },
+            "offsetX": {
+              "value": 46,
+              "unit": "px",
+              "min": -400,
+              "max": 400,
+              "step": 2
+            }
           }
         },
         "globe": {
           "type": "image",
           "props": {
-            "size":       { "value": 92,   "unit": "px", "min": 20,   "max": 200,  "step": 4 },
-            "offsetY":    { "value": -342, "unit": "px", "min": -800, "max": 400,  "step": 2 },
-            "offsetX":    { "value": -10,  "unit": "px", "min": -400, "max": 400,  "step": 2 },
-            "textOffset": { "value": 11,   "unit": "%",  "min": 0,    "max": 50,   "step": 1 }
+            "size": {
+              "value": 92,
+              "unit": "px",
+              "min": 20,
+              "max": 200,
+              "step": 4
+            },
+            "offsetY": {
+              "value": -342,
+              "unit": "px",
+              "min": -800,
+              "max": 400,
+              "step": 2
+            },
+            "offsetX": {
+              "value": -10,
+              "unit": "px",
+              "min": -400,
+              "max": 400,
+              "step": 2
+            },
+            "textOffset": {
+              "value": 11,
+              "unit": "%",
+              "min": 0,
+              "max": 50,
+              "step": 1
+            }
           }
         },
         "underline": {
           "type": "image",
           "props": {
-            "width":   { "value": 68,  "unit": "%",  "min": 10,   "max": 100,  "step": 1 },
-            "offsetY": { "value": 38,  "unit": "px", "min": -800, "max": 400,  "step": 2 },
-            "offsetX": { "value": 122, "unit": "px", "min": -400, "max": 400,  "step": 2 }
+            "width": {
+              "value": 68,
+              "unit": "%",
+              "min": 10,
+              "max": 100,
+              "step": 1
+            },
+            "offsetY": {
+              "value": 38,
+              "unit": "px",
+              "min": -800,
+              "max": 400,
+              "step": 2
+            },
+            "offsetX": {
+              "value": 122,
+              "unit": "px",
+              "min": -400,
+              "max": 400,
+              "step": 2
+            }
           }
         },
         "sensitiveImage": {
           "type": "image",
           "props": {
-            "marginH":  { "value": 46,  "unit": "px", "min": 0,    "max": 60,   "step": 2 },
-            "offsetY":  { "value": 110, "unit": "px", "min": -800, "max": 400,  "step": 2 },
-            "fontSize": { "value": 3.6, "unit": "vw", "min": 1,    "max": 8,    "step": 0.1 },
-            "opacity":  { "value": 60,  "unit": "%",  "min": 0,    "max": 100,  "step": 5 }
+            "marginH": {
+              "value": 46,
+              "unit": "px",
+              "min": 0,
+              "max": 60,
+              "step": 2
+            },
+            "offsetY": {
+              "value": 110,
+              "unit": "px",
+              "min": -800,
+              "max": 400,
+              "step": 2
+            },
+            "fontSize": {
+              "value": 3.6,
+              "unit": "vw",
+              "min": 1,
+              "max": 8,
+              "step": 0.1
+            },
+            "opacity": {
+              "value": 60,
+              "unit": "%",
+              "min": 0,
+              "max": 100,
+              "step": 5
+            }
           }
         },
         "artGallery": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 16,   "unit": "vw", "min": 4,    "max": 40,   "step": 0.5 },
-            "offsetY":  { "value": -542, "unit": "px", "min": -1000,"max": 400,  "step": 2 },
-            "offsetX":  { "value": -12,  "unit": "px", "min": -400, "max": 400,  "step": 2 }
+            "fontSize": {
+              "value": 16,
+              "unit": "vw",
+              "min": 4,
+              "max": 40,
+              "step": 0.5
+            },
+            "offsetY": {
+              "value": -542,
+              "unit": "px",
+              "min": -1000,
+              "max": 400,
+              "step": 2
+            },
+            "offsetX": {
+              "value": -12,
+              "unit": "px",
+              "min": -400,
+              "max": 400,
+              "step": 2
+            }
           }
         },
         "locationLabel": {
           "type": "text",
           "props": {
-            "offsetY":  { "value": -616, "unit": "px", "min": -1000,"max": 400,  "step": 2 },
-            "offsetX":  { "value": 276,  "unit": "px", "min": -400, "max": 400,  "step": 2 },
-            "fontSize": { "value": 5.0,  "unit": "vw", "min": 2,    "max": 14,   "step": 0.5 }
+            "offsetY": {
+              "value": -616,
+              "unit": "px",
+              "min": -1000,
+              "max": 400,
+              "step": 2
+            },
+            "offsetX": {
+              "value": 276,
+              "unit": "px",
+              "min": -400,
+              "max": 400,
+              "step": 2
+            },
+            "fontSize": {
+              "value": 5.0,
+              "unit": "vw",
+              "min": 2,
+              "max": 14,
+              "step": 0.5
+            }
           }
         },
         "locationInfo": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 0.46, "unit": "rem", "min": 0.2,  "max": 1.0,  "step": 0.02 },
-            "offsetY":  { "value": -652, "unit": "px",  "min": -1000,"max": 400,  "step": 2 },
-            "offsetX":  { "value": -6,   "unit": "px",  "min": -400, "max": 400,  "step": 2 }
+            "fontSize": {
+              "value": 0.46,
+              "unit": "rem",
+              "min": 0.2,
+              "max": 1.0,
+              "step": 0.02
+            },
+            "offsetY": {
+              "value": -652,
+              "unit": "px",
+              "min": -1000,
+              "max": 400,
+              "step": 2
+            },
+            "offsetX": {
+              "value": -6,
+              "unit": "px",
+              "min": -400,
+              "max": 400,
+              "step": 2
+            }
           }
         },
         "miercolesSticker": {
           "type": "image",
           "props": {
-            "size":     { "value": 38,  "unit": "%",   "min": 8,    "max": 90,   "step": 1 },
-            "right":    { "value": -10, "unit": "px",  "min": -60,  "max": 200,  "step": 2 },
-            "top":      { "value": -8,  "unit": "px",  "min": -200, "max": 1200, "step": 2 },
-            "rotation": { "value": -2,  "unit": "deg", "min": -45,  "max": 45,   "step": 1 }
+            "size": {
+              "value": 38,
+              "unit": "%",
+              "min": 8,
+              "max": 90,
+              "step": 1
+            },
+            "right": {
+              "value": -10,
+              "unit": "px",
+              "min": -60,
+              "max": 200,
+              "step": 2
+            },
+            "top": {
+              "value": -8,
+              "unit": "px",
+              "min": -200,
+              "max": 1200,
+              "step": 2
+            },
+            "rotation": {
+              "value": -2,
+              "unit": "deg",
+              "min": -45,
+              "max": 45,
+              "step": 1
+            }
           }
         },
         "productList": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 0.54, "unit": "rem", "min": 0.1,  "max": 1.2,  "step": 0.02 },
-            "offsetY":  { "value": -584, "unit": "px",  "min": -1000,"max": 400,  "step": 2 }
+            "fontSize": {
+              "value": 0.54,
+              "unit": "rem",
+              "min": 0.1,
+              "max": 1.2,
+              "step": 0.02
+            },
+            "offsetY": {
+              "value": -584,
+              "unit": "px",
+              "min": -1000,
+              "max": 400,
+              "step": 2
+            }
           }
         },
         "subtitle": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 5.5, "unit": "vw", "min": 2,    "max": 16,   "step": 0.5 },
-            "rotation": { "value": -1.5,"unit": "deg","min": -20,  "max": 20,   "step": 0.5 },
-            "offsetY":  { "value": -42, "unit": "px", "min": -1000,"max": 400,  "step": 2 },
-            "offsetX":  { "value": 80,  "unit": "px", "min": -400, "max": 400,  "step": 2 }
+            "fontSize": {
+              "value": 5.5,
+              "unit": "vw",
+              "min": 2,
+              "max": 16,
+              "step": 0.5
+            },
+            "rotation": {
+              "value": -1.5,
+              "unit": "deg",
+              "min": -20,
+              "max": 20,
+              "step": 0.5
+            },
+            "offsetY": {
+              "value": -42,
+              "unit": "px",
+              "min": -1000,
+              "max": 400,
+              "step": 2
+            },
+            "offsetX": {
+              "value": 80,
+              "unit": "px",
+              "min": -400,
+              "max": 400,
+              "step": 2
+            }
           }
         },
         "marquee": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 8,    "unit": "vw", "min": 2,    "max": 16,   "step": 0.5 },
-            "speed":    { "value": 4,   "unit": "px", "min": 1,    "max": 100,  "step": 1 },
-            "paddingV": { "value": 5,   "unit": "px", "min": 0,    "max": 30,   "step": 1 },
-            "offsetY":  { "value": -332,"unit": "px", "min": -800, "max": 400,  "step": 2 }
+            "fontSize": {
+              "value": 8,
+              "unit": "vw",
+              "min": 2,
+              "max": 16,
+              "step": 0.5
+            },
+            "speed": {
+              "value": 4,
+              "unit": "px",
+              "min": 1,
+              "max": 100,
+              "step": 1
+            },
+            "paddingV": {
+              "value": 5,
+              "unit": "px",
+              "min": 0,
+              "max": 30,
+              "step": 1
+            },
+            "offsetY": {
+              "value": -332,
+              "unit": "px",
+              "min": -800,
+              "max": 400,
+              "step": 2
+            }
           }
         }
       }
@@ -126,45 +390,159 @@
         "bag": {
           "type": "image",
           "props": {
-            "width":        { "value": 70,  "unit": "%",  "min": 20,   "max": 120,  "step": 2 },
-            "offsetY":      { "value": 32,  "unit": "px", "min": -400, "max": 400,  "step": 4 },
-            "offsetX":      { "value": -66, "unit": "px", "min": -200, "max": 200,  "step": 2 },
-            "marginBottom": { "value": -40, "unit": "px", "min": -200, "max": 100,  "step": 4 }
+            "width": {
+              "value": 70,
+              "unit": "%",
+              "min": 20,
+              "max": 120,
+              "step": 2
+            },
+            "offsetY": {
+              "value": 32,
+              "unit": "px",
+              "min": -400,
+              "max": 400,
+              "step": 4
+            },
+            "offsetX": {
+              "value": -66,
+              "unit": "px",
+              "min": -200,
+              "max": 200,
+              "step": 2
+            },
+            "marginBottom": {
+              "value": -40,
+              "unit": "px",
+              "min": -200,
+              "max": 100,
+              "step": 4
+            }
           }
         },
         "box": {
           "type": "image",
           "props": {
-            "width":        { "value": 55,   "unit": "%",   "min": 10,   "max": 120,  "step": 2 },
-            "rotation":     { "value": 4,    "unit": "deg", "min": -45,  "max": 45,   "step": 1 },
-            "offsetY":      { "value": -216, "unit": "px",  "min": -400, "max": 400,  "step": 4 },
-            "offsetX":      { "value": 36,   "unit": "px",  "min": -200, "max": 200,  "step": 2 },
-            "marginBottom": { "value": -30,  "unit": "px",  "min": -200, "max": 100,  "step": 4 }
+            "width": {
+              "value": 55,
+              "unit": "%",
+              "min": 10,
+              "max": 120,
+              "step": 2
+            },
+            "rotation": {
+              "value": 4,
+              "unit": "deg",
+              "min": -45,
+              "max": 45,
+              "step": 1
+            },
+            "offsetY": {
+              "value": -216,
+              "unit": "px",
+              "min": -400,
+              "max": 400,
+              "step": 4
+            },
+            "offsetX": {
+              "value": 36,
+              "unit": "px",
+              "min": -200,
+              "max": 200,
+              "step": 2
+            },
+            "marginBottom": {
+              "value": -30,
+              "unit": "px",
+              "min": -200,
+              "max": 100,
+              "step": 4
+            }
           }
         },
         "cup": {
           "type": "image",
           "props": {
-            "width":       { "value": 40,   "unit": "%",   "min": 8,    "max": 120,  "step": 2 },
-            "rotation":    { "value": 0,    "unit": "deg", "min": -45,  "max": 45,   "step": 1 },
-            "offsetY":     { "value": -136, "unit": "px",  "min": -400, "max": 400,  "step": 4 },
-            "offsetX":     { "value": 168,  "unit": "px",  "min": -200, "max": 200,  "step": 2 },
-            "paddingLeft": { "value": 8,    "unit": "%",   "min": 0,    "max": 60,   "step": 1 }
+            "width": {
+              "value": 40,
+              "unit": "%",
+              "min": 8,
+              "max": 120,
+              "step": 2
+            },
+            "rotation": {
+              "value": 0,
+              "unit": "deg",
+              "min": -45,
+              "max": 45,
+              "step": 1
+            },
+            "offsetY": {
+              "value": -136,
+              "unit": "px",
+              "min": -400,
+              "max": 400,
+              "step": 4
+            },
+            "offsetX": {
+              "value": 168,
+              "unit": "px",
+              "min": -200,
+              "max": 200,
+              "step": 2
+            },
+            "paddingLeft": {
+              "value": 8,
+              "unit": "%",
+              "min": 0,
+              "max": 60,
+              "step": 1
+            }
           }
         },
         "watermark": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 34, "unit": "vw", "min": 10,   "max": 80,   "step": 1 },
-            "offsetY":  { "value": 146, "unit": "px", "min": -400, "max": 400,  "step": 2 },
-            "offsetX":  { "value": 0,  "unit": "px", "min": -200, "max": 200,  "step": 2 }
+            "fontSize": {
+              "value": 34,
+              "unit": "vw",
+              "min": 10,
+              "max": 80,
+              "step": 1
+            },
+            "offsetY": {
+              "value": 146,
+              "unit": "px",
+              "min": -400,
+              "max": 400,
+              "step": 2
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px",
+              "min": -200,
+              "max": 200,
+              "step": 2
+            }
           }
         },
         "scroll": {
           "type": "config",
           "props": {
-            "stiffness": { "value": 75, "unit": "px", "min": 5,  "max": 400, "step": 5 },
-            "damping":   { "value": 22, "unit": "px", "min": 2,  "max": 100, "step": 1 }
+            "stiffness": {
+              "value": 75,
+              "unit": "px",
+              "min": 5,
+              "max": 400,
+              "step": 5
+            },
+            "damping": {
+              "value": 22,
+              "unit": "px",
+              "min": 2,
+              "max": 100,
+              "step": 1
+            }
           }
         }
       }
@@ -175,54 +553,162 @@
         "section": {
           "type": "config",
           "props": {
-            "paddingBottom": { "value": 40, "unit": "px", "min": 0, "max": 400, "step": 4 }
+            "paddingBottom": {
+              "value": 40,
+              "unit": "px",
+              "min": 0,
+              "max": 400,
+              "step": 4
+            }
           }
         },
         "receipt": {
           "type": "image",
           "props": {
-            "width":    { "value": 68,   "unit": "%",   "min": 10,   "max": 120, "step": 2 },
-            "offsetY":  { "value": -12, "unit": "px",  "min": -800, "max": 400, "step": 2 },
-            "offsetX":  { "value": -54,  "unit": "px",  "min": -200, "max": 200, "step": 2 },
-            "rotation": { "value": -15,  "unit": "deg", "min": -45,  "max": 45,  "step": 1 }
+            "width": {
+              "value": 68,
+              "unit": "%",
+              "min": 10,
+              "max": 120,
+              "step": 2
+            },
+            "offsetY": {
+              "value": -12,
+              "unit": "px",
+              "min": -800,
+              "max": 400,
+              "step": 2
+            },
+            "offsetX": {
+              "value": -54,
+              "unit": "px",
+              "min": -200,
+              "max": 200,
+              "step": 2
+            },
+            "rotation": {
+              "value": -15,
+              "unit": "deg",
+              "min": -45,
+              "max": 45,
+              "step": 1
+            }
           }
         },
         "differentByDefault": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 15, "unit": "vw", "min": 4,    "max": 40,   "step": 0.5 },
-            "opacity":  { "value": 18, "unit": "%",  "min": 0,    "max": 100,  "step": 2 },
-            "offsetY":  { "value": 94,   "unit": "px", "min": -600, "max": 400,  "step": 2 }
+            "fontSize": {
+              "value": 15,
+              "unit": "vw",
+              "min": 4,
+              "max": 40,
+              "step": 0.5
+            },
+            "opacity": {
+              "value": 18,
+              "unit": "%",
+              "min": 0,
+              "max": 100,
+              "step": 2
+            },
+            "offsetY": {
+              "value": 94,
+              "unit": "px",
+              "min": -600,
+              "max": 400,
+              "step": 2
+            }
           }
         },
         "hashtag": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 0.5, "unit": "rem", "min": 0.2, "max": 2.0,  "step": 0.02 },
-            "offsetY":  { "value": 0,   "unit": "px",  "min": -400,"max": 400,  "step": 2 }
+            "fontSize": {
+              "value": 0.5,
+              "unit": "rem",
+              "min": 0.2,
+              "max": 2.0,
+              "step": 0.02
+            },
+            "offsetY": {
+              "value": 0,
+              "unit": "px",
+              "min": -400,
+              "max": 400,
+              "step": 2
+            }
           }
         },
         "thisIs": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 13,   "unit": "vw", "min": 1,   "max": 40,   "step": 0.5 },
-            "offsetY":  { "value": 34, "unit": "px", "min": -600,"max": 400,  "step": 2 }
+            "fontSize": {
+              "value": 13,
+              "unit": "vw",
+              "min": 1,
+              "max": 40,
+              "step": 0.5
+            },
+            "offsetY": {
+              "value": 34,
+              "unit": "px",
+              "min": -600,
+              "max": 400,
+              "step": 2
+            }
           }
         },
         "ourCulture": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 17, "unit": "vw", "min": 4,   "max": 40,   "step": 0.5 },
-            "offsetY":  { "value": 36, "unit": "px", "min": -600,"max": 400,  "step": 2 }
+            "fontSize": {
+              "value": 17,
+              "unit": "vw",
+              "min": 4,
+              "max": 40,
+              "step": 0.5
+            },
+            "offsetY": {
+              "value": 36,
+              "unit": "px",
+              "min": -600,
+              "max": 400,
+              "step": 2
+            }
           }
         },
         "description": {
           "type": "text",
           "props": {
-            "fontSize":   { "value": 0.48, "unit": "rem", "min": 0.2, "max": 2.0,  "step": 0.02 },
-            "lineHeight": { "value": 2.1,  "unit": "px",  "min": 1,   "max": 5,    "step": 0.1 },
-            "offsetY":    { "value": -64,  "unit": "px",  "min": -400,"max": 400,  "step": 2 },
-            "offsetX":    { "value": 0,    "unit": "px",  "min": -400,"max": 400,  "step": 2 }
+            "fontSize": {
+              "value": 0.48,
+              "unit": "rem",
+              "min": 0.2,
+              "max": 2.0,
+              "step": 0.02
+            },
+            "lineHeight": {
+              "value": 2.1,
+              "unit": "px",
+              "min": 1,
+              "max": 5,
+              "step": 0.1
+            },
+            "offsetY": {
+              "value": -64,
+              "unit": "px",
+              "min": -400,
+              "max": 400,
+              "step": 2
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px",
+              "min": -400,
+              "max": 400,
+              "step": 2
+            }
           }
         }
       }
@@ -233,40 +719,124 @@
         "title": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 25, "unit": "vw", "min": 6,   "max": 50,   "step": 0.5 },
-            "offsetY":  { "value": 0,  "unit": "px", "min": -400,"max": 400,  "step": 2 }
+            "fontSize": {
+              "value": 25,
+              "unit": "vw",
+              "min": 6,
+              "max": 50,
+              "step": 0.5
+            },
+            "offsetY": {
+              "value": 0,
+              "unit": "px",
+              "min": -400,
+              "max": 400,
+              "step": 2
+            }
           }
         },
         "tagline": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 0.5, "unit": "rem", "min": 0.2, "max": 2.0,  "step": 0.02 },
-            "offsetY":  { "value": 0,   "unit": "px",  "min": -400,"max": 400,  "step": 2 }
+            "fontSize": {
+              "value": 0.5,
+              "unit": "rem",
+              "min": 0.2,
+              "max": 2.0,
+              "step": 0.02
+            },
+            "offsetY": {
+              "value": 0,
+              "unit": "px",
+              "min": -400,
+              "max": 400,
+              "step": 2
+            }
           }
         },
         "apps": {
           "type": "block",
           "props": {
-            "gap":      { "value": 10, "unit": "px", "min": 0,   "max": 60,   "step": 2 },
-            "paddingV": { "value": 16, "unit": "px", "min": 4,   "max": 60,   "step": 2 },
-            "offsetY":  { "value": 0,  "unit": "px", "min": -400,"max": 400,  "step": 2 }
+            "gap": {
+              "value": 10,
+              "unit": "px",
+              "min": 0,
+              "max": 60,
+              "step": 2
+            },
+            "paddingV": {
+              "value": 16,
+              "unit": "px",
+              "min": 4,
+              "max": 60,
+              "step": 2
+            },
+            "offsetY": {
+              "value": 0,
+              "unit": "px",
+              "min": -400,
+              "max": 400,
+              "step": 2
+            }
           }
         },
         "info": {
           "type": "block",
           "props": {
-            "paddingV": { "value": 16, "unit": "px", "min": 4,   "max": 60,   "step": 2 },
-            "paddingH": { "value": 16, "unit": "px", "min": 0,   "max": 60,   "step": 2 },
-            "offsetY":  { "value": 0,  "unit": "px", "min": -400,"max": 400,  "step": 2 }
+            "paddingV": {
+              "value": 16,
+              "unit": "px",
+              "min": 4,
+              "max": 60,
+              "step": 2
+            },
+            "paddingH": {
+              "value": 16,
+              "unit": "px",
+              "min": 0,
+              "max": 60,
+              "step": 2
+            },
+            "offsetY": {
+              "value": 0,
+              "unit": "px",
+              "min": -400,
+              "max": 400,
+              "step": 2
+            }
           }
         },
         "watermark": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 22,  "unit": "vw", "min": 4,    "max": 80,   "step": 1 },
-            "rotation": { "value": -12, "unit": "deg", "min": -45,  "max": 45,   "step": 1 },
-            "offsetY":  { "value": 4,   "unit": "%",  "min": -100, "max": 100,  "step": 1 },
-            "offsetX":  { "value": -1,  "unit": "%",  "min": -100, "max": 100,  "step": 1 }
+            "fontSize": {
+              "value": 22,
+              "unit": "vw",
+              "min": 4,
+              "max": 80,
+              "step": 1
+            },
+            "rotation": {
+              "value": -12,
+              "unit": "deg",
+              "min": -45,
+              "max": 45,
+              "step": 1
+            },
+            "offsetY": {
+              "value": 4,
+              "unit": "%",
+              "min": -100,
+              "max": 100,
+              "step": 1
+            },
+            "offsetX": {
+              "value": -1,
+              "unit": "%",
+              "min": -100,
+              "max": 100,
+              "step": 1
+            }
           }
         }
       }
@@ -277,45 +847,159 @@
         "navLinks": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 19,   "unit": "vw", "min": 8,    "max": 25,   "step": 0.5 },
-            "gap":      { "value": 10,   "unit": "px", "min": -20,  "max": 60,   "step": 2 },
-            "offsetY":  { "value": -140, "unit": "px", "min": -400, "max": 200,  "step": 2 },
-            "offsetX":  { "value": 12,   "unit": "px", "min": -200, "max": 200,  "step": 2 }
+            "fontSize": {
+              "value": 24,
+              "unit": "vw",
+              "min": 8,
+              "max": 25,
+              "step": 0.5
+            },
+            "gap": {
+              "value": 4,
+              "unit": "px",
+              "min": -20,
+              "max": 60,
+              "step": 2
+            },
+            "offsetY": {
+              "value": 0,
+              "unit": "px",
+              "min": -400,
+              "max": 200,
+              "step": 2
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px",
+              "min": -200,
+              "max": 200,
+              "step": 2
+            }
           }
         },
         "miercolesSticker": {
           "type": "image",
           "props": {
-            "size":     { "value": 42,  "unit": "%",   "min": 8,    "max": 90,   "step": 1 },
-            "top":      { "value": 64,  "unit": "px",  "min": -60,  "max": 600,  "step": 2 },
-            "right":    { "value": 16,  "unit": "px",  "min": -60,  "max": 200,  "step": 2 },
-            "rotation": { "value": -2,  "unit": "deg", "min": -45,  "max": 45,   "step": 1 }
+            "size": {
+              "value": 46,
+              "unit": "%",
+              "min": 8,
+              "max": 90,
+              "step": 1
+            },
+            "top": {
+              "value": 100,
+              "unit": "px",
+              "min": -60,
+              "max": 600,
+              "step": 2
+            },
+            "right": {
+              "value": -5,
+              "unit": "px",
+              "min": -60,
+              "max": 200,
+              "step": 2
+            },
+            "rotation": {
+              "value": -2,
+              "unit": "deg",
+              "min": -45,
+              "max": 45,
+              "step": 1
+            }
           }
         },
         "jacketClubSticker": {
           "type": "image",
           "props": {
-            "size":     { "value": 38,  "unit": "%",   "min": 8,    "max": 90,   "step": 1 },
-            "bottom":   { "value": 290, "unit": "px",  "min": -60,  "max": 800,  "step": 2 },
-            "left":     { "value": 236, "unit": "px",  "min": -60,  "max": 800,  "step": 2 },
-            "rotation": { "value": 15,  "unit": "deg", "min": -45,  "max": 45,   "step": 1 }
+            "size": {
+              "value": 44,
+              "unit": "%",
+              "min": 8,
+              "max": 90,
+              "step": 1
+            },
+            "bottom": {
+              "value": 140,
+              "unit": "px",
+              "min": -60,
+              "max": 800,
+              "step": 2
+            },
+            "left": {
+              "value": 200,
+              "unit": "px",
+              "min": -60,
+              "max": 800,
+              "step": 2
+            },
+            "rotation": {
+              "value": 12,
+              "unit": "deg",
+              "min": -45,
+              "max": 45,
+              "step": 1
+            }
           }
         },
         "pedirAhora": {
           "type": "config",
           "props": {
-            "fontSize": { "value": 0.88, "unit": "rem", "min": 0.3,  "max": 1.4,  "step": 0.02 },
-            "top":      { "value": 13,   "unit": "px",  "min": 0,    "max": 100,  "step": 1 },
-            "right":    { "value": 18,   "unit": "px",  "min": 0,    "max": 100,  "step": 1 }
+            "fontSize": {
+              "value": 0.88,
+              "unit": "rem",
+              "min": 0.3,
+              "max": 1.4,
+              "step": 0.02
+            },
+            "top": {
+              "value": 13,
+              "unit": "px",
+              "min": 0,
+              "max": 100,
+              "step": 1
+            },
+            "right": {
+              "value": 18,
+              "unit": "px",
+              "min": 0,
+              "max": 100,
+              "step": 1
+            }
           }
         },
         "socialIcons": {
           "type": "config",
           "props": {
-            "size":    { "value": 36,  "unit": "px", "min": 10, "max": 60,  "step": 2 },
-            "offsetY": { "value": 512, "unit": "px", "min": 0,  "max": 800, "step": 4 },
-            "offsetX": { "value": 316, "unit": "px", "min": 0,  "max": 600, "step": 2 },
-            "gap":     { "value": 14,  "unit": "px", "min": 4,  "max": 60,  "step": 2 }
+            "size": {
+              "value": 36,
+              "unit": "px",
+              "min": 10,
+              "max": 60,
+              "step": 2
+            },
+            "offsetY": {
+              "value": 512,
+              "unit": "px",
+              "min": 0,
+              "max": 800,
+              "step": 4
+            },
+            "offsetX": {
+              "value": 316,
+              "unit": "px",
+              "min": 0,
+              "max": 600,
+              "step": 2
+            },
+            "gap": {
+              "value": 14,
+              "unit": "px",
+              "min": 4,
+              "max": 60,
+              "step": 2
+            }
           }
         }
       }
