@@ -431,7 +431,7 @@ export default function MobileHome() {
         <nav style={{
           display: "flex", flexDirection: "column", justifyContent: "center",
           gap: d.menuNavGap,
-          padding: "80px 28px 60px 28px", height: "100%", boxSizing: "border-box",
+          padding: "80px 28px 60px 28px", height: "100dvh", boxSizing: "border-box",
           transform: tx(d.menuNavOffY, d.menuNavOffX),
         }}>
           {[
