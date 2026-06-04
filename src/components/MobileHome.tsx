@@ -25,10 +25,10 @@ function tx(y = 0, x = 0) {
   return `translateY(${y}px) translateX(${x}px)`;
 }
 
-function FadeUp({ children, delay = 0, style, root }: { children: React.ReactNode; delay?: number; style?: React.CSSProperties; root?: React.RefObject<HTMLElement | null> }) {
+function FadeUp({ children, delay = 0, style, root, fromY = 24 }: { children: React.ReactNode; delay?: number; style?: React.CSSProperties; root?: React.RefObject<HTMLElement | null>; fromY?: number }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: fromY }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: false, amount: 0.15, root }}
       transition={{ duration: 0.65, ease: EASE, delay }}
@@ -523,7 +523,7 @@ export default function MobileHome() {
           </h2>
           {/* Receipt — en el overlay, después de los títulos en DOM = encima de ellos */}
           <div style={{ transform: tx(d.receiptOffY, d.receiptOffX) }}>
-            <FadeUp root={scrollContainerRef} delay={0.10}>
+            <FadeUp root={scrollContainerRef} delay={0.05} fromY={-140}>
               <img src="/images/culture-receipt.webp" alt="" decoding="async" style={{ width: `${d.receiptWidth}%`, maxWidth: 280, display: "block", margin: "0 auto 40px auto", transform: `rotate(${d.receiptRotation}deg)`, filter: "drop-shadow(0 12px 32px rgba(0,0,0,0.5))" }} />
             </FadeUp>
           </div>
@@ -547,7 +547,7 @@ export default function MobileHome() {
         {/* Receipt + DIFFERENT BY DEFAULT — counter-animados: no siguen el y del panel */}
         <motion.div style={{ y: counterY }}>
           <div style={{ transform: tx(d.dbdOffY) }}>
-            <FadeUp root={scrollContainerRef} delay={0.16}>
+            <FadeUp root={scrollContainerRef} delay={0.7} fromY={32}>
               <div style={{ ...F.display, fontSize: `${d.dbdFontSize}vw`, color: C.burgundy, lineHeight: 0.88, letterSpacing: "-0.02em", textTransform: "uppercase", margin: "0 0 24px 0" }}>
                 DIFFERENT<br />BY DEFAULT.
               </div>
