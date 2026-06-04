@@ -270,7 +270,8 @@ export default function MobileHome() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
 
-  // Cambia el color del chrome del navegador (barra de estado + dirección) según el estado del menú
+  // Cambia el chrome del navegador (status bar + address bar) cuando el menú abre/cierra.
+  // Safari lee el background del <html> para colorear el status bar — theme-color solo no es suficiente.
   useEffect(() => {
     let meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
     if (!meta) {
@@ -278,7 +279,14 @@ export default function MobileHome() {
       meta.setAttribute("name", "theme-color");
       document.head.appendChild(meta);
     }
-    meta.setAttribute("content", menuOpen ? C.tinta : C.cream);
+    const color = menuOpen ? C.tinta : C.cream;
+    meta.setAttribute("content", color);
+    document.documentElement.style.backgroundColor = color;
+    document.body.style.backgroundColor = color;
+    return () => {
+      document.documentElement.style.backgroundColor = C.cream;
+      document.body.style.backgroundColor = C.cream;
+    };
   }, [menuOpen]);
   useEffect(() => {
     // offsetTop: posición en el layout SIN transforms de Framer Motion.
