@@ -223,12 +223,10 @@ export default function MobileHome() {
   const culturaRef         = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: packagingRef,
-    container: scrollContainerRef,
     offset: ["start end", "end start"],
   });
   const { scrollYProgress: culturaProgress } = useScroll({
     target: culturaRef,
-    container: scrollContainerRef,
     offset: ["start end", "start -1.0"],
   });
   // arranca desde el borde inferior (400px) y entra rápido hasta posición sticky (440px desde top)
@@ -270,15 +268,17 @@ export default function MobileHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   useEffect(() => {
     const measure = () => {
-      if (!culturaRef.current || !scrollContainerRef.current) return;
-      const containerRect = scrollContainerRef.current.getBoundingClientRect();
+      if (!culturaRef.current) return;
       const culturaRect = culturaRef.current.getBoundingClientRect();
-      const scrollTop = scrollContainerRef.current.scrollTop;
-      setCulturaHeaderY(culturaRect.top - containerRect.top + scrollTop + 48);
+      setCulturaHeaderY(culturaRect.top + window.scrollY + 48);
     };
     measure();
     window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
+    window.addEventListener("scroll", measure, { passive: true });
+    return () => {
+      window.removeEventListener("resize", measure);
+      window.removeEventListener("scroll", measure);
+    };
   }, []);
 
   // Pre-decodifica las imágenes del reveal de packaging. Arrancan en opacity:0,
@@ -296,7 +296,7 @@ export default function MobileHome() {
   return (
     <div
       ref={scrollContainerRef}
-      style={{ background: C.cream, height: "100dvh", overflowY: "auto", overflowX: "hidden", position: "relative" }}
+      style={{ background: C.cream, overflowX: "clip", position: "relative" }}
     >
 
       {/* ── Menu overlay (fixed, zIndex 200) ─────────────── */}
@@ -720,7 +720,7 @@ export default function MobileHome() {
         {/* Receipt + DIFFERENT BY DEFAULT — counter-animados: no siguen el y del panel */}
         <motion.div style={{ y: counterY }}>
           <div style={{ transform: tx(d.dbdOffY) }}>
-            <FadeUp root={scrollContainerRef} delay={0.7} fromY={32}>
+            <FadeUp  delay={0.7} fromY={32}>
               <div style={{ ...F.display, fontSize: `${d.dbdFontSize}vw`, color: C.burgundy, lineHeight: 0.88, letterSpacing: "-0.02em", textTransform: "uppercase", margin: "0 0 24px 0" }}>
                 DIFFERENT<br />BY DEFAULT.
               </div>
@@ -728,7 +728,7 @@ export default function MobileHome() {
           </div>
           {/* Description — dentro del counterY: no se mueve con el panel */}
           <div style={{ transform: tx(d.descOffY, d.descOffX) }}>
-            <FadeUp root={scrollContainerRef} delay={0.22}>
+            <FadeUp  delay={0.22}>
               <p style={{ ...F.mono, fontSize: `${d.descFontSize}rem`, color: C.cream, opacity: 0.6, lineHeight: d.descLineHeight, letterSpacing: "0.06em", textTransform: "uppercase", margin: 0, textAlign: "right" }}>
                 MÚSICA. CALLE. HUMOR.<br />AMIGOS. PLANES.<br />NOCHES QUE SÍ CUENTAN.<br />ESTO ES SPRINGS.
               </p>
@@ -743,24 +743,24 @@ export default function MobileHome() {
           SPRINGS
         </div>
         <div style={{ position: "relative", zIndex: 1 }}>
-          <FadeUp root={scrollContainerRef} style={{ transform: tx(d.pedirTaglineOffY) }}>
+          <FadeUp  style={{ transform: tx(d.pedirTaglineOffY) }}>
             <div style={{ ...F.mono, fontSize: `${d.pedirTaglineFs}rem`, letterSpacing: "0.22em", color: C.mostaza, textTransform: "uppercase", marginBottom: 40 }}>
               ↗ SIN EXCUSAS · ESTO ES SPRINGS
             </div>
           </FadeUp>
-          <FadeUp root={scrollContainerRef} delay={0.08} style={{ transform: tx(d.pedirTitleOffY) }}>
+          <FadeUp  delay={0.08} style={{ transform: tx(d.pedirTitleOffY) }}>
             <h2 style={{ ...F.display, fontSize: `${d.pedirTitleFs}vw`, color: C.cream, lineHeight: 0.92, letterSpacing: "-0.01em", textTransform: "uppercase", margin: "0 0 48px 0" }}>
               PEDIR<br />YA.
             </h2>
           </FadeUp>
-          <FadeUp root={scrollContainerRef} delay={0.16} style={{ transform: tx(d.appsOffY) }}>
+          <FadeUp  delay={0.16} style={{ transform: tx(d.appsOffY) }}>
             <div style={{ marginBottom: 40 }}>
               <a href="/menu" style={{ ...F.display, fontSize: "1.1rem", letterSpacing: "0.12em", color: C.tinta, background: C.cream, padding: `${d.appsPaddingV}px 24px`, textDecoration: "none", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 PEDIR AHORA <span>→</span>
               </a>
             </div>
           </FadeUp>
-          <FadeUp root={scrollContainerRef} delay={0.24} style={{ transform: tx(d.infoOffY) }}>
+          <FadeUp  delay={0.24} style={{ transform: tx(d.infoOffY) }}>
             <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
               {[
                 { label: "Horario",  val: "12PM — 9PM",   sub: "Lunes a domingo" },
