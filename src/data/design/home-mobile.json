@@ -277,17 +277,17 @@
         "navLinks": {
           "type": "text",
           "props": {
-            "fontSize": { "value": 15,  "unit": "vw", "min": 8,    "max": 25,   "step": 0.5 },
-            "offsetY":  { "value": 0,   "unit": "px", "min": -200, "max": 200,  "step": 2 },
-            "offsetX":  { "value": 0,   "unit": "px", "min": -200, "max": 200,  "step": 2 }
+            "fontSize": { "value": 19,   "unit": "vw", "min": 8,    "max": 25,   "step": 0.5 },
+            "offsetY":  { "value": -140, "unit": "px", "min": -400, "max": 200,  "step": 2 },
+            "offsetX":  { "value": 12,   "unit": "px", "min": -200, "max": 200,  "step": 2 }
           }
         },
         "miercolesSticker": {
           "type": "image",
           "props": {
-            "size":     { "value": 38,  "unit": "%",   "min": 8,    "max": 90,   "step": 1 },
-            "top":      { "value": 72,  "unit": "px",  "min": -60,  "max": 600,  "step": 2 },
-            "right":    { "value": -10, "unit": "px",  "min": -60,  "max": 200,  "step": 2 },
+            "size":     { "value": 42,  "unit": "%",   "min": 8,    "max": 90,   "step": 1 },
+            "top":      { "value": 80,  "unit": "px",  "min": -60,  "max": 600,  "step": 2 },
+            "right":    { "value": 16,  "unit": "px",  "min": -60,  "max": 200,  "step": 2 },
             "rotation": { "value": -2,  "unit": "deg", "min": -45,  "max": 45,   "step": 1 }
           }
         },
@@ -295,16 +295,16 @@
           "type": "image",
           "props": {
             "size":     { "value": 38,  "unit": "%",   "min": 8,    "max": 90,   "step": 1 },
-            "bottom":   { "value": 80,  "unit": "px",  "min": -60,  "max": 600,  "step": 2 },
-            "left":     { "value": -10, "unit": "px",  "min": -60,  "max": 200,  "step": 2 },
-            "rotation": { "value": -2,  "unit": "deg", "min": -45,  "max": 45,   "step": 1 }
+            "bottom":   { "value": 350, "unit": "px",  "min": -60,  "max": 800,  "step": 2 },
+            "left":     { "value": 200, "unit": "px",  "min": -60,  "max": 400,  "step": 2 },
+            "rotation": { "value": 15,  "unit": "deg", "min": -45,  "max": 45,   "step": 1 }
           }
         },
         "pedirAhora": {
           "type": "config",
           "props": {
-            "fontSize": { "value": 0.48, "unit": "rem", "min": 0.3,  "max": 1.0,  "step": 0.02 },
-            "top":      { "value": 11,   "unit": "px",  "min": 0,    "max": 100,  "step": 1 },
+            "fontSize": { "value": 0.88, "unit": "rem", "min": 0.3,  "max": 1.4,  "step": 0.02 },
+            "top":      { "value": 13,   "unit": "px",  "min": 0,    "max": 100,  "step": 1 },
             "right":    { "value": 18,   "unit": "px",  "min": 0,    "max": 100,  "step": 1 }
           }
         }
