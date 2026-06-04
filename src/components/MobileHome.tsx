@@ -573,7 +573,7 @@ export default function MobileHome() {
       </motion.section>
 
       {/* ════════ PEDIR YA ════════ */}
-      <section style={{ background: C.burgundy, padding: "56px 18px 72px 18px", position: "relative", overflow: "hidden" }}>
+      <section style={{ background: C.burgundy, padding: "88px 18px 72px 18px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", bottom: `${d.wmOffY}%`, right: `${d.wmOffX * -1}%`, ...F.display, fontSize: `${d.wmFontSize}vw`, color: C.cream, opacity: 0.04, letterSpacing: "-0.02em", whiteSpace: "nowrap", zIndex: 0, pointerEvents: "none", userSelect: "none", transform: `rotate(${d.wmRotation}deg)`, transformOrigin: "right bottom" }}>
           SPRINGS
         </div>
