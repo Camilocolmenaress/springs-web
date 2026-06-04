@@ -195,6 +195,18 @@ export default function MobileHome() {
     wmRotation:      sv(z, "pedirYa", "watermark", "rotation",   -12),
     wmOffY:          sv(z, "pedirYa", "watermark", "offsetY",    10),
     wmOffX:          sv(z, "pedirYa", "watermark", "offsetX",    -15),
+    // menu overlay
+    menuNavFontSize: sv(z, "menu", "navLinks",          "fontSize", 15),
+    menuNavOffY:     sv(z, "menu", "navLinks",          "offsetY",  0),
+    menuNavOffX:     sv(z, "menu", "navLinks",          "offsetX",  0),
+    menuMdSize:      sv(z, "menu", "miercolesSticker",  "size",     38),
+    menuMdTop:       sv(z, "menu", "miercolesSticker",  "top",      72),
+    menuMdRight:     sv(z, "menu", "miercolesSticker",  "right",    -10),
+    menuMdRotation:  sv(z, "menu", "miercolesSticker",  "rotation", -2),
+    menuJcSize:      sv(z, "menu", "jacketClubSticker", "size",     38),
+    menuJcBottom:    sv(z, "menu", "jacketClubSticker", "bottom",   80),
+    menuJcLeft:      sv(z, "menu", "jacketClubSticker", "left",     -10),
+    menuJcRotation:  sv(z, "menu", "jacketClubSticker", "rotation", -2),
   };
 
   // ── Scroll-driven packaging + cultura ────────────────────────
@@ -290,6 +302,7 @@ export default function MobileHome() {
           overflow: "hidden",
         }}
       >
+        {/* Botón cerrar — arriba izquierda */}
         <button
           onClick={() => setMenuOpen(false)}
           aria-label="Cerrar menú"
@@ -297,16 +310,55 @@ export default function MobileHome() {
             position: "absolute", top: 14, left: 18,
             background: "none", border: "none", cursor: "pointer",
             width: 34, height: 34, display: "flex", flexDirection: "column",
-            alignItems: "center", justifyContent: "center", padding: 0,
+            alignItems: "center", justifyContent: "center", padding: 0, zIndex: 1,
           }}
         >
           <span style={{ display: "block", width: 22, height: 1.5, background: C.cream, transform: "rotate(45deg) translateY(0.75px)" }} />
           <span style={{ display: "block", width: 22, height: 1.5, background: C.cream, transform: "rotate(-45deg) translateY(-0.75px)" }} />
         </button>
 
+        {/* PEDIR AHORA — arriba derecha */}
+        <button
+          onClick={() => { setMenuOpen(false); router.push("/menu"); }}
+          style={{ ...F.mono, position: "absolute", top: 11, right: 18, zIndex: 1, fontSize: "0.48rem", letterSpacing: "0.14em", background: C.burgundy, color: C.cream, border: "none", padding: "7px 12px", cursor: "pointer", display: "flex", alignItems: "center", gap: 5 }}
+        >
+          PEDIR AHORA
+          <svg aria-hidden="true" width="9" height="9" viewBox="0 0 10 10" fill="none">
+            <path d="M2 8L8 2M8 2H3M8 2V7" stroke="currentColor" strokeWidth="1.3"/>
+          </svg>
+        </button>
+
+        {/* Sticker miércoles — arriba derecha */}
+        <img
+          src="/images/sticker-miercoles.webp" alt="" aria-hidden="true" decoding="async"
+          style={{
+            position: "absolute",
+            top: d.menuMdTop,
+            right: d.menuMdRight,
+            width: `${d.menuMdSize}%`,
+            transform: `rotate(${d.menuMdRotation}deg)`,
+            pointerEvents: "none",
+          }}
+        />
+
+        {/* Sticker jacket club — abajo izquierda */}
+        <img
+          src="/images/sticker-jacket-club.webp" alt="" aria-hidden="true" decoding="async"
+          style={{
+            position: "absolute",
+            bottom: d.menuJcBottom,
+            left: d.menuJcLeft,
+            width: `${d.menuJcSize}%`,
+            transform: `rotate(${d.menuJcRotation}deg)`,
+            pointerEvents: "none",
+          }}
+        />
+
+        {/* Nav links */}
         <nav style={{
           display: "flex", flexDirection: "column", justifyContent: "center",
           padding: "80px 28px 60px 28px", height: "100%", boxSizing: "border-box",
+          transform: tx(d.menuNavOffY, d.menuNavOffX),
         }}>
           {[
             { label: "CARTA",       href: "/menu" },
@@ -324,7 +376,7 @@ export default function MobileHome() {
               transition={{ duration: 0.55, ease: EASE, delay: menuOpen ? 0.28 + i * 0.07 : 0 }}
               style={{
                 ...F.display,
-                fontSize: "15vw",
+                fontSize: `${d.menuNavFontSize}vw`,
                 color: C.cream,
                 textDecoration: "none",
                 lineHeight: 0.9,
@@ -336,29 +388,6 @@ export default function MobileHome() {
               {label}
             </motion.a>
           ))}
-
-          <motion.a
-            href="/menu"
-            onClick={() => setMenuOpen(false)}
-            initial={false}
-            animate={menuOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-            transition={{ duration: 0.5, ease: EASE, delay: menuOpen ? 0.65 : 0 }}
-            style={{
-              ...F.mono,
-              marginTop: 28,
-              fontSize: "0.56rem",
-              letterSpacing: "0.14em",
-              background: C.cream,
-              color: C.tinta,
-              padding: "11px 20px",
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 8,
-              textDecoration: "none",
-            }}
-          >
-            PEDIR AHORA →
-          </motion.a>
         </nav>
       </motion.div>
 

@@ -270,6 +270,37 @@
           }
         }
       }
+    },
+    "menu": {
+      "label": "Menú overlay",
+      "elements": {
+        "navLinks": {
+          "type": "text",
+          "props": {
+            "fontSize": { "value": 15,  "unit": "vw", "min": 8,    "max": 25,   "step": 0.5 },
+            "offsetY":  { "value": 0,   "unit": "px", "min": -200, "max": 200,  "step": 2 },
+            "offsetX":  { "value": 0,   "unit": "px", "min": -200, "max": 200,  "step": 2 }
+          }
+        },
+        "miercolesSticker": {
+          "type": "image",
+          "props": {
+            "size":     { "value": 38,  "unit": "%",   "min": 8,    "max": 90,   "step": 1 },
+            "top":      { "value": 72,  "unit": "px",  "min": -60,  "max": 600,  "step": 2 },
+            "right":    { "value": -10, "unit": "px",  "min": -60,  "max": 200,  "step": 2 },
+            "rotation": { "value": -2,  "unit": "deg", "min": -45,  "max": 45,   "step": 1 }
+          }
+        },
+        "jacketClubSticker": {
+          "type": "image",
+          "props": {
+            "size":     { "value": 38,  "unit": "%",   "min": 8,    "max": 90,   "step": 1 },
+            "bottom":   { "value": 80,  "unit": "px",  "min": -60,  "max": 600,  "step": 2 },
+            "left":     { "value": -10, "unit": "px",  "min": -60,  "max": 200,  "step": 2 },
+            "rotation": { "value": -2,  "unit": "deg", "min": -45,  "max": 45,   "step": 1 }
+          }
+        }
+      }
     }
   }
 }
