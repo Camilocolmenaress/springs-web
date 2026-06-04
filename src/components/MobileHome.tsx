@@ -281,11 +281,9 @@ export default function MobileHome() {
     }
     const color = menuOpen ? C.tinta : C.cream;
     meta.setAttribute("content", color);
-    document.documentElement.style.backgroundColor = color;
-    document.body.style.backgroundColor = color;
+    document.documentElement.style.background = color;
     return () => {
-      document.documentElement.style.backgroundColor = C.cream;
-      document.body.style.backgroundColor = C.cream;
+      document.documentElement.style.background = C.cream;
     };
   }, [menuOpen]);
   useEffect(() => {
