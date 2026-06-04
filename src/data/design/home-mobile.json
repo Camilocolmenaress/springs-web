@@ -848,28 +848,28 @@
           "type": "text",
           "props": {
             "fontSize": {
-              "value": 24,
+              "value": 19,
               "unit": "vw",
               "min": 8,
               "max": 25,
               "step": 0.5
             },
             "gap": {
-              "value": 4,
+              "value": 10,
               "unit": "px",
               "min": -20,
               "max": 60,
               "step": 2
             },
             "offsetY": {
-              "value": 0,
+              "value": -140,
               "unit": "px",
               "min": -400,
               "max": 200,
               "step": 2
             },
             "offsetX": {
-              "value": 0,
+              "value": 12,
               "unit": "px",
               "min": -200,
               "max": 200,
@@ -881,21 +881,21 @@
           "type": "image",
           "props": {
             "size": {
-              "value": 46,
+              "value": 42,
               "unit": "%",
               "min": 8,
               "max": 90,
               "step": 1
             },
             "top": {
-              "value": 100,
+              "value": 64,
               "unit": "px",
               "min": -60,
               "max": 600,
               "step": 2
             },
             "right": {
-              "value": -5,
+              "value": 16,
               "unit": "px",
               "min": -60,
               "max": 200,
@@ -914,28 +914,28 @@
           "type": "image",
           "props": {
             "size": {
-              "value": 44,
+              "value": 38,
               "unit": "%",
               "min": 8,
               "max": 90,
               "step": 1
             },
             "bottom": {
-              "value": 140,
+              "value": 290,
               "unit": "px",
               "min": -60,
               "max": 800,
               "step": 2
             },
             "left": {
-              "value": 200,
+              "value": 236,
               "unit": "px",
               "min": -60,
               "max": 800,
               "step": 2
             },
             "rotation": {
-              "value": 12,
+              "value": 15,
               "unit": "deg",
               "min": -45,
               "max": 45,
