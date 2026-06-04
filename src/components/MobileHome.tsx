@@ -371,26 +371,21 @@ export default function MobileHome() {
         backdropFilter: "blur(20px) saturate(1.3)",
         WebkitBackdropFilter: "blur(20px) saturate(1.3)",
       }}>
-        {/* Hamburger — izquierda */}
-        <button
-          onClick={() => setMenuOpen(true)}
-          aria-label="Abrir menú"
-          style={{
-            background: "none", border: "none", cursor: "pointer",
-            display: "flex", flexDirection: "column", gap: 5,
-            padding: 6, marginLeft: -6, flexShrink: 0,
-          }}
-        >
-          <span style={{ display: "block", width: 22, height: 1.5, background: C.tinta }} />
-          <span style={{ display: "block", width: 22, height: 1.5, background: C.tinta }} />
-          <span style={{ display: "block", width: 16, height: 1.5, background: C.tinta }} />
-        </button>
-
-        {/* Logo — centro absoluto */}
-        <div style={{
-          position: "absolute", left: "50%", transform: "translateX(-62%)",
-          display: "flex", alignItems: "center", gap: 8, pointerEvents: "none",
-        }}>
+        {/* Hamburger + logo — izquierda juntos */}
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginLeft: -6 }}>
+          <button
+            onClick={() => setMenuOpen(true)}
+            aria-label="Abrir menú"
+            style={{
+              background: "none", border: "none", cursor: "pointer",
+              display: "flex", flexDirection: "column", gap: 5,
+              padding: 6, flexShrink: 0,
+            }}
+          >
+            <span style={{ display: "block", width: 22, height: 1.5, background: C.tinta }} />
+            <span style={{ display: "block", width: 22, height: 1.5, background: C.tinta }} />
+            <span style={{ display: "block", width: 16, height: 1.5, background: C.tinta }} />
+          </button>
           <span style={{ ...F.display, fontSize: "1.35rem", letterSpacing: "0.04em", color: C.tinta }}>SPRINGS</span>
           <span style={{ color: C.tinta, opacity: 0.3 }}>✦</span>
           <div style={{ ...F.mono, fontSize: "0.32rem", letterSpacing: "0.08em", color: C.tinta, lineHeight: 1.5, textTransform: "uppercase", opacity: 0.5 }}>
