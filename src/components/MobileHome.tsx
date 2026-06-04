@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRouter } from "next/navigation";
 import SensitiveImage from "@/components/SensitiveImage";
@@ -266,6 +267,8 @@ export default function MobileHome() {
 
   const [culturaHeaderY, setCulturaHeaderY] = useState<number | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
   useEffect(() => {
     // offsetTop: posición en el layout SIN transforms de Framer Motion.
     // getBoundingClientRect incluiría el y:400 inicial del panel y daría un valor erróneo.
@@ -319,8 +322,8 @@ export default function MobileHome() {
       style={{ background: C.cream, overflowX: "clip", position: "relative" }}
     >
 
-      {/* ── Menu overlay (fixed, zIndex 200) ─────────────── */}
-      <motion.div
+      {/* ── Menu overlay — portal directo a body, escapa overflow:clip del wrapper ── */}
+      {mounted && createPortal(<motion.div
         animate={{ clipPath: menuOpen ? "circle(300% at 24px 26px)" : "circle(0% at 24px 26px)" }}
         transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
         style={{
@@ -442,7 +445,7 @@ export default function MobileHome() {
             </motion.a>
           ))}
         </nav>
-      </motion.div>
+      </motion.div>, document.body)}
 
       {/* ── Header sticky ──────────────────────────────────── */}
       <header style={{
