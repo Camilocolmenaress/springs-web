@@ -314,7 +314,7 @@
           "props": {
             "size":    { "value": 20,  "unit": "px", "min": 10, "max": 50,  "step": 2 },
             "offsetY": { "value": 400, "unit": "px", "min": 0,  "max": 800, "step": 4 },
-            "offsetX": { "value": 20,  "unit": "px", "min": 0,  "max": 200, "step": 2 },
+            "offsetX": { "value": 20,  "unit": "px", "min": 0,  "max": 600, "step": 2 },
             "gap":     { "value": 16,  "unit": "px", "min": 4,  "max": 60,  "step": 2 }
           }
         }
