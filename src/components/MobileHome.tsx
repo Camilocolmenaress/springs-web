@@ -584,7 +584,7 @@ export default function MobileHome() {
             </div>
           </FadeUp>
           <FadeUp root={scrollContainerRef} delay={0.08} style={{ transform: tx(d.pedirTitleOffY) }}>
-            <h2 style={{ ...F.display, fontSize: `${d.pedirTitleFs}vw`, color: C.cream, lineHeight: 0.85, letterSpacing: "-0.01em", textTransform: "uppercase", margin: "0 0 48px 0" }}>
+            <h2 style={{ ...F.display, fontSize: `${d.pedirTitleFs}vw`, color: C.cream, lineHeight: 1.05, letterSpacing: "-0.01em", textTransform: "uppercase", margin: "0 0 48px 0" }}>
               PEDIR<br />YA.
             </h2>
           </FadeUp>
