@@ -292,7 +292,7 @@ export default function MobileHome() {
       bodyOverflow: bodyStyle.overflow,
       bodyHeight:   bodyStyle.height,
     };
-    htmlStyle.overflow = "visible";
+    htmlStyle.overflow = "auto";
     htmlStyle.height   = "auto";
     bodyStyle.overflow = "visible";
     bodyStyle.height   = "auto";
