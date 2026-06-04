@@ -321,7 +321,7 @@ export default function MobileHome() {
 
       {/* ── Menu overlay (fixed, zIndex 200) ─────────────── */}
       <motion.div
-        animate={{ clipPath: menuOpen ? "circle(150% at 24px 26px)" : "circle(0% at 24px 26px)" }}
+        animate={{ clipPath: menuOpen ? "circle(300% at 24px 26px)" : "circle(0% at 24px 26px)" }}
         transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
         style={{
           position: "fixed", inset: 0, zIndex: 10000,
