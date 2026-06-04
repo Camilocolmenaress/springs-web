@@ -218,6 +218,14 @@ export default function MobileHome() {
   });
   const cultureY = useSpring(cultureYRaw, { stiffness: 120, damping: 20 });
   const counterY = useTransform(cultureY, v => -v);
+
+  // receipt: cae del cielo sincronizado con la llegada del panel
+  const receiptYRaw = useTransform(culturaProgress, (p) => {
+    const t = Math.max(0, (p - 0.52) / 0.28);
+    return (1 - Math.min(1, t)) * -160;
+  });
+  const receiptOpacity = useTransform(culturaProgress, (p) => Math.min(1, Math.max(0, (p - 0.52) / 0.22)));
+  const receiptYAnim = useSpring(receiptYRaw, { stiffness: 90, damping: 18 });
   const sp = { stiffness: 180, damping: 28 };
   // diagonal: bolsa izquierda-arriba → derecha-abajo
   const bagXRaw = useTransform(scrollYProgress, [0.30, 0.50], [-180, 0]);
@@ -523,9 +531,9 @@ export default function MobileHome() {
           </h2>
           {/* Receipt — en el overlay, después de los títulos en DOM = encima de ellos */}
           <div style={{ transform: tx(d.receiptOffY, d.receiptOffX) }}>
-            <FadeUp root={scrollContainerRef} delay={0.05} fromY={-140}>
+            <motion.div style={{ y: receiptYAnim, opacity: receiptOpacity }}>
               <img src="/images/culture-receipt.webp" alt="" decoding="async" style={{ width: `${d.receiptWidth}%`, maxWidth: 280, display: "block", margin: "0 auto 40px auto", transform: `rotate(${d.receiptRotation}deg)`, filter: "drop-shadow(0 12px 32px rgba(0,0,0,0.5))" }} />
-            </FadeUp>
+            </motion.div>
           </div>
         </div>
       )}
