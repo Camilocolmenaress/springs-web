@@ -267,18 +267,15 @@ export default function MobileHome() {
   const [culturaHeaderY, setCulturaHeaderY] = useState<number | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   useEffect(() => {
+    // offsetTop: posición en el layout SIN transforms de Framer Motion.
+    // getBoundingClientRect incluiría el y:400 inicial del panel y daría un valor erróneo.
     const measure = () => {
       if (!culturaRef.current) return;
-      const culturaRect = culturaRef.current.getBoundingClientRect();
-      setCulturaHeaderY(culturaRect.top + window.scrollY + 48);
+      setCulturaHeaderY((culturaRef.current as HTMLElement).offsetTop + 48);
     };
     measure();
     window.addEventListener("resize", measure);
-    window.addEventListener("scroll", measure, { passive: true });
-    return () => {
-      window.removeEventListener("resize", measure);
-      window.removeEventListener("scroll", measure);
-    };
+    return () => window.removeEventListener("resize", measure);
   }, []);
 
   // globals.css fija height:100% + overflow:hidden en html/body para el scroll horizontal del desktop.
