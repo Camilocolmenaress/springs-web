@@ -281,14 +281,26 @@ export default function MobileHome() {
     };
   }, []);
 
-  // Permite scroll de documento en mobile (globals.css pone overflow:hidden en body para el scroll horizontal del desktop)
+  // globals.css fija height:100% + overflow:hidden en html/body para el scroll horizontal del desktop.
+  // Aquí los reseteamos para que el documento crezca naturalmente y window.scrollY funcione en mobile.
   useEffect(() => {
-    const prev = document.documentElement.style.overflow;
-    document.documentElement.style.overflow = "auto";
-    document.body.style.overflow = "auto";
+    const htmlStyle = document.documentElement.style;
+    const bodyStyle = document.body.style;
+    const prev = {
+      htmlOverflow: htmlStyle.overflow,
+      htmlHeight:   htmlStyle.height,
+      bodyOverflow: bodyStyle.overflow,
+      bodyHeight:   bodyStyle.height,
+    };
+    htmlStyle.overflow = "visible";
+    htmlStyle.height   = "auto";
+    bodyStyle.overflow = "visible";
+    bodyStyle.height   = "auto";
     return () => {
-      document.documentElement.style.overflow = prev;
-      document.body.style.overflow = "";
+      htmlStyle.overflow = prev.htmlOverflow;
+      htmlStyle.height   = prev.htmlHeight;
+      bodyStyle.overflow = prev.bodyOverflow;
+      bodyStyle.height   = prev.bodyHeight;
     };
   }, []);
 
