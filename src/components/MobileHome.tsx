@@ -299,7 +299,7 @@ export default function MobileHome() {
         animate={{ clipPath: menuOpen ? "circle(150% at 24px 26px)" : "circle(0% at 24px 26px)" }}
         transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
         style={{
-          position: "fixed", inset: 0, zIndex: 200,
+          position: "fixed", inset: 0, zIndex: 10000,
           background: C.tinta,
           pointerEvents: menuOpen ? "auto" : "none",
           overflow: "hidden",
