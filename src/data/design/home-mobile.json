@@ -862,7 +862,7 @@
               "step": 2
             },
             "offsetY": {
-              "value": -140,
+              "value": -60,
               "unit": "px",
               "min": -400,
               "max": 200,
@@ -888,7 +888,7 @@
               "step": 1
             },
             "top": {
-              "value": 64,
+              "value": 90,
               "unit": "px",
               "min": -60,
               "max": 600,
@@ -921,7 +921,7 @@
               "step": 1
             },
             "bottom": {
-              "value": 290,
+              "value": 80,
               "unit": "px",
               "min": -60,
               "max": 800,
@@ -954,7 +954,7 @@
               "step": 0.02
             },
             "top": {
-              "value": 13,
+              "value": 24,
               "unit": "px",
               "min": 0,
               "max": 100,
@@ -980,7 +980,7 @@
               "step": 2
             },
             "offsetY": {
-              "value": 512,
+              "value": 620,
               "unit": "px",
               "min": 0,
               "max": 800,
