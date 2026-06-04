@@ -269,6 +269,17 @@ export default function MobileHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
+
+  // Cambia el color del chrome del navegador (barra de estado + dirección) según el estado del menú
+  useEffect(() => {
+    let meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+    if (!meta) {
+      meta = document.createElement("meta");
+      meta.setAttribute("name", "theme-color");
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute("content", menuOpen ? C.tinta : C.cream);
+  }, [menuOpen]);
   useEffect(() => {
     // offsetTop: posición en el layout SIN transforms de Framer Motion.
     // getBoundingClientRect incluiría el y:400 inicial del panel y daría un valor erróneo.
