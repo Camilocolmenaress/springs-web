@@ -221,10 +221,10 @@ export default function MobileHome() {
 
   // receipt: cae del cielo sincronizado con la llegada del panel
   const receiptYRaw = useTransform(culturaProgress, (p) => {
-    const t = Math.max(0, (p - 0.52) / 0.28);
+    const t = Math.max(0, (p - 0.22) / 0.22);
     return (1 - Math.min(1, t)) * -160;
   });
-  const receiptOpacity = useTransform(culturaProgress, (p) => Math.min(1, Math.max(0, (p - 0.52) / 0.22)));
+  const receiptOpacity = useTransform(culturaProgress, (p) => Math.min(1, Math.max(0, (p - 0.22) / 0.18)));
   const receiptYAnim = useSpring(receiptYRaw, { stiffness: 90, damping: 18 });
   const sp = { stiffness: 180, damping: 28 };
   // diagonal: bolsa izquierda-arriba → derecha-abajo
