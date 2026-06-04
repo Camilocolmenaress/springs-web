@@ -299,6 +299,14 @@
             "left":     { "value": -10, "unit": "px",  "min": -60,  "max": 200,  "step": 2 },
             "rotation": { "value": -2,  "unit": "deg", "min": -45,  "max": 45,   "step": 1 }
           }
+        },
+        "pedirAhora": {
+          "type": "config",
+          "props": {
+            "fontSize": { "value": 0.48, "unit": "rem", "min": 0.3,  "max": 1.0,  "step": 0.02 },
+            "top":      { "value": 11,   "unit": "px",  "min": 0,    "max": 100,  "step": 1 },
+            "right":    { "value": 18,   "unit": "px",  "min": 0,    "max": 100,  "step": 1 }
+          }
         }
       }
     }

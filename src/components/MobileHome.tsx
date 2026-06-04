@@ -207,6 +207,9 @@ export default function MobileHome() {
     menuJcBottom:    sv(z, "menu", "jacketClubSticker", "bottom",   80),
     menuJcLeft:      sv(z, "menu", "jacketClubSticker", "left",     -10),
     menuJcRotation:  sv(z, "menu", "jacketClubSticker", "rotation", -2),
+    menuBtnFontSize: sv(z, "menu", "pedirAhora",        "fontSize", 0.48),
+    menuBtnTop:      sv(z, "menu", "pedirAhora",        "top",      11),
+    menuBtnRight:    sv(z, "menu", "pedirAhora",        "right",    18),
   };
 
   // ── Scroll-driven packaging + cultura ────────────────────────
@@ -320,7 +323,7 @@ export default function MobileHome() {
         {/* PEDIR AHORA — arriba derecha */}
         <button
           onClick={() => { setMenuOpen(false); router.push("/menu"); }}
-          style={{ ...F.mono, position: "absolute", top: 11, right: 18, zIndex: 1, fontSize: "0.48rem", letterSpacing: "0.14em", background: C.burgundy, color: C.cream, border: "none", padding: "7px 12px", cursor: "pointer", display: "flex", alignItems: "center", gap: 5 }}
+          style={{ ...F.mono, position: "absolute", top: d.menuBtnTop, right: d.menuBtnRight, zIndex: 1, fontSize: `${d.menuBtnFontSize}rem`, letterSpacing: "0.14em", background: C.burgundy, color: C.cream, border: "none", padding: "7px 12px", cursor: "pointer", display: "flex", alignItems: "center", gap: 5 }}
         >
           PEDIR AHORA
           <svg aria-hidden="true" width="9" height="9" viewBox="0 0 10 10" fill="none">
@@ -330,7 +333,7 @@ export default function MobileHome() {
 
         {/* Sticker miércoles — arriba derecha */}
         <img
-          src="/images/sticker-miercoles.webp" alt="" aria-hidden="true" decoding="async"
+          src="/images/miercoles-dados-sticker.webp" alt="" aria-hidden="true" decoding="async"
           style={{
             position: "absolute",
             top: d.menuMdTop,
@@ -343,7 +346,7 @@ export default function MobileHome() {
 
         {/* Sticker jacket club — abajo izquierda */}
         <img
-          src="/images/sticker-jacket-club.webp" alt="" aria-hidden="true" decoding="async"
+          src="/images/jacket-club-sticker.webp" alt="" aria-hidden="true" decoding="async"
           style={{
             position: "absolute",
             bottom: d.menuJcBottom,
