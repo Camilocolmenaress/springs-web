@@ -388,7 +388,7 @@ export default function MobileHome() {
 
         {/* Logo — centro absoluto */}
         <div style={{
-          position: "absolute", left: "50%", transform: "translateX(-50%)",
+          position: "absolute", left: "50%", transform: "translateX(-62%)",
           display: "flex", alignItems: "center", gap: 8, pointerEvents: "none",
         }}>
           <span style={{ ...F.display, fontSize: "1.35rem", letterSpacing: "0.04em", color: C.tinta }}>SPRINGS</span>
