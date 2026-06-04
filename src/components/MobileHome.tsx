@@ -196,9 +196,10 @@ export default function MobileHome() {
     wmOffY:          sv(z, "pedirYa", "watermark", "offsetY",    10),
     wmOffX:          sv(z, "pedirYa", "watermark", "offsetX",    -15),
     // menu overlay
-    menuNavFontSize: sv(z, "menu", "navLinks",          "fontSize", 15),
-    menuNavOffY:     sv(z, "menu", "navLinks",          "offsetY",  0),
-    menuNavOffX:     sv(z, "menu", "navLinks",          "offsetX",  0),
+    menuNavFontSize: sv(z, "menu", "navLinks",          "fontSize", 19),
+    menuNavGap:      sv(z, "menu", "navLinks",          "gap",      4),
+    menuNavOffY:     sv(z, "menu", "navLinks",          "offsetY",  -140),
+    menuNavOffX:     sv(z, "menu", "navLinks",          "offsetX",  12),
     menuMdSize:      sv(z, "menu", "miercolesSticker",  "size",     38),
     menuMdTop:       sv(z, "menu", "miercolesSticker",  "top",      72),
     menuMdRight:     sv(z, "menu", "miercolesSticker",  "right",    -10),
@@ -323,11 +324,12 @@ export default function MobileHome() {
         {/* PEDIR AHORA — arriba derecha */}
         <button
           onClick={() => { setMenuOpen(false); router.push("/menu"); }}
-          style={{ ...F.mono, position: "absolute", top: d.menuBtnTop, right: d.menuBtnRight, zIndex: 1, fontSize: `${d.menuBtnFontSize}rem`, letterSpacing: "0.14em", background: C.burgundy, color: C.cream, border: "none", padding: "7px 12px", cursor: "pointer", display: "flex", alignItems: "center", gap: 5 }}
+          className="btn-pill"
+          style={{ ...F.mono, position: "absolute", top: d.menuBtnTop, right: d.menuBtnRight, zIndex: 1, fontSize: `${d.menuBtnFontSize}rem`, letterSpacing: "0.14em", background: C.burgundy, color: C.cream, border: "none", padding: "9px 16px", cursor: "pointer", display: "flex", alignItems: "center", gap: 7 }}
         >
           PEDIR AHORA
-          <svg aria-hidden="true" width="9" height="9" viewBox="0 0 10 10" fill="none">
-            <path d="M2 8L8 2M8 2H3M8 2V7" stroke="currentColor" strokeWidth="1.3"/>
+          <svg aria-hidden="true" width="13" height="13" viewBox="0 0 10 10" fill="none">
+            <path d="M2 8L8 2M8 2H3M8 2V7" stroke="currentColor" strokeWidth="1.8"/>
           </svg>
         </button>
 
@@ -360,6 +362,7 @@ export default function MobileHome() {
         {/* Nav links */}
         <nav style={{
           display: "flex", flexDirection: "column", justifyContent: "center",
+          gap: d.menuNavGap,
           padding: "80px 28px 60px 28px", height: "100%", boxSizing: "border-box",
           transform: tx(d.menuNavOffY, d.menuNavOffX),
         }}>
@@ -385,7 +388,6 @@ export default function MobileHome() {
                 lineHeight: 0.9,
                 letterSpacing: "-0.02em",
                 display: "block",
-                marginBottom: 4,
               }}
             >
               {label}
@@ -428,11 +430,12 @@ export default function MobileHome() {
         {/* PEDIR AHORA — derecha */}
         <button
           onClick={() => router.push("/menu")}
-          style={{ ...F.mono, fontSize: "0.48rem", letterSpacing: "0.14em", background: C.burgundy, color: C.cream, border: "none", padding: "7px 12px", cursor: "pointer", display: "flex", alignItems: "center", gap: 5, flexShrink: 0 }}
+          className="btn-pill"
+          style={{ ...F.mono, fontSize: "0.48rem", letterSpacing: "0.14em", background: C.burgundy, color: C.cream, border: "none", padding: "9px 16px", cursor: "pointer", display: "flex", alignItems: "center", gap: 7, flexShrink: 0 }}
         >
           PEDIR AHORA
-          <svg aria-hidden="true" width="9" height="9" viewBox="0 0 10 10" fill="none">
-            <path d="M2 8L8 2M8 2H3M8 2V7" stroke="currentColor" strokeWidth="1.3"/>
+          <svg aria-hidden="true" width="13" height="13" viewBox="0 0 10 10" fill="none">
+            <path d="M2 8L8 2M8 2H3M8 2V7" stroke="currentColor" strokeWidth="1.8"/>
           </svg>
         </button>
       </header>

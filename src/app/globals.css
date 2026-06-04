@@ -26,6 +26,10 @@
   border-radius: 50% !important;
 }
 
+.btn-pill {
+  border-radius: 999px !important;
+}
+
 html, body {
   margin: 0;
   padding: 0;
