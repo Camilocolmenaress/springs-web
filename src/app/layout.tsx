@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Anton, Inter, JetBrains_Mono, Playfair_Display, Caveat_Brush, Caveat } from "next/font/google";
 import "./globals.css";
 import CookieBanner from "@/components/CookieBanner";
@@ -43,6 +43,12 @@ const caveat = Caveat({
   variable: "--font-caveat",
   display: "swap",
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   title: "SPRINGS — Jacket Potatoes",
