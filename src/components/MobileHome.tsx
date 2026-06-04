@@ -247,6 +247,7 @@ export default function MobileHome() {
   const cupOp = useTransform(scrollYProgress, [0.42, 0.48], [0, 1]);
 
   const [culturaHeaderY, setCulturaHeaderY] = useState<number | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
   useEffect(() => {
     const measure = () => {
       if (!culturaRef.current || !scrollContainerRef.current) return;
@@ -278,6 +279,89 @@ export default function MobileHome() {
       style={{ background: C.cream, height: "100dvh", overflowY: "auto", overflowX: "hidden", position: "relative" }}
     >
 
+      {/* ── Menu overlay (fixed, zIndex 200) ─────────────── */}
+      <motion.div
+        animate={{ clipPath: menuOpen ? "circle(150% at 24px 26px)" : "circle(0% at 24px 26px)" }}
+        transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+        style={{
+          position: "fixed", inset: 0, zIndex: 200,
+          background: C.tinta,
+          pointerEvents: menuOpen ? "auto" : "none",
+          overflow: "hidden",
+        }}
+      >
+        <button
+          onClick={() => setMenuOpen(false)}
+          aria-label="Cerrar menú"
+          style={{
+            position: "absolute", top: 14, left: 18,
+            background: "none", border: "none", cursor: "pointer",
+            width: 34, height: 34, display: "flex", flexDirection: "column",
+            alignItems: "center", justifyContent: "center", padding: 0,
+          }}
+        >
+          <span style={{ display: "block", width: 22, height: 1.5, background: C.cream, transform: "rotate(45deg) translateY(0.75px)" }} />
+          <span style={{ display: "block", width: 22, height: 1.5, background: C.cream, transform: "rotate(-45deg) translateY(-0.75px)" }} />
+        </button>
+
+        <nav style={{
+          display: "flex", flexDirection: "column", justifyContent: "center",
+          padding: "80px 28px 60px 28px", height: "100%", boxSizing: "border-box",
+        }}>
+          {[
+            { label: "CARTA",       href: "/menu" },
+            { label: "ART GALLERY", href: "/art-gallery" },
+            { label: "NOSOTROS",    href: "#" },
+            { label: "EL CLUB",     href: "/springs-jacket-club" },
+            { label: "FAQS",        href: "#faqs" },
+          ].map(({ label, href }, i) => (
+            <motion.a
+              key={label}
+              href={href}
+              onClick={() => setMenuOpen(false)}
+              initial={false}
+              animate={menuOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+              transition={{ duration: 0.55, ease: EASE, delay: menuOpen ? 0.28 + i * 0.07 : 0 }}
+              style={{
+                ...F.display,
+                fontSize: "15vw",
+                color: C.cream,
+                textDecoration: "none",
+                lineHeight: 0.9,
+                letterSpacing: "-0.02em",
+                display: "block",
+                marginBottom: 4,
+              }}
+            >
+              {label}
+            </motion.a>
+          ))}
+
+          <motion.a
+            href="/menu"
+            onClick={() => setMenuOpen(false)}
+            initial={false}
+            animate={menuOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+            transition={{ duration: 0.5, ease: EASE, delay: menuOpen ? 0.65 : 0 }}
+            style={{
+              ...F.mono,
+              marginTop: 28,
+              fontSize: "0.56rem",
+              letterSpacing: "0.14em",
+              background: C.cream,
+              color: C.tinta,
+              padding: "11px 20px",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              textDecoration: "none",
+            }}
+          >
+            PEDIR AHORA →
+          </motion.a>
+        </nav>
+      </motion.div>
+
       {/* ── Header sticky ──────────────────────────────────── */}
       <header style={{
         position: "sticky", top: 0, zIndex: 100, height: 52,
@@ -287,6 +371,20 @@ export default function MobileHome() {
         backdropFilter: "blur(20px) saturate(1.3)",
         WebkitBackdropFilter: "blur(20px) saturate(1.3)",
       }}>
+        <button
+          onClick={() => setMenuOpen(true)}
+          aria-label="Abrir menú"
+          style={{
+            background: "none", border: "none", cursor: "pointer",
+            display: "flex", flexDirection: "column", gap: 5,
+            padding: 6, marginLeft: -6,
+          }}
+        >
+          <span style={{ display: "block", width: 22, height: 1.5, background: C.tinta }} />
+          <span style={{ display: "block", width: 22, height: 1.5, background: C.tinta }} />
+          <span style={{ display: "block", width: 16, height: 1.5, background: C.tinta }} />
+        </button>
+
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <span style={{ ...F.display, fontSize: "1.35rem", letterSpacing: "0.04em", color: C.tinta }}>SPRINGS</span>
           <span style={{ color: C.tinta, opacity: 0.3 }}>✦</span>
@@ -294,15 +392,6 @@ export default function MobileHome() {
             BRITISH SOUL<br />COLOMBIAN HEART.
           </div>
         </div>
-        <button
-          onClick={() => router.push("/menu")}
-          style={{ ...F.mono, fontSize: "0.48rem", letterSpacing: "0.14em", background: C.burgundy, color: C.cream, border: "none", padding: "7px 12px", cursor: "pointer", display: "flex", alignItems: "center", gap: 5 }}
-        >
-          PEDIR AHORA
-          <svg aria-hidden="true" width="9" height="9" viewBox="0 0 10 10" fill="none">
-            <path d="M2 8L8 2M8 2H3M8 2V7" stroke="currentColor" strokeWidth="1.3"/>
-          </svg>
-        </button>
       </header>
 
       {/* ════════════════════════════
