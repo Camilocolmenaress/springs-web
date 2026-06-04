@@ -848,7 +848,7 @@
           "type": "text",
           "props": {
             "fontSize": {
-              "value": 22,
+              "value": 23,
               "unit": "vw",
               "min": 8,
               "max": 25,
@@ -862,7 +862,7 @@
               "step": 2
             },
             "offsetY": {
-              "value": -60,
+              "value": 30,
               "unit": "px",
               "min": -400,
               "max": 200,
@@ -888,14 +888,14 @@
               "step": 1
             },
             "top": {
-              "value": 90,
+              "value": 100,
               "unit": "px",
               "min": -60,
               "max": 600,
               "step": 2
             },
             "right": {
-              "value": 16,
+              "value": -5,
               "unit": "px",
               "min": -60,
               "max": 200,
@@ -914,21 +914,21 @@
           "type": "image",
           "props": {
             "size": {
-              "value": 38,
+              "value": 50,
               "unit": "%",
               "min": 8,
               "max": 90,
               "step": 1
             },
             "bottom": {
-              "value": 80,
+              "value": 90,
               "unit": "px",
               "min": -60,
               "max": 800,
               "step": 2
             },
             "left": {
-              "value": 236,
+              "value": 195,
               "unit": "px",
               "min": -60,
               "max": 800,
@@ -980,7 +980,7 @@
               "step": 2
             },
             "offsetY": {
-              "value": 570,
+              "value": 650,
               "unit": "px",
               "min": 0,
               "max": 800,
