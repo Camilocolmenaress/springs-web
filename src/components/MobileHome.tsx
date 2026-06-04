@@ -328,7 +328,6 @@ export default function MobileHome() {
         {/* PEDIR AHORA — arriba derecha */}
         <button
           onClick={() => { setMenuOpen(false); router.push("/menu"); }}
-          className="btn-pill"
           style={{ ...F.display, position: "absolute", top: d.menuBtnTop, right: d.menuBtnRight, zIndex: 1, fontSize: `${d.menuBtnFontSize}rem`, letterSpacing: "0.1em", background: C.burgundy, color: C.cream, border: "none", padding: "8px 13px", cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }}
         >
           PEDIR AHORA
@@ -459,7 +458,6 @@ export default function MobileHome() {
         {/* PEDIR AHORA — derecha */}
         <button
           onClick={() => router.push("/menu")}
-          className="btn-pill"
           style={{ ...F.display, fontSize: "0.58rem", letterSpacing: "0.1em", background: C.burgundy, color: C.cream, border: "none", padding: "8px 13px", cursor: "pointer", display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}
         >
           PEDIR AHORA
