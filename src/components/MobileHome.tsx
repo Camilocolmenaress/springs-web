@@ -325,11 +325,12 @@ export default function MobileHome() {
         <button
           onClick={() => { setMenuOpen(false); router.push("/menu"); }}
           className="btn-pill"
-          style={{ ...F.mono, position: "absolute", top: d.menuBtnTop, right: d.menuBtnRight, zIndex: 1, fontSize: `${d.menuBtnFontSize}rem`, letterSpacing: "0.14em", background: C.burgundy, color: C.cream, border: "none", padding: "9px 16px", cursor: "pointer", display: "flex", alignItems: "center", gap: 7 }}
+          style={{ ...F.display, position: "absolute", top: d.menuBtnTop, right: d.menuBtnRight, zIndex: 1, fontSize: `${d.menuBtnFontSize}rem`, letterSpacing: "0.1em", background: C.burgundy, color: C.cream, border: "none", padding: "8px 13px", cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }}
         >
           PEDIR AHORA
-          <svg aria-hidden="true" width="13" height="13" viewBox="0 0 10 10" fill="none">
-            <path d="M2 8L8 2M8 2H3M8 2V7" stroke="currentColor" strokeWidth="1.8"/>
+          <svg aria-hidden="true" width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="1" y1="11" x2="11" y2="1"/>
+            <polyline points="4,1 11,1 11,8"/>
           </svg>
         </button>
 
@@ -431,11 +432,12 @@ export default function MobileHome() {
         <button
           onClick={() => router.push("/menu")}
           className="btn-pill"
-          style={{ ...F.mono, fontSize: "0.48rem", letterSpacing: "0.14em", background: C.burgundy, color: C.cream, border: "none", padding: "9px 16px", cursor: "pointer", display: "flex", alignItems: "center", gap: 7, flexShrink: 0 }}
+          style={{ ...F.display, fontSize: "0.58rem", letterSpacing: "0.1em", background: C.burgundy, color: C.cream, border: "none", padding: "8px 13px", cursor: "pointer", display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}
         >
           PEDIR AHORA
-          <svg aria-hidden="true" width="13" height="13" viewBox="0 0 10 10" fill="none">
-            <path d="M2 8L8 2M8 2H3M8 2V7" stroke="currentColor" strokeWidth="1.8"/>
+          <svg aria-hidden="true" width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="1" y1="11" x2="11" y2="1"/>
+            <polyline points="4,1 11,1 11,8"/>
           </svg>
         </button>
       </header>
