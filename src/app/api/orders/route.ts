@@ -5,9 +5,7 @@ import { NextResponse } from "next/server";
 
 interface OrderItem {
   product_id: string;
-  nombre_producto: string;
   cantidad: number;
-  precio_unitario: number;
 }
 
 interface OrderRequest {
@@ -39,6 +37,19 @@ export async function POST(request: Request) {
       { status: 400 }
     );
   }
+  for (const item of body.items) {
+    if (
+      !item.product_id ||
+      !Number.isInteger(item.cantidad) ||
+      item.cantidad < 1 ||
+      item.cantidad > 50
+    ) {
+      return NextResponse.json(
+        { error: "Cantidad no valida en el pedido." },
+        { status: 400 }
+      );
+    }
+  }
 
   const { abierta, mensaje } = await esCocinaAbierta();
   if (!abierta) {
@@ -49,25 +60,42 @@ export async function POST(request: Request) {
   }
 
   const productIds = body.items.map((i) => i.product_id);
-  const { data: productos } = await supabase
+  const { data: productos, error: productosError } = await supabase
     .from("products")
-    .select("id, nombre, disponible")
+    .select("id, nombre, precio, disponible")
     .in("id", productIds);
 
-  if (productos) {
-    const noDisponibles = productos
-      .filter((p) => !p.disponible)
-      .map((p) => p.nombre);
-    if (noDisponibles.length > 0) {
-      return NextResponse.json(
-        { error: "producto_no_disponible", productos: noDisponibles },
-        { status: 400 }
-      );
-    }
+  if (productosError || !productos) {
+    return NextResponse.json(
+      { error: "Error verificando los productos." },
+      { status: 500 }
+    );
   }
 
+  const productosPorId = new Map(productos.map((p) => [p.id, p]));
+
+  const noEncontrados = productIds.filter((id) => !productosPorId.has(id));
+  if (noEncontrados.length > 0) {
+    return NextResponse.json(
+      { error: "producto_no_encontrado", productos: noEncontrados },
+      { status: 400 }
+    );
+  }
+
+  const noDisponibles = productos
+    .filter((p) => !p.disponible)
+    .map((p) => p.nombre);
+  if (noDisponibles.length > 0) {
+    return NextResponse.json(
+      { error: "producto_no_disponible", productos: noDisponibles },
+      { status: 400 }
+    );
+  }
+
+  // Precio SIEMPRE desde la BD — nunca confiar en el precio que manda el cliente
   const subtotal = body.items.reduce(
-    (sum, item) => sum + item.precio_unitario * item.cantidad,
+    (sum, item) =>
+      sum + productosPorId.get(item.product_id)!.precio * item.cantidad,
     0
   );
 
@@ -106,13 +134,16 @@ export async function POST(request: Request) {
     );
   }
 
-  const itemsToInsert = body.items.map((item) => ({
-    order_id: order.id,
-    product_id: item.product_id,
-    nombre_producto: item.nombre_producto,
-    cantidad: item.cantidad,
-    precio_unitario: item.precio_unitario,
-  }));
+  const itemsToInsert = body.items.map((item) => {
+    const producto = productosPorId.get(item.product_id)!;
+    return {
+      order_id: order.id,
+      product_id: item.product_id,
+      nombre_producto: producto.nombre,
+      cantidad: item.cantidad,
+      precio_unitario: producto.precio,
+    };
+  });
 
   const { error: itemsError } = await supabase
     .from("order_items")
