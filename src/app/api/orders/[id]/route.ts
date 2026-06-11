@@ -1,4 +1,5 @@
 import { supabase } from "@/lib/supabase";
+import { isAuthenticated } from "@/lib/auth";
 import { NextResponse } from "next/server";
 
 const TRANSICIONES_VALIDAS: Record<string, string[]> = {
@@ -44,6 +45,14 @@ export async function PATCH(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const [esAdmin, esCocina] = await Promise.all([
+    isAuthenticated("admin"),
+    isAuthenticated("cocina"),
+  ]);
+  if (!esAdmin && !esCocina) {
+    return NextResponse.json({ error: "No autorizado." }, { status: 401 });
+  }
+
   const { id } = await params;
   const body = await request.json();
 

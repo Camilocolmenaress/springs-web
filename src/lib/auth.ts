@@ -1,7 +1,23 @@
 import { supabase } from "./supabase";
 import { cookies } from "next/headers";
+import { createHmac, timingSafeEqual } from "crypto";
 
 const SESSION_COOKIE = "springs_session";
+const SESSION_MAX_AGE_S = 60 * 60 * 12;
+
+function getSessionSecret(): string {
+  const secret = process.env.SESSION_SECRET;
+  if (!secret) {
+    throw new Error("SESSION_SECRET no esta configurado en las env vars.");
+  }
+  return secret;
+}
+
+function firmar(payload: string): string {
+  return createHmac("sha256", getSessionSecret())
+    .update(payload)
+    .digest("hex");
+}
 
 export async function verifyPin(
   pin: string,
@@ -22,8 +38,8 @@ export async function setPin(
 }
 
 export function createSessionToken(tipo: "cocina" | "admin"): string {
-  const payload = `${tipo}:${Date.now()}:springs`;
-  return Buffer.from(payload).toString("base64");
+  const payload = `${tipo}:${Date.now()}`;
+  return Buffer.from(`${payload}:${firmar(payload)}`).toString("base64url");
 }
 
 export async function setSessionCookie(tipo: "cocina" | "admin") {
@@ -33,8 +49,9 @@ export async function setSessionCookie(tipo: "cocina" | "admin") {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
-    maxAge: 60 * 60 * 12,
-    path: `/${tipo}`,
+    maxAge: SESSION_MAX_AGE_S,
+    // path "/" para que la cookie llegue tambien a /api/* (con /admin no llegaba)
+    path: "/",
   });
 }
 
@@ -46,8 +63,24 @@ export async function isAuthenticated(
   if (!token?.value) return false;
 
   try {
-    const decoded = Buffer.from(token.value, "base64").toString("utf-8");
-    return decoded.startsWith(`${tipo}:`) && decoded.endsWith(":springs");
+    const decoded = Buffer.from(token.value, "base64url").toString("utf-8");
+    const [t, ts, sig] = decoded.split(":");
+    if (t !== tipo || !ts || !sig) return false;
+
+    const issuedAt = Number(ts);
+    if (
+      !Number.isFinite(issuedAt) ||
+      Date.now() - issuedAt > SESSION_MAX_AGE_S * 1000
+    ) {
+      return false;
+    }
+
+    const expected = Buffer.from(firmar(`${t}:${ts}`), "hex");
+    const received = Buffer.from(sig, "hex");
+    return (
+      expected.length === received.length &&
+      timingSafeEqual(expected, received)
+    );
   } catch {
     return false;
   }
