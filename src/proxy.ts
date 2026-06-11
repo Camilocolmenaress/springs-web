@@ -20,7 +20,24 @@ const authLimit = new Ratelimit({
   prefix: "springs:auth",
 });
 
+const METODOS_ESCRITURA = new Set(["POST", "PUT", "PATCH", "DELETE"]);
+
+const ORIGENES_PERMITIDOS = new Set([
+  "https://springs.com.co",
+  "https://www.springs.com.co",
+  "http://localhost:3000",
+]);
+
 export async function proxy(request: NextRequest) {
+  // Bloquea escrituras cross-origin: solo el propio sitio puede mutar datos
+  const origin = request.headers.get("origin");
+  if (origin && METODOS_ESCRITURA.has(request.method)) {
+    const esMismoOrigen = origin === request.nextUrl.origin;
+    if (!esMismoOrigen && !ORIGENES_PERMITIDOS.has(origin)) {
+      return NextResponse.json({ error: "Origen no permitido." }, { status: 403 });
+    }
+  }
+
   const ip =
     (request as NextRequest & { ip?: string }).ip ??
     request.headers.get("x-real-ip") ??
@@ -59,5 +76,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/api/orders", "/api/auth"],
+  matcher: ["/api/:path*"],
 };
